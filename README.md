@@ -7,9 +7,16 @@
 * [paleta de colores](https://coolors.co/u/octavio_diaz_crespo)
 
 ## Anotaciones
-29/11: Declarando entidades y propiedades
+3/12: Componentes, rutas e ideas:
+* Componentes:En la ruta del proyecto `src/app/layout` estan los componentes <header>, <main>, <sidebar> los cuales conforman la estructura del MVP
+En la ruta del proyecto `src/app/features` estan las _entidades_ (inmueble, *inquilino*, *propietario* y contrato). Las marcadas tienen sus componentes  ( <propietario-c> y <inquilino-c>) donde se muestra de manera hardcodeada los datos de las interfaces ( _las entidades_)
 
+* Rutas: 
+    Por ahora las unicas rutas que hay son: `/propietario` e `/inquilino`, cada una muestra el componente que le corresponde <propietario-c>, <inquilino-c>
+* Ideas:
+    Quiero hacer formularios para crear de manera dinámica las entidades _propietario_ e _inquilino_
 ### Entidades 
+29/11: Declarando entidades y propiedades
 Inquilino ( persona que alquila) / Propietario ( dueño de inmuebles) / Inmueble ( donde va a vivir el inquilino) / contrato ( nexo entre las 3 entidades )
 * * Inquilino: id ( key ) / nombre / DNI / telefono / email / garante / ingresos / domicilio actual
 * * Propietario: id ( key) / nombre / DNI / email / telefono / domicilio / CBU

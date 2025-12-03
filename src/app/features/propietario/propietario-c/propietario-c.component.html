@@ -1,0 +1,11 @@
+<div class="container">
+    @if (propietario){
+    <h5>{{propietario.nombre}}</h5>
+    <p>DNI: {{propietario.dni}}</p>
+    <p>Teléfono: {{propietario.telefono}}</p>
+    <p>Email: {{propietario.email}}</p>
+    <p>CBU: {{propietario.cbu}}</p>
+    } @else {
+        <p> No se obtuvieron datos del propietario</p>
+    }
+</div>

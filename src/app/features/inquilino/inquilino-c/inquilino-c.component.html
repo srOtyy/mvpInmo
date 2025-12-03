@@ -1,0 +1,11 @@
+@if (inquilino){
+    <h2>datos del inquilino</h2>
+    <p>Nombre: {{inquilino.nombre}}</p>
+    <p>DNI: {{inquilino.dni}}</p>
+    <p>Teléfono: {{inquilino.telefono}}</p>
+    <p>Email: {{inquilino.email}}</p>
+    <p>Garante: {{inquilino.garante}}</p>
+    <p>Ingresos: {{inquilino.ingresos}}</p>
+} @else {
+    <p> No se obtuvieron datos del inquilino</p>
+}
