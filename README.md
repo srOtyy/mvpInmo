@@ -14,7 +14,7 @@
     En la ruta del proyecto `src/app/features` estan las _entidades_ (inmueble, inquilino, propietario y contrato).Propietario e inquilino tienen los componentes ( propietario-c e inquilino-c) donde se muestra de manera hardcodeada los datos de las interfaces
 * Rutas: 
     Por ahora las unicas rutas que hay son: `/propietario`, `/inquilino`y `/formulario/propietario`. La unica que renderiza un ejemplo es el formulario. Hay que usar ese modelo base para mantener el estilo en la muestra de datos ( en propietario-c como en inquilino-c)
-* Ideas:
+* Siguiente:
     Quiero hacer formularios reactivos para crear de manera dinámica la entidad de propietario (luego la logica se repite en las demas entidades)
     Además, hay que crear un shared template de card para poder mostrar de manera dinamica y no repetir estilizacion 
     La pregunta es ¿como?
