@@ -1,20 +1,21 @@
-.header{
-    height: 20%;
-    z-index: 10;
-}
-.body{
-        z-index: 1;
-        height: 80%;
+@import '../styles.scss';
+.layout-container{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    height: 100%;
+    gap: 0px;
+    .nav-bar{
+        width: 15vw;
+    }
+    .body{
+        width: 85vw;
+        height: 100%;
         display: flex;
-        flex-direction: row;
-        .nav-bar{
-            width: 200px;
-            height: 80vh;
-            border-right: 1px solid #1a1a1a;
-        }
-        .main-content{
-            flex-grow: 1;
-            overflow-y: auto;
-            height: 80vh;
+        flex-direction: column;
+        background-color: $secondary-900;
+        .header{
+            height: 10vh;
+            background-color: $secondary-600;
         }
     }
+}

@@ -1,8 +1,58 @@
-$color-oscuro: #6b9080;
-$color-principal: #a4c3b2;
-$color-secundario: #cce3de;
-$color-claro1: #eaf4f4;
-$color-claro2: #f6fff8;
+// =============================
+// PRIMARY — Cyan (#00DDDD)
+// =============================
+$primary-100: #CCFFFF;
+$primary-200: #99F6F6;
+$primary-300: #66EEEE;
+$primary-400: #33E5E5;
+$primary-500: #00DDDD;
+$primary-600: #00B8B8;
+$primary-700: #009999;
+$primary-800: #007A7A;
+$primary-900: #005A5A;
+
+// =============================
+// SECONDARY — Verde petróleo (#004747)
+// =============================
+$secondary-100: #C4E5E5;
+$secondary-200: #9ACBCB;
+$secondary-300: #70B2B2;
+$secondary-400: #468888;
+$secondary-500: #004747;
+$secondary-600: #003C3C;
+$secondary-700: #003232;
+$secondary-800: #002828;
+$secondary-900: #001E1E;
+
+// =============================
+// NEUTRALS — Gris verdoso (#3E4849)
+// =============================
+$neutral-50:  #F1F5F5;
+$neutral-100: #DDE3E3;
+$neutral-200: #C8D0D0;
+$neutral-300: #AAB6B6;
+$neutral-400: #889595;
+$neutral-500: #3E4849;
+$neutral-600: #323A3B;
+$neutral-700: #262C2D;
+$neutral-800: #191E1E;
+$neutral-900: #0D1010;
+
+// =============================
+// ACCENTS (complementarios cálidos)
+// =============================
+$accent-1: #FF9F50;  // naranja suave
+$accent-2: #FF6F4C;  // coral apagado
+$accent-3: #FFD5B3;  // durazno claro
+
+// =============================
+// FUNCIONALES (UI states)
+// =============================
+$success: #3CB878;
+$warning: #F4B400;
+$error:   #D64550;
+$info:    #00BEBE;
+
 
 body{
     margin: 0;
