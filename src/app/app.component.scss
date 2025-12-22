@@ -6,16 +6,17 @@
     gap: 0px;
     .nav-bar{
         width: 15vw;
+        background-color: $neutral-800;
     }
     .body{
         width: 85vw;
         height: 100%;
         display: flex;
         flex-direction: column;
-        background-color: $secondary-900;
+        background-color: $primary-700;
         .header{
             height: 10vh;
-            background-color: $secondary-600;
+            background-color: $neutral-700;
         }
     }
 }

@@ -1,0 +1,27 @@
+@import '../../../styles.scss';
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-top: 15px;
+    width: 95%;
+    background-color: $neutral-800;
+    margin: 20px;
+    border-radius: 15px;
+    color: $primary-500;
+}
+::-webkit-scrollbar {
+    width: 8px; /* Ancho para scroll vertical */
+    }
+::-webkit-scrollbar-track {
+    background: $primary-900;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: $neutral-500;
+  border-radius: 10px;
+}

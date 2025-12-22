@@ -6,7 +6,7 @@
     align-items: start;
     height: 100%;
     width: 80%;
-    background-color: $neutral-900;
+    background-color: $neutral-800;
     margin: 20px;
     border-radius: 15px;
     h4{
@@ -20,5 +20,8 @@
         gap: 20px;
         padding-left: 30px;  
       
+    }
+    .abril{
+        background-color: pink;
     }
 }

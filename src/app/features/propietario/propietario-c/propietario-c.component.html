@@ -1,0 +1,6 @@
+<button mat-button (click)="crearPropietario()">Crear Propietario</button>
+<app-card-list>
+    @for(propietario of listaPropietarios; track propietario.id) {
+        <app-item-propietario [propietario]="propietario"></app-item-propietario>
+    }
+</app-card-list>
