@@ -1,0 +1,36 @@
+@import '../../../styles.scss';
+.modal-base {
+  padding: 20px;
+  padding-top: 70px;
+  border-radius: 20px;
+  background-color: $neutral-600;
+  color: $neutral-100;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  .titulo {
+    font-weight: 400;
+    margin-bottom: 20px;
+    text-align: center;
+
+  }
+  .divider-titulo{
+    border-top-color: $primary-300;
+  }
+  .cuerpo{
+    width: 500px;
+
+  }
+  
+}
+::-webkit-scrollbar {
+    width: 8px; /* Ancho para scroll vertical */
+    }
+::-webkit-scrollbar-track {
+    background: $primary-900;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: $neutral-500;
+  border-radius: 10px;
+}

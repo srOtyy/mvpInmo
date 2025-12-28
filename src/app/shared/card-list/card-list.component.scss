@@ -5,14 +5,17 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    max-height: 70vh;
-    overflow-y: auto;
-    padding-top: 15px;
+    max-height: 65vh;
+    padding-top: 25px;
     width: 95%;
     background-color: $neutral-800;
-    margin: 20px;
+    margin: 10px;
     border-radius: 15px;
     color: $primary-500;
+    .lista{
+        overflow-y: auto;
+
+    }
 }
 ::-webkit-scrollbar {
     width: 8px; /* Ancho para scroll vertical */
@@ -24,4 +27,10 @@
 ::-webkit-scrollbar-thumb {
   background: $neutral-500;
   border-radius: 10px;
+  transition: background-color 0.25s ease;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: $neutral-300;
+
+}
+

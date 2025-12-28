@@ -1,0 +1,16 @@
+<div class="modal-base">
+    <h3 mat-dialog-tittle class="titulo">
+        {{data.titulo}}
+    </h3>
+    <mat-divider class="divider-titulo"></mat-divider>
+    <mat-dialog-content class="cuerpo">
+        <ng-container
+            *ngComponentOutlet="data.componente; 
+            inputs: data.componenteData">
+        </ng-container>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close (click)="cerrar()" cdkFocusInitial>Cerrar</button>
+    </mat-dialog-actions>
+</div>

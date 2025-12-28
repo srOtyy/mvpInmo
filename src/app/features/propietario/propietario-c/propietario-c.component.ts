@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { IPropietario } from '../propietario.interface';
-import { PropietarioSService } from '../propietario-s.service';
+
 
 import { MatButton } from "@angular/material/button";
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
 import { ItemPropietarioComponent } from '../item-propietario/item-propietario.component';
+import { PropietarioRxjsService } from '../propietario-rxjs.service';
 @Component({
   selector: 'app-propietario-c',
   standalone: true,
@@ -16,8 +17,10 @@ export class PropietarioCComponent {
   propietario!: IPropietario;
   listaPropietarios: IPropietario[] = [];
 
-  constructor( private _propietarioService: PropietarioSService) {
-    this.actualizarListaPropietarios()
+  constructor( private _propietariosRxJsService: PropietarioRxjsService) {
+    this._propietariosRxJsService.lsitaPropietarios$.subscribe( propietarios => {
+      this.listaPropietarios = propietarios;
+    });
   }
 
   crearPropietario(){
@@ -29,12 +32,10 @@ export class PropietarioCComponent {
       email: 'oty@oty',
       cbu: '1234567890123456789012'
     }
-    this._propietarioService.agregarNuevoPropietario(this.propietario);
-    this.actualizarListaPropietarios()
+    this._propietariosRxJsService.agregarPropietario(this.propietario);
+   
   }
-  actualizarListaPropietarios(){
-    this.listaPropietarios = this._propietarioService.obtenerListaPropietarios();
-  }
+  
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;
   }
