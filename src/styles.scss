@@ -60,4 +60,17 @@ body{
     box-sizing: border-box;
     font-family: sans-serif;
 }
+.snackbar-color{
+    .mdc-snackbar__surface {
+    background-color: $neutral-800 !important;
+  }
+  
+  .mdc-snackbar__label {
+    color: $primary-200 ;
+  }
+
+  .mdc-snackbar__actions .mdc-button {
+    color: $secondary-300  !important;
+  }
+}
 html, body { height: 100%; }

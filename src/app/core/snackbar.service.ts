@@ -6,6 +6,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class SnackbarService {
   private _snackBar = inject(MatSnackBar);
   mensajeSnackBar(mensaje: string, accion: string) {
-    this._snackBar.open(mensaje, accion);
+    this._snackBar.open(mensaje, accion,{
+      panelClass: ['snackbar-color']
+    });
   }
 }
