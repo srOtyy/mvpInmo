@@ -5,7 +5,7 @@ import { FormularioPropietarioComponent } from './features/propietario/formulari
 
 export const routes: Routes = [
     // {path: '', redirectTo: '', pathMatch: 'full', component: },
-    {path: 'inquilino', component:InquilinoCComponent},
-    {path: 'propietario', component: PropietarioCComponent},
-    {path: 'formulario/propietario', component: FormularioPropietarioComponent}
+    {path: 'inquilinos', component:InquilinoCComponent},
+    {path: 'propietarios/lista', component: PropietarioCComponent},
+    {path: 'propietarios/crear', component: FormularioPropietarioComponent}
 ];

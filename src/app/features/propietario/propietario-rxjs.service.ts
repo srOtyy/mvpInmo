@@ -11,14 +11,8 @@ export class PropietarioRxjsService {
   lsitaPropietarios$ : Observable<IPropietario[]> = this.listaPropietariosSubject.asObservable();
   constructor() { }
 
-  //getter and setter
-  obtenerListaPropietarios(): IPropietario[]{
-    return this.listaPropietariosSubject.getValue();
-  }
-  establecerListaPropietarios( nuevaLista: IPropietario[] ){
-    this.listaPropietariosSubject.next( nuevaLista );
-  }
-  
+
+
   //crud
   agregarPropietario( propietario: IPropietario ){
     const listaActual = this.listaPropietariosSubject.getValue();
