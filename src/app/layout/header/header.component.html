@@ -1,4 +1,7 @@
 
-<div class="div">
-    <h4>Otyy</h4>
+<div class="lista-botones">
+    @for (boton of listaBotones; track boton.nombre){
+        <button class="boton" 
+        mat-button [routerLink]="boton.ruta">{{ boton.nombre }}</button>
+    }
 </div>

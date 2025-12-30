@@ -41,26 +41,24 @@ La aplicación se organiza por **features**, donde cada entidad concentra:
 * Cada entidad gestiona su estado mediante **servicios RxJS**
 * Uso de `BehaviorSubject` + `Observable`
 * Los métodos del servicio funcionan como acciones (create / update / delete)
-* Pendiente de revisión: getters/setters no utilizados en el servicio de propietarios
 
 ---
 
 ## 🧱 Estado actual del proyecto
 
-* Servicio de **Snackbar** incorporado en `core` para:
-
-  * feedback al usuario
-  * reemplazar el uso de consola como canal principal
+* Se creó un servicio en el `core` para el **header**, la idea es que el header renderice ciertos botones segun la ruta o componente en el q estemos
+Tengo la duda de si desde el .ts puedo acceder a la ruta para poder ahorrar en rutas
+La idea es que el header acceda a la ruta en la que estamos y obtenga como variable la ruta. Asi los botones pueden hacer un routerLink asi: {{rutaActual}}/crear 
+Esto evita tener q crear 2 array de botones, y solo crear uno generico que despliegue los demas componentes para con cada entidad 
 
 * CRUD de **Propietarios** funcional (pendiente de validación final)
 
-* Inconsistencias detectadas en rutas (listas vs formularios)
 
 ---
 
 ## 🔜 Próximos pasos
 
-* Unificar rutas por entidad de forma coherente
+* Implementar utilidad al **header**
 * Implementar CRUD de **Inmuebles** reutilizando el patrón de Propietarios
 * Depurar UI
 * Detectar y extraer componentes repetidos a `shared`

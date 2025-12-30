@@ -1,7 +1,13 @@
 @import '../../../styles.scss';
 
-h4{
-    padding: 10px;
-    font-size: 30px;
-    color: $primary-500;
+.lista-botones {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    justify-content: start;
+    height: 100%;
+    .boton{
+        width: 150px;
+    }
 }
