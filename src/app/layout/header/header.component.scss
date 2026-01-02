@@ -1,6 +1,7 @@
 @import '../../../styles.scss';
 
 .lista-botones {
+    margin-left: 10px;
     display: flex;
     flex-direction: row;
     gap: 15px;
@@ -9,5 +10,12 @@
     height: 100%;
     .boton{
         width: 150px;
+        border-bottom: 1px solid $primary-500;
+        border-radius: 0;
+        transition: all 0.3s ease;
+    }
+    .boton:hover{
+        color: $neutral-50;
+        border-bottom-color: $neutral-50;
     }
 }

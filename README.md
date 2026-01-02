@@ -59,7 +59,7 @@ Esto evita tener q crear 2 array de botones, y solo crear uno generico que despl
 ## 🔜 Próximos pasos
 
 * Implementar utilidad al **header**
-* Implementar CRUD de **Inmuebles** reutilizando el patrón de Propietarios
+* Implementar CRUD de **Inmuebles** o **inquilinos** reutilizando el patrón de Propietarios
 * Depurar UI
 * Detectar y extraer componentes repetidos a `shared`
 
