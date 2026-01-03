@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IPropietario } from '../propietario.interface';
-
-
 import { MatButton } from "@angular/material/button";
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
 import { ItemPropietarioComponent } from '../item-propietario/item-propietario.component';
@@ -13,6 +11,7 @@ import { PropietarioRxjsService } from '../propietario-rxjs.service';
   templateUrl: './propietario-c.component.html',
   styleUrl: './propietario-c.component.scss'
 })
+
 export class PropietarioCComponent {
   propietario!: IPropietario;
   listaPropietarios: IPropietario[] = [];
