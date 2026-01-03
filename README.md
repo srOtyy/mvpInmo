@@ -4,6 +4,13 @@
 - Falta agregar: modales del CRUD y formulario
 - Opcional = Utilizar los botones del header de forma dinamica ( solicitar al url la ruta utilizada)
 
+--- 
+
+## Próxima versión (prevista)
+v0.3 ...
+
+---
+
 ## Antiguas versiones
 
 ### v0.1 – Propietarios
@@ -16,5 +23,3 @@ En esta versión se implementó el CRUD básico de la entidad Propietario, inclu
 Esta versión estableció el patrón base para el resto de las entidades del sistema.
 
 ---
-## Próxima versión (prevista)
-
