@@ -1,0 +1,20 @@
+@import '../../../../../styles.scss';
+.mensaje{
+    text-align: center;
+    height: 150px;
+    padding-bottom: 0;
+    .mensaje-principal{
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .sub-mensaje{
+        font-size: 14px;
+        color: $neutral-400;
+    }
+    .button{
+        margin-top: 15px;
+        width: 250px;
+        color: $error;
+    }
+}

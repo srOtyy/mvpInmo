@@ -1,4 +1,4 @@
-import { Component, Input,  } from '@angular/core';
+import { Component, Input, OnInit,  } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IPropietario } from '../../propietario.interface';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -15,7 +15,7 @@ import { SnackbarService } from '../../../../core/snackbar.service';
   templateUrl: './editar-propietario.component.html',
   styleUrl: './editar-propietario.component.scss'
 })
-export class EditarPropietarioComponent {
+export class EditarPropietarioComponent implements OnInit{
   //Setear los datos del propietario en el formulario fuera del constructor ya que los datos vienen por input (MAT_DIALOG_DATA)
 
   @Input() propietario!: IPropietario;
