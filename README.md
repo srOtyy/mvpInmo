@@ -4,7 +4,7 @@
 - Falta agregar: modales del CRUD y formulario
 - Opcional = Utilizar los botones del header de forma dinamica ( solicitar al url la ruta utilizada)
 - se esta repitiendo parte de los archivos de modal ( como en la entidad propietarios)
-- Hay un error en el formulario del modal de editar inquilino, la propiedad _ingresos_ 
+
 --- 
 
 ## Próxima versión (prevista)

@@ -30,7 +30,7 @@ export class EditarInquilinoComponent implements OnInit{
       garante: new FormControl('', [Validators.required]),
       ingresos: new FormControl('', [Validators.required]),
     });
-    console.log(this.inquilino);
+    
   }
  
   ngOnInit(){
@@ -44,6 +44,7 @@ export class EditarInquilinoComponent implements OnInit{
       telefono: inquilinoData.telefono,
       email: inquilinoData.email,
       garante: inquilinoData.garante,
+      ingresos: inquilinoData.ingresos,
     });
   }
 
