@@ -1,0 +1,27 @@
+@import '../../../../styles.scss';
+.contenedor-formulario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    height: 100%;
+    width: 80%;
+    background-color: $neutral-800;
+    margin: 20px;
+    border-radius: 15px;
+    h4{
+        padding-left:50px ;
+        padding-bottom: 20px;
+        color: $primary-500;
+    }
+    .formulario{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; 
+        gap: 20px;
+        padding-left: 30px;  
+      
+    }
+    .abril{
+        background-color: pink;
+    }
+}

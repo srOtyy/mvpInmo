@@ -1,7 +1,6 @@
-
 <div class="lista-botones">
-    @for (boton of listaBotones; track boton.nombre){
-        <button class="boton" 
-        mat-button [routerLink]="boton.ruta">{{ boton.nombre }}</button>
-    }
+    @for (boton of botones; track $index) {
+    <button mat-button [routerLink]="boton.ruta" class="boton">{{boton.nombre}}</button>
+}
+
 </div>

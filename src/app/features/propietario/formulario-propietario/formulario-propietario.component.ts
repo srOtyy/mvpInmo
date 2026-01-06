@@ -33,7 +33,6 @@ export class FormularioPropietarioComponent {
   enviarFormulario(){
     if(this.formularioPropietario.valid){
       this._propietariosRxJsService.agregarPropietario(this.formularioPropietario.value)
-      //aca deberia hacer un mensaje que diga "propietario creado con exito" con los snackbar de angular material
       this.formularioPropietario.reset()
       this._snackbarService.mensajeSnackBar('Propietario creado con éxito', 'Cerrar');
     }
