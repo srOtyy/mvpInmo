@@ -23,7 +23,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Ingresos</mat-label>
-            <textarea matInput formControlName="ingresos"></textarea>
+            <input matInput formControlName="ingresos">
         </mat-form-field>
         <button mat-flat-button ="submit" (click)="enviarFormulario()" [disabled]="formularioInquilino.invalid">
             Crear</button>

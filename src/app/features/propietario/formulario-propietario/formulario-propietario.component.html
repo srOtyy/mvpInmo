@@ -1,10 +1,6 @@
 <div class="contenedor-formulario">
     <h4>Propietario</h4>    
     <form class="formulario" [formGroup]="formularioPropietario">
-        <mat-form-field appearance="fill">
-            <mat-label>id</mat-label>
-            <input matInput formControlName="id">
-        </mat-form-field>
          <mat-form-field appearance="fill">
             <mat-label>Nombre</mat-label>
             <input matInput formControlName="nombre">
@@ -25,6 +21,7 @@
             <mat-label>Cbu</mat-label>
             <input matInput formControlName="cbu">
         </mat-form-field>
+        <span></span>
         <button mat-flat-button ="submit" (click)="enviarFormulario()" [disabled]="formularioPropietario.invalid">
             Crear</button>
     </form>

@@ -17,10 +17,12 @@ import { MatInputModule } from '@angular/material/input';
 export class FormularioInquilinoComponent {
   formularioInquilino: FormGroup
   nuevoInquilino!: InquilinoCComponent
+  idRnd = Math.floor(Math.random() * 1000)
+
 
   constructor(private formBuilder: FormBuilder, private _inquilinosRxJsService: InquilinoRxjsService, private _snackbarService: SnackbarService){
     this.formularioInquilino = this.formBuilder.group({
-      id: new FormControl('',[Validators.required]),
+      id: new FormControl(this.idRnd,[Validators.required]),
       nombre: new FormControl('',[Validators.required]),
       dni: new FormControl('',[Validators.required]),
       telefono: new FormControl('',[Validators.required]),

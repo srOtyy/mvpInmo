@@ -1,16 +1,16 @@
 ## v0.2 - Inquilinos
-- Replicar lógica de modelo de UI y RxJs como en propietarios
+- Se creó un CRUD para inquilinos ( modals + formularios / RxJs)
 - Pareciera que item-propietario repite lo mismo que item-inquilino, solo que los modales recibirian diferentes componentes
-- Falta agregar: modales del CRUD y formulario
-- Opcional = Utilizar los botones del header de forma dinamica ( solicitar al url la ruta utilizada)
-- se esta repitiendo parte de los archivos de modal ( como en la entidad propietarios)
+- se esta repitiendo parte de los archivos de modal ( como en la entidad propietarios )
 
 --- 
 
 ## Próxima versión (prevista)
-v0.3 ...
+v0.3 Service para rutas dinamicas
 
 ---
+## Comandos ayuda
+- git push origin --tags ( commitea los  tags)
 
 ## Antiguas versiones
 
