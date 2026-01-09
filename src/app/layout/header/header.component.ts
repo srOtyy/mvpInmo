@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink, NavigationEnd } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
-import { filter } from 'rxjs/operators';
+import { RutasDinamicasService } from '../../core/rutas-dinamicas.service';
+import { IBotonRuta } from '../../core/navegacionRutas';
 
 @Component({
   selector: 'app-header',
@@ -11,25 +12,15 @@ import { filter } from 'rxjs/operators';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  botones: IBotonRuta[] = []
 
-  entidad!: string;
 
-  constructor(private router: Router) {}
+  constructor(private _serviceRutas: RutasDinamicasService) {
+    this._serviceRutas.arrayBotones$.subscribe((botones) => {
+      this.botones = botones; 
+    })
 
-  ngOnInit() {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.entidad = this.router.url.split('/')[1];
-      });
+    
   }
 
-  get botones() {
-    if (!this.entidad) return [];
-
-    return [
-      { nombre: 'lista', ruta: ['/', this.entidad, 'lista'] },
-      { nombre: 'crear', ruta: ['/', this.entidad, 'crear'] }
-    ];
-  }
 }
