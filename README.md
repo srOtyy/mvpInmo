@@ -1,64 +1,45 @@
-## v0.3 – Service controlador de rutas
 
-### Objetivo
-Implementar un service que permita al Header renderizar acciones dinámicas (botones) en función del dominio activo en el que se encuentra el usuario.
+# MVP Inmobiliaria
 
-Este enfoque introduce una capa de contexto de navegación, separando la lógica de UI del conocimiento directo de rutas.
+    1. Visión del proyecto
 
-### Alcance incluido
-- El service obtiene el dominio actual a través de Router
+    Este proyecto es un gestor inmobiliario desarrollado en Angular, pensado con un enfoque evolutivo.
 
-- Se creó el archivo `navegacionRutas.ts`, que contiene:
-    * La interfaz IBotonRuta
-    * El union type que define los dominios válidos del sistema
+    La idea central es que el sistema no sea cerrado ni rígido, sino que pueda expandirse en función de las necesidades reales del usuario (la persona que gestiona la inmobiliaria).
+    Nuevas herramientas, automatizaciones o flujos pueden incorporarse a medida que surgen nuevas demandas, manteniendo al sistema vivo y adaptable.
 
-### Observaciones técnicas
+    Stack actual:
+        * Angular 18.2.21
+        * npm 11.7.0
+        * Angular Material 18
+        
+## ¿Qué problema intenta resolver?
 
-- El HeaderComponent consume el service como suscriptor principal
+    Las inmobiliarias suelen realizar una gran cantidad de tareas repetitivas y manuales, tales como:
 
-- El service se convierte en un punto de alta influencia arquitectónica, al centralizar:
-    * Qué acciones existen
-    * En qué dominio están habilitadas
+        * registro de propietarios, inmuebles e inquilinos
 
-- Se introducen dos herramientas clave del tipado en TypeScript:
-    * Union type
-    * Record<K,V>
->Nota: 
->  - Union Type:  type Dominio = 'valor1' | 'valor2' | ...
->    La variable solo puede tomar uno de los valores declarados.
->  - Record<K,V>: las claves son de tipo K y los valores son de tipo V unicamente   
-### Decisiones
+        * gestión de datos de potenciales compradores
 
-- Los dominios se declaran exclusivamente en `navegacionRutas.ts` mediante union type
-- Las acciones por dominio se definen dentro del service (accionesPorDominio)
-- Se utiliza Record<Dominio, IBotonRuta[]>
-- Ubicación actual de archivos:
-    ./core/navegacionRutas.ts
-    ./core/rutas-dinamicas.service.ts
->Nota:
->En la próxima jornada se evaluará crear ./core/navegacion/ para agrupar estos archivos y reducir ruido dentro de core.
-## Próxima versión (prevista)
-### v0.4...
+        * seguimiento de contratos vigentes
 
+        * recordatorios de vencimientos y eventos importantes
+    Este proyecto busca reducir la carga operativa y cognitiva, centralizando la información y automatizando alertas y procesos recurrentes.
 
-## Versiones anteriores
-### v0.1 – Propietarios
-    En esta versión se implementó el CRUD básico de la entidad Propietario, incluyendo:
-        Modelo y servicio
-        Gestión de estado mediante RxJS
-        UI mínima funcional para creación, edición y listado
-        Esta versión estableció el patrón base para el resto de las entidades del sistema.
-### v0.2 - Inquilinos
-    En esta version se impemento el CURD basico de Inquilino, incluye :
-        Modelo (interfaz) y serivicio
-        Gestion de estadio mediante RxJs ( El array)
-        UI Aceptable para el uso del CRUD
-        Esta versopm establecio la segunda entidad importante del sistema.
-        ### Observaciones técnicas
+## ¿Cómo está pensado el sistema hoy?
 
-    Observaciones endeudadas:
-        - `item-propietario` y `item-inquilino` comparten estructura
-        - Los modales base se repiten entre entidades
-        - Se detecta posible abstracción futura (no abordada en esta versión)
+## ¿Cuáles son sus piezas principales?
 
+   Actualmente, el dominio del sistema contempla cuatro entidades principales:
+        *Propietarios
+        * Inmuebles
+        *Inquilinos
+        * Contratos
+    Relación general del dominio:
+        *Un Propietario puede tener uno o más Inmuebles
+        * Un Contrato se genera a partir de la relación entre:
+        *un Inquilino
+        * un Inmueble
+    El Contrato actúa como nexo entre las entidades y da contexto temporal y legal a la relación
 
+## Limites actuales del MVP

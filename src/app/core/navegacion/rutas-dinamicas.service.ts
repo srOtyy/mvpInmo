@@ -1,8 +1,4 @@
 
-//2 Traducir ese segmento a un array de botones ( Hacerlo un observable)
-
-//3 Emitir ese array al header
-
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { BehaviorSubject, filter, Observable } from 'rxjs';
