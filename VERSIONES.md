@@ -1,49 +1,16 @@
-# v0.3 – Service controlador de rutas
+# v0.4 - Dominio 'Contratos'
 
 ## Objetivo
 
-    Implementar un service que permita al Header renderizar acciones dinámicas (botones) en función del dominio activo en el que se encuentra el usuario.
-
-Este enfoque introduce una capa de contexto de navegación, separando la lógica de UI del conocimiento directo de rutas.
-
 ## Alcance incluido
-
-- El service obtiene el dominio actual a través de Router
-
-- Se creó el archivo `navegacionRutas.ts`, que contiene:
-  - La interfaz IBotonRuta
-  - El union type que define los dominios válidos del sistema
 
 ### Observaciones técnicas
 
-- El HeaderComponent consume el service como suscriptor principal
-
-- El service se convierte en un punto de alta influencia arquitectónica, al centralizar:
-  - Qué acciones existen
-  - En qué dominio están habilitadas
-
-- Se introducen dos herramientas clave del tipado en TypeScript:
-  - Union type
-  - Record<K,V>
-
->Nota:
->
-> - Union Type:  type Dominio = 'valor1' | 'valor2' | ...
->    La variable solo puede tomar uno de los valores declarados.
-> - Record<K,V>: las claves son de tipo K y los valores son de tipo V unicamente
->
 ### Decisiones
-
-- Los dominios se declaran exclusivamente en `navegacionRutas.ts` mediante union type
-- Las acciones por dominio se definen dentro del service (accionesPorDominio)
-- Se utiliza Record<Dominio, IBotonRuta[]>
-- Ubicación actual de archivos:
-    ./core/navegacion/navegacionRutas.ts
-    ./core/navegacion/rutas-dinamicas.service.ts
 
 ## Próxima versión (prevista)
 
-### v0.4
+### v0.5
 
 ## Versiones anteriores
 
@@ -66,3 +33,14 @@ Este enfoque introduce una capa de contexto de navegación, separando la lógica
     Observaciones endeudadas:
         - `item-propietario` y `item-inquilino` comparten estructura
         - Los modales base se repiten entre entidades
+
+### v0.3 - Service rutas dinamicas
+
+    En esta version se creó un service que crea botones en el header, los botones indican las rutas del dominio donde se encuentra el usuario ( los dominios que hay en el sidebar).
+    Se permite agregar nuevas rutas dentro de los archivos indicados
+        - Se creó el archivo `navegacionRutas.ts`, que contiene:
+        - La interfaz IBotonRuta
+        - El union type que define los dominios válidos del sistema
+    
+    Obsevaciones:
+        Se utilizan herramientas nuevas cono record y union type
