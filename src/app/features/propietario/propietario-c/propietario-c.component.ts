@@ -17,7 +17,7 @@ export class PropietarioCComponent {
   listaPropietarios: IPropietario[] = [];
 
   constructor( private _propietariosRxJsService: PropietarioRxjsService) {
-    this._propietariosRxJsService.lsitaPropietarios$.subscribe( propietarios => {
+    this._propietariosRxJsService.listaPropietarios$.subscribe( propietarios => {
       this.listaPropietarios = propietarios;
     });
   }

@@ -8,7 +8,7 @@ export class PropietarioRxjsService {
   // estado interno
   private listaPropietariosSubject = new BehaviorSubject<IPropietario[]>([]);
   // estado externo ( lectura )
-  lsitaPropietarios$ : Observable<IPropietario[]> = this.listaPropietariosSubject.asObservable();
+  listaPropietarios$ : Observable<IPropietario[]> = this.listaPropietariosSubject.asObservable();
   constructor() { }
 
 

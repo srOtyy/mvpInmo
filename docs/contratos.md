@@ -1,4 +1,4 @@
-# Dominio: Contratos
+# Contratos
 
 ## 1. Propósito
 
@@ -29,7 +29,7 @@
 
 ### Fin
 
-    Cuando llegue la fecha pactada en el inicio del contrato
+    Cuando llegue la fecha pactada en el inicio del contrato y se hayan tomado las 3 firmas legales
 
 ## 5. Estados del contrato
 
