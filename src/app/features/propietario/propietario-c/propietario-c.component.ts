@@ -22,6 +22,7 @@ export class PropietarioCComponent {
     });
   }
 
+  // este crea el propietario de prueba
   crearPropietario(){
     this.propietario = {
       id: this.randomId(),
@@ -29,7 +30,8 @@ export class PropietarioCComponent {
       dni: 12345678,
       telefono: 1234567890,
       email: 'oty@oty',
-      cbu: '1234567890123456789012'
+      cbu: '1234567890123456789012',
+      inmuebles: ['123','456','789']
     }
     this._propietariosRxJsService.agregarPropietario(this.propietario);
    

@@ -28,6 +28,7 @@ export class FormularioPropietarioComponent {
       telefono: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       cbu: new FormControl('', [Validators.required]),
+      inmuebles: new FormControl([], [])  
     })
   }
 
