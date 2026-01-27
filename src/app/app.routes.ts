@@ -3,6 +3,7 @@ import { InquilinoCComponent } from './features/inquilino/inquilino-c/inquilino-
 import { PropietarioCComponent } from './features/propietario/propietario-c/propietario-c.component';
 import { FormularioPropietarioComponent } from './features/propietario/formulario-propietario/formulario-propietario.component';
 import { FormularioInquilinoComponent } from './features/inquilino/formulario-inquilino/formulario-inquilino.component';
+import { FormularioCreacionComponent } from './features/inmueble/formulario-creacion/formulario-creacion.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,12 @@ export const routes: Routes = [
     children: [
       { path: 'lista', component: InquilinoCComponent },
       { path: 'crear', component: FormularioInquilinoComponent }
+    ]
+  },
+  {
+    path: 'inmuebles',
+    children: [
+      { path: 'crear', component: FormularioCreacionComponent}
     ]
   }
 ];

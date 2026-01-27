@@ -1,16 +1,26 @@
-# v0.4 - Dominio 'Contratos'
+# v0.5 - Inmuebles
 
 ## Objetivo
 
 ## Alcance incluido
 
+    Se creó un formulario de creacion de caracteristicas para el inmueble
+    Se creo un componente 'item' para renderizarlo dentro de card-list ( igual no funciona)
+
 ### Observaciones técnicas
+
+    -Pareciera que el card-list no esta cumpliendo con la idea de mostrar la lista de caracteristicas 
+    -El formulario solo crea caracteristicas del inmueble, no inmuebles. La creacion del inmueble tiene q derivarse desde el propietario o puede hacerse desde una ruta aparte
+    -El card-list destruye el layout ya que no entra en el main ( tal vez hay que arreglar esto primero)
+    - La creacion de un inmueble no requiere mucho ya que el id es generado automaticamente, el idPropietario se asigna internamente y las caracteristicas se crean desde el formulario de caracteristicas. Tal vez la "creacion del inmueble" sea darles valor a las caracteristicas definidas previamente en el formulario de caracteristicas
 
 ### Decisiones
 
-## Próxima versión (prevista)
+    - el sidebar del layout esta siendo hardoceado por cada entidad en lugar de crear los botones dinamicamente. Hay que implementar una version dinamica del hardcodeo
+    - Entender el comportamiento de card-list para con item-caracteristica. La idea de mostrar las caracteristicas creadas es clave. ( no esta funcionando)
+    - Por el momento el formulari solo crea caracteristicas; no inmuebles
 
-### v0.5
+## Próxima versión (prevista)
 
 ## Versiones anteriores
 
@@ -44,3 +54,5 @@
     
     Obsevaciones:
         Se utilizan herramientas nuevas cono record y union type
+
+#### vo.4 - Dominio 'Contratos'

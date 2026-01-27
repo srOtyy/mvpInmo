@@ -1,10 +1,14 @@
 export interface IInmueble{
-    id: number,
-    direccion: string,
-    tipo: string,
-    metros: number,
-    ambientes: number,
+    id: number
     propietarioId: number,
-    estado: string,
-
+    caracterisiticas: caracterisitcasInmueble[]
+}
+export interface caracterisitcasInmueble{
+    clave: string,
+    valor: any
+}
+export interface definicionCaracteristicaInmueble{
+    clave: string,
+    tipo: 'string' | 'number' | 'boolean',
+    requerido: boolean
 }

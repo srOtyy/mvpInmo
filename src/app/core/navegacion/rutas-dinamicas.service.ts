@@ -21,6 +21,9 @@ export class RutasDinamicasService {
       { nombre: 'lista', ruta: ['/inquilinos', 'lista'] },
       { nombre: 'crear', ruta: ['/inquilinos', 'crear'] },
       {nombre : 'crear contrato', ruta: ['/inquilinos', 'crear-contrato']}
+    ],
+    inmuebles: [
+      { nombre: 'crear', ruta: ['/inmuebles', 'crear'] }
     ]
   };
 
