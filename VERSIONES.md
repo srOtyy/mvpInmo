@@ -10,17 +10,19 @@
 ### Observaciones técnicas
 
     -Pareciera que el card-list no esta cumpliendo con la idea de mostrar la lista de caracteristicas 
-    -El formulario solo crea caracteristicas del inmueble, no inmuebles. La creacion del inmueble tiene q derivarse desde el propietario o puede hacerse desde una ruta aparte
-    -El card-list destruye el layout ya que no entra en el main ( tal vez hay que arreglar esto primero)
-    - La creacion de un inmueble no requiere mucho ya que el id es generado automaticamente, el idPropietario se asigna internamente y las caracteristicas se crean desde el formulario de caracteristicas. Tal vez la "creacion del inmueble" sea darles valor a las caracteristicas definidas previamente en el formulario de caracteristicas
+    -El card-list destruye el layout ya que no entra en el main ( v0.6)
+    - el sidebar del layout esta siendo hardoceado por cada entidad en lugar de crear los botones dinamicamente. Hay que implementar una version dinamica del hardcodeo (v0.6 )
 
 ### Decisiones
 
-    - el sidebar del layout esta siendo hardoceado por cada entidad en lugar de crear los botones dinamicamente. Hay que implementar una version dinamica del hardcodeo
-    - Entender el comportamiento de card-list para con item-caracteristica. La idea de mostrar las caracteristicas creadas es clave. ( no esta funcionando)
-    - Por el momento el formulari solo crea caracteristicas; no inmuebles
+    - Por el momento el formulario solo crea caracteristicas; no inmuebles
+        La creacion de un inmueble no requiere mucho ya que el id es generado automaticamente, el idPropietario se asigna internamente y las caracteristicas se crean desde el formulario de caracteristicas. Tal vez la "creacion del inmueble" sea darles valor a las caracteristicas definidas previamente en el formulario de caracteristicas
+    - No vamos a arreglar el Problema del Layout porque no corresponde a v0.5
 
-## Próxima versión (prevista)
+## Próxima versión (v0.6)
+
+1. Arreglar el Layout(  main ?)
+2. Debugear las vesiones anteriores, documentar lo necesario y armar los esquemas faltantes de cada entidad.
 
 ## Versiones anteriores
 
@@ -55,4 +57,12 @@
     Obsevaciones:
         Se utilizan herramientas nuevas cono record y union type
 
-#### vo.4 - Dominio 'Contratos'
+### v0.4 - Dominio 'Contratos'
+
+    aca iria lo que se trabajo en v0.4
+    En esta versión se crearon archivos markdown con mermeid
+
+    Observaciones técnicas:
+        - Se reutilizaron patrones establecidos en v0.1 y v0.2
+        - Se identificó duplicación de código en componentes `item-*`
+        - El sidebar continúa siendo hardcodeado para esta entidad

@@ -1,5 +1,7 @@
 <div class="contenedor-formulario">
-    <h4> Característica </h4>
+    <div class="izquierda">
+        <h4> Característica </h4>
+
     <form class="formulario" [formGroup]="formularioCaracteristicas">
         <mat-form-field appearance="fill">
             <mat-label>Clave</mat-label>
@@ -16,4 +18,14 @@
        <mat-checkbox formControlName="requerido">Requerido</mat-checkbox>
         <button mat-raised-button (click)="agregarCaracteristica()" type="submit" [disabled]="formularioCaracteristicas.invalid">Agregar</button>
     </form>
+    </div>
+    <div class="derecha">
+    <mat-list role="list" class="lista">
+        @for (caracteristica of listaCaracteristicas; track $index) {
+            <br>
+            <span class="item">{{caracteristica.clave}} - {{caracteristica.tipo}} - {{caracteristica.requerido}} </span>
+        }
+    </mat-list>
+
+    </div>
 </div>

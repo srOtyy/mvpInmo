@@ -8,13 +8,15 @@
   import { MatDividerModule } from '@angular/material/divider';
   import {MatSelectModule} from '@angular/material/select';
   import {MatCheckboxModule} from '@angular/material/checkbox';
+  import {MatListModule} from '@angular/material/list';
   import { ItemCaracteristicaComponent } from '../item-caracteristica/item-caracteristica.component';
   import { CardListComponent } from '../../../shared/card-list/card-list.component';
+import { InmueblesRxjsService } from '../inmuebles-rxjs.service';
 
   @Component({
     selector: 'app-formulario-creacion',
     standalone: true,
-    imports: [MatButton,ReactiveFormsModule,MatFormFieldModule,MatInputModule,MatDividerModule,MatSelectModule,MatCheckboxModule,CardListComponent, ItemCaracteristicaComponent],
+    imports: [MatButton,ReactiveFormsModule,MatFormFieldModule,MatInputModule,MatDividerModule,MatListModule,MatSelectModule,MatCheckboxModule],
     templateUrl: './formulario-creacion.component.html',
     styleUrl: './formulario-creacion.component.scss'
   })
@@ -27,7 +29,8 @@
     listaCaracteristicas: definicionCaracteristicaInmueble[] = []
 
     constructor(  private formBuilder: FormBuilder,
-      private _snackbarService: SnackbarService
+      private _snackbarService: SnackbarService,
+      private _inmuebleService: InmueblesRxjsService
     ){
       // this.formularioInmueble = this.formBuilder.group({
       //   id: new FormControl(this.idRnd, [Validators.required]),
@@ -37,11 +40,14 @@
       //   caracterisiticas: new FormControl([], [])  
 
       // })
+      this._inmuebleService.listaCaracteristicas$.subscribe(caracteristicas => {
+        this.listaCaracteristicas = caracteristicas;
+      });
       this.formularioCaracteristicas = this.formBuilder.group({
         clave: new FormControl('',Validators.required),
         // un mat-select con los 3 tipos
         tipo: new FormControl('',Validators.required),
-        requerido: new FormControl(false,Validators.requiredTrue)
+        requerido: new FormControl(false)
       })
     }  
     
