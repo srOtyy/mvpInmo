@@ -1,6 +1,10 @@
 <button mat-button (click)="crearPropietario()">Crear Propietario</button>
 <app-card-list entidad="Propietarios">
     @for(propietario of listaPropietarios; track propietario.id) {
-        <app-item-propietario [propietario]="propietario"></app-item-propietario>
+        <app-item-entidad [entidad]="propietario"
+        [titulo]="propietario.nombre"
+        (ver)="verPropietario($event)"
+        (editar)="editarPropietario($event)"
+        (eliminar)="eliminarPropietario($event)"></app-item-entidad>
     }
 </app-card-list>

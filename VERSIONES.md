@@ -1,28 +1,38 @@
-# v0.5 - Inmuebles
+# v0.6 - Debug
 
 ## Objetivo
 
+    Arreglar los pendientes de las versiones anteriores
+        * v0.1: 
+                - Chequear card-list: destruye el layout / el layout no se expande (LISTO)
+        * v0.2:
+                - `item-propietario` e `item-inquilino` comparten estructura
+                - Los modales base se repiten entre entidades
+        * v0.4:
+                - Se reutilizaron patrones establecidos en v0.1 y v0.2
+                - El sidebar continúa siendo hardcodeado para cada entidad
+        * v0.5: 
+                - Las entidades propietario e inquilino deberían tener el mismo sistema de atributos que tiene inmuebles ( un array editable para flexibilidad futura )
+        * documentacion:
+                Faltó agregar el dominio de inquilinos
+                Faltó agregar flujo de inmuebles y contratos
+
 ## Alcance incluido
 
-    Se creó un formulario de creacion de caracteristicas para el inmueble
-    Se creo un componente 'item' para renderizarlo dentro de card-list ( igual no funciona)
+    Item-propietario e item inquilino son un item dentro de card-list (shared) que recibe por input la entidad que va a abrir 3 modales: ver, editar y eliminar. Cada modal puede ver la entidad, editarla o eliminarla, segun corresponda.
+    Volver los modales shared sería lo más conveniente? Porque tambien repiten el mismo concepto en la lógica del proyecto (los shared solo consumen el servicio de rx-js donde se almacena el array que simula ser la base de datos. Pero cada entidad tiene su propio service de rx-js. Entonces serian como bases de datos separadas. Deberia hacer un service que almacene los arrays de cada service para simular la base de datos coomo un solo concepto y no como cada service x entidad ? v0.7 ? )
 
-### Observaciones técnicas
+    Podriamos evaluar la idea de modales-shared para una siguiente version (v0.7?) 
 
-    -Pareciera que el card-list no esta cumpliendo con la idea de mostrar la lista de caracteristicas 
-    -El card-list destruye el layout ya que no entra en el main ( v0.6)
-    - el sidebar del layout esta siendo hardoceado por cada entidad en lugar de crear los botones dinamicamente. Hay que implementar una version dinamica del hardcodeo (v0.6 )
+### Observaciones
+
+    v0.1:
+        app-component: al body se le agregó overflow-y scroll y se estilizo el scroll. ( No se como editar el ancho del scroll. Me gusta que el scroll del body sea mas grande que los demas componentes. Pero todos son iguales de ancho)
+        al card-list se le agregó padding
 
 ### Decisiones
 
-    - Por el momento el formulario solo crea caracteristicas; no inmuebles
-        La creacion de un inmueble no requiere mucho ya que el id es generado automaticamente, el idPropietario se asigna internamente y las caracteristicas se crean desde el formulario de caracteristicas. Tal vez la "creacion del inmueble" sea darles valor a las caracteristicas definidas previamente en el formulario de caracteristicas
-    - No vamos a arreglar el Problema del Layout porque no corresponde a v0.5
-
-## Próxima versión (v0.6)
-
-1. Arreglar el Layout(  main ?)
-2. Debugear las vesiones anteriores, documentar lo necesario y armar los esquemas faltantes de cada entidad.
+## Próxima versión
 
 ## Versiones anteriores
 
@@ -66,3 +76,12 @@
         - Se reutilizaron patrones establecidos en v0.1 y v0.2
         - Se identificó duplicación de código en componentes `item-*`
         - El sidebar continúa siendo hardcodeado para esta entidad
+
+### v0.5 Inmuebles
+
+    Se creó el formulario de caracteristicas que se van a solicitar a la hora de crear inmuebles 
+
+    Observacioens técnicas:
+        - el layout se rompe 
+        - NO se esta creando inmuebles ( solo el array de caracteristicas)
+        - se hardcodeo el sidebar

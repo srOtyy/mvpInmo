@@ -17,7 +17,7 @@ import { MatButton } from '@angular/material/button';
   styleUrl: './editar-inquilino.component.scss'
 })
 export class EditarInquilinoComponent implements OnInit{
- @Input() inquilino!: IInquilino;
+ @Input() entidad!: IInquilino;
  formularioEditarInquilino: FormGroup;
 
  constructor( private formBuilder: FormBuilder, private _inquilinoRxJsService: InquilinoRxjsService, private dialogRef: MatDialogRef<ModalComponent>,private _snackbarService: SnackbarService){
@@ -34,7 +34,7 @@ export class EditarInquilinoComponent implements OnInit{
   }
  
   ngOnInit(){
-    this.pasarDatosInquilino(this.inquilino);
+    this.pasarDatosInquilino(this.entidad);
   }
   pasarDatosInquilino(inquilinoData: IInquilino) {
     this.formularioEditarInquilino.setValue({

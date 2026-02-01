@@ -14,14 +14,14 @@ import { MatButton } from '@angular/material/button';
   styleUrl: './eliminar-inquilino.component.scss'
 })
 export class EliminarInquilinoComponent {
-  @Input() inquilino!: IInquilino;
+  @Input() entidad!: IInquilino;
   constructor(private _serviceRxJsInquilinos: InquilinoRxjsService,
     private dialogRef: MatDialogRef <ModalComponent>,
     private _snackbarService: SnackbarService
   ){}
 
   confimarEliminarInquilino(){
-    this._serviceRxJsInquilinos.eliminarInquilino(this.inquilino.id);
+    this._serviceRxJsInquilinos.eliminarInquilino(this.entidad.id);
     this._snackbarService.mensajeSnackBar('Inquilino eliminado con éxito', 'Cerrar');
     this.cerrarModal()
   }

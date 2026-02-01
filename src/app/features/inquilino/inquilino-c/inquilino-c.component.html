@@ -1,6 +1,11 @@
 <button mat-button (click)="crearInquilino()">Crear Inquilino</button>
 <app-card-list entidad="Inquilinos">
     @for(inquilino of listaInquilinos; track inquilino.id) {
-        <app-item-inquilino [inquilino]="inquilino"></app-item-inquilino>
+        <app-item-entidad [entidad]="inquilino"
+        [titulo]="inquilino.nombre"
+        (ver)="verInquilino($event)"
+        (editar)="editarInquilino($event)"
+        (eliminar)="eliminarInquilino($event)"
+        ></app-item-entidad>
     }
 </app-card-list>

@@ -10,5 +10,5 @@ import { MatDividerModule } from '@angular/material/divider';
   styleUrl: './ver-inquilino.component.scss'
 })
 export class VerInquilinoComponent {
-  @Input() inquilino!: IInquilino;
+  @Input() entidad!: IInquilino;
 }

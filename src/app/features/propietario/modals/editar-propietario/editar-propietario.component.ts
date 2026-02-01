@@ -18,7 +18,7 @@ import { SnackbarService } from '../../../../core/snackbar.service';
 export class EditarPropietarioComponent implements OnInit{
   //Setear los datos del propietario en el formulario fuera del constructor ya que los datos vienen por input (MAT_DIALOG_DATA)
 
-  @Input() propietario!: IPropietario;
+  @Input() entidad!: IPropietario;
   formularioEditarPropietario: FormGroup;
   
   constructor( private formBuilder: FormBuilder, private _propietarioRxJsService: PropietarioRxjsService, private dialogRef: MatDialogRef<ModalComponent>,private _snackbarService: SnackbarService){
@@ -33,7 +33,7 @@ export class EditarPropietarioComponent implements OnInit{
     });
   }
   ngOnInit() {
-    this.pasarDatosPropietario(this.propietario);
+    this.pasarDatosPropietario(this.entidad);
   }
   
   pasarDatosPropietario(propietarioData: IPropietario) {

@@ -10,6 +10,6 @@ import { MatDividerModule } from '@angular/material/divider';
   styleUrl: './ver-info-propietario.component.scss'
 })
 export class VerInfoPropietarioComponent {
-  @Input() propietario!: IPropietario;
+  @Input() entidad!: IPropietario;
 
 }

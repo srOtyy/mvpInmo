@@ -13,11 +13,11 @@ import { SnackbarService } from '../../../../core/snackbar.service';
   styleUrl: './eliminar-propietario.component.scss'
 })
 export class EliminarPropietarioComponent {
-  @Input() propietario!: IPropietario;
+  @Input() entidad!: IPropietario;
   constructor(private _serviceRxJsPropietarios: PropietarioRxjsService, private dialogRef: MatDialogRef <ModalComponent>, private _snackbarService: SnackbarService){}
 
   confirmarEliminarPropietario(){
-    this._serviceRxJsPropietarios.eliminarPropietario(this.propietario.id);
+    this._serviceRxJsPropietarios.eliminarPropietario(this.entidad.id);
     this._snackbarService.mensajeSnackBar('Propietario eliminado con éxito', 'Cerrar');
     this.cerrarModal()
   }
