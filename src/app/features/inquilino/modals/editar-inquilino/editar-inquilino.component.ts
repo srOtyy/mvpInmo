@@ -8,6 +8,7 @@ import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { construirCaracteristicasDesdeForm, obtenerCaracteristica } from '../../../../shared/entity-helpers';
 
 @Component({
   selector: 'app-editar-inquilino',
@@ -36,21 +37,33 @@ export class EditarInquilinoComponent implements OnInit{
   ngOnInit(){
     this.pasarDatosInquilino(this.entidad);
   }
+
   pasarDatosInquilino(inquilinoData: IInquilino) {
     this.formularioEditarInquilino.setValue({
       id: inquilinoData.id,
-      nombre: inquilinoData.nombre,
-      dni: inquilinoData.dni,
-      telefono: inquilinoData.telefono,
-      email: inquilinoData.email,
-      garante: inquilinoData.garante,
-      ingresos: inquilinoData.ingresos,
+      nombre: obtenerCaracteristica(inquilinoData, 'nombre'),
+      dni: obtenerCaracteristica(inquilinoData, 'dni'),
+      telefono: obtenerCaracteristica(inquilinoData, 'telefono'),
+      email: obtenerCaracteristica(inquilinoData, 'email'),
+      garante: obtenerCaracteristica(inquilinoData, 'garante'),
+      ingresos: obtenerCaracteristica(inquilinoData, 'ingresos'),
     });
   }
 
   guardarCambios() {  
-    this._inquilinoRxJsService.editarInquilino(this.formularioEditarInquilino.value)
-    this._snackbarService.mensajeSnackBar('Inquilino editado con éxito', 'Cerrar');
+    const inquilinoEditado: IInquilino = {
+      id: this.formularioEditarInquilino.get('id')?.value,
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInquilino, [
+        'nombre',
+        'dni',
+        'telefono',
+        'email',
+        'garante',
+        'ingresos'
+      ])
+    };
+    this._inquilinoRxJsService.editarInquilino(inquilinoEditado)
+    this._snackbarService.mensajeSnackBar('Inquilino editado con Ã©xito', 'Cerrar');
     this.dialogRef.close(true);
   }
 }

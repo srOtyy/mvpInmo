@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { IPropietario } from '../propietario.interface';
 import { MatButton } from "@angular/material/button";
 import { PropietarioRxjsService } from '../propietario-rxjs.service';
 import { SnackbarService } from '../../../core/snackbar.service';
+import { construirCaracteristicasDesdeForm } from '../../../shared/entity-helpers';
 @Component({
   selector: 'app-formulario-propietario',
   standalone: true,
@@ -28,13 +29,24 @@ export class FormularioPropietarioComponent {
       telefono: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       cbu: new FormControl('', [Validators.required]),
-      inmuebles: new FormControl([], [])  
+      inmuebles: new FormControl([], [])
     })
   }
 
   enviarFormulario(){
     if(this.formularioPropietario.valid){
-      this._propietariosRxJsService.agregarPropietario(this.formularioPropietario.value)
+      const propietario: IPropietario = {
+        id: this.formularioPropietario.get('id')?.value,
+        caracteristicas: construirCaracteristicasDesdeForm(this.formularioPropietario, [
+          'nombre',
+          'dni',
+          'telefono',
+          'email',
+          'cbu',
+          'inmuebles'
+        ])
+      };
+      this._propietariosRxJsService.agregarPropietario(propietario)
       this.formularioPropietario.reset()
       this._snackbarService.mensajeSnackBar('Propietario creado con éxito', 'Cerrar');
     }

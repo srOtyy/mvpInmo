@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { SnackbarService } from '../../../../core/snackbar.service';
 import { MatButton } from '@angular/material/button';
+import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
 
 @Component({
   selector: 'app-eliminar-inquilino',
@@ -20,9 +21,12 @@ export class EliminarInquilinoComponent {
     private _snackbarService: SnackbarService
   ){}
 
+  obtenerCaracteristica = (clave: string) =>
+    obtenerCaracteristica(this.entidad, clave);
+
   confimarEliminarInquilino(){
     this._serviceRxJsInquilinos.eliminarInquilino(this.entidad.id);
-    this._snackbarService.mensajeSnackBar('Inquilino eliminado con éxito', 'Cerrar');
+    this._snackbarService.mensajeSnackBar('Inquilino eliminado con Ã©xito', 'Cerrar');
     this.cerrarModal()
   }
   cerrarModal(){

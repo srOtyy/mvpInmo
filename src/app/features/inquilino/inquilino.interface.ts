@@ -1,10 +1,3 @@
-export interface IInquilino{
-    id: number,
-    nombre: string,
-    dni: number,
-    telefono: number,
-    email: string,
-    garante: string,
-    ingresos: number,
+import { IEntityBase } from '../../shared/entity-base.interface';
 
-}
+export interface IInquilino extends IEntityBase {}

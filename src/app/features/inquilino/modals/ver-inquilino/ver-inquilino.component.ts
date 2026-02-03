@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IInquilino } from '../../inquilino.interface';
 import { MatDividerModule } from '@angular/material/divider';
+import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
 
 @Component({
   selector: 'app-ver-inquilino',
@@ -11,4 +12,6 @@ import { MatDividerModule } from '@angular/material/divider';
 })
 export class VerInquilinoComponent {
   @Input() entidad!: IInquilino;
+  obtenerCaracteristica = (clave: string) =>
+    obtenerCaracteristica(this.entidad, clave);
 }

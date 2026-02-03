@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IInquilino } from '../inquilino.interface';
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
-import { ItemInquilinoComponent } from '../item-inquilino/item-inquilino.component';
 import { InquilinoRxjsService } from '../inquilino-rxjs.service';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,14 +8,13 @@ import { EditarInquilinoComponent } from '../modals/editar-inquilino/editar-inqu
 import { VerInquilinoComponent } from '../modals/ver-inquilino/ver-inquilino.component';
 import { EliminarInquilinoComponent } from '../modals/eliminar-inquilino/eliminar-inquilino.component';
 import { ModalComponent } from '../../../shared/modal/modal.component';
-import { EditarPropietarioComponent } from '../../propietario/modals/editar-propietario/editar-propietario.component';
-import { IPropietario } from '../../propietario/propietario.interface';
 import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.component';
+import { obtenerCaracteristica } from '../../../shared/entity-helpers';
 
 @Component({
   selector: 'app-inquilino-c',
   standalone: true,
-  imports: [CardListComponent,ItemInquilinoComponent, MatButton, ItemEntidadComponent],
+  imports: [CardListComponent, MatButton, ItemEntidadComponent],
   templateUrl: './inquilino-c.component.html',
   styleUrl: './inquilino-c.component.scss'
 })
@@ -24,6 +22,7 @@ import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.
 export class InquilinoCComponent {
   inquilino!: IInquilino;
   listaInquilinos: IInquilino[] = [];
+  obtenerCaracteristica = obtenerCaracteristica;
 
   constructor( private _inquilinosService: InquilinoRxjsService , private dialog: MatDialog) {
     this._inquilinosService.listaInquilinos$.subscribe(inquilinos => {
@@ -34,18 +33,21 @@ export class InquilinoCComponent {
   crearInquilino(){
     this.inquilino = {
       id: this.randomId(),
-      nombre: 'Ana',
-      dni: 87654321,
-      telefono: 9876543210,
-      email: 'ana@ana',
-      garante: 'Garantia XYZ',
-      ingresos: 50000
+      caracteristicas: [
+        { clave: 'nombre', valor: 'Ana' },
+        { clave: 'dni', valor: 87654321 },
+        { clave: 'telefono', valor: 9876543210 },
+        { clave: 'email', valor: 'ana@ana' },
+        { clave: 'garante', valor: 'Garantia XYZ' },
+        { clave: 'ingresos', valor: 50000 }
+      ]
     }
     this._inquilinosService.agregarInquilino(this.inquilino);
   }
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;
   }
+
   verInquilino(inquilino: IInquilino){
       this.dialog.open(ModalComponent, {
         data: {

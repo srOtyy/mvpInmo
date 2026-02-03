@@ -1,14 +1,11 @@
-export interface IInmueble{
-    id: number
-    propietarioId: number,
-    caracterisiticas: caracterisitcasInmueble[]
-}
-export interface caracterisitcasInmueble{
-    clave: string,
-    valor: any
-}
-export interface definicionCaracteristicaInmueble{
-    clave: string,
-    tipo: 'string' | 'number' | 'boolean',
-    requerido: boolean
+import { CaracteristicaEntidad, IEntityBase } from '../../shared/entity-base.interface';
+
+export interface IInmueble extends IEntityBase {}
+
+export interface caracteristicasInmueble extends CaracteristicaEntidad {}
+
+export interface definicionCaracteristicaInmueble {
+  clave: string;
+  tipo: 'string' | 'number' | 'boolean';
+  requerido: boolean;
 }

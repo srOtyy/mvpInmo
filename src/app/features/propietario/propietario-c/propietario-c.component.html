@@ -2,7 +2,7 @@
 <app-card-list entidad="Propietarios">
     @for(propietario of listaPropietarios; track propietario.id) {
         <app-item-entidad [entidad]="propietario"
-        [titulo]="propietario.nombre"
+        [titulo]="obtenerCaracteristica(propietario, 'nombre')"
         (ver)="verPropietario($event)"
         (editar)="editarPropietario($event)"
         (eliminar)="eliminarPropietario($event)"></app-item-entidad>

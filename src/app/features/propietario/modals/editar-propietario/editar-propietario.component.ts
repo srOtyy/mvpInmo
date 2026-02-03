@@ -8,6 +8,7 @@ import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PropietarioRxjsService } from '../../propietario-rxjs.service';
 import { SnackbarService } from '../../../../core/snackbar.service';
+import { construirCaracteristicasDesdeForm, obtenerCaracteristica } from '../../../../shared/entity-helpers';
 @Component({
   selector: 'app-editar-propietario',
   standalone: true,
@@ -35,22 +36,33 @@ export class EditarPropietarioComponent implements OnInit{
   ngOnInit() {
     this.pasarDatosPropietario(this.entidad);
   }
-  
+
   pasarDatosPropietario(propietarioData: IPropietario) {
     this.formularioEditarPropietario.setValue({
       id: propietarioData.id,
-      nombre: propietarioData.nombre,
-      dni: propietarioData.dni,
-      telefono: propietarioData.telefono,
-      email: propietarioData.email,
-      cbu: propietarioData.cbu,
-      inmuebles: propietarioData.inmuebles  
+      nombre: obtenerCaracteristica(propietarioData, 'nombre'),
+      dni: obtenerCaracteristica(propietarioData, 'dni'),
+      telefono: obtenerCaracteristica(propietarioData, 'telefono'),
+      email: obtenerCaracteristica(propietarioData, 'email'),
+      cbu: obtenerCaracteristica(propietarioData, 'cbu'),
+      inmuebles: obtenerCaracteristica(propietarioData, 'inmuebles', [])
     });
   }
 
   guardarCambios() {  
-    this._propietarioRxJsService.editarPropietario(this.formularioEditarPropietario.value)
-    this._snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
+    const propietarioEditado: IPropietario = {
+      id: this.formularioEditarPropietario.get('id')?.value,
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarPropietario, [
+        'nombre',
+        'dni',
+        'telefono',
+        'email',
+        'cbu',
+        'inmuebles'
+      ])
+    };
+    this._propietarioRxJsService.editarPropietario(propietarioEditado)
+    this._snackbarService.mensajeSnackBar('Propietario editado con Ã©xito', 'Cerrar');
     this.dialogRef.close(true);
   }
   

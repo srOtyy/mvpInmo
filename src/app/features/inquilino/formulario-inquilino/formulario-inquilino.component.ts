@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { InquilinoCComponent } from '../inquilino-c/inquilino-c.component';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InquilinoRxjsService } from '../inquilino-rxjs.service';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { MatButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { IInquilino } from '../inquilino.interface';
+import { construirCaracteristicasDesdeForm } from '../../../shared/entity-helpers';
 
 @Component({
   selector: 'app-formulario-inquilino',
@@ -16,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class FormularioInquilinoComponent {
   formularioInquilino: FormGroup
-  nuevoInquilino!: InquilinoCComponent
+  nuevoInquilino!: IInquilino
   idRnd = Math.floor(Math.random() * 1000)
 
 
@@ -34,7 +35,18 @@ export class FormularioInquilinoComponent {
 
   enviarFormulario(){
     if(this.formularioInquilino.valid){
-      this._inquilinosRxJsService.agregarInquilino(this.formularioInquilino.value)
+      const inquilino: IInquilino = {
+        id: this.formularioInquilino.get('id')?.value,
+        caracteristicas: construirCaracteristicasDesdeForm(this.formularioInquilino, [
+          'nombre',
+          'dni',
+          'telefono',
+          'email',
+          'garante',
+          'ingresos'
+        ])
+      };
+      this._inquilinosRxJsService.agregarInquilino(inquilino)
       this.formularioInquilino.reset()
       this._snackbarService.mensajeSnackBar('Inquilino creado con éxito', 'Cerrar');
     }

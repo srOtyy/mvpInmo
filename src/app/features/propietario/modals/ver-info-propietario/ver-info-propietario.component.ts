@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IPropietario } from '../../propietario.interface';
 import { MatDividerModule } from '@angular/material/divider';
+import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
 
 @Component({
   selector: 'app-ver-info-propietario',
@@ -11,5 +12,6 @@ import { MatDividerModule } from '@angular/material/divider';
 })
 export class VerInfoPropietarioComponent {
   @Input() entidad!: IPropietario;
-
+  obtenerCaracteristica = (clave: string) =>
+    obtenerCaracteristica(this.entidad, clave);
 }

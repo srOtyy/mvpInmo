@@ -1,6 +1,6 @@
   import { Component } from '@angular/core';
   import { ReactiveFormsModule, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-  import { caracterisitcasInmueble, definicionCaracteristicaInmueble, IInmueble } from '../inmueble.interface';
+  import { definicionCaracteristicaInmueble, IInmueble } from '../inmueble.interface';
   import {MatFormFieldModule} from '@angular/material/form-field';
   import {MatInputModule} from '@angular/material/input';
   import { MatButton } from "@angular/material/button";

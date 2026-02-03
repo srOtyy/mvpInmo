@@ -8,29 +8,48 @@
         * v0.2:
                 - `item-propietario` e `item-inquilino` comparten estructura
                 - Los modales base se repiten entre entidades
+                (LISTO)
         * v0.4:
-                - Se reutilizaron patrones establecidos en v0.1 y v0.2
+                - Se reutilizaron patrones establecidos en v0.1 y v0.2 
                 - El sidebar continúa siendo hardcodeado para cada entidad
+                (LISTO)
         * v0.5: 
                 - Las entidades propietario e inquilino deberían tener el mismo sistema de atributos que tiene inmuebles ( un array editable para flexibilidad futura )
+                (LISTO)
         * documentacion:
                 Faltó agregar el dominio de inquilinos
                 Faltó agregar flujo de inmuebles y contratos
+                Editar dominios y flujos actuales porque se editaron las interfaces y los shared que utilizan
 
 ## Alcance incluido
 
-    Item-propietario e item inquilino son un item dentro de card-list (shared) que recibe por input la entidad que va a abrir 3 modales: ver, editar y eliminar. Cada modal puede ver la entidad, editarla o eliminarla, segun corresponda.
-    Volver los modales shared sería lo más conveniente? Porque tambien repiten el mismo concepto en la lógica del proyecto (los shared solo consumen el servicio de rx-js donde se almacena el array que simula ser la base de datos. Pero cada entidad tiene su propio service de rx-js. Entonces serian como bases de datos separadas. Deberia hacer un service que almacene los arrays de cada service para simular la base de datos coomo un solo concepto y no como cada service x entidad ? v0.7 ? )
-
-    Podriamos evaluar la idea de modales-shared para una siguiente version (v0.7?) 
-
+    -El problema de la destruccion del layout fue solucionado con scss
+    -La repeticion de estructura de componentes fue solucionado crendo un shared: item-entidad: recibe por input la entidad tipo: <T> y devuelve por output cuando deben realizarse ciertos eventos
+    -Se unificó el sistema de atributos de las entidades Inmueble, Propietario e Inquilino.
+  
 ### Observaciones
 
     v0.1:
         app-component: al body se le agregó overflow-y scroll y se estilizo el scroll. ( No se como editar el ancho del scroll. Me gusta que el scroll del body sea mas grande que los demas componentes. Pero todos son iguales de ancho)
         al card-list se le agregó padding
+    v0.2:
+        se agrego un nuevo shared item-entidad que recibe por input la entidad ( utiliza el patron <T>)
+    v0.4: 
+        Ahora el sidebar utiliza rutas-dinamicas.service para acceder a los dominios activos para generar los botones de ruta ( los del sidebar)
+    v0.5:
+        CODEX:
+            -Se creó un modelo base `IEntityBase` con `id` y `caracteristicas` y las tres entidades ahora lo extienden.
+
+            Herramientas/patrones utilizados:
+                - Interfaz base compartida (`IEntityBase`)
+                - Helpers shared en `src/app/shared/entity-helpers.ts`:
+                    `obtenerCaracteristica` y `construirCaracteristicasDesdeForm`
 
 ### Decisiones
+
+    Ahora que las entidades tienen caracteristicas flexibles no hace falta que los formularios pidan dni/nombre
+    Actualmente lo piden, inclusive los modales estan hardcodeados mostrando esos datos
+    Se deberia eliminar el hardcodeo de las caracteristicas mostradas ( modales propietario e inquilino ) 
 
 ## Próxima versión
 
