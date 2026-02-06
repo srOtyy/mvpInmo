@@ -34,12 +34,7 @@ export class InquilinoCComponent {
     this.inquilino = {
       id: this.randomId(),
       caracteristicas: [
-        { clave: 'nombre', valor: 'Ana' },
-        { clave: 'dni', valor: 87654321 },
-        { clave: 'telefono', valor: 9876543210 },
-        { clave: 'email', valor: 'ana@ana' },
-        { clave: 'garante', valor: 'Garantia XYZ' },
-        { clave: 'ingresos', valor: 50000 }
+        { clave: 'nombre', valor: this.randomId().toString() },
       ]
     }
     this._inquilinosService.agregarInquilino(this.inquilino);

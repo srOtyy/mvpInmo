@@ -36,12 +36,7 @@ export class PropietarioCComponent {
     this.propietario = {
       id: this.randomId(),
       caracteristicas: [
-        { clave: 'nombre', valor: 'Otto' },
-        { clave: 'dni', valor: 12345678 },
-        { clave: 'telefono', valor: 1234567890 },
-        { clave: 'email', valor: 'oty@oty' },
-        { clave: 'cbu', valor: '1234567890123456789012' },
-        { clave: 'inmuebles', valor: ['123', '456', '789'] }
+        { clave: 'nombre', valor: this.randomId().toString() },
       ]
     }
     this._propietariosRxJsService.agregarPropietario(this.propietario);

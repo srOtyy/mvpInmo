@@ -9,8 +9,6 @@
   import {MatSelectModule} from '@angular/material/select';
   import {MatCheckboxModule} from '@angular/material/checkbox';
   import {MatListModule} from '@angular/material/list';
-  import { ItemCaracteristicaComponent } from '../item-caracteristica/item-caracteristica.component';
-  import { CardListComponent } from '../../../shared/card-list/card-list.component';
 import { InmueblesRxjsService } from '../inmuebles-rxjs.service';
 
   @Component({
@@ -52,8 +50,5 @@ import { InmueblesRxjsService } from '../inmuebles-rxjs.service';
         this.listaCaracteristicas.push(nuevaCaracteristica);
         this.formularioCaracteristicas.reset();
       }
-      console.log(this.listaCaracteristicas);
     }
-   
-
   }

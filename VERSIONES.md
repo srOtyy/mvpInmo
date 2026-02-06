@@ -18,8 +18,8 @@
                 (LISTO)
         * documentacion:
                 Faltó agregar el dominio de inquilinos
-                Faltó agregar flujo de inmuebles y contratos
-                Editar dominios y flujos actuales porque se editaron las interfaces y los shared que utilizan
+                Faltó agregar flujo de inmuebles
+                Editar dominios y flujos actuales porque se editaron las interfaces y los shared que utilizan (LISTO)
 
 ## Alcance incluido
 
@@ -47,9 +47,7 @@
 
 ### Decisiones
 
-    Ahora que las entidades tienen caracteristicas flexibles no hace falta que los formularios pidan dni/nombre
-    Actualmente lo piden, inclusive los modales estan hardcodeados mostrando esos datos
-    Se deberia eliminar el hardcodeo de las caracteristicas mostradas ( modales propietario e inquilino ) 
+    Los modales de propietarios e inquilinos aun muestran las caracteristicas de manera hardcodeada y no dinamicamente
 
 ## Próxima versión
 
@@ -88,7 +86,6 @@
 
 ### v0.4 - Dominio 'Contratos'
 
-    aca iria lo que se trabajo en v0.4
     En esta versión se crearon archivos markdown con mermeid
 
     Observaciones técnicas:
@@ -104,3 +101,5 @@
         - el layout se rompe 
         - NO se esta creando inmuebles ( solo el array de caracteristicas)
         - se hardcodeo el sidebar
+
+        

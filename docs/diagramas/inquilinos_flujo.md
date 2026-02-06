@@ -6,15 +6,14 @@ flowchart TB
 
     %% Rutas
     R1[/Ruta: inquilino/lista/]
-    R2[/Ruta: inquilino/crear/]
 
     %% Componentes
-    PC[inquilino-c]
-    FP[formulario-inquilino]
-    IP[item-inquilino]
+    IC[inquilino-c]
 
     %% Shared
     CL[shared: card-list]
+    IE[shared: item-entidad]
+
 
     %% Modales
     ME[modal editar]
@@ -28,24 +27,23 @@ flowchart TB
     O[(listaInquilinos$)]
 
     %% Flujos
-    R1 --> PC
-    R2 --> FP
+    R1 --> IC
 
-    PC -->|Renderiza lista| CL
-    CL --> IP
+    IC -->|Renderiza lista| CL
+    CL --> IE
 
-    IP --> ME
-    IP --> MD
-    IP --> MI
+    IE --> ME
+    IE --> MD
+    IE --> MI
 
-    PC -->|subscribe| S
+    IC -->|subscribe|S
     ME -->|subscribe| S
     MD -->|subscribe| S
 
-    FP -->|envía nuevo inquilino| S
+    IC -->|envía nuevo inquilino| S
 
     S -->|emite cambios| O
-    O --> PC
+    O --> IC
 
     %% Estilos
     classDef route stroke:#1E88E5, color:#f1f1f1;
@@ -55,9 +53,9 @@ flowchart TB
     classDef shared stroke:#5E35B1;
     classDef state stroke:#455A64;
 
-    class R1,R2 route;
-    class PC,FP,IP component;
-    class CL shared;
+    class R1, route;
+    class IC,FP, component;
+    class CL,IE shared;
     class ME,MD,MI modal;
     class S service;
     class O state;

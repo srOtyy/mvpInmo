@@ -6,15 +6,13 @@ flowchart TB
 
     %% Rutas
     R1[/Ruta: propietario/lista/]
-    R2[/Ruta: propietario/crear/]
 
     %% Componentes
     PC[propietario-c]
-    FP[formulario-propietario]
-    IP[item-propietario]
 
     %% Shared
     CL[shared: card-list]
+    IE[shared: item-entidad]
 
     %% Modales
     ME[modal editar]
@@ -29,20 +27,19 @@ flowchart TB
 
     %% Flujos
     R1 --> PC
-    R2 --> FP
 
     PC -->|Renderiza lista| CL
-    CL --> IP
+    CL --> IE
 
-    IP --> ME
-    IP --> MD
-    IP --> MI
+    IE --> ME
+    IE --> MD
+    IE --> MI
 
     PC -->|subscribe| S
     ME -->|subscribe| S
     MD -->|subscribe| S
 
-    FP -->|envía nuevo propietario| S
+    PC -->|crea nuevo propietario| S
 
     S -->|emite cambios| O
     O --> PC
@@ -56,8 +53,8 @@ flowchart TB
     classDef state stroke:#455A64;
 
     class R1,R2 route;
-    class PC,FP,IP component;
-    class CL shared;
+    class PC,IP component;
+    class CL,IE shared;
     class ME,MD,MI modal;
     class S service;
     class O state;

@@ -8,12 +8,7 @@
 ## Atributos
 
 - id
-- nombre
-- dni
-- telefono
-- email
-- cbu
-- inmuebles
+- caracteristicas
 
 ## Servicios asociados
 
@@ -35,7 +30,7 @@
     - propietario-c
     - eliminar-propietario ( modal )
     - editar-propietario ( modal )
-    - formulario-propietario
+    
 
 ## Flujo típico
 
