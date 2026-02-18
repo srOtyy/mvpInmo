@@ -1,0 +1,54 @@
+<div class="contenedor">
+  <form class="formulario" [formGroup]="formularioCaracteristicas">
+    <mat-form-field >
+      <mat-label>Clave</mat-label>
+      <input matInput formControlName="clave"/>
+    </mat-form-field>
+   
+    <mat-form-field >
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        @for (tipo of tipos; track tipo) {
+          <mat-option [value]="tipo">{{ tipo }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="requerido">Requerido</mat-checkbox>
+
+    <button mat-raised-button color="primary" type="button" (click)="agregarDefinicion()" [disabled]="formularioCaracteristicas.invalid">
+      Agregar
+    </button>
+  </form>
+
+  <div class="contenedor_lista">
+    <h6>Caracteristicas definidas</h6>
+    <mat-list  class="lista">
+     
+    @for (definicion of definiciones; track definicion; let i = $index) {
+      <mat-list-item>
+        <div class="item">
+          <div class="item_texto">
+            <p><strong>{{ definicion.clave }}</strong></p>
+            <p><span>{{ definicion.tipo }}</span></p>
+            @if(definicion.requerido) {
+              <p><span>Requerido</span></p>
+            }
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-list-item>
+     }
+    </mat-list>
+    <button class="boton"
+          mat-raised-button
+          color="accent"
+          type="button"
+          (click)="confirmarDefiniciones()"
+          [disabled]="!dominioActivo"
+        >
+          Confirmar definiciones
+        </button>
+  </div>
+  
+</div>

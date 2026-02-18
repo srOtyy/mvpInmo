@@ -63,7 +63,7 @@ export class EditarInquilinoComponent implements OnInit{
       ])
     };
     this._inquilinoRxJsService.editarInquilino(inquilinoEditado)
-    this._snackbarService.mensajeSnackBar('Inquilino editado con Ã©xito', 'Cerrar');
+    this._snackbarService.mensajeSnackBar('Inquilino editado con éxito', 'Cerrar');
     this.dialogRef.close(true);
   }
 }

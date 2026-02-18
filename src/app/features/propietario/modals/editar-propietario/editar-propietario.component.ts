@@ -62,7 +62,7 @@ export class EditarPropietarioComponent implements OnInit{
       ])
     };
     this._propietarioRxJsService.editarPropietario(propietarioEditado)
-    this._snackbarService.mensajeSnackBar('Propietario editado con Ã©xito', 'Cerrar');
+    this._snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
     this.dialogRef.close(true);
   }
   

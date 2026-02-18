@@ -25,13 +25,16 @@ export class PropietarioCComponent {
   listaPropietarios: IPropietario[] = [];
   obtenerCaracteristica = obtenerCaracteristica;
 
-  constructor( private _propietariosRxJsService: PropietarioRxjsService, private dialog: MatDialog) {
+  constructor(
+    private _propietariosRxJsService: PropietarioRxjsService,
+    private dialog: MatDialog
+  ) {
     this._propietariosRxJsService.listaPropietarios$.subscribe( propietarios => {
       this.listaPropietarios = propietarios;
     });
   }
 
-  // este crea el propietario de prueba
+  // este crea el propietario de prueba, deberia eliminarse ?
   crearPropietario(){
     this.propietario = {
       id: this.randomId(),
@@ -46,6 +49,7 @@ export class PropietarioCComponent {
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;
   }
+  // estos metodos abren los modales correspondientes 
   verPropietario(propietario: IPropietario){
     this.dialog.open(ModalComponent, {
       data: {

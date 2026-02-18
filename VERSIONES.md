@@ -1,53 +1,12 @@
-# v0.6 - Debug
+# v0.7
 
 ## Objetivo
 
-    Arreglar los pendientes de las versiones anteriores
-        * v0.1: 
-                - Chequear card-list: destruye el layout / el layout no se expande (LISTO)
-        * v0.2:
-                - `item-propietario` e `item-inquilino` comparten estructura
-                - Los modales base se repiten entre entidades
-                (LISTO)
-        * v0.4:
-                - Se reutilizaron patrones establecidos en v0.1 y v0.2 
-                - El sidebar continúa siendo hardcodeado para cada entidad
-                (LISTO)
-        * v0.5: 
-                - Las entidades propietario e inquilino deberían tener el mismo sistema de atributos que tiene inmuebles ( un array editable para flexibilidad futura )
-                (LISTO)
-        * documentacion:
-                Faltó agregar el dominio de inquilinos
-                Faltó agregar flujo de inmuebles
-                Editar dominios y flujos actuales porque se editaron las interfaces y los shared que utilizan (LISTO)
-
 ## Alcance incluido
-
-    -El problema de la destruccion del layout fue solucionado con scss
-    -La repeticion de estructura de componentes fue solucionado crendo un shared: item-entidad: recibe por input la entidad tipo: <T> y devuelve por output cuando deben realizarse ciertos eventos
-    -Se unificó el sistema de atributos de las entidades Inmueble, Propietario e Inquilino.
   
 ### Observaciones
 
-    v0.1:
-        app-component: al body se le agregó overflow-y scroll y se estilizo el scroll. ( No se como editar el ancho del scroll. Me gusta que el scroll del body sea mas grande que los demas componentes. Pero todos son iguales de ancho)
-        al card-list se le agregó padding
-    v0.2:
-        se agrego un nuevo shared item-entidad que recibe por input la entidad ( utiliza el patron <T>)
-    v0.4: 
-        Ahora el sidebar utiliza rutas-dinamicas.service para acceder a los dominios activos para generar los botones de ruta ( los del sidebar)
-    v0.5:
-        CODEX:
-            -Se creó un modelo base `IEntityBase` con `id` y `caracteristicas` y las tres entidades ahora lo extienden.
-
-            Herramientas/patrones utilizados:
-                - Interfaz base compartida (`IEntityBase`)
-                - Helpers shared en `src/app/shared/entity-helpers.ts`:
-                    `obtenerCaracteristica` y `construirCaracteristicasDesdeForm`
-
 ### Decisiones
-
-    Los modales de propietarios e inquilinos aun muestran las caracteristicas de manera hardcodeada y no dinamicamente
 
 ## Próxima versión
 
@@ -102,4 +61,10 @@
         - NO se esta creando inmuebles ( solo el array de caracteristicas)
         - se hardcodeo el sidebar
 
-        
+### v0.6 Debug
+
+    Se saldó la deuda de debug entre v0.1 a v0.5
+    Se crearon nuevos shared, eliminaron componentes repetidos y se actualizo las interfaces de las entidades
+
+    Pendientes para el proximo debug:
+        -Los modales de propietarios e inquilinos aun muestran las caracteristicas de manera hardcodeada y no dinamicamente

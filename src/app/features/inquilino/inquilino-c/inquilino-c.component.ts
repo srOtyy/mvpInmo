@@ -24,7 +24,10 @@ export class InquilinoCComponent {
   listaInquilinos: IInquilino[] = [];
   obtenerCaracteristica = obtenerCaracteristica;
 
-  constructor( private _inquilinosService: InquilinoRxjsService , private dialog: MatDialog) {
+  constructor(
+    private _inquilinosService: InquilinoRxjsService,
+    private dialog: MatDialog
+  ) {
     this._inquilinosService.listaInquilinos$.subscribe(inquilinos => {
       this.listaInquilinos = inquilinos;
     })

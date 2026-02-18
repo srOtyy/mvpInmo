@@ -1,31 +1,6 @@
 <div class="contenedor-formulario">
-    <div class="izquierda">
-        <h4> Crear caracteristicas </h4>
-
-    <form class="formulario" [formGroup]="formularioCaracteristicas">
-        <mat-form-field appearance="fill">
-            <mat-label>Clave</mat-label>
-            <input matInput formControlName="clave" >
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Tipo de valor</mat-label>
-            <mat-select formControlName="tipo">
-                <mat-option value="string">Texto</mat-option>
-                <mat-option value="number">Numero</mat-option>
-                <mat-option value="boolean">VoF</mat-option>
-            </mat-select>
-        </mat-form-field>
-       <mat-checkbox formControlName="requerido">Requerido</mat-checkbox>
-        <button mat-raised-button (click)="agregarCaracteristica()" type="submit" [disabled]="formularioCaracteristicas.invalid">Agregar</button>
-    </form>
-    </div>
-    <div class="derecha">
-    <mat-list role="list" class="lista">
-        @for (caracteristica of listaCaracteristicas; track $index) {
-            <br>
-            <span class="item">{{caracteristica.clave}} - {{caracteristica.tipo}} - {{caracteristica.requerido}} </span>
-        }
-    </mat-list>
-
-    </div>
+  <div class="izquierda">
+    <h4>Crear caracteristicas</h4>
+    <app-formulario-caracteristicas></app-formulario-caracteristicas>
+  </div>
 </div>

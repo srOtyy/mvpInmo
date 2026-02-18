@@ -1,7 +1,7 @@
 @import '../../../../styles.scss';
  .contenedor-formulario{
     display: grid;
-    grid-template-columns: 4fr 2fr;
+    grid-template-columns: 1fr;
     height: 100%;
     width: 80%;
     background-color: $neutral-800;
@@ -19,47 +19,8 @@
             padding-bottom: 20px;
             color: $primary-500;
         }
-        .formulario{
-
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr; 
-            gap: 20px;
-            padding-left: 30px;  
-        
-        }
    }
-   .derecha{
-        align-self: center;
-        padding: 10px;
-        border-left: 2px solid $neutral-600;
-        height: 85%;
-        .lista{
-            overflow-y: auto;
-            padding-left: 20px;
-            margin-right: 10px;
-            scrollbar-width: thin;
-            scrollbar-color: $primary-500 $neutral-800;
-            padding: 10px 20px;
-            max-height: 90%;
-            .item{
-                color: $neutral-400;
-                font-size: 14px;
-                padding-bottom: 15px;
-            }
-            &::-webkit-scrollbar {
-                width: 8px;
-            }
-            &::-webkit-scrollbar-track {
-                background: $neutral-800;
-            }
-            &::-webkit-scrollbar-thumb {
-                background-color: $primary-500;
-                border-radius: 10px;
-                border: 2px solid $neutral-800;
-            }
-        }
-   }
-   .izquierda, .derecha{
+   .izquierda{
         max-height: 50vh;
    }
 }

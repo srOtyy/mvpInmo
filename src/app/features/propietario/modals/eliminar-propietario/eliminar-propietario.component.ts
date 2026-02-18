@@ -22,7 +22,7 @@ export class EliminarPropietarioComponent {
 
   confirmarEliminarPropietario(){
     this._serviceRxJsPropietarios.eliminarPropietario(this.entidad.id);
-    this._snackbarService.mensajeSnackBar('Propietario eliminado con Ã©xito', 'Cerrar');
+    this._snackbarService.mensajeSnackBar('Propietario eliminado con éxito', 'Cerrar');
     this.cerrarModal()
   }
   cerrarModal(){
