@@ -43,9 +43,6 @@ export class RutasDinamicasService {
     });
   }
 
-  getDominioActivo(): Dominio | null {
-    return this.dominioActivoSubject.value;
-  }
 
   emitirEntidades(): string[]{
     return Object.keys(this.accionesPorDominio);

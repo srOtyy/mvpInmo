@@ -61,10 +61,6 @@ export class FormularioCaracteristicasComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dominioActivo = this.rutasDinamicasService.getDominioActivo();
-    if (this.dominioActivo) {
-      this.definiciones = this.definicionesService.getDefiniciones(this.dominioActivo);
-    }
 
     this.dominioSub = this.rutasDinamicasService.dominioActivo$.subscribe(dominio => {
       this.dominioActivo = dominio;

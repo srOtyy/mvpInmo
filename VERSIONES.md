@@ -2,11 +2,23 @@
 
 ## Objetivo
 
+Crear un `shared` para centralizar la definición de características y poder reutilizar esa lógica en formularios/componentes.
+
 ## Alcance incluido
+
+- Se creó el `shared` y `definiciones-caracteristicas.service.ts`.
+- Se movió la definición de características a una fuente única.
+- Se adaptó el formulario de características para consumir la definición desde el service.
   
 ### Observaciones
 
+- Se reduce hardcodeo en componentes y se facilita mantenimiento.
+- Queda mejor preparado para reutilizar el mismo catálogo en otros dominios.
+
 ### Decisiones
+
+- Mantener la definición en un service compartido para evitar duplicación.
+- Priorizar consistencia entre formularios antes de sumar nuevas entidades.
 
 ## Próxima versión
 
