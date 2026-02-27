@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-import { Subscription } from 'rxjs';
-import { RutasDinamicasService } from '../../core/navegacion/rutas-dinamicas.service';
+import { of, Subject, switchMap, takeUntil } from 'rxjs';
 import { Dominio } from '../../core/navegacion/navegacionRutas';
+import { RutasDinamicasService } from '../../core/navegacion/rutas-dinamicas.service';
 import { DefinicionCaracteristica } from '../definicion-caracteristica.interface';
 import { DefinicionesCaracteristicasService } from '../definiciones-caracteristicas.service';
-import { MatDividerModule } from '@angular/material/divider';
+
 @Component({
   selector: 'app-formulario-caracteristicas',
   standalone: true,
@@ -31,12 +32,9 @@ import { MatDividerModule } from '@angular/material/divider';
   styleUrl: './formulario-caracteristicas.component.scss'
 })
 export class FormularioCaracteristicasComponent implements OnInit, OnDestroy {
-  private dominioSub?: Subscription; 
-  
-  // El dominioSub es una suscripción a un observable que emite cambios en el dominio activo. Esto permite que el componente reaccione dinámicamente a los cambios en el dominio, actualizando las definiciones de características en consecuencia. Es necesario para mantener la sincronización entre el estado del dominio y las definiciones de características mostradas en el formulario, asegurando que los usuarios siempre vean la información relevante para el contexto actual.
+  private destroy$ = new Subject<void>();
 
   dominioActivo: Dominio | null = null;
-  // El dominio activo se obtiene a través del servicio de rutas dinámicas, lo que permite que el componente se adapte al contexto actual de la aplicación
 
   @Output() definicionSubmit = new EventEmitter<{
     dominio: Dominio;
@@ -61,17 +59,28 @@ export class FormularioCaracteristicasComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.rutasDinamicasService.dominioActivo$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dominio => {
+          this.dominioActivo = dominio;
 
-    this.dominioSub = this.rutasDinamicasService.dominioActivo$.subscribe(dominio => {
-      this.dominioActivo = dominio;
-      if (dominio) {
-        this.definiciones = this.definicionesService.getDefiniciones(dominio);
-      }
-    });
+          if (!dominio) {
+            this.definiciones = [];
+            return of<DefinicionCaracteristica[]>([]);
+          }
+
+          return this.definicionesService.getDefiniciones$(dominio);
+        })
+      )
+      .subscribe(definiciones => {
+        this.definiciones = definiciones.slice();
+      });
   }
 
   ngOnDestroy(): void {
-    this.stopDominioSub();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   agregarDefinicion(): void {
@@ -88,7 +97,7 @@ export class FormularioCaracteristicasComponent implements OnInit, OnDestroy {
     this.definiciones = [...this.definiciones, nuevaDefinicion];
     this.formularioCaracteristicas.reset({
       clave: '',
-      tipo: 'string',
+      tipo: 'texto',
       requerido: false
     });
   }
@@ -107,12 +116,5 @@ export class FormularioCaracteristicasComponent implements OnInit, OnDestroy {
       dominio: this.dominioActivo,
       definiciones: this.definiciones.slice()
     });
-  }
-
-  private stopDominioSub(): void {
-    if (this.dominioSub) {
-      this.dominioSub.unsubscribe();
-      this.dominioSub = undefined;
-    }
   }
 }

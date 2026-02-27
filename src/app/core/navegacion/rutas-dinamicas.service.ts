@@ -13,15 +13,16 @@ export class RutasDinamicasService {
   private accionesPorDominio: Record<Dominio, IBotonRuta[]> = {
     propietarios: [
       { nombre: 'lista', ruta: ['/propietarios', 'lista'] },
+      { nombre: 'crear', ruta: ['/propietarios', 'crear'] },
       { nombre: 'caracteristicas', ruta: ['/propietarios', 'def_caracteristicas'] }
     ],
     inquilinos: [
       { nombre: 'lista', ruta: ['/inquilinos', 'lista'] },
+      {nombre: 'crear', ruta: ['/inquilinos', 'crear']},
       { nombre: 'caracteristicas', ruta: ['/inquilinos', 'def_caracteristicas'] },
-      {nombre : 'crear contrato', ruta: ['/inquilinos', 'crear-contrato']}
     ],
     inmuebles: [
-      { nombre: 'crear', ruta: ['/inmuebles', 'crear'] },
+      {nombre: 'crear', ruta: ['/inmuebles', 'crear']},
       { nombre: 'caracteristicas', ruta: ['/inmuebles', 'def_caracteristicas'] }
     ]
   };

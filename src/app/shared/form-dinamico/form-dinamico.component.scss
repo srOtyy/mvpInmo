@@ -1,0 +1,26 @@
+@import "../../../styles.scss";
+
+.formulario{
+  padding: 20px;
+  width: 50vw;
+  border-right: 1px solid $neutral-400;
+  p{
+    color: $neutral-400;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 1rem;
+    .campo {
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

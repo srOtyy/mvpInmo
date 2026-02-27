@@ -1,24 +1,21 @@
-# v0.7
+# v0.8
 
 ## Objetivo
 
-Crear un `shared` para centralizar la definición de características y poder reutilizar esa lógica en formularios/componentes.
+Crear un formulario dinámico que renderice un array de caracteristicas y lo muestre según el dominio asignado
 
 ## Alcance incluido
 
-- Se creó el `shared` y `definiciones-caracteristicas.service.ts`.
-- Se movió la definición de características a una fuente única.
-- Se adaptó el formulario de características para consumir la definición desde el service.
-  
 ### Observaciones
 
-- Se reduce hardcodeo en componentes y se facilita mantenimiento.
-- Queda mejor preparado para reutilizar el mismo catálogo en otros dominios.
+- Hay un bug cuando se cambia de dominio, todavía no se como forzar el bug. Hay que eliminar los routerlink de los botones del sidebar. La idea es que el sidebar solo cambie los botones del header asi evitamos el bug ( arreglado el bug pero la idea sigue siendo buena)
+- Hay un bug cuando se crean entidades ya no se muestran en la lista de cada entidad. Hay que arreglar como accede el shared-list a las entidades para mostrarlas
+- En la creacion de propietarios, me gustaría que los inputs que son de checkbox esten del lado derecho del formulario, ya que genera un poco de "ruido" que se mesclen entre inputs de texto ( detalle de UI)
+- los modales de los propietarios tienen hardcodeado las propiedades anteriores, por lo que no muestran las propiedades ingresadas ( arreglar modales)
 
 ### Decisiones
 
-- Mantener la definición en un service compartido para evitar duplicación.
-- Priorizar consistencia entre formularios antes de sumar nuevas entidades.
+- Por ahora podemos dejar el formulario que se cree segun el orden del array, pero si proximamente arreglar la ui de este formulario para que sea más amigable
 
 ## Próxima versión
 
