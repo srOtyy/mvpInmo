@@ -4,6 +4,7 @@ import { CrearPropietarioComponent } from './features/propietario/crear-propieta
 import { PropietarioCComponent } from './features/propietario/propietario-c/propietario-c.component';
 import { FormularioCaracteristicasComponent } from './shared/formulario-caracteristicas/formulario-caracteristicas.component';
 import { CrearInquilinoComponent } from './features/inquilino/crear-inquilino/crear-inquilino.component';
+import { CrearInmuebleComponent } from './features/inmueble/crear-inmueble/crear-inmueble.component';
 
 export const routes: Routes = [
   {
@@ -25,7 +26,7 @@ export const routes: Routes = [
   {
     path: 'inmuebles',
     children: [
-      {path: 'crear', component: CrearInquilinoComponent},
+      {path: 'crear', component: CrearInmuebleComponent},
       { path: 'def_caracteristicas', component: FormularioCaracteristicasComponent }
     ]
   }

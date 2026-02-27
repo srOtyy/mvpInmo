@@ -26,10 +26,13 @@
       align-self: center;
       color: $neutral-200;
       margin: 0;
+      border-bottom: 1px solid $neutral-600;
+      padding-bottom: 20px;
     }
     .lista{
       flex: 1 1 auto;
       min-height: 0;
+      max-height: 75vh;
       display: block;
       overflow-y: auto;
       padding-bottom: 10px;
@@ -51,8 +54,12 @@
         }
       }
     }
-    .boton{
+    .contenedor-boton{
+      padding-top:20px ;
+      height: 40px;
+      border-top: 1px solid $neutral-600;
       align-self: center;
+
     }
   }
 
