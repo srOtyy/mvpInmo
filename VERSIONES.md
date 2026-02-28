@@ -15,6 +15,8 @@ Crear un formulario dinámico que renderice un array de caracteristicas y lo mue
 
 ### Decisiones
 
+- Se creo un componente shared 'form-dinamico' que recibe por input el dominio activo ( string ) y emite por output una entidad creada ( solo emite los valores que se le asignaron a las caracteristicas definidas anteriormente )
+- Se creo un componente por dominio 'crear-(dominio)', es padre de 'form-dinamico'. Este componente crea la entidad que le corresponde con un id random ( númerico ) junto con los valores emitidos en 'form-dinamico' y las emite al servicio correspondiente ( runtime )
 - Por ahora podemos dejar el formulario que se cree segun el orden del array, pero si proximamente arreglar la ui de este formulario para que sea más amigable
 
 ## Próxima versión
