@@ -11,6 +11,11 @@ Crear una base de datos local con json server para tener una persistencia en los
 - Actualmente estamos trabajando unicamente con la entidad propietarios
 - El crud de entidad no accede a la db. Primero hay que comprender como lo hacen las caracteristicas
 Luego de eso se va a poder replicar la misma lógica con la creacion de entidades
+- Hay un bug cuando se cambia de dominio, todavía no se como forzar el bug. Hay que eliminar los routerlink de los botones del sidebar. La idea es que el sidebar solo cambie los botones del header asi evitamos el bug ( arreglado el bug pero la idea sigue siendo buena)
+- Hay un bug cuando se crean entidades ya no se muestran en la lista de cada entidad. Hay que arreglar como accede el shared-list a las entidades para mostrarlas
+- En la creacion de propietarios, me gustaría que los inputs que son de checkbox esten del lado derecho del formulario, ya que genera un poco de "ruido" que se mesclen entre inputs de texto ( detalle de UI)
+- los modales de los propietarios tienen hardcodeado las propiedades anteriores, por lo que no muestran las propiedades ingresadas ( arreglar modales)
+- La interface 'caracteristicasInmueble' en src/app/features/inmueble/inmueble.interface.ts está definida pero no se importa ni usa en ninguna otra parte del código. La documentación en docs/dominio/inmueble-dominio.md referencia esta interface pero está desactualizada. Considerar eliminar la interface o implementar su funcionalidad.
 
 ### Decisiones
 
