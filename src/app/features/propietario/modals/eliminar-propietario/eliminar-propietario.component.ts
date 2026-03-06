@@ -15,15 +15,24 @@ import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
 })
 export class EliminarPropietarioComponent {
   @Input() entidad!: IPropietario;
-  constructor(private _serviceRxJsPropietarios: PropietarioRxjsService, private dialogRef: MatDialogRef <ModalComponent>, private _snackbarService: SnackbarService){}
+  constructor(
+    private _serviceRxJsPropietarios: PropietarioRxjsService,
+     private dialogRef: MatDialogRef <ModalComponent>,
+      private _snackbarService: SnackbarService){}
 
   obtenerCaracteristica = (clave: string) =>
     obtenerCaracteristica(this.entidad, clave);
 
   confirmarEliminarPropietario(){
-    this._serviceRxJsPropietarios.eliminarPropietario(this.entidad.id);
-    this._snackbarService.mensajeSnackBar('Propietario eliminado con éxito', 'Cerrar');
-    this.cerrarModal()
+    this._serviceRxJsPropietarios.eliminarPropietario(this.entidad.id).subscribe({
+      next: () => {
+        this._snackbarService.mensajeSnackBar('Propietario eliminado con éxito', 'Cerrar');
+        this.cerrarModal();
+      },
+      error: () => {
+        this._snackbarService.mensajeSnackBar('Error al eliminar propietario', 'Cerrar');
+      }
+    });
   }
   cerrarModal(){
     this.dialogRef.close();

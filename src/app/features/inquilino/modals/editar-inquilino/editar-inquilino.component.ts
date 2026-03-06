@@ -9,7 +9,6 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { construirCaracteristicasDesdeForm, obtenerCaracteristica } from '../../../../shared/entity-helpers';
-
 @Component({
   selector: 'app-editar-inquilino',
   standalone: true,
@@ -40,30 +39,28 @@ export class EditarInquilinoComponent implements OnInit{
 
   pasarDatosInquilino(inquilinoData: IInquilino) {
     this.formularioEditarInquilino.setValue({
-      id: inquilinoData.id,
-      nombre: obtenerCaracteristica(inquilinoData, 'nombre'),
-      dni: obtenerCaracteristica(inquilinoData, 'dni'),
-      telefono: obtenerCaracteristica(inquilinoData, 'telefono'),
-      email: obtenerCaracteristica(inquilinoData, 'email'),
-      garante: obtenerCaracteristica(inquilinoData, 'garante'),
-      ingresos: obtenerCaracteristica(inquilinoData, 'ingresos'),
+      id: inquilinoData.id
     });
   }
 
   guardarCambios() {  
+   this._inquilinoRxJsService.actualizarInquilino(this.setInquilinoNuevo()).subscribe({
+      next: () => {
+        this._snackbarService.mensajeSnackBar('Inquilino editado con éxito', 'Cerrar');
+        this.dialogRef.close(true);
+      },
+      error: () => {
+        this._snackbarService.mensajeSnackBar('Error al editar inquilino', 'Cerrar');
+      }
+    });
+}
+
+  setInquilinoNuevo(): IInquilino{
+    const formValue = this.formularioEditarInquilino.value;
     const inquilinoEditado: IInquilino = {
-      id: this.formularioEditarInquilino.get('id')?.value,
-      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInquilino, [
-        'nombre',
-        'dni',
-        'telefono',
-        'email',
-        'garante',
-        'ingresos'
-      ])
+      id: formValue.id,
+      caracteristicas: construirCaracteristicasDesdeForm(formValue, obtenerCaracteristica(this.entidad, 'caracteristicas'))
     };
-    this._inquilinoRxJsService.editarInquilino(inquilinoEditado)
-    this._snackbarService.mensajeSnackBar('Inquilino editado con éxito', 'Cerrar');
-    this.dialogRef.close(true);
+    return inquilinoEditado;
   }
 }

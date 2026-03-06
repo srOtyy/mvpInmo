@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { InquilinoRxjsService } from '../inquilino-rxjs.service';
 import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinamico.component';
+import { SnackbarService } from '../../../core/snackbar.service';
 
 @Component({
   selector: 'app-crear-inquilino',
@@ -10,7 +11,7 @@ import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinami
   styleUrl: './crear-inquilino.component.scss'
 })
 export class CrearInquilinoComponent {
-  constructor(private inquilinosService: InquilinoRxjsService) {}
+  constructor(private inquilinosService: InquilinoRxjsService, private snack: SnackbarService) {}
 
   onEntidadCreada(entidad: { caracteristicas: { clave: string; valor: any }[] }): void {
     const nuevoInquilino = {
@@ -18,7 +19,14 @@ export class CrearInquilinoComponent {
       caracteristicas: entidad.caracteristicas
     };
 
-    this.inquilinosService.agregarInquilino(nuevoInquilino);
+    this.inquilinosService.crearInquilino(nuevoInquilino).subscribe({
+      next: () => {
+        this.snack.mensajeSnackBar('Inquilino creado exitosamente', 'Cerrar');
+      },
+      error: (error) => {
+        this.snack.mensajeSnackBar('Error al crear inquilino', 'Cerrar');
+      }
+    });
   }
 
   private randomId(): number {

@@ -1,23 +1,27 @@
-# v0.8
+# v0.9
 
 ## Objetivo
 
-Crear un formulario dinámico que renderice un array de caracteristicas y lo muestre según el dominio asignado
+Crear una base de datos local con json server para tener una persistencia en los datos creados. Esto va a simplificar la creacion del MVP
 
 ## Alcance incluido
 
 ### Observaciones
 
-- Hay un bug cuando se cambia de dominio, todavía no se como forzar el bug. Hay que eliminar los routerlink de los botones del sidebar. La idea es que el sidebar solo cambie los botones del header asi evitamos el bug ( arreglado el bug pero la idea sigue siendo buena)
-- Hay un bug cuando se crean entidades ya no se muestran en la lista de cada entidad. Hay que arreglar como accede el shared-list a las entidades para mostrarlas
-- En la creacion de propietarios, me gustaría que los inputs que son de checkbox esten del lado derecho del formulario, ya que genera un poco de "ruido" que se mesclen entre inputs de texto ( detalle de UI)
-- los modales de los propietarios tienen hardcodeado las propiedades anteriores, por lo que no muestran las propiedades ingresadas ( arreglar modales)
+- Actualmente estamos trabajando unicamente con la entidad propietarios
+- El crud de entidad no accede a la db. Primero hay que comprender como lo hacen las caracteristicas
+Luego de eso se va a poder replicar la misma lógica con la creacion de entidades
 
 ### Decisiones
 
-- Se creo un componente shared 'form-dinamico' que recibe por input el dominio activo ( string ) y emite por output una entidad creada ( solo emite los valores que se le asignaron a las caracteristicas definidas anteriormente )
-- Se creo un componente por dominio 'crear-(dominio)', es padre de 'form-dinamico'. Este componente crea la entidad que le corresponde con un id random ( númerico ) junto con los valores emitidos en 'form-dinamico' y las emite al servicio correspondiente ( runtime )
-- Por ahora podemos dejar el formulario que se cree segun el orden del array, pero si proximamente arreglar la ui de este formulario para que sea más amigable
+- Para correr el .json se nesecita ejecutar en una terminal propia 'json-server --watch "nombre del archivo.json"'
+
+- Para poder implementar el uso de la base de datos se tuvieron que modificar los archivos siguientes:
+    definiciones-caracteristicas.service:
+        1.En el constructor setea el Map<Domino,BehaviurSubject<definicionesCaracteristica[]>>() y se buscan las definiciones existentes si es que existen. Hay que entender el porque se setea el Map
+        2. la funcion 'setDefiniciones(dominio, definiciones):Observable<> es la que envia los datos a la db. ¿Como funciona?
+    formualario-caracteristicas.component.ts:
+        1.
 
 ## Próxima versión
 
@@ -65,17 +69,21 @@ Crear un formulario dinámico que renderice un array de caracteristicas y lo mue
 
 ### v0.5 Inmuebles
 
-    Se creó el formulario de caracteristicas que se van a solicitar a la hora de crear inmuebles 
+Se creó el formulario de caracteristicas que se van a solicitar a la hora de crear inmuebles
 
-    Observacioens técnicas:
-        - el layout se rompe 
-        - NO se esta creando inmuebles ( solo el array de caracteristicas)
-        - se hardcodeo el sidebar
+Observacioens técnicas:
+    - el layout se rompe
+    - NO se esta creando inmuebles ( solo el array de caracteristicas)
+    - se hardcodeo el sidebar
 
 ### v0.6 Debug
 
-    Se saldó la deuda de debug entre v0.1 a v0.5
-    Se crearon nuevos shared, eliminaron componentes repetidos y se actualizo las interfaces de las entidades
+Se saldó la deuda de debug entre v0.1 a v0.5
+Se crearon nuevos shared, eliminaron componentes repetidos y se actualizo las interfaces de las entidades
 
-    Pendientes para el proximo debug:
-        -Los modales de propietarios e inquilinos aun muestran las caracteristicas de manera hardcodeada y no dinamicamente
+Pendientes para el proximo debug:
+    -Los modales de propietarios e inquilinos aun muestran las caracteristicas de manera hardcodeada y no dinamicamente
+
+### v0.8 Formulario dinamico
+
+falta agregar lo que se hizo en esta version y la v0.7

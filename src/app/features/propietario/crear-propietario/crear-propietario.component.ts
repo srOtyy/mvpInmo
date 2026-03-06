@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinamico.component';
 import { IPropietario } from '../propietario.interface';
 import { PropietarioRxjsService } from '../propietario-rxjs.service';
+import { SnackbarService } from '../../../core/snackbar.service';
 
 @Component({
   selector: 'app-crear-propietario',
@@ -11,7 +12,10 @@ import { PropietarioRxjsService } from '../propietario-rxjs.service';
   styleUrl: './crear-propietario.component.scss'
 })
 export class CrearPropietarioComponent {
-  constructor(private propietariosService: PropietarioRxjsService) {}
+
+  constructor(private propietariosService: PropietarioRxjsService,
+    private snack: SnackbarService
+  ) {}
 
   onEntidadCreada(entidad: { caracteristicas: { clave: string; valor: any }[] }): void {
     const nuevoPropietario: IPropietario = {
@@ -19,7 +23,14 @@ export class CrearPropietarioComponent {
       caracteristicas: entidad.caracteristicas
     };
 
-    this.propietariosService.agregarPropietario(nuevoPropietario);
+    this.propietariosService.crearPropietario(nuevoPropietario).subscribe({
+      next: () => {
+        this.snack.mensajeSnackBar('Propietario creado exitosamente', 'Cerrar');
+      },
+      error: (error) => {
+        this.snack.mensajeSnackBar('Error al crear propietario', 'Cerrar');
+      }
+    })
   }
 
   private randomId(): number {

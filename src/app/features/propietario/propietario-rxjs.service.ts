@@ -1,36 +1,53 @@
 import { Injectable } from '@angular/core';
 import { IPropietario } from './propietario.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class PropietarioRxjsService {
-  // estado interno
+  URL = 'http://localhost:3000/propietarios';
   private listaPropietariosSubject = new BehaviorSubject<IPropietario[]>([]);
-  // estado externo ( lectura )
-  listaPropietarios$ : Observable<IPropietario[]> = this.listaPropietariosSubject.asObservable();
-  constructor() { }
+  listaPropietarios$ = this.listaPropietariosSubject.asObservable();
 
+  constructor(private http: HttpClient) {}
 
-
-  //crud
-  agregarPropietario( propietario: IPropietario ){
-    const listaActual = this.listaPropietariosSubject.getValue();
-    this.listaPropietariosSubject.next([...listaActual, propietario]);
+  cargarPropietarios(): Observable<IPropietario[]> {
+    return this.http.get<IPropietario[]>(this.URL).pipe(
+      tap((propietarios) => this.listaPropietariosSubject.next(propietarios))
+    );
   }
-  eliminarPropietario( id: number ){
-    const listaActual = this.listaPropietariosSubject.getValue();
-    const listaFiltrada = listaActual.filter( propietario => propietario.id !== id );
-    this.listaPropietariosSubject.next( listaFiltrada );
+
+  crearPropietario(data: IPropietario): Observable<IPropietario> {
+    return this.http.post<IPropietario>(this.URL, data).pipe(
+      tap((nuevoPropietario) => {
+        const propietariosActuales = this.listaPropietariosSubject.getValue();
+        this.listaPropietariosSubject.next([...propietariosActuales, nuevoPropietario]);
+      })
+    );
   }
-  editarPropietario( propietarioEditado: IPropietario ){
-    const listaActual = this.listaPropietariosSubject.getValue();
-    const listaActualizada = listaActual.map( propietario => {
-      if( propietario.id === propietarioEditado.id ){
-        return propietarioEditado;
-      }
-      return propietario;
-    });
-    this.listaPropietariosSubject.next( listaActualizada );
+
+  actualizarPropietario(data: IPropietario): Observable<IPropietario> {
+    return this.http.put<IPropietario>(`${this.URL}/${data.id}`, data).pipe(
+      tap((propietarioActualizado) => {
+        const propietariosActuales = this.listaPropietariosSubject
+          .getValue()
+          .map((propietario) =>
+            propietario.id === propietarioActualizado.id ? propietarioActualizado : propietario
+          );
+        this.listaPropietariosSubject.next(propietariosActuales);
+      })
+    );
+  }
+
+  eliminarPropietario(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.URL}/${id}`).pipe(
+      tap(() => {
+        const propietariosActuales = this.listaPropietariosSubject
+          .getValue()
+          .filter((propietario) => propietario.id !== id);
+        this.listaPropietariosSubject.next(propietariosActuales);
+      })
+    );
   }
 }

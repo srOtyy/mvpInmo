@@ -1,0 +1,103 @@
+{
+  "inquilinos": [
+    {
+      "id": 211021,
+      "caracteristicas": [
+        {
+          "clave": "Nombre",
+          "valor": "a"
+        },
+        {
+          "clave": "nombre",
+          "valor": "oty"
+        }
+      ]
+    }
+  ],
+  "propietarios": [
+    {
+      "id": 648728,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Oty"
+        },
+        {
+          "clave": "Edad",
+          "valor": 25
+        }
+      ]
+    },
+    {
+      "id": 397854,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Pebete"
+        },
+        {
+          "clave": "Edad",
+          "valor": 1
+        }
+      ]
+    },
+    {
+      "id": 860524,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "pirulines"
+        },
+        {
+          "clave": "Edad",
+          "valor": 12
+        }
+      ]
+    }
+  ],
+  "inmuebles": [
+    {
+      "id": "1m",
+      "caracteristicas": []
+    }
+  ],
+  "definiciones": [
+    {
+      "id": "propietarios",
+      "dominio": "propietarios",
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "tipo": "texto",
+          "requerido": true
+        },
+        {
+          "clave": "Edad",
+          "tipo": "numero",
+          "requerido": false
+        }
+      ]
+    },
+    {
+      "id": "inquilinos",
+      "dominio": "inquilinos",
+      "caracteristicas": [
+        {
+          "clave": "Nombre",
+          "tipo": "texto",
+          "requerido": true
+        },
+        {
+          "clave": "nombre",
+          "tipo": "texto",
+          "requerido": false
+        }
+      ]
+    },
+    {
+      "id": "inmuebles",
+      "dominio": "inmuebles",
+      "caracteristicas": []
+    }
+  ]
+}

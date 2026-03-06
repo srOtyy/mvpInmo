@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-import { of, Subject, switchMap, takeUntil } from 'rxjs';
+import { of, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { Dominio } from '../../core/navegacion/navegacionRutas';
 import { RutasDinamicasService } from '../../core/navegacion/rutas-dinamicas.service';
 import { DefinicionCaracteristica } from '../definicion-caracteristica.interface';
@@ -54,6 +54,7 @@ export class FormularioCaracteristicasComponent implements OnInit, OnDestroy {
     this.formularioCaracteristicas = this.formBuilder.group({
       clave: new FormControl('', Validators.required),
       tipo: new FormControl<DefinicionCaracteristica['tipo']>('texto', Validators.required),
+      
       requerido: new FormControl(false)
     });
   }
@@ -111,10 +112,14 @@ export class FormularioCaracteristicasComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.definicionesService.setDefiniciones(this.dominioActivo, this.definiciones);
-    this.definicionSubmit.emit({
-      dominio: this.dominioActivo,
-      definiciones: this.definiciones.slice()
-    });
+    this.definicionesService
+      .setDefiniciones(this.dominioActivo, this.definiciones)
+      .pipe(take(1))
+      .subscribe(definicionesGuardadas => {
+        this.definicionSubmit.emit({
+          dominio: this.dominioActivo as Dominio,
+          definiciones: definicionesGuardadas
+        });
+      });
   }
 }

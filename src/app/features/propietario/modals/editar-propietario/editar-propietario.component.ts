@@ -24,13 +24,7 @@ export class EditarPropietarioComponent implements OnInit{
   
   constructor( private formBuilder: FormBuilder, private _propietarioRxJsService: PropietarioRxjsService, private dialogRef: MatDialogRef<ModalComponent>,private _snackbarService: SnackbarService){
     this.formularioEditarPropietario = this.formBuilder.group({
-      id: new FormControl('', [Validators.required]),
-      nombre: new FormControl('', [Validators.required]),
-      dni: new FormControl('', [Validators.required]),
-      telefono: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      cbu: new FormControl('', [Validators.required]),
-      inmuebles: new FormControl([],[])
+      id: new FormControl('', [Validators.required])
     });
   }
   ngOnInit() {
@@ -39,31 +33,30 @@ export class EditarPropietarioComponent implements OnInit{
 
   pasarDatosPropietario(propietarioData: IPropietario) {
     this.formularioEditarPropietario.setValue({
-      id: propietarioData.id,
-      nombre: obtenerCaracteristica(propietarioData, 'nombre'),
-      dni: obtenerCaracteristica(propietarioData, 'dni'),
-      telefono: obtenerCaracteristica(propietarioData, 'telefono'),
-      email: obtenerCaracteristica(propietarioData, 'email'),
-      cbu: obtenerCaracteristica(propietarioData, 'cbu'),
-      inmuebles: obtenerCaracteristica(propietarioData, 'inmuebles', [])
+      id: propietarioData.id
     });
   }
 
   guardarCambios() {  
-    const propietarioEditado: IPropietario = {
-      id: this.formularioEditarPropietario.get('id')?.value,
-      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarPropietario, [
-        'nombre',
-        'dni',
-        'telefono',
-        'email',
-        'cbu',
-        'inmuebles'
-      ])
-    };
-    this._propietarioRxJsService.editarPropietario(propietarioEditado)
-    this._snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
-    this.dialogRef.close(true);
+
+    this._propietarioRxJsService.actualizarPropietario(this.setPropietarioNuevo()).subscribe({
+      next: () => {
+        this._snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
+        this.dialogRef.close(true);
+      },
+      error: () => {
+        this._snackbarService.mensajeSnackBar('Error al editar propietario', 'Cerrar');
+      }
+    });
   }
-  
+  setPropietarioNuevo(): IPropietario{
+    const formValue = this.formularioEditarPropietario.value;
+    const propietarioEditado: IPropietario = {
+      id: formValue.id,
+      caracteristicas: construirCaracteristicasDesdeForm(formValue, obtenerCaracteristica(this.entidad, 'caracteristicas'))
+    };
+    return propietarioEditado;
+  }
+
 }
+

@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IPropietario } from '../propietario.interface';
-import { MatButton } from "@angular/material/button";
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
 import { PropietarioRxjsService } from '../propietario-rxjs.service';
 import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.component';
@@ -9,43 +8,30 @@ import { EditarPropietarioComponent } from '../modals/editar-propietario/editar-
 import { EliminarPropietarioComponent } from '../modals/eliminar-propietario/eliminar-propietario.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../../shared/modal/modal.component';
+import { Observable } from 'rxjs';
 import { obtenerCaracteristica } from '../../../shared/entity-helpers';
-
-
+import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-propietario-c',
   standalone: true,
-  imports: [ MatButton,CardListComponent, ItemEntidadComponent],
+  imports: [CardListComponent, ItemEntidadComponent, AsyncPipe],
   templateUrl: './propietario-c.component.html',
   styleUrl: './propietario-c.component.scss'
 })
 
-export class PropietarioCComponent {
+export class PropietarioCComponent implements OnInit {
   propietario!: IPropietario;
-  listaPropietarios: IPropietario[] = [];
+  listaPropietarios$!: Observable<IPropietario[]>;
   obtenerCaracteristica = obtenerCaracteristica;
-
   constructor(
     private _propietariosRxJsService: PropietarioRxjsService,
     private dialog: MatDialog
-  ) {
-    this._propietariosRxJsService.listaPropietarios$.subscribe( propietarios => {
-      this.listaPropietarios = propietarios;
-    });
-  }
-
-  // este crea el propietario de prueba, deberia eliminarse ?
-  crearPropietario(){
-    this.propietario = {
-      id: this.randomId(),
-      caracteristicas: [
-        { clave: 'nombre', valor: this.randomId().toString() },
-      ]
-    }
-    this._propietariosRxJsService.agregarPropietario(this.propietario);
-   
-  }
+  ) {};
   
+  ngOnInit(): void {
+    this.listaPropietarios$ = this._propietariosRxJsService.listaPropietarios$;
+    this._propietariosRxJsService.cargarPropietarios().subscribe();
+  }
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;
   }

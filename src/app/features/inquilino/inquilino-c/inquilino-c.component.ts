@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IInquilino } from '../inquilino.interface';
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
 import { InquilinoRxjsService } from '../inquilino-rxjs.service';
@@ -10,37 +10,29 @@ import { EliminarInquilinoComponent } from '../modals/eliminar-inquilino/elimina
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.component';
 import { obtenerCaracteristica } from '../../../shared/entity-helpers';
-
+import { Observable, } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-inquilino-c',
   standalone: true,
-  imports: [CardListComponent, MatButton, ItemEntidadComponent],
+  imports: [CardListComponent, MatButton, ItemEntidadComponent, AsyncPipe],
   templateUrl: './inquilino-c.component.html',
   styleUrl: './inquilino-c.component.scss'
 })
 
-export class InquilinoCComponent {
+export class InquilinoCComponent implements OnInit{
   inquilino!: IInquilino;
-  listaInquilinos: IInquilino[] = [];
+  listaInquilinos$!: Observable<IInquilino[]>
   obtenerCaracteristica = obtenerCaracteristica;
 
   constructor(
     private _inquilinosService: InquilinoRxjsService,
     private dialog: MatDialog
-  ) {
-    this._inquilinosService.listaInquilinos$.subscribe(inquilinos => {
-      this.listaInquilinos = inquilinos;
-    })
-  }
+  ) {};
 
-  crearInquilino(){
-    this.inquilino = {
-      id: this.randomId(),
-      caracteristicas: [
-        { clave: 'nombre', valor: this.randomId().toString() },
-      ]
-    }
-    this._inquilinosService.agregarInquilino(this.inquilino);
+  ngOnInit(): void {
+    this.listaInquilinos$ = this._inquilinosService.listaInquilinos$;
+    this._inquilinosService.cargarInquilinos().subscribe();
   }
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;

@@ -18,16 +18,24 @@ export class EliminarInquilinoComponent {
   @Input() entidad!: IInquilino;
   constructor(private _serviceRxJsInquilinos: InquilinoRxjsService,
     private dialogRef: MatDialogRef <ModalComponent>,
-    private _snackbarService: SnackbarService
-  ){}
+    private _snackbarService: SnackbarService){}
 
   obtenerCaracteristica = (clave: string) =>
     obtenerCaracteristica(this.entidad, clave);
 
   confimarEliminarInquilino(){
-    this._serviceRxJsInquilinos.eliminarInquilino(this.entidad.id);
-    this._snackbarService.mensajeSnackBar('Inquilino eliminado con éxito', 'Cerrar');
-    this.cerrarModal()
+    this._serviceRxJsInquilinos.eliminarInquilino(this.entidad.id).subscribe(
+      {
+        next: () => {
+          this._snackbarService.mensajeSnackBar('Inquilino eliminado con éxito', 'Cerrar');
+          this.cerrarModal();
+        },
+        error: () => {
+          this._snackbarService.mensajeSnackBar('Error al eliminar inquilino', 'Cerrar');
+        }
+      }
+    );
+   
   }
   cerrarModal(){
     this.dialogRef.close();

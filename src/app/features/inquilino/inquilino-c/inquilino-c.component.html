@@ -1,6 +1,5 @@
-<button mat-button (click)="crearInquilino()">Crear Inquilino</button>
 <app-card-list entidad="Inquilinos">
-    @for(inquilino of listaInquilinos; track inquilino.id) {
+    @for(inquilino of listaInquilinos$| async; track inquilino.id) {
         <app-item-entidad [entidad]="inquilino"
         [titulo]="obtenerCaracteristica(inquilino, 'nombre')"
         (ver)="verInquilino($event)"
