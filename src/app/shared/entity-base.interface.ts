@@ -5,5 +5,5 @@ export interface IEntityBase {
 
 export interface CaracteristicaEntidad {
   clave: string;
-  valor: any;
+  valor: string | number | boolean;
 }

@@ -7,7 +7,7 @@ export type EntidadConCaracteristicas = {
 export function obtenerCaracteristica(
   entidad: EntidadConCaracteristicas,
   clave: string,
-  valorPorDefecto: any = ''
+  valorPorDefecto: string | number | boolean  = ''
 ): any {
   return entidad.caracteristicas.find(c => c.clave === clave)?.valor ?? valorPorDefecto;
 }

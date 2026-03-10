@@ -20,15 +20,14 @@ export class EditarInquilinoComponent implements OnInit{
  @Input() entidad!: IInquilino;
  formularioEditarInquilino: FormGroup;
 
- constructor( private formBuilder: FormBuilder, private _inquilinoRxJsService: InquilinoRxjsService, private dialogRef: MatDialogRef<ModalComponent>,private _snackbarService: SnackbarService){
+ constructor( 
+    private formBuilder: FormBuilder,
+    private _inquilinoRxJsService: InquilinoRxjsService,
+    private dialogRef: MatDialogRef<ModalComponent>,
+    private _snackbarService: SnackbarService
+  ){
     this.formularioEditarInquilino = this.formBuilder.group({
-      id: new FormControl('', [Validators.required]),
-      nombre: new FormControl('', [Validators.required]),
-      dni: new FormControl('', [Validators.required]),
-      telefono: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      garante: new FormControl('', [Validators.required]),
-      ingresos: new FormControl('', [Validators.required]),
+      id: new FormControl('', [Validators.required])
     });
     
   }
@@ -38,8 +37,17 @@ export class EditarInquilinoComponent implements OnInit{
   }
 
   pasarDatosInquilino(inquilinoData: IInquilino) {
-    this.formularioEditarInquilino.setValue({
+   this.formularioEditarInquilino.patchValue({
       id: inquilinoData.id
+    });
+
+    inquilinoData.caracteristicas.forEach(c => {
+
+      this.formularioEditarInquilino.addControl(
+        c.clave,
+        new FormControl(c.valor)
+      );
+
     });
   }
 
@@ -56,10 +64,10 @@ export class EditarInquilinoComponent implements OnInit{
 }
 
   setInquilinoNuevo(): IInquilino{
-    const formValue = this.formularioEditarInquilino.value;
+    const claves = this.entidad.caracteristicas.map(c => c.clave);
     const inquilinoEditado: IInquilino = {
-      id: formValue.id,
-      caracteristicas: construirCaracteristicasDesdeForm(formValue, obtenerCaracteristica(this.entidad, 'caracteristicas'))
+      id: this.formularioEditarInquilino.value.id,
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInquilino, claves)
     };
     return inquilinoEditado;
   }

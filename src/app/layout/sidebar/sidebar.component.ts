@@ -13,8 +13,6 @@ export class SidebarComponent {
   // obtiene los dominios activos desde el servicio de core: rutas-dinamicas.service.ts
   dominiosActivos: string[] = [];
   constructor(private rutasDinamicasService: RutasDinamicasService) {
-    this.rutasDinamicasService.emitirEntidades().forEach(dominio => {
-      this.dominiosActivos.push(dominio);
-    });
+    this.dominiosActivos = this.rutasDinamicasService.emitirEntidades();
   }
 }

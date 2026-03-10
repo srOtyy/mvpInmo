@@ -22,23 +22,39 @@ export class EditarPropietarioComponent implements OnInit{
   @Input() entidad!: IPropietario;
   formularioEditarPropietario: FormGroup;
   
-  constructor( private formBuilder: FormBuilder, private _propietarioRxJsService: PropietarioRxjsService, private dialogRef: MatDialogRef<ModalComponent>,private _snackbarService: SnackbarService){
-    this.formularioEditarPropietario = this.formBuilder.group({
+  constructor( 
+    private formBuilder: FormBuilder,
+    private _propietarioRxJsService: PropietarioRxjsService,
+    private dialogRef: MatDialogRef<ModalComponent>,
+    private _snackbarService: SnackbarService)
+    {
+      this.formularioEditarPropietario = this.formBuilder.group({
       id: new FormControl('', [Validators.required])
-    });
-  }
+      });
+    }
+
   ngOnInit() {
     this.pasarDatosPropietario(this.entidad);
   }
 
   pasarDatosPropietario(propietarioData: IPropietario) {
-    this.formularioEditarPropietario.setValue({
+
+    this.formularioEditarPropietario.patchValue({
       id: propietarioData.id
     });
+
+    propietarioData.caracteristicas.forEach(c => {
+
+      this.formularioEditarPropietario.addControl(
+        c.clave,
+        new FormControl(c.valor)
+      );
+
+    });
+
   }
 
   guardarCambios() {  
-
     this._propietarioRxJsService.actualizarPropietario(this.setPropietarioNuevo()).subscribe({
       next: () => {
         this._snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
@@ -50,11 +66,11 @@ export class EditarPropietarioComponent implements OnInit{
     });
   }
   setPropietarioNuevo(): IPropietario{
-    const formValue = this.formularioEditarPropietario.value;
+    const claves = this.entidad.caracteristicas.map(c => c.clave);
     const propietarioEditado: IPropietario = {
-      id: formValue.id,
-      caracteristicas: construirCaracteristicasDesdeForm(formValue, obtenerCaracteristica(this.entidad, 'caracteristicas'))
-    };
+       id: this.formularioEditarPropietario.value.id,
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarPropietario, claves)
+    };  
     return propietarioEditado;
   }
 

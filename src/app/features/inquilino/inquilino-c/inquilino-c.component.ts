@@ -15,7 +15,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-inquilino-c',
   standalone: true,
-  imports: [CardListComponent, MatButton, ItemEntidadComponent, AsyncPipe],
+  imports: [CardListComponent, ItemEntidadComponent, AsyncPipe],
   templateUrl: './inquilino-c.component.html',
   styleUrl: './inquilino-c.component.scss'
 })

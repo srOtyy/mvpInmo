@@ -6,6 +6,8 @@
 
 ### Observaciones
 
+- entity-helpers: obtenerCaracteristica() devuelve un any
+
 ### Decisiones
 
 ## Próxima versión

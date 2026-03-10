@@ -2,6 +2,14 @@
 .datos{
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    font-size: 15px;
+    gap: 10px;
+    font-size: 17px;
+    .dato{
+        .clave{
+            font-weight: bold;
+        }
+        .valor{
+            margin-left: 5px;
+        }
+    }
 }

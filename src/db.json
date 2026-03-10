@@ -1,56 +1,43 @@
 {
   "inquilinos": [
     {
-      "id": 211021,
+      "id": 121351,
       "caracteristicas": [
         {
-          "clave": "Nombre",
-          "valor": "a"
-        },
-        {
           "clave": "nombre",
-          "valor": "oty"
+          "valor": "pepe"
         }
       ]
     }
   ],
   "propietarios": [
     {
-      "id": 648728,
+      "id": 729526,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Oty"
+          "valor": "Oty Propietario"
         },
         {
           "clave": "Edad",
-          "valor": 25
+          "valor": "1"
         }
       ]
     },
     {
-      "id": 397854,
+      "id": 918711,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Pebete"
+          "valor": "propietario 3"
         },
         {
           "clave": "Edad",
-          "valor": 1
-        }
-      ]
-    },
-    {
-      "id": 860524,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "pirulines"
+          "valor": "2333"
         },
         {
-          "clave": "Edad",
-          "valor": 12
+          "clave": "telefono",
+          "valor": 12345123
         }
       ]
     }
@@ -75,6 +62,11 @@
           "clave": "Edad",
           "tipo": "numero",
           "requerido": false
+        },
+        {
+          "clave": "telefono",
+          "tipo": "numero",
+          "requerido": true
         }
       ]
     },
@@ -83,14 +75,9 @@
       "dominio": "inquilinos",
       "caracteristicas": [
         {
-          "clave": "Nombre",
-          "tipo": "texto",
-          "requerido": true
-        },
-        {
           "clave": "nombre",
           "tipo": "texto",
-          "requerido": false
+          "requerido": true
         }
       ]
     },
