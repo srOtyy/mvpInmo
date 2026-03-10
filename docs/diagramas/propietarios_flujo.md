@@ -1,62 +1,69 @@
-
-# Diagrama de Flujo — Dominio Propietarios (estado actual)
+# Diagrama de Flujo - Dominio Propietarios (actualizado)
 
 ```mermaid
 flowchart TB
-
     %% Rutas
-    R1[/Ruta: propietario/lista/]
+    RLISTA[/Ruta: /propietarios/lista/]
+    RCREAR[/Ruta: /propietarios/crear/]
+    RDEF[/Ruta: /propietarios/def_caracteristicas/]
 
     %% Componentes
-    PC[propietario-c]
-
-    %% Shared
+    LC[propietario-c]
+    CC[crear-propietario]
+    FD[form-dinamico]
+    FC[formulario-caracteristicas]
     CL[shared: card-list]
     IE[shared: item-entidad]
+    MOD[shared: modal]
+    MV[modal: ver-info-propietario]
+    ME[modal: editar-propietario]
+    MD[modal: eliminar-propietario]
 
-    %% Modales
-    ME[modal editar]
-    MD[modal eliminar]
-    MI[modal ver-info]
+    %% Servicios y estado
+    SP{{propietario-rxjs.service}}
+    SD{{definiciones-caracteristicas.service}}
+    EP[(listaPropietarios$)]
+    ED[(definiciones propietarios)]
 
-    %% Servicio
-    S{{propietarios-rxjs.service}}
+    %% Lista
+    RLISTA --> LC
+    LC -->|ngOnInit: cargarPropietarios| SP
+    SP -->|GET/POST/PUT/DELETE| API[(json-server)]
+    SP --> EP
+    EP --> LC
+    LC --> CL --> IE
+    IE -->|ver/editar/eliminar| MOD
+    MOD --> MV
+    MOD --> ME
+    MOD --> MD
+    ME -->|actualizarPropietario| SP
+    MD -->|eliminarPropietario| SP
 
-    %% Estado
-    O[(listaPropietarios$)]
+    %% Crear
+    RCREAR --> CC --> FD
+    FD -->|entidadCreada| CC
+    CC -->|crearPropietario| SP
 
-    %% Flujos
-    R1 --> PC
-
-    PC -->|Renderiza lista| CL
-    CL --> IE
-
-    IE --> ME
-    IE --> MD
-    IE --> MI
-
-    PC -->|subscribe| S
-    ME -->|subscribe| S
-    MD -->|subscribe| S
-
-    PC -->|crea nuevo propietario| S
-
-    S -->|emite cambios| O
-    O --> PC
+    %% Definiciones de caracteristicas
+    RDEF --> FC
+    FC -->|getDefiniciones$| SD
+    FC -->|setDefiniciones| SD
+    SD -->|GET/POST/PATCH| API
+    SD --> ED
+    ED --> FD
 
     %% Estilos
-    classDef route stroke:#1E88E5, color:#f1f1f1;
+    classDef route stroke:#1E88E5,color:#f1f1f1;
     classDef component stroke:#2E7D32;
     classDef service stroke:#F9A825;
     classDef modal stroke:#C2185B;
     classDef shared stroke:#5E35B1;
     classDef state stroke:#455A64;
 
-    class R1,R2 route;
-    class PC,IP component;
-    class CL,IE shared;
-    class ME,MD,MI modal;
-    class S service;
-    class O state;
-
+    class RLISTA,RCREAR,RDEF route;
+    class LC,CC,FD,FC component;
+    class CL,IE,MOD shared;
+    class MV,ME,MD modal;
+    class SP,SD service;
+    class EP,ED state;
 ```

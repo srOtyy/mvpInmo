@@ -1,41 +1,44 @@
-
-# Diagrama de Flujo — Dominio Inmueble (estado actual)
+# Diagrama de Flujo - Dominio Inmuebles (actualizado)
 
 ```mermaid
 flowchart TB
-
     %% Rutas
-    R1[/Ruta: inmueble/crear/]
+    RCREAR[/Ruta: /inmuebles/crear/]
+    RDEF[/Ruta: /inmuebles/def_caracteristicas/]
 
     %% Componentes
-    FC[formulario-creacion]
+    CC[crear-inmueble]
+    FD[form-dinamico]
+    FC[formulario-caracteristicas]
 
-    %% Servicio
-    S{{inmuebles-rxjs.service}}
+    %% Servicios y estado
+    SI{{inmuebles-rxjs.service}}
+    SD{{definiciones-caracteristicas.service}}
+    EI[(listaInmuebles$)]
+    ED[(definiciones inmuebles)]
 
-    %% Estado
-    O[(listaInmuebles$)]
+    %% Crear (estado en memoria)
+    RCREAR --> CC --> FD
+    FD -->|entidadCreada| CC
+    CC -->|agregarInmueble()| SI
+    SI --> EI
 
-    %% Flujos
-    R1 --> FC
-
-    FC -->|subscripcion| S
-
-    S --> O
-
-    O --> FC
-
-
+    %% Definiciones de caracteristicas
+    RDEF --> FC
+    FC -->|getDefiniciones$()| SD
+    FC -->|setDefiniciones()| SD
+    SD -->|GET/POST/PATCH| API[(json-server)]
+    SD --> ED
+    ED --> FD
 
     %% Estilos
-    classDef route stroke:#1E88E5, color:#f1f1f1;
+    classDef route stroke:#1E88E5,color:#f1f1f1;
     classDef component stroke:#2E7D32;
     classDef service stroke:#F9A825;
     classDef state stroke:#455A64;
 
-    class R1, route;
-    class FC, component;
-    class S service;
-    class O state;
-
+    class RCREAR,RDEF route;
+    class CC,FD,FC component;
+    class SI,SD service;
+    class EI,ED state;
 ```

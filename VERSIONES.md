@@ -1,32 +1,12 @@
-# v0.9
+# v0.10
 
 ## Objetivo
-
-Crear una base de datos local con json server para tener una persistencia en los datos creados. Esto va a simplificar la creacion del MVP
 
 ## Alcance incluido
 
 ### Observaciones
 
-- Actualmente estamos trabajando unicamente con la entidad propietarios
-- El crud de entidad no accede a la db. Primero hay que comprender como lo hacen las caracteristicas
-Luego de eso se va a poder replicar la misma lógica con la creacion de entidades
-- Hay un bug cuando se cambia de dominio, todavía no se como forzar el bug. Hay que eliminar los routerlink de los botones del sidebar. La idea es que el sidebar solo cambie los botones del header asi evitamos el bug ( arreglado el bug pero la idea sigue siendo buena)
-- Hay un bug cuando se crean entidades ya no se muestran en la lista de cada entidad. Hay que arreglar como accede el shared-list a las entidades para mostrarlas
-- En la creacion de propietarios, me gustaría que los inputs que son de checkbox esten del lado derecho del formulario, ya que genera un poco de "ruido" que se mesclen entre inputs de texto ( detalle de UI)
-- los modales de los propietarios tienen hardcodeado las propiedades anteriores, por lo que no muestran las propiedades ingresadas ( arreglar modales)
-- La interface 'caracteristicasInmueble' en src/app/features/inmueble/inmueble.interface.ts está definida pero no se importa ni usa en ninguna otra parte del código. La documentación en docs/dominio/inmueble-dominio.md referencia esta interface pero está desactualizada. Considerar eliminar la interface o implementar su funcionalidad.
-
 ### Decisiones
-
-- Para correr el .json se nesecita ejecutar en una terminal propia 'json-server --watch "nombre del archivo.json"'
-
-- Para poder implementar el uso de la base de datos se tuvieron que modificar los archivos siguientes:
-    definiciones-caracteristicas.service:
-        1.En el constructor setea el Map<Domino,BehaviurSubject<definicionesCaracteristica[]>>() y se buscan las definiciones existentes si es que existen. Hay que entender el porque se setea el Map
-        2. la funcion 'setDefiniciones(dominio, definiciones):Observable<> es la que envia los datos a la db. ¿Como funciona?
-    formualario-caracteristicas.component.ts:
-        1.
 
 ## Próxima versión
 
@@ -92,3 +72,9 @@ Pendientes para el proximo debug:
 ### v0.8 Formulario dinamico
 
 falta agregar lo que se hizo en esta version y la v0.7
+
+### v0.9 - Base de datos local
+
+- el .json se nesecita ejecutar en una terminal propia 'json-server --watch "nombre del archivo.json"'
+- los modales hardcodean las caracteristicas que deben mostrar. Hay que volverlos dinamicos
+- la consola muestra un error con el layout

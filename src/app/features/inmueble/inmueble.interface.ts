@@ -2,4 +2,3 @@ import { CaracteristicaEntidad, IEntityBase } from '../../shared/entity-base.int
 
 export interface IInmueble extends IEntityBase {}
 
-export interface caracteristicasInmueble extends CaracteristicaEntidad {}
