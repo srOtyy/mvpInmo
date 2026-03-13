@@ -2,11 +2,29 @@
 
 ## Objetivo
 
+eliminar todos los 'any' dentro de lo posible
+
 ## Alcance incluido
 
 ### Observaciones
 
-- entity-helpers: obtenerCaracteristica() devuelve un any
+- entity-helpers: obtenerCaracteristica() y construirCaracteristicasDesdeForm()
+                obtenerCaracteristica() emite un any
+                construirCaracteristicasDesdeForm() tiene como parametro:
+                    form: { get: (clave: string) => { value: any } | null },claves: string[]
+- modal.component.ts: En el esquema del @Inject
+                    El inject vendira a ser como el input del modal. tanto compoenente, como componenteData erciben any
+                        @Inject(MAT_DIALOG_DATA) public data: {
+                        titulo: string;
+                        componente: Type<any>;
+                        componenteData?: any;
+                        }
+- form dinamico.component.ts: en el @Output
+                            el otuput tiene el siguiente esquema:
+                                Output() entidadCreada = new EventEmitter<{ caracteristicas: { clave: string; valor: any }[] }>();
+- crear-propietario/inquilino/mueble.ts:onEntidadCreada() tiene en el argumento(
+    entidad: { caracteristicas: { clave: string; valor: any }[] }
+)
 
 ### Decisiones
 

@@ -12,5 +12,6 @@ import { MainComponent } from './layout/main/main.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = '1/12';
+  title = '3/13';
+  // el dia que empece fue el 1/12 ?
 }
