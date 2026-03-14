@@ -19,7 +19,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export class FormDinamicoComponent implements OnInit, OnDestroy {
   @Input({ required: true }) dominio!: Dominio;
   // será que la interfas de las caracteristicas le hace falta el 'requerido'?
-  @Output() entidadCreada = new EventEmitter<{ caracteristicas: { clave: string; valor: any }[] }>();
+  @Output() entidadCreada = new EventEmitter<{ caracteristicas: 
+    DefinicionCaracteristica[] }>();
 
   definiciones: DefinicionCaracteristica[] = [];
   formulario: FormGroup = new FormGroup({});
@@ -53,7 +54,8 @@ export class FormDinamicoComponent implements OnInit, OnDestroy {
     const entidad = {
       caracteristicas: this.definiciones.map(definicion => ({
         clave: definicion.clave,
-        valor: valores[definicion.clave]
+        tipo: valores[definicion.clave],
+        requerido: definicion.requerido ? true : false
       }))
     };
 

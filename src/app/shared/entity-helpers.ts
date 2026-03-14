@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { CaracteristicaEntidad } from './entity-base.interface';
 
 export type EntidadConCaracteristicas = {
@@ -8,16 +9,16 @@ export function obtenerCaracteristica(
   entidad: EntidadConCaracteristicas,
   clave: string,
   valorPorDefecto: string | number | boolean  = ''
-): any {
+): string | number | boolean  {
   return entidad.caracteristicas.find(c => c.clave === clave)?.valor ?? valorPorDefecto;
 }
 
 export function construirCaracteristicasDesdeForm(
-  form: { get: (clave: string) => { value: any } | null },
-  claves: string[]
+  form: FormGroup,
 ): CaracteristicaEntidad[] {
+  const claves = Object.keys(form.controls).filter(key => key !== 'id');
   return claves.map(clave => ({
     clave,
-    valor: form.get(clave)?.value
+    valor: form.controls[clave].value
   }));
 }

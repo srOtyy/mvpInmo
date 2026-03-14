@@ -2,31 +2,58 @@
 
 ## Objetivo
 
-eliminar todos los 'any' dentro de lo posible
+Eliminar todos los `any` dentro de lo posible.
 
 ## Alcance incluido
 
 ### Observaciones
 
-- entity-helpers: obtenerCaracteristica() y construirCaracteristicasDesdeForm()
-                obtenerCaracteristica() emite un any
-                construirCaracteristicasDesdeForm() tiene como parametro:
-                    form: { get: (clave: string) => { value: any } | null },claves: string[]
-- modal.component.ts: En el esquema del @Inject
-                    El inject vendira a ser como el input del modal. tanto compoenente, como componenteData erciben any
-                        @Inject(MAT_DIALOG_DATA) public data: {
-                        titulo: string;
-                        componente: Type<any>;
-                        componenteData?: any;
-                        }
-- form dinamico.component.ts: en el @Output
-                            el otuput tiene el siguiente esquema:
-                                Output() entidadCreada = new EventEmitter<{ caracteristicas: { clave: string; valor: any }[] }>();
-- crear-propietario/inquilino/mueble.ts:onEntidadCreada() tiene en el argumento(
-    entidad: { caracteristicas: { clave: string; valor: any }[] }
-)
+- **crear-propietario/inquilino/mueble.ts**: `onEntidadCreada()` tiene en el argumento:
+    `(entidad: { caracteristicas: { clave: string; valor: any }[] })`
+
+- **modal.component.ts**: (LOGRADO)En el esquema del `@Inject`.(LOGRADO)
+  - El inject actúa como el input del modal. Tanto componente como `componenteData` reciben `any`:
+
+      ```typescript
+      @Inject(MAT_DIALOG_DATA) public data: {
+        titulo: string;
+        componente: Type<any>;
+        componenteData?: any;
+      }
+      ```
+
+- **form-dinamico.component.ts**:(LOGRADO)En el `@Output`.(LOGRADO)
+  - El output tiene el siguiente esquema:
+    `@Output() entidadCreada = new EventEmitter<{ caracteristicas: { clave: string; valor: any }[] }>();`
+
+- **entity-helpers**:(LOGRADO) `obtenerCaracteristica()` y `construirCaracteristicasDesdeForm()`(LOGRADO)
+  - `obtenerCaracteristica()` emite un `any`.
+  - `construirCaracteristicasDesdeForm()` tiene como parámetro:
+      `form: { get: (clave: string) => { value: any } | null }, claves: string[]`
 
 ### Decisiones
+
+- modal.component.ts:
+        ```typescript
+        componente: Type<any>
+        ```
+        pareciera que es un "mal necesario". Si definimos componente:
+        ```typescript
+        componente: Type<PropietarioComponent>
+        ```
+        ese modal solo servirá para propietarios.
+        Se logró eliminar el any de componentData, en su lugar pusimos 'IEntityBase' ya que se usaba para las entidades base
+
+- form.dinamico.ts:
+        Se cambió el argumento del ouput a:
+        ```typescript
+        @Output() entidadCreada = new EventEmitter<{ caracteristicas: DefinicionCaracteristica[] }>();
+        ```
+
+- entity-helpers.ts:
+        el tipo de dato de retorno que tenia obtenerCaracteristica() se cambio a:  " string | number | boolean"
+        construirCaracteristicasDesdeForm() se le cambio el argumento a form:FormGroup y se elimino el segundo argumento.
+        Se optimizo el código tambien
 
 ## Próxima versión
 
@@ -34,7 +61,7 @@ eliminar todos los 'any' dentro de lo posible
 
 ### v0.1 – Propietarios
 
-    En esta versión se implementó el CRUD básico de la entidad Propietario, incluyendo:
+En esta versión se implementó el CRUD básico de la entidad Propietario, incluyendo:
         Modelo y servicio
         Gestión de estado mediante RxJS
         UI mínima funcional para creación, edición y listado
@@ -42,32 +69,31 @@ eliminar todos los 'any' dentro de lo posible
 
 ### v0.2 - Inquilinos
 
-    En esta version se impemento el CURD basico de Inquilino, incluye :
+En esta version se impemento el CURD basico de Inquilino, incluye :
         Modelo (interfaz) y serivicio
         Gestion de estadio mediante RxJs ( El array)
         UI Aceptable para el uso del CRUD
         Esta version establecio la segunda entidad importante del sistema.
 
-    Observaciones endeudadas:
+Observaciones endeudadas:
         - `item-propietario` y `item-inquilino` comparten estructura
         - Los modales base se repiten entre entidades
 
 ### v0.3 - Service rutas dinamicas
 
-    En esta version se creó un service que crea botones en el header, los botones indican las rutas del dominio donde se encuentra el usuario ( los dominios que hay en el sidebar).
+ En esta version se creó un service que crea botones en el header, los botones indican las rutas del dominio donde se encuentra el usuario ( los dominios que hay en el sidebar).
     Se permite agregar nuevas rutas dentro de los archivos indicados
         - Se creó el archivo `navegacionRutas.ts`, que contiene:
         - La interfaz IBotonRuta
         - El union type que define los dominios válidos del sistema
-    
-    Obsevaciones:
+Obsevaciones:
         Se utilizan herramientas nuevas cono record y union type
 
 ### v0.4 - Dominio 'Contratos'
 
-    En esta versión se crearon archivos markdown con mermeid
+En esta versión se crearon archivos markdown con mermeid
 
-    Observaciones técnicas:
+Observaciones técnicas:
         - Se reutilizaron patrones establecidos en v0.1 y v0.2
         - Se identificó duplicación de código en componentes `item-*`
         - El sidebar continúa siendo hardcodeado para esta entidad

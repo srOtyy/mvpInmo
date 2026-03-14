@@ -66,10 +66,9 @@ export class EditarPropietarioComponent implements OnInit{
     });
   }
   setPropietarioNuevo(): IPropietario{
-    const claves = this.entidad.caracteristicas.map(c => c.clave);
     const propietarioEditado: IPropietario = {
        id: this.formularioEditarPropietario.value.id,
-      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarPropietario, claves)
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarPropietario)
     };  
     return propietarioEditado;
   }
