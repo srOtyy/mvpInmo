@@ -33,6 +33,19 @@ Eliminar todos los `any` dentro de lo posible.
 
 ### Decisiones
 
+- crear-propietario/inquilino/inmueble.ts:
+     ```typescript
+          onEntidadCreada(entidad: { caracteristicas: { clave: string; valor: any }[] }): void {
+          const nuevoPropietario: IPropietario = {
+            id: this.randomId(),
+            caracteristicas: entidad.caracteristicas
+          };
+      
+        {...}
+        }
+    ```
+    Se puede repetir la lógica de el emit de `form.dinamico.ts`
+
 - modal.component.ts:
         ```typescript
         componente: Type<any>
