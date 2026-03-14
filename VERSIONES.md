@@ -8,10 +8,8 @@ Eliminar todos los `any` dentro de lo posible.
 
 ### Observaciones
 
-- **crear-propietario/inquilino/mueble.ts**: `onEntidadCreada()` tiene en el argumento:
-    `(entidad: { caracteristicas: { clave: string; valor: any }[] })`
 
-- **modal.component.ts**: (LOGRADO)En el esquema del `@Inject`.(LOGRADO)
+- **modal.component.ts**:En el esquema del `@Inject`
   - El inject actúa como el input del modal. Tanto componente como `componenteData` reciben `any`:
 
       ```typescript
@@ -22,40 +20,12 @@ Eliminar todos los `any` dentro de lo posible.
       }
       ```
 
-- **form-dinamico.component.ts**:(LOGRADO)En el `@Output`.(LOGRADO)
-  - El output tiene el siguiente esquema:
-    `@Output() entidadCreada = new EventEmitter<{ caracteristicas: { clave: string; valor: any }[] }>();`
-
-- **entity-helpers**:(LOGRADO) `obtenerCaracteristica()` y `construirCaracteristicasDesdeForm()`(LOGRADO)
-  - `obtenerCaracteristica()` emite un `any`.
-  - `construirCaracteristicasDesdeForm()` tiene como parámetro:
-      `form: { get: (clave: string) => { value: any } | null }, claves: string[]`
+  - el componente ya no anda, asi que podriamos probar con rehacer los modales en un servicio de modales genericos
 
 ### Decisiones
 
 - crear-propietario/inquilino/inmueble.ts:
-     ```typescript
-          onEntidadCreada(entidad: { caracteristicas: { clave: string; valor: any }[] }): void {
-          const nuevoPropietario: IPropietario = {
-            id: this.randomId(),
-            caracteristicas: entidad.caracteristicas
-          };
-      
-        {...}
-        }
-    ```
-    Se puede repetir la lógica de el emit de `form.dinamico.ts`
-
-- modal.component.ts:
-        ```typescript
-        componente: Type<any>
-        ```
-        pareciera que es un "mal necesario". Si definimos componente:
-        ```typescript
-        componente: Type<PropietarioComponent>
-        ```
-        ese modal solo servirá para propietarios.
-        Se logró eliminar el any de componentData, en su lugar pusimos 'IEntityBase' ya que se usaba para las entidades base
+        onEntidadCreada(entidad: { caracteristicas: caracteristicasEntidad[] }): void
 
 - form.dinamico.ts:
         Se cambió el argumento del ouput a:

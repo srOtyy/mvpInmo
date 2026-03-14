@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinamico.component';
 import { InmueblesRxjsService } from '../inmuebles-rxjs.service';
+import { CaracteristicaEntidad } from '../../../shared/entity-base.interface';
 
 @Component({
   selector: 'app-crear-inmueble',
@@ -12,7 +13,7 @@ import { InmueblesRxjsService } from '../inmuebles-rxjs.service';
 export class CrearInmuebleComponent {
   constructor(private inmueblesService: InmueblesRxjsService) {}
 
-  onEntidadCreada(entidad: { caracteristicas: { clave: string; valor: any }[] }): void {
+  onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }): void {
     const nuevoInmueble = {
       id: this.randomId(),
       caracteristicas: entidad.caracteristicas

@@ -3,6 +3,7 @@ import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinami
 import { IPropietario } from '../propietario.interface';
 import { PropietarioRxjsService } from '../propietario-rxjs.service';
 import { SnackbarService } from '../../../core/snackbar.service';
+import { CaracteristicaEntidad } from '../../../shared/entity-base.interface';
 
 @Component({
   selector: 'app-crear-propietario',
@@ -17,7 +18,7 @@ export class CrearPropietarioComponent {
     private snack: SnackbarService
   ) {}
 
-  onEntidadCreada(entidad: { caracteristicas: { clave: string; valor: any }[] }): void {
+  onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }): void {
     const nuevoPropietario: IPropietario = {
       id: this.randomId(),
       caracteristicas: entidad.caracteristicas

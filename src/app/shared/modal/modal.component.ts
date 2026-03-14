@@ -19,10 +19,12 @@ export class ModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: {
       titulo: string;
       componente: Type<any>;
-      componenteData?: IEntityBase;
+      componenteData?: any;
     }
   ) {}
-
+  mostrarData(){
+    console.log(this.data.componenteData);
+  }
   cerrar(){
     this.dialogRef.close();
   }

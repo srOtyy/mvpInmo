@@ -41,7 +41,7 @@ export class PropietarioCComponent implements OnInit {
       data: {
         titulo: 'Información del Propietario',
         componente: VerInfoPropietarioComponent,
-        componenteData: {entidad: propietario}
+        componenteData: propietario
       }
     });
   }

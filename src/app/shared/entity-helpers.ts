@@ -10,7 +10,13 @@ export function obtenerCaracteristica(
   clave: string,
   valorPorDefecto: string | number | boolean  = ''
 ): string | number | boolean  {
-  return entidad.caracteristicas.find(c => c.clave === clave)?.valor ?? valorPorDefecto;
+  for(const caracteristica of entidad.caracteristicas) {
+    if(caracteristica.clave === clave) {
+      return caracteristica.valor;
+    }
+  }
+  console.log('Valor no encontrado para clave:', clave);
+  return valorPorDefecto;
 }
 
 export function construirCaracteristicasDesdeForm(
