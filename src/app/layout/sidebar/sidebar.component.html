@@ -1,6 +1,6 @@
 <div class="side-bar">
     <div class="buttons">
-        @for (domnio of dominiosActivos; track dominiosActivos){
+        @for (domnio of dominiosActivos; track $index){
          <button mat-raised-button routerLink="{{domnio}}" > {{domnio}} </button>
         }   
     </div>

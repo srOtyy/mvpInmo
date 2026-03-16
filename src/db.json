@@ -53,6 +53,23 @@
           "valor": 12
         }
       ]
+    },
+    {
+      "id": 795387,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Este es pobre"
+        },
+        {
+          "clave": "Edad",
+          "valor": 2
+        },
+        {
+          "clave": "Inmuebles",
+          "valor": true
+        }
+      ]
     }
   ],
   "inmuebles": [
@@ -75,6 +92,11 @@
           "clave": "Edad",
           "tipo": "numero",
           "requerido": false
+        },
+        {
+          "clave": "Inmuebles",
+          "tipo": "booleano",
+          "requerido": true
         }
       ]
     },

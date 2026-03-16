@@ -2,6 +2,8 @@
 
 ## Objetivo
 
+Eliminar los any dieron problemas por todos lados. Por lo que varias eliminaciones de any van a venir implicitas en esta version. La idea es refactorizar el uso de modales  y modal.component
+
 ## Alcance incluido
 
 ### Observaciones
