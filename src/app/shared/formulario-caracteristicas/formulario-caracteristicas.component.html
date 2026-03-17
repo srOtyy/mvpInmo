@@ -25,7 +25,7 @@
     <h6>Caracteristicas definidas</h6>
     <mat-list  class="lista">
      
-    @for (definicion of definiciones; track definicion; let i = $index) {
+    @for (definicion of definiciones; track $index) {
       <mat-list-item>
         <div class="item">
           <div class="item_texto">
@@ -36,7 +36,7 @@
             }
           </div>
           <div class="item_boton">
-            <button mat-icon-button color="warn" type="button" (click)="eliminarDefinicion(i)">
+            <button mat-icon-button color="warn" type="button" (click)="eliminarDefinicion($index)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
