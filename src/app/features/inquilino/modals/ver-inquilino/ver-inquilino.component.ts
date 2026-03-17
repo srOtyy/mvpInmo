@@ -15,8 +15,4 @@ export class VerInquilinoComponent {
     nombre: string = '';
     obtenerCaracteristica = (clave: string) =>
       obtenerCaracteristica(this.entidad, clave);
-  
-    ngOnInit(): void {
-      this.nombre = this.obtenerCaracteristica('nombre');
-    }
 }

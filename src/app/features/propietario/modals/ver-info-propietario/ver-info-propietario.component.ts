@@ -10,13 +10,10 @@ import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
   templateUrl: './ver-info-propietario.component.html',
   styleUrl: './ver-info-propietario.component.scss'
 })
-export class VerInfoPropietarioComponent implements OnInit {
+export class VerInfoPropietarioComponent  {
   @Input() entidad!: IPropietario;
   nombre: string = '';
   obtenerCaracteristica = (clave: string) =>
     obtenerCaracteristica(this.entidad, clave);
 
-  ngOnInit(): void {
-    this.nombre = this.obtenerCaracteristica('nombre');
-  }
 }

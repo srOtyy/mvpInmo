@@ -7,14 +7,18 @@ export type EntidadConCaracteristicas = {
 export function obtenerCaracteristica(
   entidad: EntidadConCaracteristicas,
   clave: string,
-  valorPorDefecto: any = ''
-): any {
+  valorPorDefecto: string | number | boolean = ''
+): string | number | boolean {
   return entidad.caracteristicas.find(c => c.clave === clave)?.valor ?? valorPorDefecto;
 }
+export function obtenerClavesCaracteristicas(entidad: EntidadConCaracteristicas): string[] {
+  return entidad.caracteristicas.map(c => c.clave);
+}
+
 
 export function construirCaracteristicasDesdeForm(
-  form: { get: (clave: string) => { value: any } | null },
-  claves: string[]
+  form: { get: (clave: string) => { value: string | number | boolean } | null },
+  claves: string[] 
 ): CaracteristicaEntidad[] {
   return claves.map(clave => ({
     clave,

@@ -12,7 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 export class ItemEntidadComponent<T> {
 
   @Input() entidad!: T;
-  @Input() titulo: string = 'Entidad';
+  @Input() titulo: string | number | boolean = 'Entidad';
   @Output() ver = new EventEmitter<T>();
   @Output() editar = new EventEmitter<T>();
   @Output() eliminar = new EventEmitter<T>();

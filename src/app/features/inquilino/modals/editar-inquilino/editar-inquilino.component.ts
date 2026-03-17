@@ -8,7 +8,7 @@ import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
-import { construirCaracteristicasDesdeForm, obtenerCaracteristica } from '../../../../shared/entity-helpers';
+import { construirCaracteristicasDesdeForm, obtenerCaracteristica, obtenerClavesCaracteristicas } from '../../../../shared/entity-helpers';
 @Component({
   selector: 'app-editar-inquilino',
   standalone: true,
@@ -66,7 +66,7 @@ export class EditarInquilinoComponent implements OnInit{
   setInquilinoNuevo(): IInquilino{
     const inquilinoEditado: IInquilino = {
       id: this.formularioEditarInquilino.value.id,
-      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInquilino.value, obtenerCaracteristica(this.entidad, 'caracteristicas'))
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInquilino.value, obtenerClavesCaracteristicas(this.entidad))
     };
     return inquilinoEditado;
   }

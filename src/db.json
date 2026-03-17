@@ -1,32 +1,5 @@
 {
-  "inquilinos": [
-    {
-      "id": 211021,
-      "caracteristicas": [
-        {
-          "clave": "Nombre",
-          "valor": "a"
-        },
-        {
-          "clave": "nombre",
-          "valor": "oty"
-        }
-      ]
-    },
-    {
-      "id": 858513,
-      "caracteristicas": [
-        {
-          "clave": "Nombre",
-          "valor": "pee"
-        },
-        {
-          "clave": "nombre",
-          "valor": "causa"
-        }
-      ]
-    }
-  ],
+  "inquilinos": [],
   "propietarios": [
     {
       "id": 648728,

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { InquilinoRxjsService } from '../inquilino-rxjs.service';
 import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinamico.component';
 import { SnackbarService } from '../../../core/snackbar.service';
+import { CaracteristicaEntidad } from '../../../shared/entity-base.interface';
 
 @Component({
   selector: 'app-crear-inquilino',
@@ -13,7 +14,7 @@ import { SnackbarService } from '../../../core/snackbar.service';
 export class CrearInquilinoComponent {
   constructor(private inquilinosService: InquilinoRxjsService, private snack: SnackbarService) {}
 
-  onEntidadCreada(entidad: { caracteristicas: { clave: string; valor: any }[] }): void {
+  onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }): void {
     const nuevoInquilino = {
       id: this.randomId(),
       caracteristicas: entidad.caracteristicas
