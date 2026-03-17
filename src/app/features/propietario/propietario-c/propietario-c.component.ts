@@ -11,6 +11,7 @@ import { ModalComponent } from '../../../shared/modal/modal.component';
 import { Observable } from 'rxjs';
 import { obtenerCaracteristica } from '../../../shared/entity-helpers';
 import { AsyncPipe } from '@angular/common';
+import { ModalService } from '../../../core/modal/modal.service';
 @Component({
   selector: 'app-propietario-c',
   standalone: true,
@@ -25,7 +26,8 @@ export class PropietarioCComponent implements OnInit {
   obtenerCaracteristica = obtenerCaracteristica;
   constructor(
     private _propietariosRxJsService: PropietarioRxjsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _modalService: ModalService
   ) {};
   
   ngOnInit(): void {
@@ -37,30 +39,12 @@ export class PropietarioCComponent implements OnInit {
   }
   // estos metodos abren los modales correspondientes 
   verPropietario(propietario: IPropietario){
-    this.dialog.open(ModalComponent, {
-      data: {
-        titulo: 'Información del Propietario',
-        componente: VerInfoPropietarioComponent,
-        componenteData: propietario
-      }
-    });
+    this._modalService.abrirModal('Información del Propietario', VerInfoPropietarioComponent, {entidad: propietario});
   }
   editarPropietario(propietario: IPropietario){
-    this.dialog.open(ModalComponent, {
-      data: {
-        titulo: 'Editar Propietario',
-        componente: EditarPropietarioComponent,
-        componenteData: {entidad: propietario}
-      }
-    });
+   this._modalService.abrirModal('Editar Propietario', EditarPropietarioComponent, {entidad: propietario});
   }
   eliminarPropietario(propietario: IPropietario){
-    this.dialog.open(ModalComponent, {
-      data: {
-        titulo: 'Eliminar Propietario',
-        componente: EliminarPropietarioComponent,
-        componenteData: {entidad: propietario}
-      }
-    });
+    this._modalService.abrirModal('Eliminar Propietario', EliminarPropietarioComponent, {entidad: propietario});
   }
 }

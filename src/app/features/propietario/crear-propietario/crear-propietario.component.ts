@@ -3,6 +3,7 @@ import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinami
 import { IPropietario } from '../propietario.interface';
 import { PropietarioRxjsService } from '../propietario-rxjs.service';
 import { SnackbarService } from '../../../core/snackbar.service';
+import { DefinicionCaracteristica } from '../../../shared/definicion-caracteristica.interface';
 import { CaracteristicaEntidad } from '../../../shared/entity-base.interface';
 
 @Component({

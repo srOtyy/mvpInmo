@@ -1,18 +1,14 @@
-<form class="formulario" [formGroup]="formularioEditarPropietario">
-
-    <mat-form-field>
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="id" readonly>
-    </mat-form-field>
-
-  @for(c of entidad.caracteristicas; track $index){
-     <mat-form-field>
-      <input
-        matInput
-        [formControlName]="c.clave"
-        [placeholder]="c.clave">
-    </mat-form-field>
-  }
-    <button type="submit" mat-flat-button  (click)="guardarCambios()">Guardar cambios</button>
-
+<form [formGroup]="formularioEditarPropietario" class="formulario">
+    <ng-container >
+        @for(c of entidad.caracteristicas; track $index){
+            <mat-form-field appearance="fill">
+                <mat-label>{{ c.clave }}</mat-label>
+                <input
+                matInput
+                [formControlName]="c.clave"
+                [placeholder]="c.clave">
+            </mat-form-field>
+        }
+    </ng-container>
 </form>
+    <button type="submit" mat-flat-button [disabled]="!this.formularioEditarPropietario.valid" (click)="guardarCambios()">Guardar cambios</button>

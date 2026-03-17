@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { IInquilino } from '../inquilino.interface';
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
 import { InquilinoRxjsService } from '../inquilino-rxjs.service';
-import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarInquilinoComponent } from '../modals/editar-inquilino/editar-inquilino.component';
 import { VerInquilinoComponent } from '../modals/ver-inquilino/ver-inquilino.component';

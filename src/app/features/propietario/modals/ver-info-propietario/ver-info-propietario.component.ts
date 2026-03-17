@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IPropietario } from '../../propietario.interface';
 import { MatDividerModule } from '@angular/material/divider';
 import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
@@ -9,15 +9,10 @@ import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
   templateUrl: './ver-info-propietario.component.html',
   styleUrl: './ver-info-propietario.component.scss'
 })
-export class VerInfoPropietarioComponent implements OnInit, OnDestroy {
+export class VerInfoPropietarioComponent  {
   @Input() entidad!: IPropietario;
+  nombre: string = '';
+  obtenerCaracteristica = (clave: string) =>
+    obtenerCaracteristica(this.entidad, clave);
 
-  ngOnInit(){
-    console.log('entidad en ver info propietario', this.entidad);
-  }
-
-  ngOnDestroy(){
-    console.log('entidad en destruir ver info propietario', this.entidad);
-  }
-  
 }

@@ -1,11 +1,15 @@
 {
   "inquilinos": [
     {
-      "id": 121351,
+      "id": 607962,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "pepe"
+          "valor": "Oty"
+        },
+        {
+          "clave": "riquezas",
+          "valor": true
         }
       ]
     }
@@ -40,6 +44,23 @@
           "valor": 12345123
         }
       ]
+    },
+    {
+      "id": 586212,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "123465"
+        },
+        {
+          "clave": "Edad",
+          "valor": "112ñ"
+        },
+        {
+          "clave": "Inmuebles",
+          "valor": "2"
+        }
+      ]
     }
   ],
   "inmuebles": [
@@ -64,8 +85,8 @@
           "requerido": false
         },
         {
-          "clave": "telefono",
-          "tipo": "numero",
+          "clave": "Inmuebles",
+          "tipo": "booleano",
           "requerido": true
         }
       ]
@@ -78,6 +99,11 @@
           "clave": "nombre",
           "tipo": "texto",
           "requerido": true
+        },
+        {
+          "clave": "riquezas",
+          "tipo": "booleano",
+          "requerido": false
         }
       ]
     },

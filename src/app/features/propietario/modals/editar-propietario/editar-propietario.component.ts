@@ -50,9 +50,9 @@ export class EditarPropietarioComponent implements OnInit{
         new FormControl(c.valor)
       );
 
-    });
+  });
 
-  }
+}
 
   guardarCambios() {  
     this._propietarioRxJsService.actualizarPropietario(this.setPropietarioNuevo()).subscribe({

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CaracteristicaEntidad } from '../entity-base.interface';
 @Component({
   selector: 'app-form-dinamico',
   standalone: true,
@@ -19,8 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export class FormDinamicoComponent implements OnInit, OnDestroy {
   @Input({ required: true }) dominio!: Dominio;
   // será que la interfas de las caracteristicas le hace falta el 'requerido'?
-  @Output() entidadCreada = new EventEmitter<{ caracteristicas: 
-    DefinicionCaracteristica[] }>();
+  @Output() entidadCreada = new EventEmitter<{ caracteristicas: CaracteristicaEntidad[] }>();
 
   definiciones: DefinicionCaracteristica[] = [];
   formulario: FormGroup = new FormGroup({});

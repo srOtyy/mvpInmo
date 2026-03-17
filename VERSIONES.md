@@ -2,12 +2,11 @@
 
 ## Objetivo
 
-Eliminar todos los `any` dentro de lo posible.
+Eliminar los any dieron problemas por todos lados. Por lo que varias eliminaciones de any van a venir implicitas en esta version. La idea es refactorizar el uso de modales  y modal.component
 
 ## Alcance incluido
 
 ### Observaciones
-
 
 - **modal.component.ts**:En el esquema del `@Inject`
   - El inject actúa como el input del modal. Tanto componente como `componenteData` reciben `any`:
