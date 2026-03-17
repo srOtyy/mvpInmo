@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 import { of, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { Dominio } from '../../core/navegacion/navegacionRutas';
 import { RutasDinamicasService } from '../../core/navegacion/rutas-dinamicas.service';
@@ -26,7 +27,8 @@ import { DefinicionesCaracteristicasService } from '../definiciones-caracteristi
     MatInputModule,
     MatListModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatIconModule
   ],
   templateUrl: './formulario-caracteristicas.component.html',
   styleUrl: './formulario-caracteristicas.component.scss'

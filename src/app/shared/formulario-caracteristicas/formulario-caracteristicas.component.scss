@@ -35,7 +35,6 @@
       max-height: 75vh;
       display: block;
       overflow-y: auto;
-      padding-bottom: 10px;
       &::-webkit-scrollbar {
         width: 8px; /* Ancho del scrollbar */
       }
@@ -44,13 +43,20 @@
       }
       .item{
         color: $neutral-400;
-        width: 100%;
         padding: 10px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         .item_texto{
           display: flex;
           flex-direction: row;
           align-items: center;
           gap: 20px;
+          .item_texto_clave{
+            color: $primary-700;
+            opacity: 0.8;
+          }
+
         }
       }
     }

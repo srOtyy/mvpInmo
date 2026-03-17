@@ -1,5 +1,19 @@
 {
-  "inquilinos": [],
+  "inquilinos": [
+    {
+      "id": 607962,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Oty"
+        },
+        {
+          "clave": "riquezas",
+          "valor": true
+        }
+      ]
+    }
+  ],
   "propietarios": [
     {
       "id": 648728,
@@ -91,13 +105,13 @@
       "dominio": "inquilinos",
       "caracteristicas": [
         {
-          "clave": "Nombre",
+          "clave": "nombre",
           "tipo": "texto",
           "requerido": true
         },
         {
-          "clave": "nombre",
-          "tipo": "texto",
+          "clave": "riquezas",
+          "tipo": "booleano",
           "requerido": false
         }
       ]

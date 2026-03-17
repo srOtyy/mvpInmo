@@ -29,15 +29,20 @@
       <mat-list-item>
         <div class="item">
           <div class="item_texto">
-            <p><strong>{{ definicion.clave }}</strong></p>
+            <p><strong class="item_texto_clave">{{ definicion.clave }}</strong></p>
             <p><span>{{ definicion.tipo }}</span></p>
             @if(definicion.requerido) {
               <p><span>Requerido</span></p>
             }
           </div>
-          <mat-divider></mat-divider>
-        </div>
+          <div class="item_boton">
+            <button mat-icon-button color="warn" type="button" (click)="eliminarDefinicion(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>      
       </mat-list-item>
+      <mat-divider></mat-divider>
      }
     </mat-list>
     <div class="contenedor-boton">
