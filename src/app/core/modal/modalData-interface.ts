@@ -1,7 +1,7 @@
 import { Type } from "@angular/core";
 
 export interface ModalData<T> {
-  title: string;
+  titulo: string;
   componente: Type<any>;
   componenteData: T
 }

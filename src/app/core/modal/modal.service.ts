@@ -11,7 +11,7 @@ export class ModalService {
 
   abrirModal<T>(titulo: string, componente: any, entidad: T){
     return this.dialog.open(ModalComponent, {
-      data: { title: titulo, componente, componenteData: entidad } as ModalData<T>
+      data: { titulo, componente, componenteData: entidad } as ModalData<T>
     });
   }
 }

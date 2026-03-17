@@ -38,8 +38,16 @@ export class EditarInquilinoComponent implements OnInit{
   }
 
   pasarDatosInquilino(inquilinoData: IInquilino) {
-    this.formularioEditarInquilino.setValue({
+     this.formularioEditarInquilino.patchValue({
       id: inquilinoData.id
+    });
+
+    inquilinoData.caracteristicas.forEach(c => {
+
+      this.formularioEditarInquilino.addControl(
+        c.clave,
+        new FormControl(c.valor)
+      );
     });
   }
 
@@ -56,10 +64,9 @@ export class EditarInquilinoComponent implements OnInit{
 }
 
   setInquilinoNuevo(): IInquilino{
-    const formValue = this.formularioEditarInquilino.value;
     const inquilinoEditado: IInquilino = {
-      id: formValue.id,
-      caracteristicas: construirCaracteristicasDesdeForm(formValue, obtenerCaracteristica(this.entidad, 'caracteristicas'))
+      id: this.formularioEditarInquilino.value.id,
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInquilino.value, obtenerCaracteristica(this.entidad, 'caracteristicas'))
     };
     return inquilinoEditado;
   }

@@ -1,13 +1,11 @@
 
 <div class="datos">
-    <p><strong>Nombre:</strong> {{obtenerCaracteristica('nombre')}}</p>
-    <mat-divider></mat-divider>
-    <p><strong>Teléfono:</strong> {{obtenerCaracteristica('telefono')}}</p>
-    <mat-divider></mat-divider>
-    <p><strong>Email:</strong> {{obtenerCaracteristica('email')}}</p>
-    <mat-divider></mat-divider>
-    <p><strong>DNI:</strong> {{obtenerCaracteristica('dni')}}</p>
-    <mat-divider></mat-divider>
-    <p><strong>CBU:</strong> {{obtenerCaracteristica('cbu')}}</p>
-    <mat-divider></mat-divider>
+    @if(entidad !== null){
+        @for(c of entidad.caracteristicas; track $index) {
+            <p><strong>{{c.clave}}:</strong> {{c.valor}}</p>
+            <mat-divider></mat-divider>
+        }
+    }@else {
+        <p>No se encontró información del propietario.</p>
+    }
 </div>

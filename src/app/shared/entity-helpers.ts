@@ -18,6 +18,6 @@ export function construirCaracteristicasDesdeForm(
 ): CaracteristicaEntidad[] {
   return claves.map(clave => ({
     clave,
-    valor: form.get(clave)?.value
+    valor: form.get(clave)?.value ?? ''
   }));
 }

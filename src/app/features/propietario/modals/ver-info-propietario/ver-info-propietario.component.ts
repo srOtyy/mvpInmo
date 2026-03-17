@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IPropietario } from '../../propietario.interface';
 import { MatDividerModule } from '@angular/material/divider';
 import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
@@ -10,8 +10,13 @@ import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
   templateUrl: './ver-info-propietario.component.html',
   styleUrl: './ver-info-propietario.component.scss'
 })
-export class VerInfoPropietarioComponent {
+export class VerInfoPropietarioComponent implements OnInit {
   @Input() entidad!: IPropietario;
+  nombre: string = '';
   obtenerCaracteristica = (clave: string) =>
     obtenerCaracteristica(this.entidad, clave);
+
+  ngOnInit(): void {
+    this.nombre = this.obtenerCaracteristica('nombre');
+  }
 }

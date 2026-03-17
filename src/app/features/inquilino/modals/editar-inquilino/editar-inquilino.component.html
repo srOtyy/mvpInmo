@@ -1,30 +1,14 @@
-<form class="formulario" [formGroup]="formularioEditarInquilino"]>
-         <mat-form-field appearance="fill">
-            <mat-label>Nombre</mat-label>
-            <input matInput formControlName="nombre">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>DNI</mat-label>
-            <input matInput formControlName="dni">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Telefono</mat-label>
-            <input matInput formControlName="telefono">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>e-mail</mat-label>
-            <input matInput formControlName="email">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Garante</mat-label>
-            <input matInput formControlName="garante">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Ingresos</mat-label>
-            <input matInput formControlName="ingresos">
-        </mat-form-field>
-        <span></span>
-        <span></span>
-        <button type="submit" mat-flat-button [disabled]="!this.formularioEditarInquilino.valid" (click)="guardarCambios()">Guardar cambios</button>
-
+<form [formGroup]="formularioEditarInquilino" class="formulario">
+    <ng-container >
+        @for(c of entidad.caracteristicas; track $index){
+            <mat-form-field appearance="fill">
+                <mat-label>{{ c.clave }}</mat-label>
+                <input
+                matInput
+                [formControlName]="c.clave"
+                [placeholder]="c.clave">
+            </mat-form-field>
+        }
+    </ng-container>
 </form>
+    <button type="submit" mat-flat-button [disabled]="!this.formularioEditarInquilino.valid" (click)="guardarCambios()">Guardar cambios</button>

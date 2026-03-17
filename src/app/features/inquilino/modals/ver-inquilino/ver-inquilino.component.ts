@@ -11,7 +11,12 @@ import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
   styleUrl: './ver-inquilino.component.scss'
 })
 export class VerInquilinoComponent {
-  @Input() entidad!: IInquilino;
-  obtenerCaracteristica = (clave: string) =>
-    obtenerCaracteristica(this.entidad, clave);
+   @Input() entidad!: IInquilino;
+    nombre: string = '';
+    obtenerCaracteristica = (clave: string) =>
+      obtenerCaracteristica(this.entidad, clave);
+  
+    ngOnInit(): void {
+      this.nombre = this.obtenerCaracteristica('nombre');
+    }
 }

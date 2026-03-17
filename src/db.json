@@ -12,6 +12,19 @@
           "valor": "oty"
         }
       ]
+    },
+    {
+      "id": 858513,
+      "caracteristicas": [
+        {
+          "clave": "Nombre",
+          "valor": "pee"
+        },
+        {
+          "clave": "nombre",
+          "valor": "causa"
+        }
+      ]
     }
   ],
   "propietarios": [
@@ -55,19 +68,19 @@
       ]
     },
     {
-      "id": 795387,
+      "id": 586212,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Este es pobre"
+          "valor": "123465"
         },
         {
           "clave": "Edad",
-          "valor": 2
+          "valor": "112ñ"
         },
         {
           "clave": "Inmuebles",
-          "valor": true
+          "valor": "2"
         }
       ]
     }

@@ -32,13 +32,23 @@ export class EditarPropietarioComponent implements OnInit{
   }
 
   pasarDatosPropietario(propietarioData: IPropietario) {
-    this.formularioEditarPropietario.setValue({
+
+    this.formularioEditarPropietario.patchValue({
       id: propietarioData.id
     });
-  }
+
+    propietarioData.caracteristicas.forEach(c => {
+
+      this.formularioEditarPropietario.addControl(
+        c.clave,
+        new FormControl(c.valor)
+      );
+
+  });
+
+}
 
   guardarCambios() {  
-
     this._propietarioRxJsService.actualizarPropietario(this.setPropietarioNuevo()).subscribe({
       next: () => {
         this._snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
@@ -50,10 +60,10 @@ export class EditarPropietarioComponent implements OnInit{
     });
   }
   setPropietarioNuevo(): IPropietario{
-    const formValue = this.formularioEditarPropietario.value;
+
     const propietarioEditado: IPropietario = {
-      id: formValue.id,
-      caracteristicas: construirCaracteristicasDesdeForm(formValue, obtenerCaracteristica(this.entidad, 'caracteristicas'))
+      id: this.formularioEditarPropietario.value.id,
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarPropietario, Object.keys(this.formularioEditarPropietario.value).filter(key => key !== 'id'))
     };
     return propietarioEditado;
   }
