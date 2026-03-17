@@ -54,8 +54,7 @@ export class FormDinamicoComponent implements OnInit, OnDestroy {
     const entidad = {
       caracteristicas: this.definiciones.map(definicion => ({
         clave: definicion.clave,
-        tipo: valores[definicion.clave],
-        requerido: definicion.requerido ? true : false
+        valor: valores[definicion.clave]
       }))
     };
 

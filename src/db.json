@@ -33,7 +33,7 @@
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "propietario 3"
+          "valor": "propietario2"
         },
         {
           "clave": "Edad",
@@ -41,24 +41,7 @@
         },
         {
           "clave": "telefono",
-          "valor": 12345123
-        }
-      ]
-    },
-    {
-      "id": 586212,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "123465"
-        },
-        {
-          "clave": "Edad",
-          "valor": "112ñ"
-        },
-        {
-          "clave": "Inmuebles",
-          "valor": "2"
+          "valor": "1"
         }
       ]
     }
@@ -83,11 +66,6 @@
           "clave": "Edad",
           "tipo": "numero",
           "requerido": false
-        },
-        {
-          "clave": "Inmuebles",
-          "tipo": "booleano",
-          "requerido": true
         }
       ]
     },
