@@ -8,9 +8,17 @@
     align-items: center;
     justify-content: start;
     height: 100%;
+    .boton-dominio {
+        color: $primary-500;
+        border-right: 2px solid $primary-500;   
+        border-radius: 0;
+        width: 175px;
+        font-size: 18px;
+    }
     .boton{
         width: 150px;
-        border-bottom: 1px solid $primary-500;
+        color: $secondary-300;
+        border-bottom: 1px solid $primary-300;
         border-radius: 0;
         transition: all 0.3s ease;
     }

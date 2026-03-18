@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import { RouterLink } from "@angular/router";
 import { RutasDinamicasService } from '../../core/navegacion/rutas-dinamicas.service';
+import { Dominio } from '../../core/navegacion/navegacionRutas';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [MatButtonModule, RouterLink],
+  imports: [MatButtonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -16,5 +16,9 @@ export class SidebarComponent {
     this.rutasDinamicasService.emitirEntidades().forEach(dominio => {
       this.dominiosActivos.push(dominio);
     });
+  }
+
+  enviarDominio(dominio: string): void {
+    this.rutasDinamicasService.enviarDominioActivo(dominio as Dominio);
   }
 }

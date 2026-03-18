@@ -1,12 +1,15 @@
-# v0.10
+# v0.11
 
 ## Objetivo
 
-Eliminar los any dieron problemas por todos lados. Por lo que varias eliminaciones de any van a venir implicitas en esta version. La idea es refactorizar el uso de modales  y modal.component
+Refactor de service httpclient
 
 ## Alcance incluido
 
 ### Observaciones
+
+- el sidebar desactiva el contenido main porque tienen un routerlink.
+Mi idea es que el sidebar solo afecte al navbar, y este ultimo si defina el contenido del main
 
 ### Decisiones
 
@@ -80,3 +83,9 @@ falta agregar lo que se hizo en esta version y la v0.7
 - el .json se nesecita ejecutar en una terminal propia 'json-server --watch "nombre del archivo.json"'
 - los modales hardcodean las caracteristicas que deben mostrar. Hay que volverlos dinamicos
 - la consola muestra un error con el layout
+
+### v0.10 - refactor + eliminacion de any's
+
+- .
+- .
+- .
