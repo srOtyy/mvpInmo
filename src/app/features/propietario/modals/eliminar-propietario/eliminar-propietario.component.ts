@@ -24,7 +24,7 @@ export class EliminarPropietarioComponent {
     obtenerCaracteristica(this.entidad, clave);
 
   confirmarEliminarPropietario(){
-    this._serviceRxJsPropietarios.eliminarPropietario(this.entidad.id).subscribe({
+    this._serviceRxJsPropietarios.eliminar(this.entidad.id).subscribe({
       next: () => {
         this._snackbarService.mensajeSnackBar('Propietario eliminado con éxito', 'Cerrar');
         this.cerrarModal();

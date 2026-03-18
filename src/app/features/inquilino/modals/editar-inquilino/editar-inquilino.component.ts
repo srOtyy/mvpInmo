@@ -52,7 +52,7 @@ export class EditarInquilinoComponent implements OnInit{
   }
 
   guardarCambios() {  
-   this._inquilinoRxJsService.actualizarInquilino(this.setInquilinoNuevo()).subscribe({
+   this._inquilinoRxJsService.actualizar(this.entidad.id, this.setInquilinoNuevo()).subscribe({
       next: () => {
         this._snackbarService.mensajeSnackBar('Inquilino editado con éxito', 'Cerrar');
         this.dialogRef.close(true);

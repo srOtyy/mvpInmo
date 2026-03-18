@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { obtenerCaracteristica } from '../../../shared/entity-helpers';
 import { AsyncPipe } from '@angular/common';
 import { ModalService } from '../../../core/modal/modal.service';
+import { SnackbarService } from '../../../core/snackbar.service';
 @Component({
   selector: 'app-propietario-c',
   standalone: true,
@@ -26,13 +27,21 @@ export class PropietarioCComponent implements OnInit {
   obtenerCaracteristica = obtenerCaracteristica;
   constructor(
     private _propietariosRxJsService: PropietarioRxjsService,
-    private dialog: MatDialog,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _snack: SnackbarService
   ) {};
   
   ngOnInit(): void {
-    this.listaPropietarios$ = this._propietariosRxJsService.listaPropietarios$;
-    this._propietariosRxJsService.cargarPropietarios().subscribe();
+    this.listaPropietarios$ = this._propietariosRxJsService.obtenerLista();
+    this._propietariosRxJsService.cargar().subscribe(
+      {next: lista => console.log('Lista de propietarios cargada:', lista),
+      error: err => {
+        this._snack.mensajeSnackBar('Error al cargar propietarios', 'Cerrar');
+        console.log(err)
+      
+      }
+      }
+    );
   }
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;

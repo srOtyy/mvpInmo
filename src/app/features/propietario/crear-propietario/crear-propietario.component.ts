@@ -25,11 +25,11 @@ export class CrearPropietarioComponent {
       caracteristicas: entidad.caracteristicas
     };
 
-    this.propietariosService.crearPropietario(nuevoPropietario).subscribe({
+    this.propietariosService.crear(nuevoPropietario).subscribe({
       next: () => {
         this.snack.mensajeSnackBar('Propietario creado exitosamente', 'Cerrar');
       },
-      error: (error) => {
+      error: () => {
         this.snack.mensajeSnackBar('Error al crear propietario', 'Cerrar');
       }
     })

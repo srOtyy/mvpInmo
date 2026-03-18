@@ -24,7 +24,7 @@ export class EliminarInquilinoComponent {
     obtenerCaracteristica(this.entidad, clave);
 
   confimarEliminarInquilino(){
-    this._serviceRxJsInquilinos.eliminarInquilino(this.entidad.id).subscribe(
+    this._serviceRxJsInquilinos.eliminar(this.entidad.id).subscribe(
       {
         next: () => {
           this._snackbarService.mensajeSnackBar('Inquilino eliminado con éxito', 'Cerrar');

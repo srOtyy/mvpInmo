@@ -49,7 +49,7 @@ export class EditarPropietarioComponent implements OnInit{
 }
 
   guardarCambios() {  
-    this._propietarioRxJsService.actualizarPropietario(this.setPropietarioNuevo()).subscribe({
+    this._propietarioRxJsService.actualizar(this.setPropietarioNuevo().id, this.setPropietarioNuevo()).subscribe({
       next: () => {
         this._snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
         this.dialogRef.close(true);

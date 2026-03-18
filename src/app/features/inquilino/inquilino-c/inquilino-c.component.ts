@@ -11,6 +11,7 @@ import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.
 import { obtenerCaracteristica } from '../../../shared/entity-helpers';
 import { Observable, } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { SnackbarService } from '../../../core/snackbar.service';
 @Component({
   selector: 'app-inquilino-c',
   standalone: true,
@@ -26,12 +27,17 @@ export class InquilinoCComponent implements OnInit{
 
   constructor(
     private _inquilinosService: InquilinoRxjsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _snack: SnackbarService
   ) {};
 
   ngOnInit(): void {
-    this.listaInquilinos$ = this._inquilinosService.listaInquilinos$;
-    this._inquilinosService.cargarInquilinos().subscribe();
+    this.listaInquilinos$ = this._inquilinosService.obtenerLista();
+    this._inquilinosService.cargar().subscribe(
+      {next: lista => console.log('Lista de inquilinos cargada:', lista),
+      error: err => this._snack.mensajeSnackBar('Error al cargar inquilinos', 'Cerrar')
+      }
+    )
   }
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;

@@ -18,7 +18,7 @@ export class CrearInmuebleComponent {
       id: this.randomId(),
       caracteristicas: entidad.caracteristicas
     };
-  this.inmueblesService.agregarInmueble(nuevoInmueble);
+  this.inmueblesService.crear(nuevoInmueble);
   }
   private randomId(): number {
     return Math.floor(Math.random() * 1_000_000) + 1;

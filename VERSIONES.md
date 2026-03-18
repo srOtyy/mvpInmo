@@ -9,7 +9,9 @@ Refactor de service httpclient
 ### Observaciones
 
 - el sidebar desactiva el contenido main porque tienen un routerlink.
-Mi idea es que el sidebar solo afecte al navbar, y este ultimo si defina el contenido del main
+Mi idea es que el sidebar solo afecte al navbar, y este ultimo si defina el contenido del main (LISTO)
+- hay un conflicto en el formulario de las caracteristicas. Si elijo el dominio desde el sidebar. El contenido dentro de la lista de caracteristicas cambia segun el domino. Seguramente este suscripto al dominio activo(PENDIENTE)
+- El servicio de httpclient debe actualizarce para que no sea tan repetitivo
 
 ### Decisiones
 
