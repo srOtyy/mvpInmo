@@ -1,4 +1,4 @@
-# Diagrama de Flujo General (estado actual)
+# Diagrama de Flujo General (arquitectura actual)
 
 ```mermaid
 flowchart TB
@@ -10,7 +10,7 @@ flowchart TB
     %% Rutas por dominio
     RP[/Ruta: propietarios/lista/]
     RI[/Ruta: inquilinos/lista/]
-    RM[/Ruta: inmuebles/crear/]
+    RC[/Ruta: crear por dominio/]
 
     RDC1[/Ruta: propietarios/def_caracteristicas/]
     RDC2[/Ruta: inquilinos/def_caracteristicas/]
@@ -19,18 +19,21 @@ flowchart TB
     %% Componentes de dominio
     PC[propietario-c]
     IC[inquilino-c]
-    FC[formulario-creacion]
+    FC[crear-entidad]
 
     %% Shared UI
     CL[shared: card-list]
     IE[shared: item-entidad]
+    FD[shared: form-dinamico]
     FCS[shared: formulario-caracteristicas]
     MOD[shared: modal]
 
-    %% Servicios de dominio
+    %% Servicios de dominio y bases compartidas
     SP{{propietario-rxjs.service}}
     SI{{inquilino-rxjs.service}}
     SM{{inmuebles-rxjs.service}}
+    BCRUD{{base-crud.service}}
+    MS{{modal.service}}
 
     %% Servicio shared de definiciones
     SDEF{{definiciones-caracteristicas.service}}
@@ -44,7 +47,7 @@ flowchart TB
     U --> RDS
     RDS --> RP
     RDS --> RI
-    RDS --> RM
+    RDS --> RC
     RDS --> RDC1
     RDS --> RDC2
     RDS --> RDC3
@@ -53,7 +56,8 @@ flowchart TB
     RP --> PC
     PC --> CL
     CL --> IE
-    IE --> MOD
+    IE -->|ver/editar/eliminar en propietarios| MS
+    MS --> MOD
     PC --> SP
     MOD --> SP
     SP --> OP
@@ -62,16 +66,26 @@ flowchart TB
     %% Flujos dominio inquilinos
     RI --> IC
     IC --> CL
+    CL --> IE
+    IE -.->|apertura directa en inquilinos| MOD
     IC --> SI
     MOD --> SI
     SI --> OI
     OI --> IC
 
-    %% Flujos dominio inmuebles
-    RM --> FC
+    %% Flujos de creacion compartidos
+    RC --> FC
+    FC --> FD
+    FD -->|entidadCreada| FC
     FC --> SM
     SM --> OM
     OM --> FC
+
+    %% Herencia de servicios CRUD por dominio
+    SP -->|extiende| BCRUD
+    SI -->|extiende| BCRUD
+    SM -->|extiende| BCRUD
+    BCRUD -->|GET/POST/PUT/DELETE + lista$| API[(json-server)]
 
     %% Flujo compartido de definiciones por dominio
     RDC1 --> FCS
@@ -87,10 +101,15 @@ flowchart TB
     classDef service stroke:#F9A825;
     classDef state stroke:#455A64;
 
-    class RP,RI,RM,RDC1,RDC2,RDC3 route;
+    class RP,RI,RC,RDC1,RDC2,RDC3 route;
     class PC,IC,FC component;
-    class CL,IE,FCS,MOD shared;
-    class RDS,SP,SI,SM,SDEF service;
+    class CL,IE,FD,FCS,MOD shared;
+    class RDS,SP,SI,SM,BCRUD,MS,SDEF service;
     class OP,OI,OM state;
 ```
 
+## Nota
+
+Los servicios RxJS de cada entidad ya no repiten la lógica CRUD principal: `propietario-rxjs.service`, `inquilino-rxjs.service` e `inmuebles-rxjs.service` extienden [base-crud.service](/c:/Users/Octavio/Desktop/Desarrollo/mvpInmo/mvpInmo/src/app/core/http/base-crud.service), que centraliza `cargar`, `crear`, `actualizar`, `eliminar` y el `BehaviorSubject` `lista$`.
+
+En la capa de modales ya existe [modal.service](/c:/Users/Octavio/Desktop/Desarrollo/mvpInmo/mvpInmo/src/app/core/modal/modal.service), que encapsula la apertura del modal compartido. Hoy su uso ya aparece en propietarios; inquilinos todavia conserva apertura directa con `MatDialog`, por eso el diagrama lo muestra como una transicion hacia un flujo mas homogeneo.

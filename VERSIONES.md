@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Refactor de service httpclient
+Refactor de service httpclient 
 
 ## Alcance incluido
 
@@ -11,9 +11,11 @@ Refactor de service httpclient
 - el sidebar desactiva el contenido main porque tienen un routerlink.
 Mi idea es que el sidebar solo afecte al navbar, y este ultimo si defina el contenido del main (LISTO)
 - hay un conflicto en el formulario de las caracteristicas. Si elijo el dominio desde el sidebar. El contenido dentro de la lista de caracteristicas cambia segun el domino. Seguramente este suscripto al dominio activo(PENDIENTE)
-- El servicio de httpclient debe actualizarce para que no sea tan repetitivo
+- El servicio de httpclient debe actualizarce para que no sea tan repetitivo (LISTO)
 
 ### Decisiones
+
+- Se creo un servicio que usa genéricos para las consultas http. Los servicios de entidad-rxjs ahora heredan este servicio (base-crud-rxjs.ts)
 
 ## Próxima versión
 
@@ -88,6 +90,4 @@ falta agregar lo que se hizo en esta version y la v0.7
 
 ### v0.10 - refactor + eliminacion de any's
 
-- .
-- .
-- .
+- Se creó un servicio que usa genericos para los modales y modal.component (moda-service.ts)

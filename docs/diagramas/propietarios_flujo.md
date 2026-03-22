@@ -1,4 +1,4 @@
-# Diagrama de Flujo - Dominio Propietarios (actualizado)
+# Diagrama de Flujo - Dominio Propietarios (patron reutilizable)
 
 ```mermaid
 flowchart TB
@@ -21,6 +21,8 @@ flowchart TB
 
     %% Servicios y estado
     SP{{propietario-rxjs.service}}
+    BC{{base-crud.service}}
+    MS{{modal.service}}
     SD{{definiciones-caracteristicas.service}}
     EP[(listaPropietarios$)]
     ED[(definiciones propietarios)]
@@ -28,11 +30,13 @@ flowchart TB
     %% Lista
     RLISTA --> LC
     LC -->|ngOnInit: cargarPropietarios| SP
-    SP -->|GET/POST/PUT/DELETE| API[(json-server)]
+    SP -->|extiende| BC
+    BC -->|GET/POST/PUT/DELETE| API[(json-server)]
     SP --> EP
     EP --> LC
     LC --> CL --> IE
-    IE -->|ver/editar/eliminar| MOD
+    IE -->|ver/editar/eliminar| MS
+    MS --> MOD
     MOD --> MV
     MOD --> ME
     MOD --> MD
@@ -64,6 +68,15 @@ flowchart TB
     class LC,CC,FD,FC component;
     class CL,IE,MOD shared;
     class MV,ME,MD modal;
-    class SP,SD service;
+    class SP,BC,MS,SD service;
     class EP,ED state;
 ```
+
+## Nota
+
+Este flujo ya representa mejor el patron que se repite en las demas entidades:
+
+- el componente de lista consume el observable expuesto por el servicio RxJS de su dominio
+- el servicio de dominio delega el CRUD comun en [base-crud.service](/c:/Users/Octavio/Desktop/Desarrollo/mvpInmo/mvpInmo/src/app/core/http/base-crud.service)
+- la apertura de modales se centraliza en [modal.service](/c:/Users/Octavio/Desktop/Desarrollo/mvpInmo/mvpInmo/src/app/core/modal/modal.service)
+- la ruta de creacion reutiliza `form-dinamico` y las definiciones compartidas del dominio
