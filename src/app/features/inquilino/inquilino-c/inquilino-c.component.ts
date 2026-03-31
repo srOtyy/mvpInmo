@@ -46,12 +46,12 @@ export class InquilinoCComponent implements OnInit{
 
   // estos metodos abren los modales correspondientes
   verInquilino(inquilino: IInquilino){
-    this._modalService.abrirModal('Información del Inquilino', VerInquilinoComponent, {entidad: inquilino});
+    this._modalService.abrirModal('Información del Inquilino', VerInquilinoComponent, inquilino);
   }
   editarInquilino(inquilino: IInquilino){
-    this._modalService.abrirModal('Editar Inquilino', EditarInquilinoComponent, {entidad: inquilino});
+    this._modalService.abrirModal('Editar Inquilino', EditarInquilinoComponent, inquilino);
   }
   eliminarInquilino(inquilino: IInquilino){
-    this._modalService.abrirModal('Eliminar Inquilino', EliminarInquilinoComponent, {entidad: inquilino});    
+    this._modalService.abrirModal('Eliminar Inquilino', EliminarInquilinoComponent, inquilino);    
   }
 }

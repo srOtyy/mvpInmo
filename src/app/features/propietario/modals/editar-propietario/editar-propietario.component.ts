@@ -9,6 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { PropietarioRxjsService } from '../../propietario-rxjs.service';
 import { SnackbarService } from '../../../../core/snackbar.service';
 import { construirCaracteristicasDesdeForm, obtenerCaracteristica } from '../../../../shared/entity-helpers';
+import { ModalContentComponent } from '../../../../core/modal/modalData-interface';
 @Component({
   selector: 'app-editar-propietario',
   standalone: true,
@@ -16,46 +17,49 @@ import { construirCaracteristicasDesdeForm, obtenerCaracteristica } from '../../
   templateUrl: './editar-propietario.component.html',
   styleUrl: './editar-propietario.component.scss'
 })
-export class EditarPropietarioComponent implements OnInit{
-  //Setear los datos del propietario en el formulario fuera del constructor ya que los datos vienen por input (MAT_DIALOG_DATA)
-
+export class EditarPropietarioComponent implements OnInit, ModalContentComponent<IPropietario>{
   @Input() entidad!: IPropietario;
+
   formularioEditarPropietario: FormGroup;
-  
-  constructor( private formBuilder: FormBuilder, private _propietarioRxJsService: PropietarioRxjsService, private dialogRef: MatDialogRef<ModalComponent>,private _snackbarService: SnackbarService){
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private propietarioService: PropietarioRxjsService,
+    private dialogRef: MatDialogRef<ModalComponent>,
+    private snackbarService: SnackbarService
+  ) {
     this.formularioEditarPropietario = this.formBuilder.group({
       id: new FormControl('', [Validators.required])
     });
   }
-  ngOnInit() {
-    this.pasarDatosPropietario(this.entidad);
+
+  ngOnInit(): void {
+    if (this.entidad) {
+      this.pasarDatosPropietario(this.entidad);
+    }
   }
 
-  pasarDatosPropietario(propietarioData: IPropietario) {
-
+  pasarDatosPropietario(propietarioData: IPropietario): void {
     this.formularioEditarPropietario.patchValue({
       id: propietarioData.id
     });
 
     propietarioData.caracteristicas.forEach(c => {
-
       this.formularioEditarPropietario.addControl(
         c.clave,
         new FormControl(c.valor)
       );
-
-  });
-
-}
+    });
+  }
 
   guardarCambios() {  
-    this._propietarioRxJsService.actualizar(this.setPropietarioNuevo().id, this.setPropietarioNuevo()).subscribe({
+    this.propietarioService.actualizar(this.setPropietarioNuevo().id, this.setPropietarioNuevo()).subscribe({
       next: () => {
-        this._snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
+        this.snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
         this.dialogRef.close(true);
       },
       error: () => {
-        this._snackbarService.mensajeSnackBar('Error al editar propietario', 'Cerrar');
+        this.snackbarService.mensajeSnackBar('Error al editar propietario', 'Cerrar');
       }
     });
   }

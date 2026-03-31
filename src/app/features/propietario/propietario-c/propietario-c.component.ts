@@ -45,13 +45,20 @@ export class PropietarioCComponent implements OnInit {
     return Math.floor(Math.random() * 1000) + 1;
   }
   // estos metodos abren los modales correspondientes 
-  verPropietario(propietario: IPropietario){
-    this._modalService.abrirModal('Información del Propietario', VerInfoPropietarioComponent, {entidad: propietario});
+  verPropietario(propietario: IPropietario) {
+    this._modalService.abrirModal<IPropietario>(
+      'Información del Propietario',
+      VerInfoPropietarioComponent,
+      propietario);
   }
   editarPropietario(propietario: IPropietario){
-   this._modalService.abrirModal('Editar Propietario', EditarPropietarioComponent, {entidad: propietario});
+   this._modalService.abrirModal<IPropietario>('Editar Propietario',
+    EditarPropietarioComponent, 
+    propietario);
   }
   eliminarPropietario(propietario: IPropietario){
-    this._modalService.abrirModal('Eliminar Propietario', EliminarPropietarioComponent, {entidad: propietario});
+    this._modalService.abrirModal('Eliminar Propietario',
+    EliminarPropietarioComponent,
+    propietario);
   }
 }
