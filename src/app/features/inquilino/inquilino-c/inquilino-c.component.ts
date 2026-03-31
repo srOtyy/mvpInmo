@@ -12,6 +12,7 @@ import { obtenerCaracteristica } from '../../../shared/entity-helpers';
 import { Observable, } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { SnackbarService } from '../../../core/snackbar.service';
+import { ModalService } from '../../../core/modal/modal.service';
 @Component({
   selector: 'app-inquilino-c',
   standalone: true,
@@ -27,8 +28,8 @@ export class InquilinoCComponent implements OnInit{
 
   constructor(
     private _inquilinosService: InquilinoRxjsService,
-    private dialog: MatDialog,
-    private _snack: SnackbarService
+    private _snack: SnackbarService,
+    private _modalService: ModalService
   ) {};
 
   ngOnInit(): void {
@@ -43,31 +44,14 @@ export class InquilinoCComponent implements OnInit{
     return Math.floor(Math.random() * 1000) + 1;
   }
 
+  // estos metodos abren los modales correspondientes
   verInquilino(inquilino: IInquilino){
-      this.dialog.open(ModalComponent, {
-        data: {
-          titulo: 'Información del Inquilino',
-          componente: VerInquilinoComponent,
-          componenteData: {entidad: inquilino}
-        }
-      });
-    }
-  editarInquilino(inquilino: IInquilino){
-      this.dialog.open(ModalComponent, {
-        data: {
-          titulo: 'Editar Inquilino',
-          componente: EditarInquilinoComponent,
-          componenteData: {entidad: inquilino}
-        }
-      });
-    }
-  eliminarInquilino(inquilino: IInquilino){
-      this.dialog.open(ModalComponent, {
-        data: {
-          titulo: 'Eliminar Inquilino',
-          componente: EliminarInquilinoComponent,
-          componenteData: {entidad: inquilino}
-        }
-      });
-    }
+    this._modalService.abrirModal('Información del Inquilino', VerInquilinoComponent, {entidad: inquilino});
   }
+  editarInquilino(inquilino: IInquilino){
+    this._modalService.abrirModal('Editar Inquilino', EditarInquilinoComponent, {entidad: inquilino});
+  }
+  eliminarInquilino(inquilino: IInquilino){
+    this._modalService.abrirModal('Eliminar Inquilino', EliminarInquilinoComponent, {entidad: inquilino});    
+  }
+}

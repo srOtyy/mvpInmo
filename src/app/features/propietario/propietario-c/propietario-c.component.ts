@@ -6,8 +6,6 @@ import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.
 import { VerInfoPropietarioComponent } from '../modals/ver-info-propietario/ver-info-propietario.component';
 import { EditarPropietarioComponent } from '../modals/editar-propietario/editar-propietario.component';
 import { EliminarPropietarioComponent } from '../modals/eliminar-propietario/eliminar-propietario.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ModalComponent } from '../../../shared/modal/modal.component';
 import { Observable } from 'rxjs';
 import { obtenerCaracteristica } from '../../../shared/entity-helpers';
 import { AsyncPipe } from '@angular/common';

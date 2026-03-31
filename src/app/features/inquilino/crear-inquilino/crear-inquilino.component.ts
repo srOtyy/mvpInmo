@@ -20,7 +20,7 @@ export class CrearInquilinoComponent {
       caracteristicas: entidad.caracteristicas
     };
 
-    this.inquilinosService.crearInquilino(nuevoInquilino).subscribe({
+    this.inquilinosService.crear(nuevoInquilino).subscribe({
       next: () => {
         this.snack.mensajeSnackBar('Inquilino creado exitosamente', 'Cerrar');
       },
