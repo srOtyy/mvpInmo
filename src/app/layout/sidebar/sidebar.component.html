@@ -1,7 +1,7 @@
 <div class="side-bar">
     <div class="buttons">
         @for (domnio of dominiosActivos; track $index){
-         <button mat-raised-button routerLink="{{domnio}}" > {{domnio}} </button>
+         <button mat-raised-button (click)="enviarDominio(domnio)" > {{domnio}} </button>
         }   
     </div>
 </div>

@@ -4,7 +4,7 @@ import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgComponentOutlet } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
-import { IEntityBase } from '../entity-base.interface';
+import { SimpleModalData } from '../../core/modal/modalData-interface';
 @Component({
   selector: 'app-modal',
   standalone: true,
@@ -13,19 +13,14 @@ import { IEntityBase } from '../entity-base.interface';
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
-
+  public data: SimpleModalData<unknown>;
   constructor(
     private dialogRef: MatDialogRef<ModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {
-      titulo: string;
-      //(*excepcion 1)any autorizado 100%. La interfaz ModalData acepta como componente cualquier tipo de componente, por lo que no es necesario especificar un tipo concreto. Además, el método abrirModal es genérico, lo que permite que el tipo de datos del componente sea flexible y se adapte a las necesidades de cada caso.
-      componente: Type<any>;
-      componenteData?: any;
-    }
-  ) {}
-  mostrarData(){
-    console.log(this.data.componenteData);
+    @Inject(MAT_DIALOG_DATA) injectedData: SimpleModalData<unknown>
+  ) {
+    this.data = injectedData;
   }
+
   cerrar(){
     this.dialogRef.close();
   }

@@ -1,43 +1,27 @@
-# v0.10
+# v0.11
 
 ## Objetivo
 
-Eliminar los any dieron problemas por todos lados. Por lo que varias eliminaciones de any van a venir implicitas en esta version. La idea es refactorizar el uso de modales  y modal.component
+Refactor de service httpclient, etc...
 
 ## Alcance incluido
 
 ### Observaciones
 
-- **modal.component.ts**:En el esquema del `@Inject`
-  - El inject actúa como el input del modal. Tanto componente como `componenteData` reciben `any`:
-
-      ```typescript
-      @Inject(MAT_DIALOG_DATA) public data: {
-        titulo: string;
-        componente: Type<any>;
-        componenteData?: any;
-      }
-      ```
-
-  - el componente ya no anda, asi que podriamos probar con rehacer los modales en un servicio de modales genericos
+- el sidebar desactiva el contenido main porque tienen un routerlink.
+Mi idea es que el sidebar solo afecte al navbar, y este ultimo si defina el contenido del main (LISTO)
+- hay un conflicto en el formulario de las caracteristicas. Si elijo el dominio desde el sidebar. El contenido dentro de la lista de caracteristicas cambia segun el domino. Seguramente este suscripto al dominio activo(PENDIENTE)
+- El servicio de httpclient debe actualizarce para que no sea tan repetitivo (LISTO)
+- En el head, el indicador de dominio activo, al ser un boton, tiene el estilode hover. Abria que quitarlo
 
 ### Decisiones
 
-- crear-propietario/inquilino/inmueble.ts:
-        onEntidadCreada(entidad: { caracteristicas: caracteristicasEntidad[] }): void
-
-- form.dinamico.ts:
-        Se cambió el argumento del ouput a:
-        ```typescript
-        @Output() entidadCreada = new EventEmitter<{ caracteristicas: DefinicionCaracteristica[] }>();
-        ```
-
-- entity-helpers.ts:
-        el tipo de dato de retorno que tenia obtenerCaracteristica() se cambio a:  " string | number | boolean"
-        construirCaracteristicasDesdeForm() se le cambio el argumento a form:FormGroup y se elimino el segundo argumento.
-        Se optimizo el código tambien
+- Se creo un servicio que usa genéricos para las consultas http. Los servicios de entidad-rxjs ahora heredan este servicio (base-crud-rxjs.ts)
 
 ## Próxima versión
+
+- Unificar los botones y la eleccion de dominio en el sidebar:
+    Podria ser que al elegir un dominio, se cambien los botones ( estaría bueno agregar un efecto de transicion ) para que vengan los botones x dominio. Esto evitaria que se elija diferente dominio mientras se observan las caracteristicas declaradas ( posible solucion ? agregado a que se recrea la UI a algo más practico? )
 
 ## Versiones anteriores
 
@@ -82,27 +66,31 @@ Observaciones técnicas:
 
 ### v0.5 Inmuebles
 
-Se creó el formulario de caracteristicas que se van a solicitar a la hora de crear inmuebles
+    Se creó el formulario de caracteristicas que se van a solicitar a la hora de crear inmuebles
 
-Observacioens técnicas:
-    - el layout se rompe
-    - NO se esta creando inmuebles ( solo el array de caracteristicas)
-    - se hardcodeo el sidebar
+    Observacioens técnicas:
+        - el layout se rompe
+        - NO se esta creando inmuebles ( solo el array de caracteristicas)
+        - se hardcodeo el sidebar
 
 ### v0.6 Debug
 
-Se saldó la deuda de debug entre v0.1 a v0.5
-Se crearon nuevos shared, eliminaron componentes repetidos y se actualizo las interfaces de las entidades
+    Se saldó la deuda de debug entre v0.1 a v0.5
+    Se crearon nuevos shared, eliminaron componentes repetidos y se actualizo las interfaces de las entidades
 
-Pendientes para el proximo debug:
-    -Los modales de propietarios e inquilinos aun muestran las caracteristicas de manera hardcodeada y no dinamicamente
+    Pendientes para el proximo debug:
+        -Los modales de propietarios e inquilinos aun muestran las caracteristicas de manera hardcodeada y no dinamicamente
 
 ### v0.8 Formulario dinamico
 
-falta agregar lo que se hizo en esta version y la v0.7
+    falta agregar lo que se hizo en esta version y la v0.7
 
 ### v0.9 - Base de datos local
 
-- el .json se nesecita ejecutar en una terminal propia 'json-server --watch "nombre del archivo.json"'
-- los modales hardcodean las caracteristicas que deben mostrar. Hay que volverlos dinamicos
-- la consola muestra un error con el layout
+    - el .json se nesecita ejecutar en una terminal propia 'json-server --watch "nombre del archivo.json"'
+    - los modales hardcodean las caracteristicas que deben mostrar. Hay que volverlos dinamicos
+    - la consola muestra un error con el layout
+
+### v0.10 - refactor + eliminacion de any's
+
+    - Se creó un servicio que usa genericos para los modales y modal.component (moda-service.ts)

@@ -37,11 +37,24 @@
         },
         {
           "clave": "Edad",
-          "valor": "2333"
+          "valor": 1
+        }
+      ]
+    },
+    {
+      "id": 586212,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "123465"
         },
         {
-          "clave": "telefono",
-          "valor": "1"
+          "clave": "Edad",
+          "valor": "112ñ"
+        },
+        {
+          "clave": "Inmuebles",
+          "valor": "2"
         }
       ]
     }

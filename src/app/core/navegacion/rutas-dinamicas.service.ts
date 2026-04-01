@@ -26,40 +26,26 @@ export class RutasDinamicasService {
       { nombre: 'caracteristicas', ruta: ['/inmuebles', 'def_caracteristicas'] }
     ]
   };
-
+  // para emitir el array de botones al componente que lo necesite ( actualmente el header)
   private arrayBotones: BehaviorSubject<IBotonRuta[]> = new BehaviorSubject<IBotonRuta[]>([]);
   arrayBotones$ : Observable<IBotonRuta[]> = this.arrayBotones.asObservable();
-
+  // Para mantener el dominio activo y emitirlo al componente que lo necesite ( actualmente el sidebar)
   private dominioActivoSubject: BehaviorSubject<Dominio | null> = new BehaviorSubject<Dominio | null>(null);
   dominioActivo$: Observable<Dominio | null> = this.dominioActivoSubject.asObservable();
 
-  constructor(private router: Router) {
-    this.setDominioDesdeUrl(this.router.url);
-    //1 Escuchar los eventos del router, Filtrar solo NavigationEnd, Leer la URL,Extraer el primer segmento como dominio 
-    this.router.events.pipe(
-      filter(evento => evento instanceof NavigationEnd)
-    ).subscribe((evento: NavigationEnd) => {
-      const url = evento.urlAfterRedirects;
-      this.setDominioDesdeUrl(url);
-    });
-  }
-
+  constructor(private router: Router) {}
 
   emitirEntidades(): string[]{
     return Object.keys(this.accionesPorDominio);
   }
-
-  private setDominioDesdeUrl(url: string): void {
-    const dominio = url.split('/')[1];
-
+  enviarDominioActivo(dominio: Dominio): void {
     if (dominio in this.accionesPorDominio) {
       this.arrayBotones.next(this.accionesPorDominio[dominio as Dominio]);
       this.dominioActivoSubject.next(dominio as Dominio);
-      return;
+    } else {
+      this.arrayBotones.next([]);
+      this.dominioActivoSubject.next(null);
     }
-
-    this.arrayBotones.next([]);
-    this.dominioActivoSubject.next(null);
+  
   }
-
 }

@@ -13,14 +13,14 @@ import { IBotonRuta } from '../../core/navegacion/navegacionRutas';
 })
 export class HeaderComponent {
   botones: IBotonRuta[] = []
-
-
+  dominio: string = ''
   constructor(private _serviceRutas: RutasDinamicasService) {
     this._serviceRutas.arrayBotones$.subscribe((botones) => {
       this.botones = botones; 
+    }) 
+    this._serviceRutas.dominioActivo$.subscribe((dominio) => {
+      this.dominio = dominio || '';
     })
-
-    
   }
 
 }

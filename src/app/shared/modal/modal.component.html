@@ -6,7 +6,9 @@
     <mat-dialog-content class="cuerpo">
         <ng-container
             *ngComponentOutlet="data.componente; 
-            inputs: data.componenteData ">
+            inputs:{
+                entidad: data.componenteData
+            }">
         </ng-container>
 
     </mat-dialog-content>

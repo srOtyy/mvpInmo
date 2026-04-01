@@ -6,12 +6,11 @@ import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.
 import { VerInfoPropietarioComponent } from '../modals/ver-info-propietario/ver-info-propietario.component';
 import { EditarPropietarioComponent } from '../modals/editar-propietario/editar-propietario.component';
 import { EliminarPropietarioComponent } from '../modals/eliminar-propietario/eliminar-propietario.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ModalComponent } from '../../../shared/modal/modal.component';
 import { Observable } from 'rxjs';
 import { obtenerCaracteristica } from '../../../shared/entity-helpers';
 import { AsyncPipe } from '@angular/common';
 import { ModalService } from '../../../core/modal/modal.service';
+import { SnackbarService } from '../../../core/snackbar.service';
 @Component({
   selector: 'app-propietario-c',
   standalone: true,
@@ -26,25 +25,40 @@ export class PropietarioCComponent implements OnInit {
   obtenerCaracteristica = obtenerCaracteristica;
   constructor(
     private _propietariosRxJsService: PropietarioRxjsService,
-    private dialog: MatDialog,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _snack: SnackbarService
   ) {};
   
   ngOnInit(): void {
-    this.listaPropietarios$ = this._propietariosRxJsService.listaPropietarios$;
-    this._propietariosRxJsService.cargarPropietarios().subscribe();
+    this.listaPropietarios$ = this._propietariosRxJsService.obtenerLista();
+    this._propietariosRxJsService.cargar().subscribe(
+      {next: lista => console.log('Lista de propietarios cargada:', lista),
+      error: err => {
+        this._snack.mensajeSnackBar('Error al cargar propietarios', 'Cerrar');
+        console.log(err)
+      
+      }
+      }
+    );
   }
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;
   }
   // estos metodos abren los modales correspondientes 
-  verPropietario(propietario: IPropietario){
-    this._modalService.abrirModal('Información del Propietario', VerInfoPropietarioComponent, {entidad: propietario});
+  verPropietario(propietario: IPropietario) {
+    this._modalService.abrirModal<IPropietario>(
+      'Información del Propietario',
+      VerInfoPropietarioComponent,
+      propietario);
   }
   editarPropietario(propietario: IPropietario){
-   this._modalService.abrirModal('Editar Propietario', EditarPropietarioComponent, {entidad: propietario});
+   this._modalService.abrirModal<IPropietario>('Editar Propietario',
+    EditarPropietarioComponent, 
+    propietario);
   }
   eliminarPropietario(propietario: IPropietario){
-    this._modalService.abrirModal('Eliminar Propietario', EliminarPropietarioComponent, {entidad: propietario});
+    this._modalService.abrirModal('Eliminar Propietario',
+    EliminarPropietarioComponent,
+    propietario);
   }
 }
