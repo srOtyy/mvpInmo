@@ -1,5 +1,5 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { BehaviorSubject, filter, Observable } from 'rxjs';
 import { Dominio,IBotonRuta } from './navegacionRutas';
@@ -32,6 +32,8 @@ export class RutasDinamicasService {
   // Para mantener el dominio activo y emitirlo al componente que lo necesite ( actualmente el sidebar)
   private dominioActivoSubject: BehaviorSubject<Dominio | null> = new BehaviorSubject<Dominio | null>(null);
   dominioActivo$: Observable<Dominio | null> = this.dominioActivoSubject.asObservable();
+  //singal para el dominio activo, se puede usar en el html del sidebar para mostrar los botones de accion correspondientes al dominio activo
+  public $dominioActivo = signal<Dominio | null>(null);
 
   constructor(private router: Router) {}
 
@@ -46,6 +48,8 @@ export class RutasDinamicasService {
       this.arrayBotones.next([]);
       this.dominioActivoSubject.next(null);
     }
-  
+  }
+  obtenerBotonesPorDominio(dominio: Dominio): IBotonRuta[] {
+    return this.accionesPorDominio[dominio] || [];
   }
 }

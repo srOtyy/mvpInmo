@@ -5,11 +5,47 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    .buttons{
+    .botones{
+        width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 30px;
-        padding: 10px;
+        gap: 50px;
         padding-top :30px ;
+        .div-dominio{
+            .boton-dominio{
+                width: 100%;
+                border-bottom: 1px solid $primary-300;
+                border-radius: 0;
+                transition: all 0.3s ease;
+                background-color: transparent;
+                &:hover{
+                    color: $neutral-50;
+                    border-bottom-color: $neutral-50;
+                }
+            }
+            .sub-botones{
+                background-color: $neutral-700;
+                border-bottom: 1px solid $primary-700;
+                ul{
+                    list-style: none;
+                    margin: 0;
+                    padding: 15px;
+                    li{
+                        .boton-accion{
+                            text-align: start;
+                            width: 100%;
+                            border-radius: 0;
+                            transition: all 0.3s ease;
+                            background-color: transparent;
+                            &:hover{
+                                color: $accent-1;
+                                background-color: transparent;
+                            }
+                        }
+                        
+                    }
+                    }
+            }
+        }
     }
 }
