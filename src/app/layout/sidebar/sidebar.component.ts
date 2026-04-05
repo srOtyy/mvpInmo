@@ -30,6 +30,6 @@ export class SidebarComponent {
     return this.rutasDinamicasService.$dominioActivo() === dominio;
   }
   obtenerBotonesDeAccion(dominio: string): IBotonRuta[] {
-    return this.rutasDinamicasService.obtenerBotonesPorDominio(dominio as Dominio);
+    return this.rutasDinamicasService.obtenerBotonesAccionPorDominio(dominio as Dominio);
   }
 }

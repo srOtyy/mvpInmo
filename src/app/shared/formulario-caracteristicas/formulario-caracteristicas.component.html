@@ -51,7 +51,7 @@
           color="accent"
           type="button"
           (click)="confirmarDefiniciones()"
-          [disabled]="!dominioActivo"
+          [disabled]="definiciones.length === 0"
         >
           Confirmar definiciones
         </button>

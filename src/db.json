@@ -57,6 +57,23 @@
           "valor": "2"
         }
       ]
+    },
+    {
+      "id": 12366,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "nene"
+        },
+        {
+          "clave": "Edad",
+          "valor": null
+        },
+        {
+          "clave": "pene",
+          "valor": true
+        }
+      ]
     }
   ],
   "inmuebles": [
@@ -81,9 +98,9 @@
           "requerido": false
         },
         {
-          "clave": "Inmuebles",
+          "clave": "pene",
           "tipo": "booleano",
-          "requerido": true
+          "requerido": false
         }
       ]
     },

@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { of, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { take } from 'rxjs';
 import { Dominio } from '../../core/navegacion/navegacionRutas';
 import { RutasDinamicasService } from '../../core/navegacion/rutas-dinamicas.service';
 import { DefinicionCaracteristica } from '../definicion-caracteristica.interface';
@@ -33,21 +33,20 @@ import { DefinicionesCaracteristicasService } from '../definiciones-caracteristi
   templateUrl: './formulario-caracteristicas.component.html',
   styleUrl: './formulario-caracteristicas.component.scss'
 })
-export class FormularioCaracteristicasComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class FormularioCaracteristicasComponent implements OnInit {
 
   dominioActivo: Dominio | null = null;
+  definiciones: DefinicionCaracteristica[] = [];
+  tipos: DefinicionCaracteristica['tipo'][] = ['texto', 'numero', 'booleano'];
+  formularioCaracteristicas: FormGroup;
 
   @Output() definicionSubmit = new EventEmitter<{
     dominio: Dominio;
     definiciones: DefinicionCaracteristica[];
   }>();
 
-  definiciones: DefinicionCaracteristica[] = [];
-  tipos: DefinicionCaracteristica['tipo'][] = ['texto', 'numero', 'booleano'];
-
-  formularioCaracteristicas: FormGroup;
-
+  //definiciones service todavía maneja observables. Se podra asignar un signal en su lugar? 
+  // si se asigna un signal, el componente se va a actualizar automáticamente cada vez que cambie el valor del signal, lo cual es ideal para nuestro caso porque queremos que el formulario se actualice cada vez que cambien las definiciones del dominio activo. Además, al usar un signal, podemos evitar tener que suscribirnos manualmente a los cambios de las definiciones y manejar la lógica de actualización del formulario dentro del servicio, lo cual puede hacer que el código sea más limpio y fácil de mantener. En resumen, asignar un signal en lugar de un observable puede ser una buena idea para mejorar la reactividad y la simplicidad del código en este caso.
   constructor(
     private formBuilder: FormBuilder,
     private rutasDinamicasService: RutasDinamicasService,
@@ -62,28 +61,14 @@ export class FormularioCaracteristicasComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.rutasDinamicasService.dominioActivo$
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap(dominio => {
-          this.dominioActivo = dominio;
-
-          if (!dominio) {
-            this.definiciones = [];
-            return of<DefinicionCaracteristica[]>([]);
-          }
-
-          return this.definicionesService.getDefiniciones$(dominio);
-        })
-      )
-      .subscribe(definiciones => {
-        this.definiciones = definiciones.slice();
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    if(this.rutasDinamicasService.$dominioActivo()) {
+      this.dominioActivo = this.rutasDinamicasService.$dominioActivo() as Dominio;
+      this.definicionesService.getDefiniciones$(this.dominioActivo)
+        .pipe(take(1))
+        .subscribe(definiciones => {
+          this.definiciones = definiciones.slice();
+        });
+    }
   }
 
   agregarDefinicion(): void {

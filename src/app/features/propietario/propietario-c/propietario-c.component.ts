@@ -23,6 +23,7 @@ export class PropietarioCComponent implements OnInit {
   propietario!: IPropietario;
   listaPropietarios$!: Observable<IPropietario[]>;
   obtenerCaracteristica = obtenerCaracteristica;
+  
   constructor(
     private _propietariosRxJsService: PropietarioRxjsService,
     private _modalService: ModalService,

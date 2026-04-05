@@ -14,14 +14,13 @@ export abstract class BaseCrudService<T>{
     protected endpoint: string
   ) { }
 
-
+  obtenerLista(): Observable<T[]> {
+    return this.lista$.asObservable();
+  }
   cargar(): Observable<T[]> {
     return this.http.get<T[]>(this.endpoint).pipe(
       tap(lista => this.lista$.next(lista))
     );
-  }
-  obtenerLista(): Observable<T[]> {
-    return this.lista$.asObservable();
   }
   crear(entidad: T) {
     return this.http.post<T>(this.endpoint, entidad).pipe(
