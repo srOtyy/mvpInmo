@@ -1,3 +1,3 @@
-import { IEntityBase } from '../../shared/entity-base.interface';
+import { IEntityBase } from '../caracteristicas/entity-base.interface';
 
 export interface IInquilino extends IEntityBase {}

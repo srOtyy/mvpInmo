@@ -8,7 +8,7 @@ import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PropietarioRxjsService } from '../../propietario-rxjs.service';
 import { SnackbarService } from '../../../../core/snackbar.service';
-import { construirCaracteristicasDesdeForm, obtenerCaracteristica } from '../../../../shared/entity-helpers';
+import { construirCaracteristicasDesdeForm } from '../../../caracteristicas/entity-helpers';
 import { ModalContentComponent } from '../../../../core/modal/modalData-interface';
 @Component({
   selector: 'app-editar-propietario',

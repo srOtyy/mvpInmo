@@ -7,7 +7,7 @@ import { VerInfoPropietarioComponent } from '../modals/ver-info-propietario/ver-
 import { EditarPropietarioComponent } from '../modals/editar-propietario/editar-propietario.component';
 import { EliminarPropietarioComponent } from '../modals/eliminar-propietario/eliminar-propietario.component';
 import { Observable } from 'rxjs';
-import { obtenerCaracteristica } from '../../../shared/entity-helpers';
+import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
 import { AsyncPipe } from '@angular/common';
 import { ModalService } from '../../../core/modal/modal.service';
 import { SnackbarService } from '../../../core/snackbar.service';

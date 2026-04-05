@@ -12,8 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { take } from 'rxjs';
 import { Dominio } from '../../core/navegacion/navegacionRutas';
 import { RutasDinamicasService } from '../../core/navegacion/rutas-dinamicas.service';
-import { DefinicionCaracteristica } from '../definicion-caracteristica.interface';
-import { DefinicionesCaracteristicasService } from '../definiciones-caracteristicas.service';
+import { DefinicionCaracteristica} from '../../features/caracteristicas/definicion-caracteristica.interface';
+import { DefinicionesCaracteristicasService } from '../../features/caracteristicas/definiciones-caracteristicas.service';
 
 @Component({
   selector: 'app-formulario-caracteristicas',
@@ -46,7 +46,7 @@ export class FormularioCaracteristicasComponent implements OnInit {
   }>();
 
   //definiciones service todavía maneja observables. Se podra asignar un signal en su lugar? 
-  // si se asigna un signal, el componente se va a actualizar automáticamente cada vez que cambie el valor del signal, lo cual es ideal para nuestro caso porque queremos que el formulario se actualice cada vez que cambien las definiciones del dominio activo. Además, al usar un signal, podemos evitar tener que suscribirnos manualmente a los cambios de las definiciones y manejar la lógica de actualización del formulario dentro del servicio, lo cual puede hacer que el código sea más limpio y fácil de mantener. En resumen, asignar un signal en lugar de un observable puede ser una buena idea para mejorar la reactividad y la simplicidad del código en este caso.
+  // 
   constructor(
     private formBuilder: FormBuilder,
     private rutasDinamicasService: RutasDinamicasService,

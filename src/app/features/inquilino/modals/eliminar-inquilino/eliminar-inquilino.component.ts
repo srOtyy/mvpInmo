@@ -5,7 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { SnackbarService } from '../../../../core/snackbar.service';
 import { MatButton } from '@angular/material/button';
-import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
+import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 
 @Component({
   selector: 'app-eliminar-inquilino',

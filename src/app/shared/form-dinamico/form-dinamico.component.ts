@@ -3,13 +3,13 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { Dominio } from '../../core/navegacion/navegacionRutas';
-import { DefinicionCaracteristica } from '../definicion-caracteristica.interface';
-import { DefinicionesCaracteristicasService } from '../definiciones-caracteristicas.service';
+import { DefinicionCaracteristica } from '../../features/caracteristicas/definicion-caracteristica.interface';
+import { DefinicionesCaracteristicasService } from '../../features/caracteristicas/definiciones-caracteristicas.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CaracteristicaEntidad } from '../entity-base.interface';
+import { CaracteristicaEntidad } from '../../features/caracteristicas/entity-base.interface';
 @Component({
   selector: 'app-form-dinamico',
   standalone: true,

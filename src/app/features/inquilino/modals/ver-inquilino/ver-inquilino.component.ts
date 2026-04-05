@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IInquilino } from '../../inquilino.interface';
 import { MatDividerModule } from '@angular/material/divider';
-import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
+import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 
 @Component({
   selector: 'app-ver-inquilino',

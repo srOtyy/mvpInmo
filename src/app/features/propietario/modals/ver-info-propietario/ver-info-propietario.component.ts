@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IPropietario } from '../../propietario.interface';
 import { MatDividerModule } from '@angular/material/divider';
-import { obtenerCaracteristica } from '../../../../shared/entity-helpers';
+import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 
 @Component({
   selector: 'app-ver-info-propietario',

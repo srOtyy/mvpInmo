@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Dominio } from '../core/navegacion/navegacionRutas';
 import { DefinicionCaracteristica } from './definicion-caracteristica.interface';
 import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-
+import { Dominio } from '../../core/navegacion/navegacionRutas';
 interface DefinicionesDominioResponse {
   id: string | number;
   dominio: Dominio;

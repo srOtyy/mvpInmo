@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinamico.component';
 import { InmueblesRxjsService } from '../inmuebles-rxjs.service';
-import { CaracteristicaEntidad } from '../../../shared/entity-base.interface';
+import { CaracteristicaEntidad } from '../../caracteristicas/entity-base.interface';
 import { SnackbarService } from '../../../core/snackbar.service';
 
 @Component({
