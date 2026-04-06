@@ -1,7 +1,6 @@
 
 import { Injectable, signal } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { BehaviorSubject, filter, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { Dominio,IBotonRuta } from './navegacionRutas';
 
 @Injectable({

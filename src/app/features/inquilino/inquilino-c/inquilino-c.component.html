@@ -1,5 +1,5 @@
 <app-card-list entidad="Inquilinos">
-    @for(inquilino of listaInquilinos$| async; track inquilino.id) {
+    @for(inquilino of $listaInquilinos; track $index) {
         <app-item-entidad [entidad]="inquilino"
         [titulo]="obtenerCaracteristica(inquilino, 'nombre')"
         (ver)="verInquilino($event)"

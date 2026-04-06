@@ -7,21 +7,19 @@ import { VerInquilinoComponent } from '../modals/ver-inquilino/ver-inquilino.com
 import { EliminarInquilinoComponent } from '../modals/eliminar-inquilino/eliminar-inquilino.component';
 import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.component';
 import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
-import { Observable, } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { ModalService } from '../../../core/modal/modal.service';
 @Component({
   selector: 'app-inquilino-c',
   standalone: true,
-  imports: [CardListComponent, ItemEntidadComponent, AsyncPipe],
+  imports: [CardListComponent, ItemEntidadComponent],
   templateUrl: './inquilino-c.component.html',
   styleUrl: './inquilino-c.component.scss'
 })
 
 export class InquilinoCComponent implements OnInit{
   inquilino!: IInquilino;
-  listaInquilinos$!: Observable<IInquilino[]>
+  $listaInquilinos!: IInquilino[];
   obtenerCaracteristica = obtenerCaracteristica;
 
   constructor(
@@ -31,12 +29,15 @@ export class InquilinoCComponent implements OnInit{
   ) {};
 
   ngOnInit(): void {
-    this.listaInquilinos$ = this._inquilinosService.obtenerLista();
     this._inquilinosService.cargar().subscribe(
-      {next: lista => console.log('Lista de inquilinos cargada:', lista),
+      {next: lista => {
+        console.log('Lista de inquilinos cargada:', lista),
+       this.$listaInquilinos = this._inquilinosService.$lista();
+      },
       error: err => this._snack.mensajeSnackBar('Error al cargar inquilinos', 'Cerrar')
       }
     )
+
   }
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;

@@ -1,25 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { Observable, switchMap, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export abstract class BaseCrudService<T>{
-
-  lista$ = new BehaviorSubject<T[]>([]);
-
+  $lista = signal<T[]>([]);
   constructor(
     protected http: HttpClient,
     protected endpoint: string
   ) { }
 
-  obtenerLista(): Observable<T[]> {
-    return this.lista$.asObservable();
-  }
   cargar(): Observable<T[]> {
     return this.http.get<T[]>(this.endpoint).pipe(
-      tap(lista => this.lista$.next(lista))
+      tap(lista => this.$lista.set(lista))
     );
   }
   crear(entidad: T) {

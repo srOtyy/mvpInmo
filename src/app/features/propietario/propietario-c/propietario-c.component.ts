@@ -6,22 +6,20 @@ import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.
 import { VerInfoPropietarioComponent } from '../modals/ver-info-propietario/ver-info-propietario.component';
 import { EditarPropietarioComponent } from '../modals/editar-propietario/editar-propietario.component';
 import { EliminarPropietarioComponent } from '../modals/eliminar-propietario/eliminar-propietario.component';
-import { Observable } from 'rxjs';
 import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
-import { AsyncPipe } from '@angular/common';
 import { ModalService } from '../../../core/modal/modal.service';
 import { SnackbarService } from '../../../core/snackbar.service';
 @Component({
   selector: 'app-propietario-c',
   standalone: true,
-  imports: [CardListComponent, ItemEntidadComponent, AsyncPipe],
+  imports: [CardListComponent, ItemEntidadComponent],
   templateUrl: './propietario-c.component.html',
   styleUrl: './propietario-c.component.scss'
 })
 
 export class PropietarioCComponent implements OnInit {
   propietario!: IPropietario;
-  listaPropietarios$!: Observable<IPropietario[]>;
+  $listaPropietarios!: IPropietario[];
   obtenerCaracteristica = obtenerCaracteristica;
   
   constructor(
@@ -31,9 +29,12 @@ export class PropietarioCComponent implements OnInit {
   ) {};
   
   ngOnInit(): void {
-    this.listaPropietarios$ = this._propietariosRxJsService.obtenerLista();
     this._propietariosRxJsService.cargar().subscribe(
-      {next: lista => console.log('Lista de propietarios cargada:', lista),
+      {next: lista => {
+        console.log('Lista de propietarios cargada:', lista);
+        this.$listaPropietarios = this._propietariosRxJsService.$lista();
+
+      },
       error: err => {
         this._snack.mensajeSnackBar('Error al cargar propietarios', 'Cerrar');
         console.log(err)

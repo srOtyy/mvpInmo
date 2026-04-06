@@ -74,6 +74,23 @@
           "valor": true
         }
       ]
+    },
+    {
+      "id": 404514,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "nenea"
+        },
+        {
+          "clave": "Edad",
+          "valor": 123
+        },
+        {
+          "clave": "pene",
+          "valor": true
+        }
+      ]
     }
   ],
   "inmuebles": [
