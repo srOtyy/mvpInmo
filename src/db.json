@@ -57,6 +57,40 @@
           "valor": "2"
         }
       ]
+    },
+    {
+      "id": 12366,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "nene"
+        },
+        {
+          "clave": "Edad",
+          "valor": null
+        },
+        {
+          "clave": "pene",
+          "valor": true
+        }
+      ]
+    },
+    {
+      "id": 404514,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "nenea"
+        },
+        {
+          "clave": "Edad",
+          "valor": 123
+        },
+        {
+          "clave": "pene",
+          "valor": true
+        }
+      ]
     }
   ],
   "inmuebles": [
@@ -78,6 +112,11 @@
         {
           "clave": "Edad",
           "tipo": "numero",
+          "requerido": false
+        },
+        {
+          "clave": "pene",
+          "tipo": "booleano",
           "requerido": false
         }
       ]

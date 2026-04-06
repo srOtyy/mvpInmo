@@ -1,9 +1,0 @@
-<div class="lista-botones">
-    @if (dominio) {
-        <button mat-button class="boton-dominio">{{dominio}}</button>
-    }
-    @for (boton of botones; track $index) {
-    <button mat-button [routerLink]="boton.ruta" class="boton">{{boton.nombre}}</button>
-}
-
-</div>

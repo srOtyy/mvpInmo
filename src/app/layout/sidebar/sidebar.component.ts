@@ -1,22 +1,35 @@
 import { Component } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import { RutasDinamicasService } from '../../core/navegacion/rutas-dinamicas.service';
-import { Dominio } from '../../core/navegacion/navegacionRutas';
+import { Dominio, IBotonRuta } from '../../core/navegacion/navegacionRutas';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, RouterLink],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-  // obtiene los dominios activos desde el servicio de core: rutas-dinamicas.service.ts
+  // no se si estoy agarrando el valor del signal y lo asigno a la variable o si directamente uso el signal en el html, lo que si se es que el signal no se puede usar en el html, por eso lo asigno a la variable dominioActivo, pero no se si es la mejor forma de hacerlo
   dominiosActivos: string[] = [];
-  constructor(private rutasDinamicasService: RutasDinamicasService) {
-    this.dominiosActivos = this.rutasDinamicasService.emitirEntidades();
+  dominioActivo: Dominio | null = null;
+  constructor(
+    private rutasDinamicasService: RutasDinamicasService
+  ) {
+    this.rutasDinamicasService.emitirEntidades().forEach(dominio => {
+      this.dominiosActivos.push(dominio);
+    });
+    
   }
 
   enviarDominio(dominio: string): void {
-    this.rutasDinamicasService.enviarDominioActivo(dominio as Dominio);
+    this.rutasDinamicasService.$dominioActivo.set(dominio as Dominio);
+  }
+  consultarDominioActivo(dominio: string): boolean {
+    return this.rutasDinamicasService.$dominioActivo() === dominio;
+  }
+  obtenerBotonesDeAccion(dominio: string): IBotonRuta[] {
+    return this.rutasDinamicasService.obtenerBotonesAccionPorDominio(dominio as Dominio);
   }
 }

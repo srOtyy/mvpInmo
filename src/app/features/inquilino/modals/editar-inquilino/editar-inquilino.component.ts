@@ -8,7 +8,7 @@ import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
-import { construirCaracteristicasDesdeForm, obtenerCaracteristica, obtenerClavesCaracteristicas } from '../../../../shared/entity-helpers';
+import { construirCaracteristicasDesdeForm, obtenerClavesCaracteristicas } from '../../../caracteristicas/entity-helpers';
 @Component({
   selector: 'app-editar-inquilino',
   standalone: true,

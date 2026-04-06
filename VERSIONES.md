@@ -1,27 +1,16 @@
-# v0.11
+# v0.12
 
 ## Objetivo
 
-Refactor de service httpclient, etc...
+Integrar signals progresivamente
 
 ## Alcance incluido
 
 ### Observaciones
 
-- el sidebar desactiva el contenido main porque tienen un routerlink.
-Mi idea es que el sidebar solo afecte al navbar, y este ultimo si defina el contenido del main (LISTO)
-- hay un conflicto en el formulario de las caracteristicas. Si elijo el dominio desde el sidebar. El contenido dentro de la lista de caracteristicas cambia segun el domino. Seguramente este suscripto al dominio activo(PENDIENTE)
-- El servicio de httpclient debe actualizarce para que no sea tan repetitivo (LISTO)
-- En el head, el indicador de dominio activo, al ser un boton, tiene el estilode hover. Abria que quitarlo
-
 ### Decisiones
 
-- Se creo un servicio que usa genéricos para las consultas http. Los servicios de entidad-rxjs ahora heredan este servicio (base-crud-rxjs.ts)
-
 ## Próxima versión
-
-- Unificar los botones y la eleccion de dominio en el sidebar:
-    Podria ser que al elegir un dominio, se cambien los botones ( estaría bueno agregar un efecto de transicion ) para que vengan los botones x dominio. Esto evitaria que se elija diferente dominio mientras se observan las caracteristicas declaradas ( posible solucion ? agregado a que se recrea la UI a algo más practico? )
 
 ## Versiones anteriores
 
@@ -93,4 +82,8 @@ Observaciones técnicas:
 
 ### v0.10 - refactor + eliminacion de any's
 
-    - Se creó un servicio que usa genericos para los modales y modal.component (moda-service.ts)
+        - Se creó un servicio que usa genericos para los modales y modal.component (moda-service.ts)
+
+### v0.11 - refactor
+
+        - Se creo un servicio que usa genéricos para las consultas http. Los servicios de entidad-rxjs ahora heredan este servicio (base-crud-rxjs.ts)

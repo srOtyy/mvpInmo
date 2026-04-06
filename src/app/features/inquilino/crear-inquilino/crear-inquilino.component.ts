@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { InquilinoRxjsService } from '../inquilino-rxjs.service';
 import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinamico.component';
 import { SnackbarService } from '../../../core/snackbar.service';
-import { CaracteristicaEntidad } from '../../../shared/entity-base.interface';
+import { CaracteristicaEntidad } from '../../caracteristicas/entity-base.interface';
 
 @Component({
   selector: 'app-crear-inquilino',
