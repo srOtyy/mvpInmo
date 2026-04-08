@@ -7,8 +7,15 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class InmueblesRxjsService extends BaseCrudService<IInmueble> {
+
   constructor( http: HttpClient ) {
     super(http, 'http://localhost:3000/inmuebles')
-   }
+  }
+
+ cargarLista(): void {
+  this.cargar().subscribe({
+    error: () => console.error('Error al cargar inmuebles')
+  });
+}
    
 }

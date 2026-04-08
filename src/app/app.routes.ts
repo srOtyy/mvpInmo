@@ -5,7 +5,8 @@ import { PropietarioCComponent } from './features/propietario/propietario-c/prop
 import { FormularioCaracteristicasComponent } from './shared/formulario-caracteristicas/formulario-caracteristicas.component';
 import { CrearInquilinoComponent } from './features/inquilino/crear-inquilino/crear-inquilino.component';
 import { CrearInmuebleComponent } from './features/inmueble/crear-inmueble/crear-inmueble.component';
-
+import { InmuebleCComponent } from './features/inmueble/inmueble-c/inmueble-c.component';
+// es necesario pasar rutas "rutas-dinamicas.service" a este archivo para que el router pueda reconocerlas
 export const routes: Routes = [
   {
     path: 'propietarios',
@@ -26,6 +27,7 @@ export const routes: Routes = [
   {
     path: 'inmuebles',
     children: [
+      { path: 'lista', component: InmuebleCComponent },
       {path: 'crear', component: CrearInmuebleComponent},
       { path: 'def_caracteristicas', component: FormularioCaracteristicasComponent }
     ]

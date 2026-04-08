@@ -21,16 +21,7 @@ export class EditarInquilinoComponent implements OnInit{
  formularioEditarInquilino: FormGroup;
 
  constructor( private formBuilder: FormBuilder, private _inquilinoRxJsService: InquilinoRxjsService, private dialogRef: MatDialogRef<ModalComponent>,private _snackbarService: SnackbarService){
-    this.formularioEditarInquilino = this.formBuilder.group({
-      id: new FormControl('', [Validators.required]),
-      nombre: new FormControl('', [Validators.required]),
-      dni: new FormControl('', [Validators.required]),
-      telefono: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      garante: new FormControl('', [Validators.required]),
-      ingresos: new FormControl('', [Validators.required]),
-    });
-    
+    this.formularioEditarInquilino = this.formBuilder.group({});
   }
  
   ngOnInit(){

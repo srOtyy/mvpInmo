@@ -9,5 +9,10 @@ export class InquilinoRxjsService extends BaseCrudService<IInquilino> {
   constructor( http: HttpClient ) {
     super(http, 'http://localhost:3000/inquilinos')
   }
-  
+  cargarLista(): void {
+    this.cargar().subscribe({
+      next: ()=> console.log('Inquilinos cargados'),
+      error: () => console.error('Error al cargar inquilinos')
+  });
+  }
 }

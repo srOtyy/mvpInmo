@@ -14,7 +14,8 @@ export abstract class BaseCrudService<T>{
 
   cargar(): Observable<T[]> {
     return this.http.get<T[]>(this.endpoint).pipe(
-      tap(lista => this.$lista.set(lista))
+      tap(lista => this.$lista.set(lista)),
+      tap( () => console.log("datos cargados") )
     );
   }
   crear(entidad: T) {

@@ -1,0 +1,10 @@
+<div class="datos">
+    @if(entidad !== null){
+        @for(c of entidad.caracteristicas; track $index) {
+            <p><strong>{{c.clave}}:</strong> {{c.valor}}</p>
+            <mat-divider></mat-divider>
+        }
+    }@else {
+        <p>No se encontró información del propietario.</p>
+    }
+</div>

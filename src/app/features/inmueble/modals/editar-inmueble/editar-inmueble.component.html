@@ -1,0 +1,14 @@
+<form [formGroup]="formularioEditarInmueble" class="formulario">
+    <ng-container >
+        @for(c of entidad.caracteristicas; track $index){
+            <mat-form-field appearance="fill">
+                <mat-label>{{ c.clave }}</mat-label>
+                <input
+                matInput
+                [formControlName]="c.clave"
+                [placeholder]="c.clave">
+            </mat-form-field>
+        }
+    </ng-container>
+</form>
+    <button type="submit" mat-flat-button [disabled]="!this.formularioEditarInmueble.valid" (click)="guardarCambios()">Guardar cambios</button>

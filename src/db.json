@@ -95,8 +95,13 @@
   ],
   "inmuebles": [
     {
-      "id": "1m",
-      "caracteristicas": []
+      "id": 962387,
+      "caracteristicas": [
+        {
+          "clave": "Dueño",
+          "valor": "pepe"
+        }
+      ]
     }
   ],
   "definiciones": [
@@ -140,7 +145,13 @@
     {
       "id": "inmuebles",
       "dominio": "inmuebles",
-      "caracteristicas": []
+      "caracteristicas": [
+        {
+          "clave": "Dueño",
+          "tipo": "texto",
+          "requerido": true
+        }
+      ]
     }
   ]
 }
