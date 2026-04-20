@@ -95,11 +95,32 @@
   ],
   "inmuebles": [
     {
-      "id": 962387,
+      "id": 259097,
+      "idPropietario": 648728,
       "caracteristicas": [
         {
           "clave": "Dueño",
-          "valor": "pepe"
+          "valor": true
+        }
+      ]
+    },
+    {
+      "id": 711688,
+      "idPropietario": 397854,
+      "caracteristicas": [
+        {
+          "clave": "Dueño",
+          "valor": true
+        }
+      ]
+    },
+    {
+      "id": 178883,
+      "idPropietario": 586212,
+      "caracteristicas": [
+        {
+          "clave": "Dueño",
+          "valor": true
         }
       ]
     }
@@ -148,7 +169,7 @@
       "caracteristicas": [
         {
           "clave": "Dueño",
-          "tipo": "texto",
+          "tipo": "booleano",
           "requerido": true
         }
       ]

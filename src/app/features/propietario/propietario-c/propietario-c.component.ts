@@ -24,8 +24,7 @@ export class PropietarioCComponent implements OnInit {
   
   constructor(
     private _propietariosRxJsService: PropietarioRxjsService,
-    private _modalService: ModalService,
-    private _snack: SnackbarService
+    private _modalService: ModalService
   ) {};
 
   get $listaPropietarios(): IPropietario[] {

@@ -1,4 +1,17 @@
 <section class="section">
   <h4>Crear Inmueble</h4>
-  <app-form-dinamico [dominio]="'inmuebles'" (entidadCreada)="onEntidadCreada($event)"></app-form-dinamico>
+  
+  <mat-form-field class="form-field" class="mat-select" >
+    <mat-label>Propietario</mat-label>
+    <mat-select [(ngModel)]="propietarioSeleccionado" required>
+       @for(propietario of propietarios; track $index){
+          <mat-option [value]="propietario">
+            {{ getNombrePropietario(propietario) }}
+          </mat-option>
+       }
+    </mat-select>
+  </mat-form-field>
+
+  <app-form-dinamico [dominio]="'inmuebles'" (entidadCreada)="onEntidadCreada($event)">
+  </app-form-dinamico>
 </section>

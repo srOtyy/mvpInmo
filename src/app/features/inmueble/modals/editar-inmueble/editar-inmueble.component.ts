@@ -29,7 +29,8 @@ export class EditarInmuebleComponent implements OnInit {
   
     pasarDatosInmueble(inmuebleData: IInmueble) {
        this.formularioEditarInmueble.patchValue({
-        id: inmuebleData.id
+        id: inmuebleData.id,
+        idPropietario: inmuebleData.idPropietario
       }); 
   
       inmuebleData.caracteristicas.forEach(c => {
@@ -56,6 +57,7 @@ export class EditarInmuebleComponent implements OnInit {
     setInmuebleNuevo(): IInmueble{
       const inmuebleEditado: IInmueble = {
         id: this.formularioEditarInmueble.value.id,
+        idPropietario: this.formularioEditarInmueble.value.idPropietario,
         caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInmueble.value, obtenerClavesCaracteristicas(this.entidad))
       };
       return inmuebleEditado;

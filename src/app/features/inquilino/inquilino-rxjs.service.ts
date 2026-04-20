@@ -9,10 +9,15 @@ export class InquilinoRxjsService extends BaseCrudService<IInquilino> {
   constructor( http: HttpClient ) {
     super(http, 'http://localhost:3000/inquilinos')
   }
+/**
+   * Carga la lista de inquilinos solo si no está ya cargada.
+   * Evita múltiples peticiones HTTP innecesarias.
+   */
   cargarLista(): void {
+    if (this.$lista().length > 0) return;
     this.cargar().subscribe({
       next: ()=> console.log('Inquilinos cargados'),
       error: () => console.error('Error al cargar inquilinos')
-  });
+    });
   }
 }

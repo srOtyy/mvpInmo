@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { IInquilino } from '../../../inquilino/inquilino.interface';
 import { InmueblesRxjsService } from '../../inmuebles-rxjs.service';
 import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../core/snackbar.service';
 import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 import { MatButton } from '@angular/material/button';
+import { IInmueble } from '../../inmueble.interface';
 @Component({
   selector: 'app-eliminar-inmueble',
   standalone: true,
@@ -14,7 +14,7 @@ import { MatButton } from '@angular/material/button';
   styleUrl: './eliminar-inmueble.component.scss'
 })
 export class EliminarInmuebleComponent {
-  @Input() entidad!: IInquilino;
+  @Input() entidad!: IInmueble;
   constructor(private _serviceRxJsInmueble: InmueblesRxjsService,
     private dialogRef: MatDialogRef <ModalComponent>,
     private _snackbarService: SnackbarService){}
