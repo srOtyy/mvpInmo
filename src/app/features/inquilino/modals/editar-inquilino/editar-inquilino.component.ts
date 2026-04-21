@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IInquilino } from '../../inquilino.interface';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InquilinoRxjsService } from '../../inquilino-rxjs.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../core/snackbar.service';

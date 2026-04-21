@@ -37,12 +37,6 @@ export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
     return this.$lista().find(p => p.id === idPropietario);
   }
 
-  /**
-   * Obtiene el nombre de un propietario por su ID.
-   * Busca en el array de características la que tenga clave "nombre".
-   * @param idPropietario - ID del propietario
-   * Promise con el nombre o undefined
-   */
   async obtenerNombrePropietario(idPropietario: number): Promise<string | undefined> {
     const propietario = await this.obtenerPropietario(idPropietario);
     if (!propietario) {

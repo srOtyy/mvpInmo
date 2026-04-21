@@ -1,0 +1,17 @@
+<div class="datos">
+    @if(entidad !== null){
+        <p><strong>Inmueble:</strong> {{entidad.inmuebleId}}</p>
+        <mat-divider></mat-divider>
+        <p><strong>Inquilino:</strong> {{entidad.inquilinoId}}</p>
+        <mat-divider></mat-divider>
+        <p><strong>Propietario:</strong> {{entidad.propietarioId}}</p>
+        <mat-divider></mat-divider>
+        <p><strong>Fecha de inicio:</strong> {{entidad.fechaInicio | date}}</p>
+        <mat-divider></mat-divider>
+        <p><strong>Fecha de fin:</strong> {{entidad.fechaFin | date}}</p>
+        <mat-divider></mat-divider>
+        <p><strong>Renta mensual:</strong> {{entidad.rentaMensual | currency}}</p>
+    }@else{
+        <p>No se encontró información del contrato.</p>
+    }
+</div>

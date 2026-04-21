@@ -125,6 +125,18 @@
       ]
     }
   ],
+  "contratos": [
+    {
+      "id": 294811,
+      "propietarioId": "123",
+      "inmuebleId": "789",
+      "inquilinoId": "456",
+      "fechaInicio": "2222-02-22",
+      "fechaFin": "0111-11-11",
+      "rentaMensual": 123456789,
+      "estado": "preliminar"
+    }
+  ],
   "definiciones": [
     {
       "id": "propietarios",

@@ -23,7 +23,6 @@ export class InquilinoCComponent implements OnInit{
 
   constructor(
     private _inquilinosService: InquilinoRxjsService,
-    private _snack: SnackbarService,
     private _modalService: ModalService
   ) {};
 

@@ -19,7 +19,6 @@ import { SnackbarService } from '../../../core/snackbar.service';
 
 export class PropietarioCComponent implements OnInit {
   
-  propietario!: IPropietario;
   obtenerCaracteristica = obtenerCaracteristica;
   
   constructor(
@@ -50,7 +49,7 @@ export class PropietarioCComponent implements OnInit {
     propietario);
   }
   eliminarPropietario(propietario: IPropietario){
-    this._modalService.abrirModal('Eliminar Propietario',
+    this._modalService.abrirModal<IPropietario>('Eliminar Propietario',
     EliminarPropietarioComponent,
     propietario);
   }
