@@ -1,19 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { SnackbarService } from '../../../core/snackbar.service';
-import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.service';
-import { IPropietario } from '../../propietario/propietario.interface';
-import { IInquilino } from '../../inquilino/inquilino.interface';
-import { IInmueble } from '../../inmueble/inmueble.interface';
-import { InquilinoRxjsService } from '../../inquilino/inquilino-rxjs.service';
-import { InmueblesRxjsService } from '../../inmueble/inmuebles-rxjs.service';
 import { IContrato } from '../contrato.interface';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { IPropietario } from '../../propietario/propietario.interface';
+import { IInquilino } from '../../inquilino/inquilino.interface';
+import { IEntityBase } from '../../caracteristicas/entity-base.interface';
 @Component({
   selector: 'app-crear-contrato',
   standalone: true,
@@ -22,18 +18,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrl: './crear-contrato.component.scss'
 })
 export class CrearContratoComponent implements OnInit {
-  $listaPropietarios! :IPropietario[]
-  $listaInquilinos! :IInquilino[]
-  $listaInmuebles! :IInmueble[]
-
-
+ 
   formulario: FormGroup = new FormGroup({});
   constructor(
     private contratosService: ContratoBbddService,
     private _snack: SnackbarService,
-    private _propietariosService: PropietarioRxjsService,
-    private _inquilinosService: InquilinoRxjsService,
-    private _inmueblesService: InmueblesRxjsService
   ){ 
     this.formulario = new FormGroup({
       id: new FormControl(this.randomId(), Validators.required), 
@@ -47,22 +36,34 @@ export class CrearContratoComponent implements OnInit {
       });
     }
 
-  ngOnInit(){
-    this.cargarDatos()
+  async ngOnInit(): Promise<void> {
+    await this.contratosService.obtenerListas().catch(error => {
+        console.error('Error al cargar las listas para el formulario de contratos:', error);
+        this._snack.mensajeSnackBar('Error al cargar datos para el formulario', 'Cerrar');
+    });
   }
 
-  async cargarDatos(){
-    try {
-      this.$listaInmuebles = this._inmueblesService.$lista();
-      this.$listaInquilinos = this._inquilinosService.$lista();
-      this.$listaPropietarios = this._propietariosService.$lista();
-      this._snack.mensajeSnackBar('Datos cargados exitosamente', 'Cerrar');
-    }
-    catch (error) {
-      this._snack.mensajeSnackBar('Error al cargar datos', 'Cerrar');
-    }
+  get propietariosLista() {
+    return this.contratosService.$listaPropietarios;
+  }
+  get inquilinosLista() {
+    return this.contratosService.$listaInquilinos;
+  }
+  get inmueblesLista() {
+    return this.contratosService.$listaInmuebles;
   }
 
+  obtenerNombre<T extends IEntityBase>(entidad: T): string {
+    const caracteristicaNombre = entidad.caracteristicas.find(c => c.clave === 'nombre');
+    return caracteristicaNombre?.valor?.toString() ? caracteristicaNombre.valor.toString() : 'Entidad sin nombre';
+  }
+  nombrePropietario(propietario: IPropietario): string {
+    return this.obtenerNombre<IPropietario>(propietario);
+  }
+  nombreInquilino(inquilino: IInquilino): string {
+    return this.obtenerNombre<IInquilino>(inquilino);
+  }
+  
   enviarContrato(contrato: IContrato){
     this.contratosService.crear(contrato).subscribe({
       next: () => {

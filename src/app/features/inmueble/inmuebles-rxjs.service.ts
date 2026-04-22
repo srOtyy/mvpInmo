@@ -26,13 +26,11 @@ cargarLista(): void {
   /**
    * Obtiene el nombre del propietario de un inmueble.
    * IMPORTANTE: Usa async/await porque obtenerNombrePropietario del servicio de propietarios
-   * es una operación asíncrona (requiere esperar a que cargue la lista desde el servidor).
-   * @param idPropietario - ID del propietario
-   * @returns Promise con el nombre o undefined
+   * es una operación asíncrona (requiere esperar a que cargue la lista desde el servidor)
    */
   async obtenerPropietarioPorId(idPropietario: number): Promise<string | undefined> {
     this._rxjsPropietarios.cargarLista(); // Asegura que la lista de propietarios esté cargada  
-    return this._rxjsPropietarios.obtenerNombrePropietario(idPropietario)
+    return this._rxjsPropietarios.obtenerNombrePropietarioPorId(idPropietario)
   }
    
 }

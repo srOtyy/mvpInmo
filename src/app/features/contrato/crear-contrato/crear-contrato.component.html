@@ -4,22 +4,33 @@
   <form [formGroup]="formulario" (ngSubmit)="enviarContrato(formulario.value)" class="formulario">
     <div class="grid">
       <div class="campo"> 
-        <mat-form-field appearance="fill">
-          <mat-label>Propietario</mat-label>
-          <input matInput formControlName="propietarioId" />
-        </mat-form-field>
-        
+        <mat-form-field>
+            <mat-label>Propietario</mat-label>
+            <mat-select formControlName="propietarioId">
+              @for (propietario of propietariosLista; track propietario) {
+                    <mat-option [value]="propietario.id">{{nombrePropietario(propietario)}}</mat-option>
+                  }
+            </mat-select>
+          </mat-form-field>
       </div>
       <div class="campo">
-        <mat-form-field appearance="fill">
+        <mat-form-field>
           <mat-label>Inquilino</mat-label>
-          <input matInput formControlName="inquilinoId" />
+          <mat-select formControlName="inquilinoId">
+            @for (inquilino of inquilinosLista; track inquilino) {
+                  <mat-option [value]="inquilino.id">{{nombreInquilino(inquilino)}}</mat-option>
+                }
+          </mat-select>
         </mat-form-field>
       </div>
       <div class="campo">
         <mat-form-field appearance="fill">
           <mat-label>Inmueble</mat-label>
-          <input matInput formControlName="inmuebleId" />
+          <mat-select formControlName="inmuebleId">
+            @for (inmueble of inmueblesLista; track inmueble) {
+                  <mat-option [value]="inmueble.id">{{inmueble.id}}</mat-option>
+                }
+          </mat-select>
         </mat-form-field>
       </div>
       <div class="campo">
@@ -44,5 +55,6 @@
     </div>
     <button mat-raised-button color="primary" type="submit">Crear Contrato</button>
   </form>
+
 </section>
     

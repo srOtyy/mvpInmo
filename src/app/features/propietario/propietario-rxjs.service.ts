@@ -16,19 +16,26 @@ export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
    * Evita múltiples peticiones HTTP innecesarias.
    */
   cargarLista(): void {
-    if (this.$lista().length > 0) return;
-    this.cargar().subscribe({
+    if (this.$lista().length > 0){
+      console.log('Lista de propietarios ya cargada', this.endpoint);
+      return;
+    }else{
+      console.log('Cargando lista de propietarios desde el servidor...');
+      this.cargar().subscribe({
       next: ()=> console.log('Propietarios cargados'),
       error: () => console.error('Error al cargar propietarios')
     });
   }
+    }
+    
+
+
 
   /**
+   * Las funciones de abajo sirven para la asignacion de propietarios a inmuebles. Son asíncronas porque dependen de que la lista de propietarios esté cargada desde el servidor.
    * Obtiene un propietario por su ID.
-   * IMPORTANTE: Usa async/await porque cargar() es una operación asíncrona (HTTP).
+   * Usa async/await porque cargar() es una operación asíncrona (HTTP).
    * Si la lista no está cargada, espera a que termine la petición antes de retornar.
-   * @param idPropietario - ID del propietario a buscar
-   * @returns Promise con el propietario o undefined
    */
   async obtenerPropietario(idPropietario: number): Promise<IPropietario | undefined> {
     if (this.$lista().length === 0) {
@@ -37,16 +44,20 @@ export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
     return this.$lista().find(p => p.id === idPropietario);
   }
 
-  async obtenerNombrePropietario(idPropietario: number): Promise<string | undefined> {
+  async obtenerNombrePropietarioPorId(idPropietario: number): Promise<string | undefined> {
     const propietario = await this.obtenerPropietario(idPropietario);
     if (!propietario) {
       console.log("Propietario no encontrado con ID:", idPropietario);
       return undefined;
     } else{
-      console.log('Propietario encontrado:', propietario);
       const caracteristicaNombre = propietario.caracteristicas.find(c => c.clave === 'nombre');
       return caracteristicaNombre?.valor?.toString();
     }
     
   }
+  obtenerNombrePropietario(propietario: IPropietario): string {
+    const caracteristicaNombre = propietario.caracteristicas.find(c => c.clave === 'nombre');
+    return caracteristicaNombre?.valor?.toString() ? caracteristicaNombre.valor.toString() : 'Propietario sin nombre';
+  }
+  
 }
