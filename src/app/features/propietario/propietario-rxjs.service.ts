@@ -17,10 +17,8 @@ export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
    */
   cargarLista(): void {
     if (this.$lista().length > 0){
-      console.log('Lista de propietarios ya cargada', this.endpoint);
       return;
     }else{
-      console.log('Cargando lista de propietarios desde el servidor...');
       this.cargar().subscribe({
       next: ()=> console.log('Propietarios cargados'),
       error: () => console.error('Error al cargar propietarios')

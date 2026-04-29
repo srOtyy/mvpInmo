@@ -39,7 +39,6 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     this.$listaPropietarios = this._rxjsPropietarios.$lista();
     this.$listaInquilinos = this._rxjsInquilinos.$lista();
     this.$listaInmuebles = this._rxjsInmuebles.$lista();
-    console.log('Listas de entidades cargadas en el servicio de contratos...');
   } catch (error) {
     console.error('Error al cargar las listas:', error);
   }

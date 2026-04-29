@@ -24,7 +24,6 @@ export class VerInmuebleComponent {
    */
   async buscarNombrePropietario() {
     this.nombre = await this._rxjsInmuebles.obtenerPropietarioPorId(this.entidad.idPropietario) || 'Desconocido';
-    console.log('Nombre del propietario:', this.nombre);
   }
 
 }
