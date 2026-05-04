@@ -14,7 +14,7 @@ export abstract class BaseCrudService<T>{
 
   cargar(): Observable<T[]> {
     return this.http.get<T[]>(this.endpoint).pipe(
-      tap(lista => this.$lista.set(lista))
+      tap(lista => this.$lista.set(lista)),
     );
   }
   crear(entidad: T) {
@@ -34,4 +34,6 @@ export abstract class BaseCrudService<T>{
     );
   }
 
+
+  //para los contratos necesito emitir la lista de cada entidad
 }

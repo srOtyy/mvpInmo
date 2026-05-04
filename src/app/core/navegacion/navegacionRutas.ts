@@ -4,4 +4,4 @@ export interface IBotonRuta {
 }
 
 //agregar futuros dominios en este union type
-export type Dominio = 'propietarios' | 'inquilinos'| 'inmuebles';
+export type Dominio = 'propietarios' | 'inquilinos'| 'inmuebles' | 'contratos' ;

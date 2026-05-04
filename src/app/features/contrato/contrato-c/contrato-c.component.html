@@ -1,0 +1,11 @@
+
+<app-card-list entidad="Contratos">
+    @for(contrato of listaContratos; track $index) {
+        <app-item-entidad [entidad]="contrato"
+        [titulo]="$index + 1"
+        (ver)="verContrato($event)"
+        (editar)="editarContrato($event)"
+        (eliminar)="eliminarContrato($event)"
+        ></app-item-entidad>
+    }
+</app-card-list>

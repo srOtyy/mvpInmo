@@ -1,12 +1,17 @@
-# v0.12
+# v0.13
 
 ## Objetivo
 
-Integrar signals progresivamente
+Crear las primeras relaciones por intedad antes de integrar `Contratos`
 
 ## Alcance incluido
 
 ### Observaciones
+
+- Primero, hay que agregar al formulario de inmuebles un select con los propietarios ( todos ) para vincular el inmueble creado con el propietario a elegir:
+    Lo ideal sería que manejemos esta lógica unicamente con el id del propietario.
+    1) vincular el id de propietario a una propiedad del inmueble ( "idPropietario" )
+    2) Crear funciones que manejen la obtencion de los id desde la base de datos, mostrar los nombres para el proceso de seleccion ( en un mat-select ) y por ultimo la vinculacion del id a la propiedad del inmueble
 
 ### Decisiones
 

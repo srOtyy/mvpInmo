@@ -19,25 +19,18 @@ import { ModalService } from '../../../core/modal/modal.service';
 
 export class InquilinoCComponent implements OnInit{
   inquilino!: IInquilino;
-  $listaInquilinos!: IInquilino[];
   obtenerCaracteristica = obtenerCaracteristica;
 
   constructor(
     private _inquilinosService: InquilinoRxjsService,
-    private _snack: SnackbarService,
     private _modalService: ModalService
   ) {};
 
+  get $listaInquilinos(): IInquilino[] {
+    return this._inquilinosService.$lista();
+  }
   ngOnInit(): void {
-    this._inquilinosService.cargar().subscribe(
-      {next: lista => {
-        console.log('Lista de inquilinos cargada:', lista),
-       this.$listaInquilinos = this._inquilinosService.$lista();
-      },
-      error: err => this._snack.mensajeSnackBar('Error al cargar inquilinos', 'Cerrar')
-      }
-    )
-
+    this._inquilinosService.cargarLista()
   }
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;

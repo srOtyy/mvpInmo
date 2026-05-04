@@ -18,30 +18,20 @@ import { SnackbarService } from '../../../core/snackbar.service';
 })
 
 export class PropietarioCComponent implements OnInit {
-  propietario!: IPropietario;
-  $listaPropietarios!: IPropietario[];
+  
   obtenerCaracteristica = obtenerCaracteristica;
   
   constructor(
     private _propietariosRxJsService: PropietarioRxjsService,
-    private _modalService: ModalService,
-    private _snack: SnackbarService
+    private _modalService: ModalService
   ) {};
+
+  get $listaPropietarios(): IPropietario[] {
+    return this._propietariosRxJsService.$lista();
+  }
   
   ngOnInit(): void {
-    this._propietariosRxJsService.cargar().subscribe(
-      {next: lista => {
-        console.log('Lista de propietarios cargada:', lista);
-        this.$listaPropietarios = this._propietariosRxJsService.$lista();
-
-      },
-      error: err => {
-        this._snack.mensajeSnackBar('Error al cargar propietarios', 'Cerrar');
-        console.log(err)
-      
-      }
-      }
-    );
+    this._propietariosRxJsService.cargarLista();
   }
   randomId(): number{
     return Math.floor(Math.random() * 1000) + 1;
@@ -59,7 +49,7 @@ export class PropietarioCComponent implements OnInit {
     propietario);
   }
   eliminarPropietario(propietario: IPropietario){
-    this._modalService.abrirModal('Eliminar Propietario',
+    this._modalService.abrirModal<IPropietario>('Eliminar Propietario',
     EliminarPropietarioComponent,
     propietario);
   }

@@ -12,7 +12,6 @@ import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 })
 export class VerInquilinoComponent {
    @Input() entidad!: IInquilino;
-    nombre: string = '';
     obtenerCaracteristica = (clave: string) =>
       obtenerCaracteristica(this.entidad, clave);
 }
