@@ -18,7 +18,7 @@ export function obtenerClavesCaracteristicas(entidad: EntidadConCaracteristicas)
 
 
 export function construirCaracteristicasDesdeForm(
-  form: FormGroup,
+  form: FormGroup
 ): CaracteristicaEntidad[] {
   const claves = Object.keys(form.controls).filter(key => key !== 'id');
   return claves.map(clave => ({

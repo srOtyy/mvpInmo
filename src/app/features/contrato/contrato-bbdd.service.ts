@@ -48,6 +48,9 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     console.log('Inquilinos:', this.$listaInquilinos);
     console.log('Inmuebles:', this.$listaInmuebles);  
   }
+  obtenerContratoPorId(id : number): IContrato | undefined {
+    return this.$lista().find(contrato => contrato.id === id);
+  }
   //en desuso, evaluar funcionalidad a futuro
   setFetecha(dia: number, mes: number, anio: number): Date {
     const fecha = new Date();

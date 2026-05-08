@@ -1,17 +1,15 @@
-# v0.13
+# v0.14
 
 ## Objetivo
 
-Crear las primeras relaciones por intedad antes de integrar `Contratos`
+Las Notificaciónes.
 
 ## Alcance incluido
 
-### Observaciones
+### ¿Que voy a hacer?
 
-- Primero, hay que agregar al formulario de inmuebles un select con los propietarios ( todos ) para vincular el inmueble creado con el propietario a elegir:
-    Lo ideal sería que manejemos esta lógica unicamente con el id del propietario.
-    1) vincular el id de propietario a una propiedad del inmueble ( "idPropietario" )
-    2) Crear funciones que manejen la obtencion de los id desde la base de datos, mostrar los nombres para el proceso de seleccion ( en un mat-select ) y por ultimo la vinculacion del id a la propiedad del inmueble
+- Voy a agregar el head nuevamente en Layout
+- Agregar un espacio en el db.json para las Notificaciones
 
 ### Decisiones
 
@@ -92,3 +90,8 @@ Observaciones técnicas:
 ### v0.11 - refactor
 
         - Se creo un servicio que usa genéricos para las consultas http. Los servicios de entidad-rxjs ahora heredan este servicio (base-crud-rxjs.ts)
+
+### v0.12 | v0.13 Contratos y Signals
+
+        -Ambas versiones fueron interesantes, en v0.13 se crearon los Contratos, el primer nexo entre las 3 entidades actuales: IPropietario, IInquilino,IInmueble.
+        - en v0.12 intercambie RxJs en algunos casos por Signals. Esto pudo haber creado estructuras un tanto diferentes en como se conectar los intercambios de datos desde el programa a la base de datos mockeada "db.json"

@@ -123,6 +123,16 @@
           "valor": true
         }
       ]
+    },
+    {
+      "id": 438781,
+      "idPropietario": 729526,
+      "caracteristicas": [
+        {
+          "clave": "Dueño",
+          "valor": true
+        }
+      ]
     }
   ],
   "contratos": [
@@ -186,5 +196,7 @@
         }
       ]
     }
+  ],
+  "notificaciones":[
   ]
 }
