@@ -197,6 +197,86 @@
       ]
     }
   ],
-  "notificaciones":[
+  "notificaciones": [
+    {
+      "id": 173099,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T18:35:11.939Z",
+      "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 427036,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T18:35:12.531Z",
+      "tipo": "vencimiento",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 171461,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T18:56:23.063Z",
+      "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 726803,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T18:56:23.870Z",
+      "tipo": "vencimiento",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 397840,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T18:56:25.879Z",
+      "tipo": "vencimiento",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 110984,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T18:56:26.118Z",
+      "tipo": "vencimiento",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 684561,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T19:03:05.192Z",
+      "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 377287,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T19:03:06.088Z",
+      "tipo": "vencimiento",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 118360,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T19:03:06.816Z",
+      "tipo": "vencimiento",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 833504,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-08T19:03:07.624Z",
+      "tipo": "vencimiento",
+      "mensaje": "Este es un recordatorio de prueba"
+    }
   ]
 }

@@ -1,11 +1,18 @@
 <div class="head">
-<div class="head__notificaciones">
-    <app-notificaciones></app-notificaciones>
-    <app-notificaciones></app-notificaciones>
-
-</div>
-<div class="head__fecha">
+  <div class="head__notificaciones">
+    @for (notificacion of listaNotificaciones$ | async; track notificacion.id) {
+      <div class="notificacion-badge" 
+           [class.pendiente]="notificacion.estado === 'pendiente'" 
+           [class.vencida]="notificacion.estado === 'completada'"
+           title="{{notificacion.mensaje}} - {{notificacion.fecha | date:'short'}}">
+        <span class="notificacion-icon">
+          {{ notificacion.tipo === 'vencimiento' ? '⏳' : '📅' }}
+        </span>
+      </div>
+    }
+  </div>
+  <div class="head__fecha">
     <span class="head__fecha--dia">Lunes</span>
     <span class="head__fecha--mes">12 de Junio</span>
-</div>
+  </div>
 </div>

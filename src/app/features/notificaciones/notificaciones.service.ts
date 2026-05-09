@@ -2,26 +2,26 @@ import { Injectable } from '@angular/core';
 import { INotificacion } from './notificacion.interface';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { HttpClient } from '@angular/common/http';
-import { IContrato } from '../contrato/contrato.interface';
+import {toObservable} from '@angular/core/rxjs-interop'
 @Injectable({
   providedIn: 'root'
 })
 export class NotificacionesService extends BaseCrudService<INotificacion> {
   ahora = new Date();
   title = this.ahora.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'2-digit'});
-  constructor( http: HttpClient) { 
+  constructor( http: HttpClient) {
     super(http, 'http://localhost:3000/notificaciones')
     console.log('NotificacionesService inicializado: ', this.title);
   }
+
+  cargarLista() {
+    if (this.$lista().length === 0) {
+      this.cargar().subscribe();
+    }
+    return toObservable(this.$lista);
+  }
   $listaNotificaciones: INotificacion[] = [];
 
-  cargarLista():void{
-    if(this.$lista().length > 0) return;
-    this.cargar().subscribe({
-      next: () => console.log('Notificaciones cargadas:', this.$lista()),
-      error: () => console.error('Error al cargar notificaciones')
-    });
-  }
   obtenerNotificaciones(estado?: string): INotificacion[] {
     if (estado) {
       return this.$lista().filter(notificacion => notificacion.estado === estado);

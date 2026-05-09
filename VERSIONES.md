@@ -1,97 +1,48 @@
-# v0.14
+# Registro de Cambios
 
-## Objetivo
+## [Sin versionar] - 2026-05-08
 
-Las Notificaciónes.
+### Características nuevas
+- Implementación de lista reactiva de notificaciones en el header con `@for` y `async` pipe
+- Animación de entrada (`fadeInScale`) para badges de notificaciones
+- Tooltips con mensaje y fecha en cada notificación
+- Indicadores visuales por estado (pendiente/vencida) con colores diferenciados
 
-## Alcance incluido
+### Cambios técnicos
 
-### ¿Que voy a hacer?
+#### `src/app/features/notificaciones/notificaciones.service.ts`
+**Modificado:**
+- `cargarLista()`: Cambiado de `void` a retornar `Observable<INotificacion[]>` usando `toObservable(this.$lista)` para reactividad completa
+- Eliminada variable `$listaNotificaciones` (redundante)
+- Lógica simplificada: carga inicial si `$lista` está vacío, luego retorna el observable del signal
 
-- Voy a agregar el head nuevamente en Layout
-- Agregar un espacio en el db.json para las Notificaciones
+**Eliminado:**
+- Uso de `firstValueFrom` (ya no se convierte a Promise)
+- Estructura `async/await` anterior
 
-### Decisiones
+#### `src/app/layout/head/head.component.ts`
+**Modificado:**
+- Eliminada implementación de `OnInit` y método `ngOnInit` (ya no necesario reactivamente)
+- Cambiado `listaNotificaciones: INotificacion[]` por `listaNotificaciones$!: Observable<INotificacion[]>`
+- Asignación directa en constructor: `this.listaNotificaciones$ = this._notificacionesService.cargarLista()`
+- Limpiada importación de `NotificacionesComponent` (ya no se usa en `imports`)
 
-## Próxima versión
+#### `src/app/layout/head/head.component.html`
+**Modificado:**
+- Eliminadas dos instancias hardcodeadas de `<app-notificaciones></app-notificaciones>`
+- Implementado `@for (notificacion of listaNotificaciones$ | async; track notificacion.id)` para renderizado reactivo
+- Cada notificación muestra badge circular con icono condicional: `⏰` (vencimiento) o `📌` (recordatorio)
+- Añadido `title` con mensaje y fecha formateada para tooltip nativo
 
-## Versiones anteriores
+#### `src/app/layout/head/head.component.scss`
+**Modificado:**
+- Estilos completos para `.notificacion-badge`: 40px circular, transiciones hover, colores por estado
+- Estados `.pendiente` (borde `$warning`) y `.vencida` (borde `$error`)
+- Animación `@keyframes fadeInScale` de entrada: opacidad 0→1, translateY(-8px)→0, scale(0.85)→1
+- Refactor del layout del header: padding, sombra, alineación mejorada
+- Tipografía ajustada y espaciado consistente en fecha
 
-### v0.1 – Propietarios
-
-En esta versión se implementó el CRUD básico de la entidad Propietario, incluyendo:
-        Modelo y servicio
-        Gestión de estado mediante RxJS
-        UI mínima funcional para creación, edición y listado
-        Esta versión estableció el patrón base para el resto de las entidades del sistema.
-
-### v0.2 - Inquilinos
-
-En esta version se impemento el CURD basico de Inquilino, incluye :
-        Modelo (interfaz) y serivicio
-        Gestion de estadio mediante RxJs ( El array)
-        UI Aceptable para el uso del CRUD
-        Esta version establecio la segunda entidad importante del sistema.
-
-Observaciones endeudadas:
-        - `item-propietario` y `item-inquilino` comparten estructura
-        - Los modales base se repiten entre entidades
-
-### v0.3 - Service rutas dinamicas
-
- En esta version se creó un service que crea botones en el header, los botones indican las rutas del dominio donde se encuentra el usuario ( los dominios que hay en el sidebar).
-    Se permite agregar nuevas rutas dentro de los archivos indicados
-        - Se creó el archivo `navegacionRutas.ts`, que contiene:
-        - La interfaz IBotonRuta
-        - El union type que define los dominios válidos del sistema
-Obsevaciones:
-        Se utilizan herramientas nuevas cono record y union type
-
-### v0.4 - Dominio 'Contratos'
-
-En esta versión se crearon archivos markdown con mermeid
-
-Observaciones técnicas:
-        - Se reutilizaron patrones establecidos en v0.1 y v0.2
-        - Se identificó duplicación de código en componentes `item-*`
-        - El sidebar continúa siendo hardcodeado para esta entidad
-
-### v0.5 Inmuebles
-
-    Se creó el formulario de caracteristicas que se van a solicitar a la hora de crear inmuebles
-
-    Observacioens técnicas:
-        - el layout se rompe
-        - NO se esta creando inmuebles ( solo el array de caracteristicas)
-        - se hardcodeo el sidebar
-
-### v0.6 Debug
-
-    Se saldó la deuda de debug entre v0.1 a v0.5
-    Se crearon nuevos shared, eliminaron componentes repetidos y se actualizo las interfaces de las entidades
-
-    Pendientes para el proximo debug:
-        -Los modales de propietarios e inquilinos aun muestran las caracteristicas de manera hardcodeada y no dinamicamente
-
-### v0.8 Formulario dinamico
-
-    falta agregar lo que se hizo en esta version y la v0.7
-
-### v0.9 - Base de datos local
-
-    - el .json se nesecita ejecutar en una terminal propia 'json-server --watch "nombre del archivo.json"'
-    - los modales hardcodean las caracteristicas que deben mostrar. Hay que volverlos dinamicos
-    - la consola muestra un error con el layout
-
-### v0.10 - refactor + eliminacion de any's
-
-        - Se creó un servicio que usa genericos para los modales y modal.component (moda-service.ts)
-
-### v0.11 - refactor
-
-        - Se creo un servicio que usa genéricos para las consultas http. Los servicios de entidad-rxjs ahora heredan este servicio (base-crud-rxjs.ts)
-
-### v0.12 | v0.13 Contratos y Signals
-
-        -Ambas versiones fueron interesantes, en v0.13 se crearon los Contratos, el primer nexo entre las 3 entidades actuales: IPropietario, IInquilino,IInmueble.
-        - en v0.12 intercambie RxJs en algunos casos por Signals. Esto pudo haber creado estructuras un tanto diferentes en como se conectar los intercambios de datos desde el programa a la base de datos mockeada "db.json"
+### Notas técnicas
+- El enfoque usa **Observables + `async` pipe** que es el patrón recomendado en Angular para suscripciones automáticas y desuscripción al destruir componente
+- Al crear una notificación, `BaseCrudService.crear()` ejecuta `cargar()` que actualiza el `signal $lista`, `toObservable` emite y el `@for` renderiza inmediatamente
+- Se mantiene compatibilidad con la interface `INotificacion` existente

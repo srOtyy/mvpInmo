@@ -8,6 +8,7 @@ import { CrearInmuebleComponent } from './features/inmueble/crear-inmueble/crear
 import { InmuebleCComponent } from './features/inmueble/inmueble-c/inmueble-c.component';
 import { CrearContratoComponent } from './features/contrato/crear-contrato/crear-contrato.component';
 import { ContratoCComponent } from './features/contrato/contrato-c/contrato-c.component';
+import { CrearNotificacionComponent } from './features/notificaciones/crear-notificacion/crear-notificacion.component';
 // es necesario pasar rutas "rutas-dinamicas.service" a este archivo para que el router pueda reconocerlas
 export const routes: Routes = [
   {
@@ -41,6 +42,12 @@ export const routes: Routes = [
       { path: 'crear', component: CrearContratoComponent },
     
 
+    ]
+  },
+  {
+    path: 'notificaciones',
+    children: [
+      {path: 'crear', component: CrearNotificacionComponent}
     ]
   }
 ];
