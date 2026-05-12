@@ -10,6 +10,7 @@ import { IPropietario } from '../../propietario/propietario.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { randomId } from '../../../shared/utilitys';
 @Component({
   selector: 'app-crear-inmueble',
   standalone: true,
@@ -56,7 +57,7 @@ export class CrearInmuebleComponent implements OnInit {
 
   
     const nuevoInmueble = {
-      id: this.randomId(),
+      id: randomId(),
       idPropietario: this.propietarioSeleccionado.id,
       caracteristicas: [...entidad.caracteristicas]
     };
@@ -71,8 +72,5 @@ export class CrearInmuebleComponent implements OnInit {
         console.error('Error al crear inmueble', error);
       }
     })
-  }
-  private randomId(): number {
-    return Math.floor(Math.random() * 1_000_000) + 1;
   }
 }

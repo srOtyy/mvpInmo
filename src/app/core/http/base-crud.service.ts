@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Observable, switchMap, tap } from 'rxjs';
+import { IEntityBase } from '../../features/caracteristicas/entity-base.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,9 @@ export abstract class BaseCrudService<T>{
     return this.http.delete(`${this.endpoint}/${id}`).pipe(
       switchMap(() => this.cargar())
     );
+  }
+ buscarEntidadPorId<T>( id: number): Observable<T> {
+    return this.http.get<T>(`${this.endpoint}/${id}`)
   }
 
 

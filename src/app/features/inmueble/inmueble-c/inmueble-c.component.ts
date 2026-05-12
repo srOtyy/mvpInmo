@@ -7,6 +7,7 @@ import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.
 import { VerInmuebleComponent } from '../modals/ver-inmueble/ver-inmueble.component'; 
 import { EditarInmuebleComponent } from '../modals/editar-inmueble/editar-inmueble.component';
 import { EliminarInmuebleComponent } from '../modals/eliminar-inmueble/eliminar-inmueble.component';
+import { randomId } from '../../../shared/utilitys';
 @Component({
   selector: 'app-inmueble-c',
   standalone: true,
@@ -27,9 +28,6 @@ export class InmuebleCComponent implements OnInit{
   }
   ngOnInit(): void{
     this._inmueblesService.cargarLista()
-  }
-  randomId(): number{
-    return Math.floor(Math.random() * 1000) + 1;
   }
   //funciones por modal
   verInmueble(inmueble: IInmueble){

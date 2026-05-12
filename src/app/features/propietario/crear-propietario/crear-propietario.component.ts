@@ -4,7 +4,7 @@ import { IPropietario } from '../propietario.interface';
 import { PropietarioRxjsService } from '../propietario-rxjs.service';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { CaracteristicaEntidad } from '../../caracteristicas/entity-base.interface';
-
+import { randomId } from '../../../shared/utilitys';
 @Component({
   selector: 'app-crear-propietario',
   standalone: true,
@@ -20,7 +20,7 @@ export class CrearPropietarioComponent {
 
   onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }): void {
     const nuevoPropietario: IPropietario = {
-      id: this.randomId(),
+      id: randomId(),
       caracteristicas: entidad.caracteristicas
     };
 
@@ -34,7 +34,5 @@ export class CrearPropietarioComponent {
     })
   }
 
-  private randomId(): number {
-    return Math.floor(Math.random() * 1_000_000) + 1;
-  }
+ 
 }

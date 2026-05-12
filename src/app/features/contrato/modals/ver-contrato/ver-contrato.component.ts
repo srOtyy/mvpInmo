@@ -1,7 +1,12 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { IContrato } from '../../contrato.interface';
 import { DatePipe, CurrencyPipe } from '@angular/common';
+import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
+import { IInquilino } from '../../../inquilino/inquilino.interface';
+import { InquilinoRxjsService } from '../../../inquilino/inquilino-rxjs.service';
+import { PropietarioRxjsService } from '../../../propietario/propietario-rxjs.service';
+import { IPropietario } from '../../../propietario/propietario.interface';
 @Component({
   selector: 'app-ver-contrato',
   standalone: true,
@@ -9,7 +14,31 @@ import { DatePipe, CurrencyPipe } from '@angular/common';
   templateUrl: './ver-contrato.component.html',
   styleUrl: './ver-contrato.component.scss'
 })
-export class VerContratoComponent {
+export class VerContratoComponent implements OnInit {
   @Input() entidad!: IContrato;
-  //acutalmente tendre que hardcodear el contrato, pero luego se puede agregar un servicio para obtenerlo
+  inquilinoNombre: string = '';
+  propietarioNombre: string = '';
+  obtenerCaracteristica = obtenerCaracteristica;
+  constructor( private _inquilinoService: InquilinoRxjsService, private _propietarioService: PropietarioRxjsService){}
+
+  ngOnInit(): void {
+    this.setInquilinoNombre();
+    this.setPropietarioNombre();  
+  }
+
+  setInquilinoNombre(){
+     this._inquilinoService.buscarEntidadPorId<IInquilino>(this.entidad.inquilinoId).subscribe({
+      next: (inquilino) => {
+       this.inquilinoNombre = obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
+      }
+    });
+  }
+  setPropietarioNombre(){
+    this._propietarioService.buscarEntidadPorId<IPropietario>(this.entidad.propietarioId).subscribe({
+      next: (propietario) => {
+       this.propietarioNombre = obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible').toString();
+      }
+    });
+  }
+
 }

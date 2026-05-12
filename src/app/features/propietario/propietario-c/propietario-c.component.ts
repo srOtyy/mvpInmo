@@ -8,7 +8,8 @@ import { EditarPropietarioComponent } from '../modals/editar-propietario/editar-
 import { EliminarPropietarioComponent } from '../modals/eliminar-propietario/eliminar-propietario.component';
 import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
 import { ModalService } from '../../../core/modal/modal.service';
-import { SnackbarService } from '../../../core/snackbar.service';
+
+
 @Component({
   selector: 'app-propietario-c',
   standalone: true,
@@ -32,9 +33,6 @@ export class PropietarioCComponent implements OnInit {
   
   ngOnInit(): void {
     this._propietariosRxJsService.cargarLista();
-  }
-  randomId(): number{
-    return Math.floor(Math.random() * 1000) + 1;
   }
   // estos metodos abren los modales correspondientes 
   verPropietario(propietario: IPropietario) {

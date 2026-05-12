@@ -3,7 +3,7 @@ import { InquilinoRxjsService } from '../inquilino-rxjs.service';
 import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinamico.component';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { CaracteristicaEntidad } from '../../caracteristicas/entity-base.interface';
-
+import { randomId } from '../../../shared/utilitys';
 @Component({
   selector: 'app-crear-inquilino',
   standalone: true,
@@ -16,7 +16,7 @@ export class CrearInquilinoComponent {
 
   onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }): void {
     const nuevoInquilino = {
-      id: this.randomId(),
+      id: randomId(),
       caracteristicas: entidad.caracteristicas
     };
 
@@ -28,9 +28,5 @@ export class CrearInquilinoComponent {
         this.snack.mensajeSnackBar('Error al crear inquilino', 'Cerrar');
       }
     });
-  }
-
-  private randomId(): number {
-    return Math.floor(Math.random() * 1_000_000) + 1;
   }
 }

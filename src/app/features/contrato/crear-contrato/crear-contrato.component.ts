@@ -9,7 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IPropietario } from '../../propietario/propietario.interface';
 import { IInquilino } from '../../inquilino/inquilino.interface';
-import { IEntityBase } from '../../caracteristicas/entity-base.interface';
+import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
+import { randomId } from '../../../shared/utilitys';
 @Component({
   selector: 'app-crear-contrato',
   standalone: true,
@@ -25,7 +26,7 @@ export class CrearContratoComponent implements OnInit {
     private _snack: SnackbarService,
   ){ 
     this.formulario = new FormGroup({
-      id: new FormControl(this.randomId(), Validators.required), 
+      id: new FormControl(randomId(), Validators.required), 
       propietarioId: new FormControl('', Validators.required),
       inmuebleId: new FormControl('', Validators.required),
       inquilinoId: new FormControl('', Validators.required),
@@ -53,15 +54,12 @@ export class CrearContratoComponent implements OnInit {
     return this.contratosService.$listaInmuebles;
   }
 
-  obtenerNombre<T extends IEntityBase>(entidad: T): string {
-    const caracteristicaNombre = entidad.caracteristicas.find(c => c.clave === 'nombre');
-    return caracteristicaNombre?.valor?.toString() ? caracteristicaNombre.valor.toString() : 'Entidad sin nombre';
-  }
+  
   nombrePropietario(propietario: IPropietario): string {
-    return this.obtenerNombre<IPropietario>(propietario);
+    return obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible').toString();
   }
   nombreInquilino(inquilino: IInquilino): string {
-    return this.obtenerNombre<IInquilino>(inquilino);
+    return obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
   }
   
   enviarContrato(contrato: IContrato){
@@ -76,11 +74,5 @@ export class CrearContratoComponent implements OnInit {
       }
     })
   }
-  
-  private randomId(): number {
-    return Math.floor(Math.random() * 1_000_000) + 1;
-  }
-
- 
 
 }

@@ -9,6 +9,7 @@ import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.
 import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { ModalService } from '../../../core/modal/modal.service';
+import { randomId } from '../../../shared/utilitys';
 @Component({
   selector: 'app-inquilino-c',
   standalone: true,
@@ -31,9 +32,6 @@ export class InquilinoCComponent implements OnInit{
   }
   ngOnInit(): void {
     this._inquilinosService.cargarLista()
-  }
-  randomId(): number{
-    return Math.floor(Math.random() * 1000) + 1;
   }
 
   // estos metodos abren los modales correspondientes
