@@ -68,6 +68,21 @@
       "id": 611943,
       "idPropietario": 457918,
       "caracteristicas": []
+    },
+    {
+      "id": 183453,
+      "idPropietario": 722251,
+      "caracteristicas": []
+    },
+    {
+      "id": 780706,
+      "idPropietario": 722251,
+      "caracteristicas": [
+        {
+          "clave": "m2",
+          "valor": 150
+        }
+      ]
     }
   ],
   "contratos": [
@@ -81,17 +96,6 @@
       "rentaMensual": 1,
       "estado": "preliminar",
       "titulo": "Octavio - Pepito"
-    },
-    {
-      "id": 511216,
-      "propietarioId": 722251,
-      "inmuebleId": 611943,
-      "inquilinoId": 289607,
-      "fechaInicio": "",
-      "fechaFin": "",
-      "rentaMensual": 123,
-      "estado": "preliminar",
-      "titulo": "Juancito - Pila"
     }
   ],
   "definiciones": [
@@ -131,7 +135,51 @@
         }
       ],
       "id": 2
+    },
+    {
+      "dominio": "inmuebles",
+      "caracteristicas": [
+        {
+          "clave": "m2",
+          "tipo": "numero",
+          "requerido": true
+        }
+      ],
+      "id": 3
     }
   ],
-  "notificaciones": []
+  "notificaciones": [
+    {
+      "id": 540826,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-14T07:14:25.976Z",
+      "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 305195,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-14T07:14:27.040Z",
+      "tipo": "vencimiento",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 659703,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-14T07:14:28.383Z",
+      "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 691614,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-14T07:14:28.663Z",
+      "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    }
+  ]
 }

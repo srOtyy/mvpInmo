@@ -1,28 +1,16 @@
 <form [formGroup]="formularioEditarContrato" class="formulario">
     <ng-container >
        <mat-form-field appearance="fill">
-            <mat-label>{{entidad.inmuebleId}}</mat-label>
+            <mat-label>inmueble</mat-label>
             <input matInput 
             [formControlName]="'inmuebleId'" 
             placeholder="{{entidad.inmuebleId}}">
        </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>{{entidad.inquilinoId}}</mat-label>
+          <mat-label>inquilino</mat-label>
           <input matInput 
-          [formControlName]="'inquilinoId'" 
+          formControlName="inquilinoId" 
           placeholder="{{entidad.inquilinoId}}">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>{{entidad.fechaInicio}}</mat-label>
-            <input matInput 
-            [formControlName]="'fechaInicio'" 
-            placeholder="{{entidad.fechaInicio}}">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>{{entidad.fechaFin}}</mat-label>
-            <input matInput 
-            [formControlName]="'fechaFin'" 
-            placeholder="{{entidad.fechaFin}}">
         </mat-form-field>
     </ng-container>
 

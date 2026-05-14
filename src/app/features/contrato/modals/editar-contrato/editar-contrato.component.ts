@@ -7,12 +7,12 @@ import { ContratoBbddService } from '../../contrato-bbdd.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-editar-contrato',
   standalone: true,
-  imports: [MatFormField,ReactiveFormsModule,MatInputModule,MatButtonModule],
+  imports: [MatFormField, MatInputModule,MatButton,ReactiveFormsModule],
   templateUrl: './editar-contrato.component.html',
   styleUrl: './editar-contrato.component.scss'
 })
@@ -25,7 +25,16 @@ export class EditarContratoComponent implements OnInit {
     private dialogRef: MatDialogRef<ModalComponent>,
     private _snackbarService: SnackbarService
   ){
-    this.formularioEditarContrato = this.formBuilder.group({});
+    this.formularioEditarContrato = this.formBuilder.group({
+      id: [''],
+      inquilinoId: [''],
+      inmuebleId: [''],
+      fechaFin: [''],
+      fechaInicio: [''],
+      propietarioId: [''],
+      estado: [''],
+      rentaMensual: ['']
+    });
   }
 
   ngOnInit(){
@@ -33,16 +42,17 @@ export class EditarContratoComponent implements OnInit {
   }
 
   pasarDatosContrato(contratoData: IContrato) {
-     this.formularioEditarContrato.setValue({
+     this.formularioEditarContrato.patchValue({
       id: contratoData.id,
       inquilinoId: contratoData.inquilinoId,
       inmuebleId: contratoData.inmuebleId,
-      propietarioId: contratoData.propietarioId,
-      fechaInicio: contratoData.fechaInicio,
       fechaFin: contratoData.fechaFin,
-      status: contratoData.estado,
+      fechaInicio: contratoData.fechaInicio,
+      propietarioId: contratoData.propietarioId,
+      estado: contratoData.estado,
       rentaMensual: contratoData.rentaMensual
     });
+      
   }
   guardarCambios(){
     this._contratosService.actualizar(this.entidad.id, this.formularioEditarContrato.value).subscribe({

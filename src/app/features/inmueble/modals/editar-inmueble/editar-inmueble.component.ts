@@ -20,8 +20,13 @@ export class EditarInmuebleComponent implements OnInit {
   @Input() entidad!: IInmueble;
   formularioEditarInmueble: FormGroup;
   
-   constructor( private formBuilder: FormBuilder, private _inmuebleRxJsService: InmueblesRxjsService, private dialogRef: MatDialogRef<ModalComponent>,private _snackbarService: SnackbarService){
-      this.formularioEditarInmueble = this.formBuilder.group({});}
+   constructor( private formBuilder: FormBuilder,
+    private _inmuebleRxJsService: InmueblesRxjsService,
+    private dialogRef: MatDialogRef<ModalComponent>,
+    private _snackbarService: SnackbarService)
+    {
+      this.formularioEditarInmueble = this.formBuilder.group({});
+    }
    
     ngOnInit(){
       this.pasarDatosInmueble(this.entidad);

@@ -4,11 +4,12 @@ import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { ContratoBbddService } from '../../contrato-bbdd.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { IContrato } from '../../contrato.interface';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-eliminar-contrato',
   standalone: true,
-  imports: [],
+  imports: [MatButton],
   templateUrl: './eliminar-contrato.component.html',
   styleUrl: './eliminar-contrato.component.scss'
 })

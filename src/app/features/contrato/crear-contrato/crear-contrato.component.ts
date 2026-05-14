@@ -11,6 +11,7 @@ import { IPropietario } from '../../propietario/propietario.interface';
 import { IInquilino } from '../../inquilino/inquilino.interface';
 import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
 import { randomId } from '../../../shared/utilitys';
+import { NotificacionesService } from '../../notificaciones/notificaciones.service';
 @Component({
   selector: 'app-crear-contrato',
   standalone: true,
@@ -24,6 +25,7 @@ export class CrearContratoComponent implements OnInit {
   constructor(
     private contratosService: ContratoBbddService,
     private _snack: SnackbarService,
+    private _notificacion: NotificacionesService
   ){ 
     this.formulario = new FormGroup({
       id: new FormControl(randomId(), Validators.required), 
@@ -69,6 +71,15 @@ export class CrearContratoComponent implements OnInit {
         this._snack.mensajeSnackBar('Contrato creado exitosamente', 'Cerrar');
         this.formulario.reset();
         this.formulario.markAllAsTouched();
+        this._notificacion.crear({
+          id: randomId(),
+          contratoId: contrato.id,
+          mensaje: `Contrato ${contrato.titulo} creado exitosamente.`,
+          fecha: contrato.fechaFin,
+          tipo: 'vencimiento',
+          estado: 'pendiente'
+        
+        });
       },
       error: () => {
         this._snack.mensajeSnackBar('Error al crear contrato', 'Cerrar');

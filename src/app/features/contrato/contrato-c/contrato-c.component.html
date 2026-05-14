@@ -1,8 +1,8 @@
 
 <app-card-list entidad="Contratos">
-    @for(contrato of listaContratos; track $index) {
-         <app-item-entidad [entidad]="contrato"
-         [titulo]="contrato.titulo || 'Cargando...'"
+    @for(contrato of listaContratos; track contrato.id) {
+        <app-item-entidad [entidad]="contrato"
+        [titulo]="contrato.titulo || 'Cargando...'"
         (ver)="verContrato($event)"
         (editar)="editarContrato($event)"
         (eliminar)="eliminarContrato($event)"

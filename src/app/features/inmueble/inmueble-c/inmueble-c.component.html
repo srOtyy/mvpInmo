@@ -1,7 +1,7 @@
 <app-card-list entidad="Inmuebles">
     @for(inmueble of $listaInmuebles; track inmueble.id) {
         <app-item-entidad [entidad]="inmueble"
-        [titulo]="inmueble.idPropietario"
+        [titulo]="inmueble.id"
         (ver)="verInmueble($event)"
         (editar)="editarInmueble($event)"
         (eliminar)="eliminarInmueble($event)">
