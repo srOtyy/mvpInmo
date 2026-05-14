@@ -19,26 +19,29 @@ export class VerContratoComponent implements OnInit {
   inquilinoNombre: string = '';
   propietarioNombre: string = '';
   obtenerCaracteristica = obtenerCaracteristica;
-  constructor( private _inquilinoService: InquilinoRxjsService, private _propietarioService: PropietarioRxjsService){}
+  constructor( private _inquilinoService: InquilinoRxjsService, private _propietariosService: PropietarioRxjsService){}
 
   ngOnInit(): void {
-    this.setInquilinoNombre();
-    this.setPropietarioNombre();  
+    this.setNombreInquilino();
+    this.setNombrePropietario();
+    console.log("relacion:"+  this.entidad.titulo)
   }
 
-  setInquilinoNombre(){
-     this._inquilinoService.buscarEntidadPorId<IInquilino>(this.entidad.inquilinoId).subscribe({
-      next: (inquilino) => {
-       this.inquilinoNombre = obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
-      }
-    });
-  }
-  setPropietarioNombre(){
-    this._propietarioService.buscarEntidadPorId<IPropietario>(this.entidad.propietarioId).subscribe({
-      next: (propietario) => {
-       this.propietarioNombre = obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible').toString();
-      }
-    });
+
+
+  //estos metodos me van a servir para mostrar los nombres del propietario e inquilino en el nombre del item
+
+  async setNombrePropietario(){
+    const propietario = await this._propietariosService.obtenerPropietarioPorId(this.entidad.propietarioId);
+    if (propietario !== undefined){ 
+      this.propietarioNombre = obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible').toString();
+    }
   }
 
+  async setNombreInquilino(){
+    const inquilino = await this._inquilinoService.obtenerInquilinoPorId(this.entidad.inquilinoId);
+    if (inquilino !== undefined){
+      this.inquilinoNombre = obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
+    }
+  }
 }

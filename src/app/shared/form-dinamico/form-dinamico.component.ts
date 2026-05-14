@@ -37,6 +37,7 @@ export class FormDinamicoComponent implements OnInit, OnDestroy {
         this.definiciones = definiciones.slice();
         this.construirFormulario(this.definiciones);
       });
+   
   }
 
   ngOnDestroy(): void {

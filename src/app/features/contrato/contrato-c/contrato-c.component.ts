@@ -7,7 +7,7 @@ import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
 import { EditarContratoComponent } from '../modals/editar-contrato/editar-contrato.component';
 import { EliminarContratoComponent } from '../modals/eliminar-contrato/eliminar-contrato.component';
-import { randomId } from '../../../shared/utilitys';
+
 @Component({
   selector: 'app-contrato-c',
   standalone: true,
@@ -22,10 +22,11 @@ export class ContratoCComponent implements OnInit {
   ){};
   ngOnInit(){
     this._contratosService.cargarLista();
+    
   }
-  get listaContratos(): IContrato[] {
-    return this._contratosService.$lista();
-  }
+   get listaContratos(): IContrato[] {
+     return this._contratosService.$lista();
+   }
   verContrato(contrato: IContrato){
     this._modalService.abrirModal<IContrato>('Información del Contrato', VerContratoComponent, contrato);
   }

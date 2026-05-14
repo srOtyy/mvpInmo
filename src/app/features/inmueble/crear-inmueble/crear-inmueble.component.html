@@ -1,7 +1,7 @@
 <section class="section">
   <h4>Crear Inmueble</h4>
   
-  <mat-form-field class="form-field" class="mat-select" >
+  <mat-form-field class="form-field" >
     <mat-label>Propietario</mat-label>
     <mat-select [(ngModel)]="propietarioSeleccionado" required>
        @for(propietario of propietarios; track $index){

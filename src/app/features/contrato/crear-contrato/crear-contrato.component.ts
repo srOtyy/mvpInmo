@@ -63,6 +63,7 @@ export class CrearContratoComponent implements OnInit {
   }
   
   enviarContrato(contrato: IContrato){
+    contrato.titulo = this.contratosService.generarTituloContrato(contrato.propietarioId.toString(), contrato.inquilinoId.toString());
     this.contratosService.crear(contrato).subscribe({
       next: () => {
         this._snack.mensajeSnackBar('Contrato creado exitosamente', 'Cerrar');

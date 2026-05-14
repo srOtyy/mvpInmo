@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IInquilino } from './inquilino.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
+import { firstValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,4 +21,13 @@ export class InquilinoRxjsService extends BaseCrudService<IInquilino> {
       error: () => console.error('Error al cargar inquilinos')
     });
   }
+
+
+ async obtenerInquilinoPorId(idInquilino  : number): Promise<IInquilino | undefined> {
+    if (this.$lista().length === 0) {
+      await firstValueFrom(this.cargar());
+    }
+    return this.$lista().find(p => p.id === idInquilino);
+  }
+
 }

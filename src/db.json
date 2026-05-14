@@ -1,93 +1,63 @@
 {
   "inquilinos": [
     {
-      "id": 607962,
+      "id": 958427,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Oty"
+          "valor": "Pepito"
         },
         {
-          "clave": "riquezas",
-          "valor": true
+          "clave": "garantes",
+          "valor": 2
+        }
+      ]
+    },
+    {
+      "id": 289607,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Pila"
+        },
+        {
+          "clave": "garantes",
+          "valor": 0
         }
       ]
     }
   ],
   "propietarios": [
     {
-      "id": 729526,
+      "id": 457918,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Oty Propietario"
+          "valor": "Octavio"
         },
         {
-          "clave": "Edad",
-          "valor": "1"
-        }
-      ]
-    },
-    {
-      "id": 918711,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "propietario2"
+          "clave": "dni",
+          "valor": 43044274
         },
         {
-          "clave": "Edad",
-          "valor": 1
-        }
-      ]
-    },
-    {
-      "id": 586212,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "123465"
-        },
-        {
-          "clave": "Edad",
-          "valor": "112ñ"
-        },
-        {
-          "clave": "Inmuebles",
-          "valor": "2"
-        }
-      ]
-    },
-    {
-      "id": 12366,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "nene"
-        },
-        {
-          "clave": "Edad",
-          "valor": null
-        },
-        {
-          "clave": "pene",
+          "clave": "nada",
           "valor": true
         }
       ]
     },
     {
-      "id": 404514,
+      "id": 722251,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "nenea"
+          "valor": "Juancito"
         },
         {
-          "clave": "Edad",
-          "valor": 123
+          "clave": "dni",
+          "valor": 123456789
         },
         {
-          "clave": "pene",
+          "clave": "nada",
           "valor": true
         }
       ]
@@ -95,61 +65,37 @@
   ],
   "inmuebles": [
     {
-      "id": 259097,
-      "idPropietario": 648728,
-      "caracteristicas": [
-        {
-          "clave": "Dueño",
-          "valor": true
-        }
-      ]
-    },
-    {
-      "id": 711688,
-      "idPropietario": 397854,
-      "caracteristicas": [
-        {
-          "clave": "Dueño",
-          "valor": true
-        }
-      ]
-    },
-    {
-      "id": 178883,
-      "idPropietario": 586212,
-      "caracteristicas": [
-        {
-          "clave": "Dueño",
-          "valor": true
-        }
-      ]
-    },
-    {
-      "id": 438781,
-      "idPropietario": 729526,
-      "caracteristicas": [
-        {
-          "clave": "Dueño",
-          "valor": true
-        }
-      ]
+      "id": 611943,
+      "idPropietario": 457918,
+      "caracteristicas": []
     }
   ],
   "contratos": [
     {
-      "id": 11432,
-      "propietarioId": 12366,
-      "inmuebleId": 438781,
-      "inquilinoId": 607962,
-      "fechaInicio": "0222-02-01",
-      "fechaFin": "0011-01-01",
-      "rentaMensual": 4,
-      "estado": "preliminar"
+      "id": 301685,
+      "propietarioId": 457918,
+      "inmuebleId": 611943,
+      "inquilinoId": 958427,
+      "fechaInicio": "",
+      "fechaFin": "",
+      "rentaMensual": 1,
+      "estado": "preliminar",
+      "titulo": "Octavio - Pepito"
+    },
+    {
+      "id": 511216,
+      "propietarioId": 722251,
+      "inmuebleId": 611943,
+      "inquilinoId": 289607,
+      "fechaInicio": "",
+      "fechaFin": "",
+      "rentaMensual": 123,
+      "estado": "preliminar",
+      "titulo": "Juancito - Pila"
     }
   ],
   "definiciones": [
     {
-      "id": "propietarios",
       "dominio": "propietarios",
       "caracteristicas": [
         {
@@ -158,19 +104,19 @@
           "requerido": true
         },
         {
-          "clave": "Edad",
+          "clave": "dni",
           "tipo": "numero",
-          "requerido": false
+          "requerido": true
         },
         {
-          "clave": "pene",
+          "clave": "nada",
           "tipo": "booleano",
           "requerido": false
         }
-      ]
+      ],
+      "id": 1
     },
     {
-      "id": "inquilinos",
       "dominio": "inquilinos",
       "caracteristicas": [
         {
@@ -179,104 +125,13 @@
           "requerido": true
         },
         {
-          "clave": "riquezas",
-          "tipo": "booleano",
-          "requerido": false
-        }
-      ]
-    },
-    {
-      "id": "inmuebles",
-      "dominio": "inmuebles",
-      "caracteristicas": [
-        {
-          "clave": "Dueño",
-          "tipo": "booleano",
+          "clave": "garantes",
+          "tipo": "numero",
           "requerido": true
         }
-      ]
+      ],
+      "id": 2
     }
   ],
-  "notificaciones": [
-    {
-      "id": 173099,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T18:35:11.939Z",
-      "tipo": "recordatorio",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 427036,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T18:35:12.531Z",
-      "tipo": "vencimiento",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 171461,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T18:56:23.063Z",
-      "tipo": "recordatorio",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 726803,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T18:56:23.870Z",
-      "tipo": "vencimiento",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 397840,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T18:56:25.879Z",
-      "tipo": "vencimiento",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 110984,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T18:56:26.118Z",
-      "tipo": "vencimiento",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 684561,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T19:03:05.192Z",
-      "tipo": "recordatorio",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 377287,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T19:03:06.088Z",
-      "tipo": "vencimiento",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 118360,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T19:03:06.816Z",
-      "tipo": "vencimiento",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 833504,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-08T19:03:07.624Z",
-      "tipo": "vencimiento",
-      "mensaje": "Este es un recordatorio de prueba"
-    }
-  ]
+  "notificaciones": []
 }

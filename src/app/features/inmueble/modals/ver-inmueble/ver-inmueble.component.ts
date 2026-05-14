@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 import { IInmueble } from '../../inmueble.interface';
 import { MatDivider } from '@angular/material/divider';
@@ -10,7 +10,7 @@ import { InmueblesRxjsService } from '../../inmuebles-rxjs.service';
   templateUrl: './ver-inmueble.component.html',
   styleUrl: './ver-inmueble.component.scss'
 })
-export class VerInmuebleComponent {
+export class VerInmuebleComponent implements OnInit {
   @Input() entidad!: IInmueble;
       nombre: string = '';
       obtenerCaracteristica = (clave: string) =>
@@ -26,4 +26,9 @@ export class VerInmuebleComponent {
     this.nombre = await this._rxjsInmuebles.obtenerPropietarioPorId(this.entidad.idPropietario) || 'Desconocido';
   }
 
+  ngOnInit(){
+    if(this.entidad !== null){
+      this.buscarNombrePropietario();
+    }
+  }
 }

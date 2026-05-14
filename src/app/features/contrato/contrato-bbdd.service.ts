@@ -9,40 +9,53 @@ import { IPropietario } from '../propietario/propietario.interface';
 import { IInquilino } from '../inquilino/inquilino.interface';
 import { IInmueble } from '../inmueble/inmueble.interface';
 import { firstValueFrom } from 'rxjs';
+import { obtenerCaracteristica } from '../caracteristicas/entity-helpers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContratoBbddService extends BaseCrudService<IContrato> {
+ $listaPropietarios: IPropietario[] = [];
+  $listaInquilinos: IInquilino[] = [];
+  $listaInmuebles: IInmueble[] = [];
 
   constructor( http: HttpClient, private _rxjsInmuebles: InmueblesRxjsService, private _rxjsInquilinos: InquilinoRxjsService, private _rxjsPropietarios: PropietarioRxjsService ) {
     super(http, 'http://localhost:3000/contratos')
   }
-  $listaPropietarios: IPropietario[] = [];
-  $listaInquilinos: IInquilino[] = [];
-  $listaInmuebles: IInmueble[] = [];
+ 
 
-  cargarLista(): void {
-    if (this.$lista().length > 0) return;
-    this.cargar().subscribe({
-      next: ()=> console.log('Contratos cargados'),
-      error: () => console.error('Error al cargar contratos')
-    });
-  }
-  async obtenerListas(): Promise<void> {
-  try {
-    await Promise.all([
-      firstValueFrom(this._rxjsPropietarios.cargar()),
-      firstValueFrom(this._rxjsInquilinos.cargar()),
-      firstValueFrom(this._rxjsInmuebles.cargar())
-    ]);
-    this.$listaPropietarios = this._rxjsPropietarios.$lista();
-    this.$listaInquilinos = this._rxjsInquilinos.$lista();
-    this.$listaInmuebles = this._rxjsInmuebles.$lista();
-  } catch (error) {
-    console.error('Error al cargar las listas:', error);
-  }
-}
+   cargarLista(): void {
+     if (this.$lista().length > 0) return;
+     this.cargar().subscribe({
+       next: () => console.log('Contratos cargados'),
+       error: () => console.error('Error al cargar contratos')
+     });
+   }
+   async obtenerListas(): Promise<void> {
+   try {
+     await Promise.all([
+       firstValueFrom(this._rxjsPropietarios.cargar()),
+       firstValueFrom(this._rxjsInquilinos.cargar()),
+       firstValueFrom(this._rxjsInmuebles.cargar())
+     ]);
+     this.$listaPropietarios = this._rxjsPropietarios.$lista();
+     this.$listaInquilinos = this._rxjsInquilinos.$lista();
+     this.$listaInmuebles = this._rxjsInmuebles.$lista();
+   } catch (error) {
+     console.error('Error al cargar las listas:', error);
+   }
+ }
+
+    generarTituloContrato(idPropietario: string, idInquilino: string): string {
+      const propietario = this.$listaPropietarios.find(p => p.id.toString() === idPropietario);
+      const inquilino = this.$listaInquilinos.find(i => i.id.toString() === idInquilino);
+      if( propietario && inquilino) {
+        const nombrePropietario = obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible');
+        const nombreInquilino = obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible');
+        return `${nombrePropietario} - ${nombreInquilino}`;
+      }
+      return 'Título no disponible';
+    }
   mostrarListas(): void {
     console.log('Propietarios:', this.$listaPropietarios);
     console.log('Inquilinos:', this.$listaInquilinos);
@@ -51,6 +64,28 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   obtenerContratoPorId(id : number): IContrato | undefined {
     return this.$lista().find(contrato => contrato.id === id);
   }
+
+  // para setear el nombre del item-entidad del contrato " propietario - inquilino "
+  
+  
+  async setNombrePropietario(id: number): Promise<string>{
+      const propietario = await this._rxjsPropietarios.obtenerPropietarioPorId(id);
+      if (propietario !== undefined){ 
+       return obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible').toString();
+      }
+      return 'Nombre no disponible';
+    }
+  
+    async setNombreInquilino(id: number): Promise<string>{
+      const inquilino = await this._rxjsInquilinos.obtenerInquilinoPorId(id);
+      if (inquilino !== undefined){
+        return obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
+      }
+      return 'Nombre no disponible';
+    }
+
+  
+
   //en desuso, evaluar funcionalidad a futuro
   setFetecha(dia: number, mes: number, anio: number): Date {
     const fecha = new Date();

@@ -24,11 +24,12 @@
       </div>
     }
   </div>
-  @if (definiciones.length === 0) {
+  @if (definiciones.length === 0 && this.dominio != "inmuebles") {
     <p>No hay características definidas para este dominio.</p>
+   
   }
   @else {
-    <button mat-raised-button type="submit" [disabled]="formulario.invalid">Crear entidad</button>
+    <button mat-raised-button type="submit" [disabled]="formulario.invalid">Crear</button>
 
   }
 </form>

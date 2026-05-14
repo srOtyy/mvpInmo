@@ -77,11 +77,12 @@ export class FormularioCaracteristicasComponent implements OnInit {
     }
 
     const nuevaDefinicion: DefinicionCaracteristica = {
-      clave: this.formularioCaracteristicas.get('clave')?.value,
+      clave: this.formularioCaracteristicas.get('clave')?.value.toLowerCase(),
       tipo: this.formularioCaracteristicas.get('tipo')?.value,
       requerido: this.formularioCaracteristicas.get('requerido')?.value
+      
     };
-
+    console.log(nuevaDefinicion.clave, "clave");
     this.definiciones = [...this.definiciones, nuevaDefinicion];
     this.formularioCaracteristicas.reset({
       clave: '',

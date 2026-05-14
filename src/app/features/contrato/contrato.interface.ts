@@ -7,14 +7,12 @@ type ContractStatus =
 
 export interface IContrato {
     id: number;
- 
     inquilinoId: number;
     inmuebleId: number;
     propietarioId: number;
-
     fechaInicio: Date;
     fechaFin: Date;
-
     estado: ContractStatus;
     rentaMensual: number;
+    titulo?: string;
 }
