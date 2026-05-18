@@ -25,6 +25,19 @@
           "valor": 0
         }
       ]
+    },
+    {
+      "id": 858974,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Gerundio"
+        },
+        {
+          "clave": "garantes",
+          "valor": 2
+        }
+      ]
     }
   ],
   "propietarios": [
@@ -115,6 +128,16 @@
         {
           "clave": "m2",
           "valor": 150
+        }
+      ]
+    },
+    {
+      "id": 274040,
+      "idPropietario": 280385,
+      "caracteristicas": [
+        {
+          "clave": "m2",
+          "valor": 250
         }
       ]
     }

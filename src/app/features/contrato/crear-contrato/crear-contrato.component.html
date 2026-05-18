@@ -6,9 +6,9 @@
       <div class="campo"> 
         <mat-form-field>
             <mat-label>Propietario</mat-label>
-            <mat-select formControlName="propietarioId">
+            <mat-select formControlName="propietarioId" >
               @for (propietario of propietariosLista; track propietario) {
-                    <mat-option [value]="propietario.id">{{nombrePropietario(propietario)}}</mat-option>
+                    <mat-option [value]="propietario.id" >{{nombrePropietario(propietario)}}</mat-option>
                   }
             </mat-select>
           </mat-form-field>
@@ -27,9 +27,14 @@
         <mat-form-field appearance="fill">
           <mat-label>Inmueble</mat-label>
           <mat-select formControlName="inmuebleId">
-            @for (inmueble of inmueblesLista; track inmueble) {
+            @if(filteredInmueblesLista.length === 0) {
+              <mat-option disabled>No hay inmuebles disponibles para este propietario</mat-option>
+            }
+            @else {
+              @for (inmueble of filteredInmueblesLista; track inmueble) {
                   <mat-option [value]="inmueble.id">{{inmueble.id}}</mat-option>
                 }
+            }
           </mat-select>
         </mat-form-field>
       </div>

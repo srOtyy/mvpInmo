@@ -20,7 +20,7 @@ import { NotificacionesService } from '../../notificaciones/notificaciones.servi
   styleUrl: './crear-contrato.component.scss'
 })
 export class CrearContratoComponent implements OnInit {
- 
+  propietarioEleigido: string | null = null;
   formulario: FormGroup = new FormGroup({});
   constructor(
     private contratosService: ContratoBbddService,
@@ -52,9 +52,17 @@ export class CrearContratoComponent implements OnInit {
   get inquilinosLista() {
     return this.contratosService.$listaInquilinos;
   }
-  get inmueblesLista() {
-    return this.contratosService.$listaInmuebles;
-  }
+   get inmueblesLista() {
+     return this.contratosService.$listaInmuebles;
+   }
+
+   get filteredInmueblesLista() {
+     const propietarioId = this.formulario.get('propietarioId')?.value;
+     if (!propietarioId) {
+       return this.inmueblesLista;
+     }
+     return this.inmueblesLista.filter(inmueble => inmueble.idPropietario === propietarioId);
+   }
 
   
   nombrePropietario(propietario: IPropietario): string {
