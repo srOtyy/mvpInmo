@@ -61,6 +61,40 @@
           "valor": true
         }
       ]
+    },
+    {
+      "id": 486349,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "pepe"
+        },
+        {
+          "clave": "dni",
+          "valor": 123
+        },
+        {
+          "clave": "nada",
+          "valor": "a"
+        }
+      ]
+    },
+    {
+      "id": 280385,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "123"
+        },
+        {
+          "clave": "dni",
+          "valor": 456789
+        },
+        {
+          "clave": "nada",
+          "valor": false
+        }
+      ]
     }
   ],
   "inmuebles": [
@@ -87,12 +121,12 @@
   ],
   "contratos": [
     {
-      "id": 301685,
+      "id": 603615,
       "propietarioId": 457918,
       "inmuebleId": 611943,
       "inquilinoId": 958427,
-      "fechaInicio": "",
-      "fechaFin": "",
+      "fechaInicio": "0001-02-12",
+      "fechaFin": "0001-01-01",
       "rentaMensual": 1,
       "estado": "preliminar",
       "titulo": "Octavio - Pepito"

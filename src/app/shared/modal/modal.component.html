@@ -4,7 +4,9 @@
     </h3>
     <mat-divider class="divider-titulo"></mat-divider>
     <mat-dialog-content class="cuerpo">
+        <!-- el container de abajo maneja el componenteData que recibe el modal -->
         <ng-container
+            
             *ngComponentOutlet="data.componente; 
             inputs:{
                 entidad: data.componenteData

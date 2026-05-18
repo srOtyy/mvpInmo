@@ -1,17 +1,26 @@
 <form [formGroup]="formularioEditarContrato" class="formulario">
     <ng-container >
-       <mat-form-field appearance="fill">
-            <mat-label>inmueble</mat-label>
-            <input matInput 
-            [formControlName]="'inmuebleId'" 
-            placeholder="{{entidad.inmuebleId}}">
-       </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>inquilino</mat-label>
-          <input matInput 
-          formControlName="inquilinoId" 
-          placeholder="{{entidad.inquilinoId}}">
-        </mat-form-field>
+    <mat-form-field>
+       <mat-select formControlName="propietarioId">
+              @for (propietario of propietariosLista; track propietario) {
+                    <mat-option [value]="propietario.id">{{obtenerCaracteristica(propietario,"nombre","Nombre no encontrado")}}</mat-option>
+                  }
+        </mat-select>
+    </mat-form-field> 
+   <mat-form-field>
+       <mat-select formControlName="inquilinoId">
+              @for (inquilino of inquilinosLista; track inquilino) {
+                    <mat-option [value]="inquilino.id">{{obtenerCaracteristica(inquilino,"nombre","Nombre no encontrado")}}</mat-option>
+                  }
+        </mat-select>
+    </mat-form-field> 
+    <mat-form-field>
+       <mat-select formControlName="inmuebleId" >
+              @for (inmueble of inmueblesLista; track inmueble) {
+                    <mat-option [value]="inmueble.id">{{inmueble.id}}</mat-option>
+                  }
+        </mat-select>
+    </mat-form-field> 
     </ng-container>
 
 </form>

@@ -8,17 +8,20 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
-
+import {MatSelectModule} from '@angular/material/select';
+import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 @Component({
   selector: 'app-editar-contrato',
   standalone: true,
-  imports: [MatFormField, MatInputModule,MatButton,ReactiveFormsModule],
+  imports: [MatFormField, MatInputModule,MatButton,ReactiveFormsModule,MatSelectModule],
   templateUrl: './editar-contrato.component.html',
   styleUrl: './editar-contrato.component.scss'
 })
 export class EditarContratoComponent implements OnInit {
   @Input() entidad!: IContrato
   formularioEditarContrato: FormGroup;
+  obtenerCaracteristica = obtenerCaracteristica;
+  deshabiliado = true;
 
   constructor( private formBuilder: FormBuilder,
     private _contratosService: ContratoBbddService,
@@ -35,12 +38,19 @@ export class EditarContratoComponent implements OnInit {
       estado: [''],
       rentaMensual: ['']
     });
+    this.formularioEditarContrato.get('inmuebleId')?.disable();
+    this.formularioEditarContrato.get('propietarioId')?.disable();
+    this.formularioEditarContrato.get('inquilinoId')?.disable();
   }
-
-  ngOnInit(){
+  async ngOnInit(): Promise<void> {
     this.pasarDatosContrato(this.entidad);
-  }
 
+    await this._contratosService.obtenerListas().catch(error => {
+        console.error('Error al cargar las listas para el formulario de contratos:', error);
+        this._snackbarService.mensajeSnackBar('Error al cargar datos para el formulario', 'Cerrar');
+    });
+  }
+ 
   pasarDatosContrato(contratoData: IContrato) {
      this.formularioEditarContrato.patchValue({
       id: contratoData.id,
@@ -65,18 +75,13 @@ export class EditarContratoComponent implements OnInit {
       }
     });
   } 
-  
-  setContratoNuevo(): IContrato{
-    const contratoEditado: IContrato = {
-      id: this.formularioEditarContrato.value.id,
-      inquilinoId: this.formularioEditarContrato.value.inquilinoId,
-      inmuebleId: this.formularioEditarContrato.value.inmuebleId,
-      propietarioId: this.formularioEditarContrato.value.propietarioId,
-      fechaInicio: this.formularioEditarContrato.value.fechaInicio,
-      fechaFin: this.formularioEditarContrato.value.fechaFin,
-      estado: this.formularioEditarContrato.value.status,
-      rentaMensual: this.formularioEditarContrato.value.rentaMensual
-    };
-    return contratoEditado;
+  get propietariosLista(){
+    return this._contratosService.$listaPropietarios;
+  }
+  get inquilinosLista(){
+    return this._contratosService.$listaInquilinos;
+  }
+  get inmueblesLista(){
+    return this._contratosService.$listaInmuebles;
   }
 }
