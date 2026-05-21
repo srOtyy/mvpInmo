@@ -2,21 +2,21 @@
     <ng-container >
     <mat-form-field>
        <mat-select formControlName="propietarioId">
-              @for (propietario of propietariosLista; track propietario) {
+              @for (propietario of propietariosLista; track propietario.id) {
                     <mat-option [value]="propietario.id">{{obtenerCaracteristica(propietario,"nombre","Nombre no encontrado")}}</mat-option>
                   }
         </mat-select>
     </mat-form-field> 
    <mat-form-field>
        <mat-select formControlName="inquilinoId">
-              @for (inquilino of inquilinosLista; track inquilino) {
+              @for (inquilino of inquilinosLista; track inquilino.id) {
                     <mat-option [value]="inquilino.id">{{obtenerCaracteristica(inquilino,"nombre","Nombre no encontrado")}}</mat-option>
                   }
         </mat-select>
     </mat-form-field> 
     <mat-form-field>
        <mat-select formControlName="inmuebleId" >
-              @for (inmueble of inmueblesLista; track inmueble) {
+              @for (inmueble of inmueblesLista; track inmueble.id) {
                     <mat-option [value]="inmueble.id">{{inmueble.id}}</mat-option>
                   }
         </mat-select>

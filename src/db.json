@@ -108,6 +108,27 @@
           "valor": false
         }
       ]
+    },
+    {
+      "id": 411148,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Alejandro"
+        },
+        {
+          "clave": "dni",
+          "valor": 123456
+        },
+        {
+          "clave": "nada",
+          "valor": false
+        },
+        {
+          "clave": "cuil",
+          "valor": 201234567
+        }
+      ]
     }
   ],
   "inmuebles": [
@@ -153,6 +174,28 @@
       "rentaMensual": 1,
       "estado": "preliminar",
       "titulo": "Octavio - Pepito"
+    },
+    {
+      "id": 42179,
+      "propietarioId": 280385,
+      "inmuebleId": 274040,
+      "inquilinoId": 858974,
+      "fechaInicio": "0001-01-01",
+      "fechaFin": "0002-02-01",
+      "rentaMensual": 10,
+      "estado": "preliminar",
+      "titulo": "123 - Gerundio"
+    },
+    {
+      "id": 901733,
+      "propietarioId": 722251,
+      "inmuebleId": 780706,
+      "inquilinoId": 289607,
+      "fechaInicio": "0001-01-01",
+      "fechaFin": "0002-02-02",
+      "rentaMensual": 123,
+      "estado": "preliminar",
+      "titulo": "Juancito - Pila"
     }
   ],
   "definiciones": [
@@ -170,9 +213,24 @@
           "requerido": true
         },
         {
-          "clave": "nada",
-          "tipo": "booleano",
+          "clave": "cuil",
+          "tipo": "numero",
           "requerido": false
+        },
+        {
+          "clave": "telefono",
+          "tipo": "numero",
+          "requerido": true
+        },
+        {
+          "clave": "telefono aux",
+          "tipo": "numero",
+          "requerido": true
+        },
+        {
+          "clave": "domicilio",
+          "tipo": "texto",
+          "requerido": true
         }
       ],
       "id": 1
@@ -236,6 +294,30 @@
       "contratoId": 123,
       "fecha": "2026-05-14T07:14:28.663Z",
       "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 803170,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-20T15:00:04.906Z",
+      "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 745271,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-20T15:00:05.937Z",
+      "tipo": "vencimiento",
+      "mensaje": "Este es un recordatorio de prueba"
+    },
+    {
+      "id": 711353,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-20T15:00:06.607Z",
+      "tipo": "vencimiento",
       "mensaje": "Este es un recordatorio de prueba"
     }
   ]

@@ -12,6 +12,7 @@ import { IInquilino } from '../../inquilino/inquilino.interface';
 import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
 import { randomId } from '../../../shared/utilitys';
 import { NotificacionesService } from '../../notificaciones/notificaciones.service';
+
 @Component({
   selector: 'app-crear-contrato',
   standalone: true,
@@ -79,6 +80,7 @@ export class CrearContratoComponent implements OnInit {
         this._snack.mensajeSnackBar('Contrato creado exitosamente', 'Cerrar');
         this.formulario.reset();
         this.formulario.markAllAsTouched();
+        console.log("Se tendria que haber creado una notificacion de vencimiento para el contrato: ");
         this._notificacion.crear({
           id: randomId(),
           contratoId: contrato.id,
@@ -94,5 +96,5 @@ export class CrearContratoComponent implements OnInit {
       }
     })
   }
-
+  
 }

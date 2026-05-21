@@ -11,6 +11,9 @@
         <p><strong>Fecha de fin:</strong> {{entidad.fechaFin | date}}</p>
         <mat-divider></mat-divider>
         <p><strong>Renta mensual:</strong> {{entidad.rentaMensual | currency}}</p>
+        <br>
+        <br>
+        <button mat-raised-button color="primary" (click)="verLiquidacion()">Ver liquidación</button>
     }@else{
         <p>No se encontró información del contrato.</p>
     }
