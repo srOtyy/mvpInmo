@@ -320,5 +320,6 @@
       "tipo": "vencimiento",
       "mensaje": "Este es un recordatorio de prueba"
     }
-  ]
+  ],
+  "liquidacion": []
 }

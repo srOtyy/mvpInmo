@@ -7,6 +7,7 @@ import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 import { InquilinoRxjsService } from '../../../inquilino/inquilino-rxjs.service';
 import { PropietarioRxjsService } from '../../../propietario/propietario-rxjs.service';
 import { LiquidacionGeneratorService } from '../../../liquidacion/liquidacion.service';
+import { LiquidacionItem } from '../../../liquidacion/liquidacion-interface';
 
 @Component({
   selector: 'app-ver-contrato',
@@ -44,9 +45,12 @@ export class VerContratoComponent implements OnInit {
     }
   }
   verLiquidacion(){
-    this._liquidacionService.generar(
-      this._liquidacionService.crearLiquidacion(this.entidad, this.propietarioNombre, this.inquilinoNombre)
-    )
+    const itemsLiquidacion: LiquidacionItem[] = [
+      { descripcion: 'Alquiler', monto: this.entidad.rentaMensual },
+      { descripcion: 'Expensas', monto: 50000 },
+      { descripcion: 'Servicio de Agua', monto: 10000 },
+    ];
+    this._liquidacionService.crearLiquidacion(this.entidad, this.propietarioNombre, this.inquilinoNombre, itemsLiquidacion);
     
   }
 }

@@ -7,6 +7,7 @@ import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
 import { EditarContratoComponent } from '../modals/editar-contrato/editar-contrato.component';
 import { EliminarContratoComponent } from '../modals/eliminar-contrato/eliminar-contrato.component';
+import { AgregarGastosContratoComponent } from '../modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
 
 @Component({
   selector: 'app-contrato-c',
@@ -35,5 +36,8 @@ export class ContratoCComponent implements OnInit {
   }
   eliminarContrato(contrato: IContrato){
     this._modalService.abrirModal<IContrato>('Eliminar Contrato', EliminarContratoComponent, contrato);    
+  }
+  agregarGastosContrato(contrato: IContrato){
+    this._modalService.abrirModal<IContrato>('Agregar Gastos al Contrato', AgregarGastosContratoComponent, contrato);    
   }
 }

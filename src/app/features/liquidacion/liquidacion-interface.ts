@@ -11,14 +11,6 @@ export interface Liquidacion {
 }
 export interface LiquidacionItem {
   descripcion: string;
-
   monto: number;
-
-  tipo:
-    | 'alquiler'
-    | 'expensas'
-    | 'servicio'
-    | 'ajuste'
-    | 'multa';
 }
 

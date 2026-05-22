@@ -1,0 +1,20 @@
+<!-- Formulario para agregar -->
+<!-- Aquí pondrías tus inputs y un botón que llame a agregarGastoTemporal(tipo, monto) -->
+
+<!-- Lista en tiempo real -->
+<ul>
+  @for (gasto of gastos(); track $index) {
+    <li>
+      {{ gasto.tipo }} - ${{ gasto.monto }}
+      <button (click)="eliminarGastoTemporal($index)">Eliminar</button>
+    </li>
+  } @empty {
+    <li>No hay gastos agregados todavía.</li>
+  }
+</ul>
+
+<!-- Muestra el total dinámico -->
+<p>Total a liquidar: ${{ totalGastos() }}</p>
+
+<!-- Botón final -->
+<button (click)="emitirGastos()">Generar Documento de Liquidación</button>

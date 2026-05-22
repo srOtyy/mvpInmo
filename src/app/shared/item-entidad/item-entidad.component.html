@@ -3,6 +3,11 @@
        <p>{{titulo}}</p>
     </div>
     <div class="acciones">
+        @if( agregarGastos ){
+            <button mat-button class="btn btn4" (click)="agregarGastosEntidad()">
+                <mat-icon fontIcon="attach_money" class="icon"></mat-icon> 
+            </button>
+        }     
         <button mat-button class="btn btn1" (click)="verEntidad()">
             <mat-icon fontIcon="visibility" class="icon"></mat-icon>
         </button>
@@ -12,6 +17,7 @@
         <button mat-button class="btn btn3" (click)="eliminarEntidad()">
             <mat-icon fontIcon="close" class="icon"></mat-icon>
         </button>
+          
     </div>
     
 </div>

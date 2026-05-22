@@ -16,6 +16,7 @@ export class ItemEntidadComponent<T> {
   @Output() ver = new EventEmitter<T>();
   @Output() editar = new EventEmitter<T>();
   @Output() eliminar = new EventEmitter<T>();
+  @Output() agregarGastos = new EventEmitter<T>();
 
   verEntidad(){
     this.ver.emit(this.entidad);
@@ -25,5 +26,10 @@ export class ItemEntidadComponent<T> {
   }
   eliminarEntidad(){
     this.eliminar.emit(this.entidad);
+  }
+  agregarGastosEntidad(){
+    if(this.agregarGastos){
+      this.agregarGastos.emit(this.entidad);
+    }
   }
 }

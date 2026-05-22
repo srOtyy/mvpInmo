@@ -12,6 +12,7 @@ import { IInquilino } from '../../inquilino/inquilino.interface';
 import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
 import { randomId } from '../../../shared/utilitys';
 import { NotificacionesService } from '../../notificaciones/notificaciones.service';
+import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
 
 @Component({
   selector: 'app-crear-contrato',
@@ -26,7 +27,8 @@ export class CrearContratoComponent implements OnInit {
   constructor(
     private contratosService: ContratoBbddService,
     private _snack: SnackbarService,
-    private _notificacion: NotificacionesService
+    private _notificacion: NotificacionesService,
+    private _liquidacion: LiquidacionGeneratorService
   ){ 
     this.formulario = new FormGroup({
       id: new FormControl(randomId(), Validators.required), 
@@ -78,6 +80,21 @@ export class CrearContratoComponent implements OnInit {
     this.contratosService.crear(contrato).subscribe({
       next: () => {
         this._snack.mensajeSnackBar('Contrato creado exitosamente', 'Cerrar');
+        console.log("generando liquidacion...")
+        /*
+        En este lugar se tiene que crear la liquidacion del contrato. ¿Que datos necesito para crear la liquidacion? El contrato, el nombre del propietario, el nombre del inquilino y los items de la liquidacion. 
+
+        
+         this._liquidacion.crearLiquidacionEnDB(liquidacion).then(liquidacionCreada => {
+          console.log('Liquidación creada en DB:', liquidacionCreada);
+        }).catch(error => {
+          console.error('Error al crear la liquidación en DB:', error);
+        });
+        */
+
+
+
+       
         this.formulario.reset();
         this.formulario.markAllAsTouched();
         console.log("Se tendria que haber creado una notificacion de vencimiento para el contrato: ");
