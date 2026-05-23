@@ -7,7 +7,6 @@ import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 import { InquilinoRxjsService } from '../../../inquilino/inquilino-rxjs.service';
 import { PropietarioRxjsService } from '../../../propietario/propietario-rxjs.service';
 import { LiquidacionGeneratorService } from '../../../liquidacion/liquidacion.service';
-import { LiquidacionItem } from '../../../liquidacion/liquidacion-interface';
 
 @Component({
   selector: 'app-ver-contrato',
@@ -44,13 +43,15 @@ export class VerContratoComponent implements OnInit {
       this.inquilinoNombre = obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
     }
   }
-  verLiquidacion(){
-    const itemsLiquidacion: LiquidacionItem[] = [
-      { descripcion: 'Alquiler', monto: this.entidad.rentaMensual },
-      { descripcion: 'Expensas', monto: 50000 },
-      { descripcion: 'Servicio de Agua', monto: 10000 },
-    ];
-    this._liquidacionService.crearLiquidacion(this.entidad, this.propietarioNombre, this.inquilinoNombre, itemsLiquidacion);
-    
+  descargarLiquidacion(){
+    const liquidacion = this._liquidacionService.buscarLiquidacionPorContrato(this.entidad.id)
+    if( liquidacion){
+      this._liquidacionService.generarLiquidacionDocx(liquidacion).then(
+        () => this._liquidacionService.eliminarGastosEnDB(liquidacion)
+      ).catch((error) => console.error('Error al generar o descargar la liquidación:', error));
+      // 
+    }else{
+      console.warn("la liquidacion dio undefined:", liquidacion)
+    }
   }
 }

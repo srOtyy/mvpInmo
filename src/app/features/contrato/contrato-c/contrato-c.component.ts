@@ -8,6 +8,8 @@ import { CardListComponent } from '../../../shared/card-list/card-list.component
 import { EditarContratoComponent } from '../modals/editar-contrato/editar-contrato.component';
 import { EliminarContratoComponent } from '../modals/eliminar-contrato/eliminar-contrato.component';
 import { AgregarGastosContratoComponent } from '../modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
+import { Liquidacion } from '../../liquidacion/liquidacion-interface';
+import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
 
 @Component({
   selector: 'app-contrato-c',
@@ -19,10 +21,12 @@ import { AgregarGastosContratoComponent } from '../modals/agregar-gastos-contrat
 export class ContratoCComponent implements OnInit {
   constructor(
     private _contratosService: ContratoBbddService,
-    private _modalService: ModalService
+    private _modalService: ModalService,
+    private _liquidacion: LiquidacionGeneratorService
   ){};
   ngOnInit(){
     this._contratosService.cargarLista();
+    this._liquidacion.cargarLista()
     
   }
    get listaContratos(): IContrato[] {
@@ -38,6 +42,12 @@ export class ContratoCComponent implements OnInit {
     this._modalService.abrirModal<IContrato>('Eliminar Contrato', EliminarContratoComponent, contrato);    
   }
   agregarGastosContrato(contrato: IContrato){
-    this._modalService.abrirModal<IContrato>('Agregar Gastos al Contrato', AgregarGastosContratoComponent, contrato);    
+    //la funcion recibe como argumento un contrato, utilizamos el id del contrato para buscar la liquidacion que le corresponda y la mandamos por el modal
+    const liquidacionAux = this._liquidacion.buscarLiquidacionPorContrato(contrato.id)
+    if(liquidacionAux){
+      this._modalService.abrirModal<Liquidacion>('Agregar Gastos a la liquidacion', AgregarGastosContratoComponent, liquidacionAux);  
+    }  else{
+      console.warn("La liquidacionAux dio undefinded:", liquidacionAux)
+    }
   }
 }

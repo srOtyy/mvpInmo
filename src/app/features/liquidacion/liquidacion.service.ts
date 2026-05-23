@@ -1,5 +1,5 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import PizZip from 'pizzip';
 import Docxtemplater from 'docxtemplater';
 import { saveAs } from 'file-saver';
@@ -8,14 +8,24 @@ import { IContrato } from '../contrato/contrato.interface';
 import { randomId } from '../../shared/utilitys';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { BaseCrudService } from '../../core/http/base-crud.service';
 @Injectable({
   providedIn: 'root'
 })
-export class LiquidacionGeneratorService {
+export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
   $gastos: LiquidacionItem[] = [];
-  constructor( private _http: HttpClient ) { }
-
-  crearLiquidacion(contrato: IContrato, nombrePropietario: string, nombreInquilino: string, items: LiquidacionItem[]) {
+  constructor( _http: HttpClient ) { 
+    super(_http, 'http://localhost:3000/liquidaciones')
+  }
+  cargarLista(): void {
+     if (this.$lista().length > 0) return;
+     this.cargar().subscribe({
+       next: () => console.log('Liquidacion cargada'),
+       error: () => console.error('Error al cargar las liquidaciones')
+     });
+   }
+ //crear la liquidacion
+  crearLiquidacion(contrato: IContrato, nombrePropietario: string, nombreInquilino: string): Liquidacion {
     const liquidacion: Liquidacion = {
       id: randomId().toString() ,
       contratoId: contrato.id.toString(),
@@ -23,19 +33,17 @@ export class LiquidacionGeneratorService {
       inquilinoNombre: nombreInquilino,
       periodo: `Inicio: ${contrato.fechaInicio} - Fin: ${contrato.fechaFin}`,
       fechaGeneracion: new Date(),
-      items: items,
-      total: items.reduce((sum, item) => sum + item.monto, 0) 
+      items: [],
+      montoAlquiler: contrato.rentaMensual,
+      total: contrato.rentaMensual
     }
-    this.generar(liquidacion).then(() => {
-      console.log('Liquidación generada con éxito');
-    }).catch(error => {
-      console.error('Error 2 al generar la liquidación:', error);
-    });
+    return liquidacion
   }
-  async generar(liquidacion: Liquidacion): Promise<void> {
+  // emitir un .docx
+  async generarLiquidacionDocx(liquidacion: Liquidacion): Promise<void> {
     try{
       const response = await lastValueFrom(
-        this._http.get('/templates/liquidacion-base2.docx', { responseType: 'arraybuffer' })
+        this.http.get('/templates/liquidacion-base2.docx', { responseType: 'arraybuffer' })
       );
       const content = new Uint8Array(response as ArrayBuffer);
       const zip = new PizZip(content);
@@ -43,14 +51,14 @@ export class LiquidacionGeneratorService {
         paragraphLoop: true,
         linebreaks: true
       });
-
       doc.render({
         contrato: liquidacion.contratoId,
         periodo: liquidacion.periodo,
         propietario: liquidacion.propietarioNombre,
         inquilino: liquidacion.inquilinoNombre,
         items: liquidacion.items,
-        total: liquidacion.total
+        montoAlquiler: liquidacion.montoAlquiler,
+        total: liquidacion.montoAlquiler + liquidacion.items.reduce((sum, item) => sum + item.monto, 0)
       });
 
       const blob = doc.getZip().generate({
@@ -64,28 +72,23 @@ export class LiquidacionGeneratorService {
       console.error('Error 1 al generar la liquidación;', error);
     }
   }
-
  
-  //creacion en db.json
-  // que es lastValueFrom? Es una función de RxJS que convierte un Observable en una Promise, permitiendo usar async/await con Observables.
-  crearLiquidacionEnDB(liquidacion: Liquidacion): Promise<Liquidacion> {
-    return lastValueFrom(
-      this._http.post<Liquidacion>('/liquidaciones', liquidacion)
-    );
-  }
-  editarLiquidacionEnDB(liquidacion: Liquidacion): Promise<Liquidacion> {
-    return lastValueFrom(
-      this._http.put<Liquidacion>(`/liquidaciones/${liquidacion.id}`, liquidacion)
-    );
-  }
-  agregarGastosEnDB(liquidacion: Liquidacion, gastos: LiquidacionItem[]): Promise<Liquidacion> {
+  //solicitudes a db.json
+  agregarGastosEnDB(liquidacion: Liquidacion, gastos: LiquidacionItem[]){
     liquidacion.items = [...liquidacion.items, ...gastos];
-    liquidacion.total = liquidacion.items.reduce((sum, item) => sum + item.monto, 0);
-    return this.editarLiquidacionEnDB(liquidacion);
+    this.actualizar(liquidacion.id, liquidacion);
   }
-  eliminarLiquidacionEnDB(liquidacionId: string): Promise<void> {
-    return lastValueFrom(
-      this._http.delete<void>(`/liquidaciones/${liquidacionId}`)
-    );
+  buscarLiquidacionPorId(id: string): Liquidacion | undefined {
+    return this.$lista().find(l => l.id === id);
+  }
+  eliminarGastosEnDB(liquidacion: Liquidacion){
+    liquidacion.items = [];
+    this.actualizar(liquidacion.id, liquidacion);
+  }
+ 
+  //buscar liquidacion x id de contrato
+  buscarLiquidacionPorContrato(id: number): Liquidacion | undefined  {
+    console.log(this.$lista())
+    return this.$lista().find(l => l.contratoId === id.toString() )
   }
 }

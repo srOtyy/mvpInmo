@@ -1,7 +1,83 @@
 @import '../../../../../styles.scss';
-.datos{
+
+.contenedor{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 55vh;
+  .formulario {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    font-size: 15px;
+    align-items: start;
+    padding: 20px;
+  }
+  .contenedor_lista{
+    background-color: $neutral-700;
+    border-bottom-left-radius:8px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
+    max-height: 40vh;
+    padding: 12px;
+
+    h6{
+        font-size: 18px;
+        align-self: center;
+        color: $neutral-200;
+        margin: 0;
+        border-bottom: 1px solid $neutral-600;
+    }
+    .lista{
+      flex: 1 1 auto;
+      display: block;
+      overflow-y: auto;
+
+      .item{
+        color: $neutral-400;
+        padding: 5px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        
+        
+        .item_texto{
+            font-size: 15px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            .item_texto_clave{
+                color: $primary-700;
+                opacity: 0.8;
+          }
+          
+
+        }
+      }
+    }
+    .contenedor-boton{
+      padding-top:10px ;
+      border-top: 1px solid $neutral-600;
+      align-self: center;
+      .boton{
+        height: 22px;
+        font-size: 11px;
+      }
+
+    }
+    ::-webkit-scrollbar {
+    width: 5px; /* Ancho para scroll vertical */
+
+    }
+    ::-webkit-scrollbar-track {
+        background: $primary-900;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: $neutral-500;
+      border-radius: 10px;
+    } 
+  }
+  
+
 }

@@ -6,6 +6,7 @@ export interface Liquidacion {
   periodo: string;
   fechaGeneracion: Date;
   items: LiquidacionItem[];
+  montoAlquiler: number,
   total: number;
   estado?: 'borrador' | 'emitida' | 'enviada';
 }

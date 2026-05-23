@@ -1,20 +1,46 @@
-<!-- Formulario para agregar -->
-<!-- Aquí pondrías tus inputs y un botón que llame a agregarGastoTemporal(tipo, monto) -->
-
-<!-- Lista en tiempo real -->
-<ul>
-  @for (gasto of gastos(); track $index) {
-    <li>
-      {{ gasto.tipo }} - ${{ gasto.monto }}
-      <button (click)="eliminarGastoTemporal($index)">Eliminar</button>
-    </li>
-  } @empty {
-    <li>No hay gastos agregados todavía.</li>
-  }
-</ul>
-
-<!-- Muestra el total dinámico -->
-<p>Total a liquidar: ${{ totalGastos() }}</p>
-
-<!-- Botón final -->
-<button (click)="emitirGastos()">Generar Documento de Liquidación</button>
+<div class="contenedor">
+  <form [formGroup]="formularioGasatos" class="contenedor_formulario">
+  <mat-form-field class="datos_formulario">
+    <mat-label>Tipo de gasto</mat-label>
+    <input matInput formControlName="tipo" placeholder="Tipo de gasto">
+  </mat-form-field>
+  <mat-form-field class="datos_formulario">
+    <mat-label>Monto</mat-label>
+    <input matInput formControlName="monto" placeholder="Monto" type="number">
+  </mat-form-field>
+  <button mat-raised-button color="primary"  class="datos_formulario" (click)="agregarGastoTemporal()">Agregar gasto</button>
+</form>
+<div class="contenedor_lista">
+    <h6>Gastos cargados</h6>
+    <mat-list  class="lista">
+    @for (gasto of $gastos(); track $index) {
+      <mat-list-item>
+        <div class="item">
+          <div class="item_texto">
+            <p><strong class="item_texto_clave">{{ gasto.tipo }}</strong></p>
+            <p><span>${{ gasto.monto }}</span></p>
+          </div>
+          <div class="item_boton">
+            <button mat-icon-button color="warn" type="button" (click)="eliminarGastoTemporal($index)" class="item_boton_icono">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>      
+      </mat-list-item>
+      <mat-divider></mat-divider>
+     }
+    </mat-list>
+    <div class="contenedor-boton">
+      <button class="boton"
+          mat-raised-button
+          color="accent"
+          type="button"
+          (click)="agregarGastosALiquidacion()"
+          [disabled]="$gastos().length === 0"
+        >
+          Agregar
+        </button>
+    </div>
+    
+  </div>
+</div>

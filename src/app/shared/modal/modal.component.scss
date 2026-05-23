@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   z-index: 1000;
+  height: 80vh;
   .titulo {
     font-weight: 400;
     margin-bottom: 20px;
@@ -18,19 +19,20 @@
     border-top-color: $primary-300;
   }
   .cuerpo{
-    width: 500px;
+    overflow-y: auto ;
+    margin: 20px 0;
+  }
+  ::-webkit-scrollbar {
+    width: 5px; /* Ancho para scroll vertical */
 
+    }
+    ::-webkit-scrollbar-track {
+        background: $primary-900;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: $neutral-500;
+      border-radius: 10px;
   }
   
-}
-::-webkit-scrollbar {
-    width: 8px; /* Ancho para scroll vertical */
-    }
-::-webkit-scrollbar-track {
-    background: $primary-900;
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background: $neutral-500;
-  border-radius: 10px;
 }

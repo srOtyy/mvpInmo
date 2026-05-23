@@ -74,7 +74,14 @@ export class CrearContratoComponent implements OnInit {
   nombreInquilino(inquilino: IInquilino): string {
     return obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
   }
-  
+  nombrePropietarioXId(id: number): string {
+    const propietario = this.propietariosLista.find(p => p.id === id);
+    return propietario ? this.nombrePropietario(propietario) : 'Nombre no disponible';
+  }
+    nombreInquilinoXId(id: number): string {
+    const inquilino = this.inquilinosLista.find(i => i.id === id);
+    return inquilino ? this.nombreInquilino(inquilino) : 'Nombre no disponible';
+  }
   enviarContrato(contrato: IContrato){
     contrato.titulo = this.contratosService.generarTituloContrato(contrato.propietarioId.toString(), contrato.inquilinoId.toString());
     this.contratosService.crear(contrato).subscribe({
@@ -83,18 +90,17 @@ export class CrearContratoComponent implements OnInit {
         console.log("generando liquidacion...")
         /*
         En este lugar se tiene que crear la liquidacion del contrato. ¿Que datos necesito para crear la liquidacion? El contrato, el nombre del propietario, el nombre del inquilino y los items de la liquidacion. 
-
-        
-         this._liquidacion.crearLiquidacionEnDB(liquidacion).then(liquidacionCreada => {
-          console.log('Liquidación creada en DB:', liquidacionCreada);
-        }).catch(error => {
-          console.error('Error al crear la liquidación en DB:', error);
-        });
         */
-
-
-
-       
+        const liquidacion = this._liquidacion.crearLiquidacion(contrato, this.nombrePropietarioXId(contrato.propietarioId), this.nombreInquilinoXId(contrato.inquilinoId));
+        //suscripcion innecesaria ? o tengo que volverlo una promesa ? 
+        this._liquidacion.crear(liquidacion).subscribe({
+          next: () => {
+            console.log("Liquidacion creada exitosamente");
+          },
+          error: () => {
+            console.error("Error al crear la liquidacion");
+          }
+        });
         this.formulario.reset();
         this.formulario.markAllAsTouched();
         console.log("Se tendria que haber creado una notificacion de vencimiento para el contrato: ");
