@@ -31,7 +31,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
       contratoId: contrato.id.toString(),
       propietarioNombre: nombrePropietario,
       inquilinoNombre: nombreInquilino,
-      periodo: `Inicio: ${contrato.fechaInicio} - Fin: ${contrato.fechaFin}`,
+      periodo: new Date().toLocaleDateString('es-AR', { month: 'long', year: 'numeric' }),
       fechaGeneracion: new Date(),
       items: [],
       montoAlquiler: contrato.rentaMensual,
@@ -66,7 +66,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       });
-      saveAs(blob, 'liquidacion.docx');
+      saveAs(blob, `Liquidacion - ${liquidacion.propietarioNombre}-${liquidacion.inquilinoNombre}.docx`);
     }
     catch(error){
       console.error('Error 1 al generar la liquidación;', error);

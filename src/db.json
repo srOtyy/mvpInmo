@@ -161,19 +161,40 @@
           "valor": 250
         }
       ]
+    },
+    {
+      "id": 475307,
+      "idPropietario": 411148,
+      "caracteristicas": [
+        {
+          "clave": "m2",
+          "valor": 500
+        }
+      ]
     }
   ],
   "contratos": [
     {
-      "id": 269747,
-      "propietarioId": 722251,
-      "inmuebleId": 183453,
+      "id": 656968,
+      "propietarioId": 457918,
+      "inmuebleId": 611943,
       "inquilinoId": 958427,
-      "fechaInicio": "2000-05-05",
-      "fechaFin": "2001-06-06",
+      "fechaInicio": "2005-05-05",
+      "fechaFin": "2006-05-05",
       "rentaMensual": 500,
       "estado": "preliminar",
-      "titulo": "Juancito - Pepito"
+      "titulo": "Octavio - Pepito"
+    },
+    {
+      "id": 901428,
+      "propietarioId": 722251,
+      "inmuebleId": 780706,
+      "inquilinoId": 289607,
+      "fechaInicio": "2003-03-31",
+      "fechaFin": "3000-03-31",
+      "rentaMensual": 350,
+      "estado": "preliminar",
+      "titulo": "Juancito - Pila"
     }
   ],
   "definiciones": [
@@ -334,14 +355,43 @@
         {
           "descripcion": "Agua",
           "monto": 20
-        },
-        {
-          "descripcion": "Expensas",
-          "monto": 20
         }
       ],
       "montoAlquiler": 500,
       "total": 500
+    },
+    {
+      "id": "416076",
+      "contratoId": "188333",
+      "propietarioNombre": "Alejandro",
+      "inquilinoNombre": "Gerundio",
+      "periodo": "Inicio: 2004-04-04 - Fin: 2008-04-04",
+      "fechaGeneracion": "2026-05-23T21:10:40.108Z",
+      "items": [],
+      "montoAlquiler": 150,
+      "total": 150
+    },
+    {
+      "id": "966868",
+      "contratoId": "656968",
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Pepito",
+      "periodo": "mayo de 2026",
+      "fechaGeneracion": "2026-05-23T21:18:17.181Z",
+      "items": [],
+      "montoAlquiler": 500,
+      "total": 500
+    },
+    {
+      "id": "729310",
+      "contratoId": "901428",
+      "propietarioNombre": "Juancito",
+      "inquilinoNombre": "Pila",
+      "periodo": "mayo de 2026",
+      "fechaGeneracion": "2026-05-23T21:19:17.597Z",
+      "items": [],
+      "montoAlquiler": 350,
+      "total": 350
     }
   ]
 }

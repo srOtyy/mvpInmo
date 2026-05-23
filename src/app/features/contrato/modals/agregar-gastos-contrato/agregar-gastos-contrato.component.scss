@@ -3,7 +3,6 @@
 .contenedor{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 55vh;
   .formulario {
     display: flex;
     flex-direction: column;
@@ -41,7 +40,7 @@
         
         
         .item_texto{
-            font-size: 15px;
+            font-size: 13px;
             display: flex;
             flex-direction: row;
             align-items: center;
