@@ -1,0 +1,14 @@
+@import '../../../../styles.scss';
+.datos{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 17px;
+    color: $neutral-400;
+    .accion{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+}

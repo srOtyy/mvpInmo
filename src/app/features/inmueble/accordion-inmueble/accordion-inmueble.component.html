@@ -1,0 +1,21 @@
+
+<div class="datos">
+    <div class="accion">
+        <button mat-button color="warn" (click)="eliminar.emit(entidad)">
+            Eliminar
+        </button>
+        <button mat-button color="primary" (click)="editar.emit(entidad)">
+            Editar
+        </button>
+    </div>
+    @if(entidad !== null){
+        @for(c of entidad.caracteristicas; track $index) {
+            @if(c.valor !== null){
+                <p><strong>{{c.clave}}:</strong> {{c.valor}}</p>
+                <mat-divider></mat-divider>
+            }
+        }
+    }@else {
+        <p>No se encontró información del inmueble.</p>
+    }
+</div>

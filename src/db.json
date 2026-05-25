@@ -1,25 +1,10 @@
 {
   "inquilinos": [
     {
-      "id": 832937,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Otyy"
-        },
-        {
-          "clave": "dni",
-          "valor": 132
-        }
-      ],
-      "garantes": []
-    },
-    {
-      "id": 632140,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "Inquilino"
+          "valor": "Inquilinoouu"
         },
         {
           "clave": "dni",
@@ -49,7 +34,8 @@
           "telefono": "222",
           "email": "2@2.com"
         }
-      ]
+      ],
+      "id": 632140
     }
   ],
   "propietarios": [
@@ -95,19 +81,7 @@
       ]
     }
   ],
-  "contratos": [
-    {
-      "id": 39643,
-      "propietarioId": 361580,
-      "inmuebleId": 860236,
-      "inquilinoId": 832937,
-      "fechaInicio": "2005-09-09",
-      "fechaFin": "2006-09-09",
-      "rentaMensual": 205,
-      "estado": "preliminar",
-      "titulo": "Octavio - Otyy"
-    }
-  ],
+  "contratos": [],
   "definiciones": [
     {
       "dominio": "propietarios",

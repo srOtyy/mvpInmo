@@ -1,25 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { IInquilino } from '../inquilino.interface';
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
 import { InquilinoRxjsService } from '../inquilino-rxjs.service';
 import { EditarInquilinoComponent } from '../modals/editar-inquilino/editar-inquilino.component';
-import { VerInquilinoComponent } from '../modals/ver-inquilino/ver-inquilino.component';
 import { EliminarInquilinoComponent } from '../modals/eliminar-inquilino/eliminar-inquilino.component';
-import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.component';
 import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
-import { SnackbarService } from '../../../core/snackbar.service';
 import { ModalService } from '../../../core/modal/modal.service';
-import { randomId } from '../../../shared/utilitys';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDividerModule} from '@angular/material/divider';
+import {AccordionInquilinoComponent} from "../accordion-inquilino/accordion-inquilino.component";
 @Component({
   selector: 'app-inquilino-c',
   standalone: true,
-  imports: [CardListComponent, ItemEntidadComponent],
+  imports: [CardListComponent, AccordionInquilinoComponent, MatExpansionModule, MatDividerModule],
   templateUrl: './inquilino-c.component.html',
   styleUrl: './inquilino-c.component.scss'
 })
 
 export class InquilinoCComponent implements OnInit{
   inquilino!: IInquilino;
+  readonly panelOpenState = signal(false);
+  
   obtenerCaracteristica = obtenerCaracteristica;
 
   constructor(
@@ -35,9 +36,7 @@ export class InquilinoCComponent implements OnInit{
   }
 
   // estos metodos abren los modales correspondientes
-  verInquilino(inquilino: IInquilino){
-    this._modalService.abrirModal('Información del Inquilino', VerInquilinoComponent, inquilino);
-  }
+ 
   editarInquilino(inquilino: IInquilino){
     this._modalService.abrirModal('Editar Inquilino', EditarInquilinoComponent, inquilino);
   }

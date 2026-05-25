@@ -1,0 +1,51 @@
+
+<div class="datos">
+     <div class="accion">
+        <button mat-button color="warn" (click)="eliminar.emit(entidad)">
+            Eliminar
+        </button>
+        <button mat-button color="primary" (click)="editar.emit(entidad)">
+            Editar
+        </button>
+    </div>
+    @if(entidad !== null){
+        <mat-stepper linear #stepper>
+            <mat-step label="Datos del inquilino" state="phone">
+                @for(c of entidad.caracteristicas; track $index) {
+                    @if(c.valor !== null){
+                        <p><strong>{{c.clave}}:</strong> {{c.valor}}</p>
+                        <mat-divider></mat-divider>
+                    }
+                }
+            </mat-step>
+            <mat-step label="Datos del Garante" state="chat">
+                @if(entidad.garantes !== null){
+                    @for(c of entidad.garantes; track $index) {
+                        <p><strong>{{c.nombre}}</strong> </p>
+                        <mat-divider></mat-divider>
+                        <p><strong>email:</strong> {{c.email}}</p>
+                        <mat-divider></mat-divider>
+                        <p><strong>teléfono:</strong> {{c.telefono}}</p>
+                        <mat-divider></mat-divider>
+                        <br>
+                    }
+                }@else {
+                    <p>No se encontró información del garante.</p>
+                }   
+            </mat-step>
+            
+             <ng-template matStepperIcon="phone">
+                <mat-icon>call_end</mat-icon>
+            </ng-template>
+            <ng-template matStepperIcon="chat">
+                <mat-icon>forum</mat-icon>
+            </ng-template>
+        </mat-stepper>
+        
+    }@else {
+        <p>No se encontró información del inquilino.</p>
+    }
+    
+</div>
+
+  

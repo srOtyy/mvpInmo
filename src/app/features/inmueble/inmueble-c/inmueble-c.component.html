@@ -1,11 +1,25 @@
 <app-card-list entidad="Inmuebles">
     @for(inmueble of $listaInmuebles; track inmueble.id) {
-        <app-item-entidad [entidad]="inmueble"
-        [titulo]="inmueble.id"
-        (ver)="verInmueble($event)"
-        (editar)="editarInmueble($event)"
-        (eliminar)="eliminarInmueble($event)">
-    </app-item-entidad>
+        <br>
+        <div class="item">
+            <mat-accordion>
+
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header>
+                    <mat-panel-title> {{inmueble.id}} </mat-panel-title>
+                    <!-- <mat-panel-description>
+                    </mat-panel-description> -->
+                    </mat-expansion-panel-header>
+                <app-accordion-inmueble 
+                [entidad]="inmueble"
+                (eliminar)="eliminarInmueble($event)"
+                (editar)="editarInmueble($event)"
+                ></app-accordion-inmueble>
+
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
     }
 
 </app-card-list>

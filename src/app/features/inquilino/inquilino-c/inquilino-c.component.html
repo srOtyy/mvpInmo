@@ -1,10 +1,21 @@
 <app-card-list entidad="Inquilinos">
     @for(inquilino of $listaInquilinos; track $index) {
-        <app-item-entidad [entidad]="inquilino"
-        [titulo]="obtenerCaracteristica(inquilino, 'nombre')"
-        (ver)="verInquilino($event)"
-        (editar)="editarInquilino($event)"
-        (eliminar)="eliminarInquilino($event)"
-        ></app-item-entidad>
+        <br>
+        <div class="item">
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header>
+                    <mat-panel-title> {{obtenerCaracteristica(inquilino, 'nombre')}} </mat-panel-title>
+                    <!-- <mat-panel-description>
+                    </mat-panel-description> -->
+                    </mat-expansion-panel-header>
+                <app-accordion-inquilino 
+                [entidad]="inquilino"
+                (eliminar)="eliminarInquilino($event)"
+                (editar)="editarInquilino($event)"
+                ></app-accordion-inquilino>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
     }
 </app-card-list>
