@@ -11,7 +11,7 @@ import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
   styleUrl: './ver-inquilino.component.scss'
 })
 export class VerInquilinoComponent {
-   @Input() entidad!: IInquilino;
+   @Input() entidad!: any; // Cambia 'any' por el tipo específico de tu entidad, por ejemplo, IInquilino
     obtenerCaracteristica = (clave: string) =>
       obtenerCaracteristica(this.entidad, clave);
 }

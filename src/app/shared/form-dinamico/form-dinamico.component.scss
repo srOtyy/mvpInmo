@@ -1,8 +1,9 @@
 @import "../../../styles.scss";
 
 .formulario{
-  padding: 20px;
-  width: 75%;
+  padding: 10px;
+  padding-top: 15px;
+  height: 300px;
   p{
     color: $neutral-400;
   }
@@ -10,11 +11,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     margin-bottom: 1rem;
-    .campo {
-      display: flex;
-      flex-direction: column;
-      width: 200px;
-    }
+    gap: 20px;
   }
 }
 

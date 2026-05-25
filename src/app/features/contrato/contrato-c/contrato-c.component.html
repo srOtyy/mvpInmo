@@ -3,6 +3,7 @@
     @for(contrato of listaContratos; track contrato.id) {
         <app-item-entidad [entidad]="contrato"
         [titulo]="contrato.titulo || 'Cargando...'"
+        [contrato]="true"
         (ver)="verContrato($event)"
         (editar)="editarContrato($event)"
         (eliminar)="eliminarContrato($event)"

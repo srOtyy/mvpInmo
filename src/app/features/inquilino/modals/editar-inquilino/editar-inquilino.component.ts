@@ -57,7 +57,8 @@ export class EditarInquilinoComponent implements OnInit{
   setInquilinoNuevo(): IInquilino{
     const inquilinoEditado: IInquilino = {
       id: this.formularioEditarInquilino.value.id,
-      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInquilino)
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInquilino),
+      garantes: this.entidad.garantes
     };
     return inquilinoEditado;
   }

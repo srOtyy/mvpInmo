@@ -1,48 +1,60 @@
 {
   "inquilinos": [
     {
-      "id": 958427,
+      "id": 832937,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Pepito"
+          "valor": "Otyy"
         },
         {
-          "clave": "garantes",
-          "valor": 2
+          "clave": "dni",
+          "valor": 132
         }
-      ]
+      ],
+      "garantes": []
     },
     {
-      "id": 289607,
+      "id": 632140,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Pila"
+          "valor": "Inquilino"
         },
         {
-          "clave": "garantes",
-          "valor": 0
+          "clave": "dni",
+          "valor": 43044
+        },
+        {
+          "clave": "email",
+          "valor": "falopa@falopa"
+        },
+        {
+          "clave": "telefono",
+          "valor": 123456
         }
-      ]
-    },
-    {
-      "id": 858974,
-      "caracteristicas": [
+      ],
+      "garantes": [
         {
-          "clave": "nombre",
-          "valor": "Gerundio"
+          "id": 512894,
+          "idInquilino": 632140,
+          "nombre": "Garante 1",
+          "telefono": "111",
+          "email": "1@1.com"
         },
         {
-          "clave": "garantes",
-          "valor": 2
+          "id": 383472,
+          "idInquilino": 632140,
+          "nombre": "Garante 2",
+          "telefono": "222",
+          "email": "2@2.com"
         }
       ]
     }
   ],
   "propietarios": [
     {
-      "id": 457918,
+      "id": 361580,
       "caracteristicas": [
         {
           "clave": "nombre",
@@ -53,148 +65,47 @@
           "valor": 43044274
         },
         {
-          "clave": "nada",
-          "valor": true
-        }
-      ]
-    },
-    {
-      "id": 722251,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "Juancito"
-        },
-        {
-          "clave": "dni",
-          "valor": 123456789
-        },
-        {
-          "clave": "nada",
-          "valor": true
-        }
-      ]
-    },
-    {
-      "id": 486349,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "pepe"
-        },
-        {
-          "clave": "dni",
-          "valor": 123
-        },
-        {
-          "clave": "nada",
-          "valor": "a"
-        }
-      ]
-    },
-    {
-      "id": 280385,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "123"
-        },
-        {
-          "clave": "dni",
-          "valor": 456789
-        },
-        {
-          "clave": "nada",
-          "valor": false
-        }
-      ]
-    },
-    {
-      "id": 411148,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "Alejandro"
-        },
-        {
-          "clave": "dni",
-          "valor": 123456
-        },
-        {
-          "clave": "nada",
-          "valor": false
-        },
-        {
           "clave": "cuil",
-          "valor": 201234567
+          "valor": null
+        },
+        {
+          "clave": "telefono",
+          "valor": 2257
+        },
+        {
+          "clave": "telefono aux",
+          "valor": 223
+        },
+        {
+          "clave": "domicilio",
+          "valor": "30083008"
         }
       ]
     }
   ],
   "inmuebles": [
     {
-      "id": 611943,
-      "idPropietario": 457918,
-      "caracteristicas": []
-    },
-    {
-      "id": 183453,
-      "idPropietario": 722251,
-      "caracteristicas": []
-    },
-    {
-      "id": 780706,
-      "idPropietario": 722251,
+      "id": 860236,
+      "idPropietario": 361580,
       "caracteristicas": [
         {
           "clave": "m2",
           "valor": 150
         }
       ]
-    },
-    {
-      "id": 274040,
-      "idPropietario": 280385,
-      "caracteristicas": [
-        {
-          "clave": "m2",
-          "valor": 250
-        }
-      ]
-    },
-    {
-      "id": 475307,
-      "idPropietario": 411148,
-      "caracteristicas": [
-        {
-          "clave": "m2",
-          "valor": 500
-        }
-      ]
     }
   ],
   "contratos": [
     {
-      "id": 656968,
-      "propietarioId": 457918,
-      "inmuebleId": 611943,
-      "inquilinoId": 958427,
-      "fechaInicio": "2005-05-05",
-      "fechaFin": "2006-05-05",
-      "rentaMensual": 500,
+      "id": 39643,
+      "propietarioId": 361580,
+      "inmuebleId": 860236,
+      "inquilinoId": 832937,
+      "fechaInicio": "2005-09-09",
+      "fechaFin": "2006-09-09",
+      "rentaMensual": 205,
       "estado": "preliminar",
-      "titulo": "Octavio - Pepito"
-    },
-    {
-      "id": 901428,
-      "propietarioId": 722251,
-      "inmuebleId": 780706,
-      "inquilinoId": 289607,
-      "fechaInicio": "2003-03-31",
-      "fechaFin": "3000-03-31",
-      "rentaMensual": 350,
-      "estado": "preliminar",
-      "titulo": "Juancito - Pila"
+      "titulo": "Octavio - Otyy"
     }
   ],
   "definiciones": [
@@ -243,9 +154,19 @@
           "requerido": true
         },
         {
-          "clave": "garantes",
+          "clave": "dni",
           "tipo": "numero",
-          "requerido": true
+          "requerido": false
+        },
+        {
+          "clave": "email",
+          "tipo": "texto",
+          "requerido": false
+        },
+        {
+          "clave": "telefono",
+          "tipo": "numero",
+          "requerido": false
         }
       ],
       "id": 2
@@ -392,6 +313,17 @@
       "items": [],
       "montoAlquiler": 350,
       "total": 350
+    },
+    {
+      "id": "161231",
+      "contratoId": "39643",
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Otyy",
+      "periodo": "mayo de 2026",
+      "fechaGeneracion": "2026-05-23T22:48:01.588Z",
+      "items": [],
+      "montoAlquiler": 205,
+      "total": 205
     }
   ]
 }

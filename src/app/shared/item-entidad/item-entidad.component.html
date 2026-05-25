@@ -1,24 +1,16 @@
+<br>
 <div class="item">
-    <div class="datos">
-       <p>{{titulo}}</p>
-    </div>
-    <div class="acciones">
-        @if( agregarGastos ){
-            <button mat-button class="btn btn4" (click)="agregarGastosEntidad()">
-                <mat-icon fontIcon="attach_money" class="icon"></mat-icon> 
-            </button>
-        }     
-        <button mat-button class="btn btn1" (click)="verEntidad()">
-            <mat-icon fontIcon="visibility" class="icon"></mat-icon>
-        </button>
-        <button mat-button  class="btn btn2" (click)="editarEntidad()">
-            <mat-icon fontIcon="edit" class="icon"></mat-icon>
-        </button>
-        <button mat-button class="btn btn3" (click)="eliminarEntidad()">
-            <mat-icon fontIcon="close" class="icon"></mat-icon>
-        </button>
-          
-    </div>
-    
+    <mat-accordion>
+
+    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+        <mat-expansion-panel-header>
+        <mat-panel-title> {{titulo}} </mat-panel-title>
+        <!-- <mat-panel-description>
+        </mat-panel-description> -->
+        </mat-expansion-panel-header>
+        <p>Contenido del panel</p>
+        <app-ver-inquilino [entidad]="entidad"></app-ver-inquilino>
+
+    </mat-expansion-panel>
+    </mat-accordion>
 </div>
-<mat-divider></mat-divider>

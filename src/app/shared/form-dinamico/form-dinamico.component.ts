@@ -18,13 +18,12 @@ import { CaracteristicaEntidad } from '../../features/caracteristicas/entity-bas
   styleUrl: './form-dinamico.component.scss'
 })
 export class FormDinamicoComponent implements OnInit, OnDestroy {
+
   @Input({ required: true }) dominio!: Dominio;
   // será que la interfas de las caracteristicas le hace falta el 'requerido'?
   @Output() entidadCreada = new EventEmitter<{ caracteristicas: CaracteristicaEntidad[] }>();
-
   definiciones: DefinicionCaracteristica[] = [];
   formulario: FormGroup = new FormGroup({});
-
   private destroy$ = new Subject<void>();
 
   constructor(private definicionesService: DefinicionesCaracteristicasService) {}

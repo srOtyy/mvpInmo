@@ -10,11 +10,12 @@ import { EliminarContratoComponent } from '../modals/eliminar-contrato/eliminar-
 import { AgregarGastosContratoComponent } from '../modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
 import { Liquidacion } from '../../liquidacion/liquidacion-interface';
 import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
+import { A11yModule } from "@angular/cdk/a11y";
 
 @Component({
   selector: 'app-contrato-c',
   standalone: true,
-  imports: [CardListComponent, ItemEntidadComponent],
+  imports: [CardListComponent, ItemEntidadComponent, A11yModule],
   templateUrl: './contrato-c.component.html',
   styleUrl: './contrato-c.component.scss'
 })

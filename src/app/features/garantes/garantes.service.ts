@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Garante } from './garante-interface';
 import {randomId} from '../../shared/utilitys';
+import { IInquilino } from '../inquilino/inquilino.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class GarantesService {
       nombre: nombre,
       telefono: telefono,
       email: email
+    };
+  }
+  agregarGarantesalInquilino(inquilino: IInquilino, garantes: Garante[]): IInquilino {
+    return {
+      ...inquilino,
+      garantes: [...inquilino.garantes, ...garantes]
     };
   }
 }
