@@ -36,6 +36,80 @@
         }
       ],
       "id": 632140
+    },
+    {
+      "id": 834926,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Abi"
+        },
+        {
+          "clave": "dni",
+          "valor": 47666666
+        },
+        {
+          "clave": "email",
+          "valor": "A@bi.com"
+        },
+        {
+          "clave": "telefono",
+          "valor": 354169874
+        }
+      ],
+      "garantes": [
+        {
+          "id": 260315,
+          "idInquilino": 834926,
+          "nombre": "Juancito",
+          "telefono": "1122334455",
+          "email": "J@jj.com"
+        },
+        {
+          "id": 684379,
+          "idInquilino": 834926,
+          "nombre": "Zulm",
+          "telefono": "123456798",
+          "email": "123@123"
+        }
+      ]
+    },
+    {
+      "id": 120459,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Oty"
+        },
+        {
+          "clave": "dni",
+          "valor": 1230000
+        },
+        {
+          "clave": "email",
+          "valor": ":p@o.com"
+        },
+        {
+          "clave": "telefono",
+          "valor": 15948978
+        }
+      ],
+      "garantes": [
+        {
+          "id": 111556,
+          "idInquilino": 120459,
+          "nombre": "G1",
+          "telefono": "1548",
+          "email": "g1@g1.com"
+        },
+        {
+          "id": 464349,
+          "idInquilino": 120459,
+          "nombre": "G2 Caps",
+          "telefono": "00001",
+          "email": "123@456.ar"
+        }
+      ]
     }
   ],
   "propietarios": [
@@ -65,6 +139,64 @@
         {
           "clave": "domicilio",
           "valor": "30083008"
+        }
+      ]
+    },
+    {
+      "id": 330005,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Nahuel"
+        },
+        {
+          "clave": "dni",
+          "valor": 4304444
+        },
+        {
+          "clave": "cuil",
+          "valor": 123456789
+        },
+        {
+          "clave": "telefono",
+          "valor": 22576111
+        },
+        {
+          "clave": "telefono aux",
+          "valor": 222222
+        },
+        {
+          "clave": "domicilio",
+          "valor": "Belgrano343"
+        }
+      ]
+    },
+    {
+      "id": 476414,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Pedro"
+        },
+        {
+          "clave": "dni",
+          "valor": 453446
+        },
+        {
+          "clave": "cuil",
+          "valor": 4534467
+        },
+        {
+          "clave": "telefono",
+          "valor": 22356889
+        },
+        {
+          "clave": "telefono aux",
+          "valor": 223554887
+        },
+        {
+          "clave": "domicilio",
+          "valor": "BsAs. 3008"
         }
       ]
     }

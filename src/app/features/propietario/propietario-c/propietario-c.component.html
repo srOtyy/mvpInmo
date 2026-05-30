@@ -1,22 +1,28 @@
 <app-card-list entidad="Propietarios">
+    
+    <div class="acciones">
+        <p>Filtrar: </p>
+        <button mat-icon-button color="primary" (click)="ordenarAlfabeticamente()">
+            <mat-icon>sort_by_alpha</mat-icon>
+        </button>
+    </div>
+    <mat-divider></mat-divider>
     @for(propietario of $listaPropietarios; track propietario.id) {
         <br>
         <div class="item">
             <mat-accordion>
-
                 <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
                     <mat-expansion-panel-header>
-                    <mat-panel-title> {{obtenerCaracteristica(propietario, 'nombre')}} </mat-panel-title>
-                    <!-- <mat-panel-description>
-                    </mat-panel-description> -->
+                    <mat-panel-title> {{obtenerNombre(propietario)}} </mat-panel-title>
+                    <mat-panel-description class="descripcion">
+                        Tel: {{obtenerCaracteristica(propietario, 'telefono')}}
+                    </mat-panel-description>
                     </mat-expansion-panel-header>
                 <app-accordion-propietario 
                     [entidad]="propietario" 
                     (eliminar)="eliminarPropietario($event)"
                     (editar)="editarPropietario($event)"
                 ></app-accordion-propietario>
-
-
                 </mat-expansion-panel>
             </mat-accordion>
         </div>

@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { IInquilino } from './inquilino.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
+import {obtenerNombre} from '../caracteristicas/entity-helpers';
 import { firstValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class InquilinoRxjsService extends BaseCrudService<IInquilino> {
+  ordenAlfabetico: boolean = false;
+  obtenerNombre = obtenerNombre;
   constructor( http: HttpClient ) {
     super(http, 'http://localhost:3000/inquilinos')
   }
@@ -29,5 +32,22 @@ export class InquilinoRxjsService extends BaseCrudService<IInquilino> {
     }
     return this.$lista().find(p => p.id === idInquilino);
   }
-
+  ordenarAlfabeticamente(){
+    if (!this.ordenAlfabetico) {
+      this.$lista.set([...this.$lista()].sort((a, b) => {
+        const nombreA = this.obtenerNombre(a);
+        const nombreB = this.obtenerNombre(b);
+        return nombreA.localeCompare(nombreB);
+      }));
+      this.ordenAlfabetico = true;
+    }
+    else{
+      this.$lista.set([...this.$lista()].sort((a, b) => {
+        const nombreA = this.obtenerNombre(a);
+        const nombreB = this.obtenerNombre(b);
+        return nombreB.localeCompare(nombreA);
+      }));
+      this.ordenAlfabetico = false;
+    }
+  }
 }

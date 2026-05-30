@@ -15,10 +15,11 @@ import {FormControl} from '@angular/forms';
 import { IInquilino } from '../inquilino.interface';
 import { Garante } from '../../garantes/garante-interface';
 import { MatIconModule } from '@angular/material/icon';
+import { MatStepperModule } from '@angular/material/stepper';
 @Component({
   selector: 'app-crear-inquilino',
   standalone: true,
-  imports: [FormDinamicoComponent, MatFormFieldModule, MatInputModule, MatButtonModule, MatDivider, MatIconModule,  FormsModule, ReactiveFormsModule],
+  imports: [FormDinamicoComponent, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatStepperModule,  FormsModule, ReactiveFormsModule],
   templateUrl: './crear-inquilino.component.html',
   styleUrl: './crear-inquilino.component.scss'
 })
@@ -40,11 +41,7 @@ export class CrearInquilinoComponent {
     private _inquilinosService: InquilinoRxjsService,
     private _snack: SnackbarService,
     private _garantes: GarantesService    
-  ) {
-    this.formularioGarante.get('nombre')?.disable();
-    this.formularioGarante.get('email')?.disable();
-    this.formularioGarante.get('telefono')?.disable();
-  }
+  ) {}
   // boton submit form dinamico
   onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }): void {
     const nuevoInquilino = {
@@ -53,17 +50,9 @@ export class CrearInquilinoComponent {
       garantes: [] 
     };
     this.inquilinoAux = nuevoInquilino;
-    this.formularioGarante.get('nombre')?.enable();
-    this.formularioGarante.get('email')?.enable();
-    this.formularioGarante.get('telefono')?.enable();
-    this.cambiarColorbotones = true;
-  } 
-  //boton submit form garante
-  finalizarCreacionGarantes(id: number){
-    this.agregarGarante(id);
-    this.habilitarTerminarCreacion = true;
 
-  }
+  } 
+ 
   //boton agregar otro garante 
   agregarGarante(id: number){
     const garante = this._garantes.crearGarante(id, this.formularioGarante.controls['nombre'].value, this.formularioGarante.controls['telefono'].value, this.formularioGarante.controls['email'].value);
@@ -77,7 +66,6 @@ export class CrearInquilinoComponent {
     const inquilinoConGarantes = this._garantes.agregarGarantesalInquilino(this.inquilinoAux, this.garantesAux);
     this.enviarInquilinoABD(inquilinoConGarantes);
     this._snack.mensajeSnackBar('Inquilino creado exitosamente', 'Cerrar');
-    this.habilitarTerminarCreacion = false;
   }
   private enviarInquilinoABD(inquilino: IInquilino) {
     this._inquilinosService.crear(inquilino).subscribe({

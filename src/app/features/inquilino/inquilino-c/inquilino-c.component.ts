@@ -9,10 +9,13 @@ import { ModalService } from '../../../core/modal/modal.service';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDividerModule} from '@angular/material/divider';
 import {AccordionInquilinoComponent} from "../accordion-inquilino/accordion-inquilino.component";
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { obtenerNombre } from '../../caracteristicas/entity-helpers'; 
 @Component({
   selector: 'app-inquilino-c',
   standalone: true,
-  imports: [CardListComponent, AccordionInquilinoComponent, MatExpansionModule, MatDividerModule],
+  imports: [CardListComponent, AccordionInquilinoComponent, MatExpansionModule, MatDividerModule, MatButtonModule, MatIconModule],
   templateUrl: './inquilino-c.component.html',
   styleUrl: './inquilino-c.component.scss'
 })
@@ -22,6 +25,7 @@ export class InquilinoCComponent implements OnInit{
   readonly panelOpenState = signal(false);
   
   obtenerCaracteristica = obtenerCaracteristica;
+  obtenerNombre = obtenerNombre;
 
   constructor(
     private _inquilinosService: InquilinoRxjsService,
@@ -42,5 +46,8 @@ export class InquilinoCComponent implements OnInit{
   }
   eliminarInquilino(inquilino: IInquilino){
     this._modalService.abrirModal('Eliminar Inquilino', EliminarInquilinoComponent, inquilino);    
+  }
+  ordenarAlfabeticamente(){
+    this._inquilinosService.ordenarAlfabeticamente();
   }
 }

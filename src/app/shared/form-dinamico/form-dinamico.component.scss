@@ -3,15 +3,13 @@
 .formulario{
   padding: 10px;
   padding-top: 15px;
-  height: 300px;
   p{
     color: $neutral-400;
   }
   .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin-bottom: 1rem;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    justify-items: flex-start;
   }
 }
 

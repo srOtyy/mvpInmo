@@ -4,11 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { firstValueFrom } from 'rxjs';
 import { obtenerCaracteristica } from '../caracteristicas/entity-helpers';
-
+import { obtenerNombre } from '../caracteristicas/entity-helpers';
 @Injectable({
   providedIn: 'root'
 })
 export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
+  obtenerNombre = obtenerNombre;
+  ordenAlfabetico: boolean = false;
   constructor(http: HttpClient) { 
     super(http, 'http://localhost:3000/propietarios')
   }
@@ -48,4 +50,23 @@ export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
     }
     return obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible').toString();
   }  
+  // ordenar por alfabeto descendente y ascendentemente
+  ordenarAlfabeticamente(){
+    if (!this.ordenAlfabetico) {
+      this.$lista.set([...this.$lista()].sort((a, b) => {
+        const nombreA = this.obtenerNombre(a);
+        const nombreB = this.obtenerNombre(b);
+        return nombreA.localeCompare(nombreB);
+      }));
+      this.ordenAlfabetico = true;
+    }
+    else{
+      this.$lista.set([...this.$lista()].sort((a, b) => {
+        const nombreA = this.obtenerNombre(a);
+        const nombreB = this.obtenerNombre(b);
+        return nombreB.localeCompare(nombreA);
+      }));
+      this.ordenAlfabetico = false;
+    }
+  }
 }

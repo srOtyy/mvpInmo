@@ -1,11 +1,19 @@
 <app-card-list entidad="Inquilinos">
+     <div class="acciones">
+        <p>Filtrar: </p>
+        <button mat-icon-button color="primary" (click)="ordenarAlfabeticamente()">
+            <mat-icon>sort_by_alpha</mat-icon>
+        </button>
+    </div>
+    <mat-divider></mat-divider>
+
     @for(inquilino of $listaInquilinos; track $index) {
         <br>
         <div class="item">
             <mat-accordion>
                 <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
                     <mat-expansion-panel-header>
-                    <mat-panel-title> {{obtenerCaracteristica(inquilino, 'nombre')}} </mat-panel-title>
+                    <mat-panel-title> {{obtenerNombre(inquilino)}} </mat-panel-title>
                     <!-- <mat-panel-description>
                     </mat-panel-description> -->
                     </mat-expansion-panel-header>

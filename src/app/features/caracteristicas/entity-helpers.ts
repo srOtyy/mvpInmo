@@ -9,6 +9,9 @@ export function obtenerCaracteristica(
 ): string | number | boolean {
   return entidad.caracteristicas.find(c => c.clave === clave)?.valor ?? valorPorDefecto;
 }
+export function obtenerNombre(entidad: IEntityBase): string {
+  return obtenerCaracteristica(entidad, 'nombre', 'Sin nombre') as string;
+}
 
 export function obtenerClavesCaracteristicas(entidad: IEntityBase): string[] {
   return entidad.caracteristicas.map(c => c.clave);

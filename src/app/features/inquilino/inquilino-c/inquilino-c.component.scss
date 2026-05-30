@@ -1,4 +1,14 @@
 @import "../../../../styles.scss";
+.acciones{
+    display: flex;
+    flex-direction: row;
+    p{
+        color: $neutral-500;
+        margin:0;
+        font-size: 18px;
+        align-self: center;
+    }
+}
 .item{
     width: 70vw;
 }

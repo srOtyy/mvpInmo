@@ -1,42 +1,46 @@
+
 <section class="section">
-  <div class="form-dinamico">
-    <h4>Crear Inquilino</h4>
-    <mat-divider></mat-divider>
-    <app-form-dinamico [dominio]="'inquilinos'" (entidadCreada)="onEntidadCreada($event)"></app-form-dinamico>
-
-  </div>
-  <div class="form-garantes">
-    <h4>Datos del garante</h4>
-    <mat-divider></mat-divider>
-    <form class="form-garantes__formulario" [formGroup]="formularioGarante" (ngSubmit)="finalizarCreacionGarantes(this.inquilinoAux.id)">
-      <mat-form-field>
-        <mat-label>Nombre</mat-label>
-        <input matInput   placeholder="Nombre del garante" formControlName="nombre"/>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput   placeholder="email del garante" formControlName="email"/>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Telefono</mat-label>
-        <input matInput   placeholder="telefono del garante" formControlName="telefono"/>
-      </mat-form-field>
-      <div class="botones">
-         
-        <button mat-icon-button type="button" (click)="agregarGarante(this.inquilinoAux.id)" [disabled]="!formularioGarante.valid">
-          <mat-icon [color]="cambiarColorbotones ? 'primary' : 'null'" >add</mat-icon>
-        </button>
-        <button mat-icon-button type="submit" [disabled]="!formularioGarante.valid">
-          <mat-icon [color]="cambiarColorbotones ? 'primary' : 'null'" >check</mat-icon>
-        </button>
-       
+  <mat-stepper class="stepper">
+    <mat-step label="Inquilino" >
+        <app-form-dinamico [dominio]="'inquilinos'" (entidadCreada)="onEntidadCreada($event)"></app-form-dinamico>
+      <div>
+        <button mat-button matStepperNext>Garantes</button>
       </div>
-     
+    </mat-step>
+    <mat-step label="Garantes" >
+        <form class="form-garantes" [formGroup]="formularioGarante" >
 
-    </form>
-  </div>
-  <div class="footer">
-    <button mat-raised-button  [disabled]="!habilitarTerminarCreacion"  color="accent" (click)="terminarCreacion()">Crear Inquilino</button>
-  </div>
+          <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input matInput   placeholder="Nombre del garante" formControlName="nombre"/>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput   placeholder="email del garante" formControlName="email"/>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Telefono</mat-label>
+            <input matInput   placeholder="telefono del garante" formControlName="telefono"/>
+          </mat-form-field>
+
+          <div class="botones">
+            <button mat-fab extended color="primary" (click)="agregarGarante(this.inquilinoAux.id)">
+              <mat-icon>add</mat-icon>
+              Agregar Garante
+            </button>
+          </div>
+  
+        </form>
+      <div>
+        <button mat-button matStepperPrevious>Inquilino</button>
+        <button mat-button matStepperNext>Terminar</button>
+      </div>
+    </mat-step>
+    <mat-step label="Finalizar">
+      <p><button mat-raised-button   color="accent" (click)="terminarCreacion()">Cargar Inquilino</button>
+    </mat-step>
+
+  </mat-stepper>
+
+
 </section>
-    
