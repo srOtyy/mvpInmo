@@ -1,19 +1,24 @@
 <div class="side-bar">
+    <div class="boton-salir">
+        <button mat-icon-button class="container" (click)="cerrarSidenavEvent()" color="primary">
+            <mat-icon>arrow_back</mat-icon>
+        </button >
+    </div>
     <div class="botones">
         @for (dominio of dominiosActivos; track $index){
-         <div class="div-dominio">
+         <div class="contenedor-boton-dominio">
             <button mat-raised-button (click)="enviarDominio(dominio)" class="boton-dominio"> {{dominio}} </button>
-            @if(consultarDominioActivo(dominio)){
-                <div class="sub-botones">
-                <ul>
-                    @for(boton of obtenerBotonesDeAccion(dominio); track $index){
-                        <li>
-                            <button mat-button [routerLink]="boton.ruta" class="boton-accion"> {{boton.nombre}} </button>
-                        </li>
-                    }
-                </ul>
-            </div>
-            }
+                @if(consultarDominioActivo(dominio)){
+                    <div class="sub-botones">
+                        <ul>
+                            @for(boton of obtenerBotonesDeAccion(dominio); track $index){
+                                <li>
+                                    <button mat-button [routerLink]="boton.ruta" class="boton-accion"> {{boton.nombre}} </button>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
          </div>
         }   
     </div>

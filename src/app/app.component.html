@@ -1,8 +1,20 @@
 <div class="div">
-    <div class="nav-bar">
-        <app-sidebar/>
-    </div>
-    
+    <!-- 
+        // el sidenav ( utilice drawer ):
+        // container es el contenedor del despliegue (mat-drawer) y del contenido principal (drawer-content) 
+        podriamos hacer debajo del despliegue ( dentro del drawer-content) el listado de contratos
+    -->
+     <mat-drawer-container class="nav-bar">
+                <mat-drawer mode="over" class="drawer" [opened]="abrirSidenav">
+                        <app-sidebar (evento)="eventoSidenav()" />
+                </mat-drawer>
+                <mat-drawer-content class="drawer-content">
+                    <button mat-button class="container" (click)="eventoSidenav()">Menu</button >
+                        <!-- Acá iría el listado de contratos. Debería ser un componente que maneje la lógica de visualización y selección de contratos -->
+                </mat-drawer-content>
+        </mat-drawer-container>
+       
+
     <div class="lado-derecho">
         <app-head class="head"></app-head>
         <div class="body">

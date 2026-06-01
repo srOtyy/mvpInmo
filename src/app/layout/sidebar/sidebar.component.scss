@@ -1,23 +1,27 @@
 @import '../../../styles.scss';
 .side-bar{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    .boton-salir{
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px;
+    }
     .botones{
-        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 50px;
         padding-top :30px ;
-        .div-dominio{
+        width: auto ;
+        .contenedor-boton-dominio{
+            width: 100%;
             .boton-dominio{
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                text-align: start;
                 width: 100%;
                 border-bottom: 1px solid $primary-300;
                 border-radius: 0;
                 transition: all 0.3s ease;
-                background-color: transparent;
                 &:hover{
                     color: $neutral-50;
                     border-bottom-color: $neutral-50;
