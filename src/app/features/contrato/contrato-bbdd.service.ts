@@ -44,18 +44,18 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
    } catch (error) {
      console.error('Error al cargar las listas:', error);
    }
- }
+  }
 
-    generarTituloContrato(idPropietario: string, idInquilino: string): string {
-      const propietario = this.$listaPropietarios.find(p => p.id.toString() === idPropietario);
-      const inquilino = this.$listaInquilinos.find(i => i.id.toString() === idInquilino);
-      if( propietario && inquilino) {
-        const nombrePropietario = obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible');
-        const nombreInquilino = obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible');
-        return `${nombrePropietario} - ${nombreInquilino}`;
-      }
-      return 'Título no disponible';
+  generarTituloContrato(idPropietario: string, idInquilino: string): string {
+    const propietario = this.$listaPropietarios.find(p => p.id.toString() === idPropietario);
+    const inquilino = this.$listaInquilinos.find(i => i.id.toString() === idInquilino);
+    if( propietario && inquilino) {
+      const nombrePropietario = obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible');
+      const nombreInquilino = obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible');
+      return `${nombrePropietario} - ${nombreInquilino}`;
     }
+    return 'Título no disponible';
+  }
   mostrarListas(): void {
     console.log('Propietarios:', this.$listaPropietarios);
     console.log('Inquilinos:', this.$listaInquilinos);
@@ -66,8 +66,6 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   }
 
   // para setear el nombre del item-entidad del contrato " propietario - inquilino "
-  
-  
   async setNombrePropietario(id: number): Promise<string>{
       const propietario = await this._rxjsPropietarios.obtenerPropietarioPorId(id);
       if (propietario !== undefined){ 
@@ -75,14 +73,14 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
       }
       return 'Nombre no disponible';
     }
-  
-    async setNombreInquilino(id: number): Promise<string>{
-      const inquilino = await this._rxjsInquilinos.obtenerInquilinoPorId(id);
-      if (inquilino !== undefined){
-        return obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
-      }
-      return 'Nombre no disponible';
+
+  async setNombreInquilino(id: number): Promise<string>{
+    const inquilino = await this._rxjsInquilinos.obtenerInquilinoPorId(id);
+    if (inquilino !== undefined){
+      return obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
     }
+    return 'Nombre no disponible';
+  }
 
   
 

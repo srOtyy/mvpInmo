@@ -9,37 +9,34 @@
   height: auto;
   .stepper{
     background-color: transparent;
-     .mat-horizontal-stepper-header-container{
+    .mat-horizontal-stepper-header-container{
       gap: 20px;
-     }
-      .form-dinamico{
+    }
+    .form-dinamico{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    padding-right: 20px;
+    border-right: 1px solid $neutral-700;
+    h4{
+      align-self: center;
+      color: $primary-500;
+    }
+    }
+    .form-garantes{
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex: 1;
-      padding-right: 20px;
-      border-right: 1px solid $neutral-700;
-      h4{
-        align-self: center;
-        color: $primary-500;
-      }
-      }
-      .form-garantes{
+      flex-direction: row;
+      gap: 20px;
+      .botones{
         display: flex;
         flex-direction: row;
-        gap: 20px;
-        .botones{
-          display: flex;
-          flex-direction: row;
-          gap: 10px;  
-          width: 150px;
-          button{
-            font-size: 14px;
-          }
+        gap: 10px;  
+        width: 150px;
+        button{
+          font-size: 14px;
         }
-        
       }
+    }
   }
-  
-
 }

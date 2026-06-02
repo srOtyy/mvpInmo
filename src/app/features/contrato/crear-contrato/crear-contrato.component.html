@@ -56,6 +56,12 @@
           <input matInput type="date" formControlName="fechaFin" />
         </mat-form-field>
       </div>
+      <div class="campo">
+        <mat-form-field appearance="fill">
+          <mat-label>Titulo</mat-label>
+          <input matInput formControlName="titulo" />
+        </mat-form-field>
+      </div>
     </div>
     <button mat-raised-button color="primary" type="submit" [disabled]="formulario.invalid"  >Crear Contrato</button>
   </form>

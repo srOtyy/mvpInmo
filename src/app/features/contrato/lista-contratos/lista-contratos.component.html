@@ -1,7 +1,7 @@
 <!-- El contenedor no se adapta a los cambios de resolución -->
 
 <div class="contenedor-principal">
-    <div class="cabecera">
+  <div class="cabecera">
         <h3 class="titulo">Contratos</h3>
         <button mat-icon-button class="btn-nuevo" (click)="eventoSidenav()">
             <mat-icon class="icono">menu</mat-icon>
@@ -22,20 +22,20 @@
 
     <mat-form-field class="form-select" appearance="fill">
       <mat-label>Estado</mat-label>
-      <mat-select [(value)]="filtroSeleccionado">
-        <mat-option value="todos" (click)="filtrarContratos()">Todos</mat-option>
-        <mat-option value="activo" (click)="filtrarContratos()">Activo</mat-option>
-        <mat-option value="preliminar" (click)="filtrarContratos()">Preliminar</mat-option>
-        <mat-option value="finalizado" (click)="filtrarContratos()">Finalizado</mat-option>
-        <mat-option value="cancelado" (click)="filtrarContratos()">Cancelado</mat-option>
-        <mat-option value="renovar" (click)="filtrarContratos()">Renovar</mat-option>
+      <mat-select [(value)]="$filtroBusqueda">
+        <mat-option value="todos" >Todos</mat-option>
+        <mat-option value="activo" >Activo</mat-option>
+        <mat-option value="preliminar" >Preliminar</mat-option>
+        <mat-option value="finalizado" >Finalizado</mat-option>
+        <mat-option value="cancelado" >Cancelado</mat-option>
+        <mat-option value="renovar" >Renovar</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
   <div class="lista-contratos">
     <mat-chip-listbox aria-label="-listado-contratos">
-      @for(contrato of contratos(); track contrato.id ){
+      @for(contrato of $contratosFiltrados(); track contrato.id ){
           <mat-chip-option class="chip-contrato" [selected]="contratoSeleccionado() === contrato"
             (click)="seleccionarContrato(contrato)">
             <div class="chip-contenido">
@@ -48,7 +48,7 @@
               </div>
               <div class="chip-datos">
                 <span class="chip-renta">{{ formatearMoneda(contrato.rentaMensual) }}</span>
-                <span class="chip-fecha">{{ formatearFecha(contrato.fechaInicio) }} - {{ formatearFecha(contrato.fechaFin) }}</span>
+                <!-- <span class="chip-fecha">{{ formatearFecha(contrato.fechaInicio) }} - {{ formatearFecha(contrato.fechaFin) }}</span> -->
               </div>
             </div>
           </mat-chip-option>  

@@ -211,9 +211,64 @@
           "valor": 150
         }
       ]
+    },
+    {
+      "id": 130740,
+      "idPropietario": 330005,
+      "caracteristicas": [
+        {
+          "clave": "m2",
+          "valor": 5000
+        }
+      ]
     }
   ],
-  "contratos": [],
+  "contratos": [
+    {
+      "id": 8,
+      "inquilinoId": 2,
+      "inmuebleId": 5,
+      "propietarioId": 3,
+      "fechaInicio": "2026-05-14T07:14:25.976Z",
+      "fechaFin": "2026-05-14T07:14:25.976Z",
+      "estado": "activo",
+      "rentaMensual": 890000,
+      "titulo": "PH 4 amb. - Belgrano"
+    },
+    {
+      "id": 456,
+      "inquilinoId": 120459,
+      "inmuebleId": 860236,
+      "propietarioId": 361580,
+      "fechaInicio": "2026-05-14T07:14:25.976Z",
+      "fechaFin": "2026-05-14T07:14:25.976Z",
+      "estado": "preliminar",
+      "rentaMensual": 150000,
+      "titulo": "Inmueble de Octavio - Pendiente"
+    },
+    {
+      "id": 649056,
+      "propietarioId": 361580,
+      "inmuebleId": 860236,
+      "inquilinoId": 120459,
+      "fechaInicio": "2001-01-05",
+      "fechaFin": "2009-01-05",
+      "rentaMensual": 500000,
+      "estado": "preliminar",
+      "titulo": "Octavio - Oty"
+    },
+    {
+      "id": 841791,
+      "propietarioId": 330005,
+      "inmuebleId": 130740,
+      "inquilinoId": 120459,
+      "fechaInicio": "2001-01-05",
+      "fechaFin": "2090-01-05",
+      "rentaMensual": 290000,
+      "estado": "preliminar",
+      "titulo": "Nahu - Oty"
+    }
+  ],
   "definiciones": [
     {
       "dominio": "propietarios",
@@ -430,6 +485,28 @@
       "items": [],
       "montoAlquiler": 205,
       "total": 205
+    },
+    {
+      "id": "664677",
+      "contratoId": "649056",
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Oty",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-02T16:09:08.711Z",
+      "items": [],
+      "montoAlquiler": 500000,
+      "total": 500000
+    },
+    {
+      "id": "820348",
+      "contratoId": "841791",
+      "propietarioNombre": "Nahuel",
+      "inquilinoNombre": "Oty",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-02T16:10:05.306Z",
+      "items": [],
+      "montoAlquiler": 290000,
+      "total": 290000
     }
   ]
 }

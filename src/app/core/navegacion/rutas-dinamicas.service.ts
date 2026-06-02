@@ -26,7 +26,6 @@ export class RutasDinamicasService {
       { nombre: 'caracteristicas', ruta: ['/inmuebles', 'def_caracteristicas'] }
     ],
     contratos: [
-      { nombre: 'lista', ruta: ['/contratos', 'lista'] },
       {nombre: 'crear', ruta: ['/contratos', 'crear']},
     ]
   };

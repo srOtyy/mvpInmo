@@ -25,9 +25,10 @@ export class SidebarComponent {
     
   }
   cerrarSidenavEvent() {
+    this.enviarDominio(null)
     this.evento.emit();
   }
-  enviarDominio(dominio: string): void {
+  enviarDominio(dominio: string | null): void {
     this.rutasDinamicasService.$dominioActivo.set(dominio as Dominio);
   }
   consultarDominioActivo(dominio: string): boolean {

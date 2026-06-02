@@ -27,7 +27,6 @@ export class CrearContratoComponent implements OnInit {
   constructor(
     private contratosService: ContratoBbddService,
     private _snack: SnackbarService,
-    private _notificacion: NotificacionesService,
     private _liquidacion: LiquidacionGeneratorService
   ){ 
     this.formulario = new FormGroup({
@@ -38,7 +37,8 @@ export class CrearContratoComponent implements OnInit {
       fechaInicio: new FormControl('', Validators.required),
       fechaFin: new FormControl('', Validators.required),
       rentaMensual: new FormControl('', [Validators.required, Validators.min(0)]),
-      estado: new FormControl('preliminar', Validators.required)
+      estado: new FormControl('preliminar', Validators.required),
+      titulo: new FormControl('')
       });
     }
 
@@ -83,7 +83,9 @@ export class CrearContratoComponent implements OnInit {
     return inquilino ? this.nombreInquilino(inquilino) : 'Nombre no disponible';
   }
   enviarContrato(contrato: IContrato){
-    contrato.titulo = this.contratosService.generarTituloContrato(contrato.propietarioId.toString(), contrato.inquilinoId.toString());
+    if(this.formulario.get('titulo')?.value === ''){
+      contrato.titulo = this.contratosService.generarTituloContrato(contrato.propietarioId.toString(), contrato.inquilinoId.toString());
+    }
     this.contratosService.crear(contrato).subscribe({
       next: () => {
         this._snack.mensajeSnackBar('Contrato creado exitosamente', 'Cerrar');
@@ -103,16 +105,6 @@ export class CrearContratoComponent implements OnInit {
         });
         this.formulario.reset();
         this.formulario.markAllAsTouched();
-        console.log("Se tendria que haber creado una notificacion de vencimiento para el contrato: ");
-        this._notificacion.crear({
-          id: randomId(),
-          contratoId: contrato.id,
-          mensaje: `Contrato ${contrato.titulo} creado exitosamente.`,
-          fecha: contrato.fechaFin,
-          tipo: 'vencimiento',
-          estado: 'pendiente'
-        
-        });
       },
       error: () => {
         this._snack.mensajeSnackBar('Error al crear contrato', 'Cerrar');
