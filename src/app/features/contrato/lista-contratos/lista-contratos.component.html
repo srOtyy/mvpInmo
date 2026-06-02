@@ -1,0 +1,60 @@
+<!-- El contenedor no se adapta a los cambios de resolución -->
+
+<div class="contenedor-principal">
+    <div class="cabecera">
+        <h3 class="titulo">Contratos</h3>
+        <button mat-icon-button class="btn-nuevo" (click)="eventoSidenav()">
+            <mat-icon class="icono">menu</mat-icon>
+        
+        </button >
+
+        <!-- <button mat-icon-button class="btn-nuevo" aria-label="Nuevo contrato">
+            <mat-icon class="icono">add</mat-icon>
+        </button> -->
+    </div>
+
+  <div class="filtros">
+    <mat-form-field class="form-buscar" appearance="fill" >
+      <mat-label>Buscar</mat-label>
+      <input matInput type="text" id="buscar" #buscarInput disabled>
+      <mat-icon matSuffix class="icono-buscar">search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="form-select" appearance="fill">
+      <mat-label>Estado</mat-label>
+      <mat-select [(value)]="filtroSeleccionado">
+        <mat-option value="todos" (click)="filtrarContratos()">Todos</mat-option>
+        <mat-option value="activo" (click)="filtrarContratos()">Activo</mat-option>
+        <mat-option value="preliminar" (click)="filtrarContratos()">Preliminar</mat-option>
+        <mat-option value="finalizado" (click)="filtrarContratos()">Finalizado</mat-option>
+        <mat-option value="cancelado" (click)="filtrarContratos()">Cancelado</mat-option>
+        <mat-option value="renovar" (click)="filtrarContratos()">Renovar</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="lista-contratos">
+    <mat-chip-listbox aria-label="-listado-contratos">
+      @for(contrato of contratos(); track contrato.id ){
+          <mat-chip-option class="chip-contrato" [selected]="contratoSeleccionado() === contrato"
+            (click)="seleccionarContrato(contrato)">
+            <div class="chip-contenido">
+              <div class="chip-header">
+                <span class="chip-titulo">{{ contrato.titulo || 'Contrato #' + contrato.id }}</span>
+                <span class="chip-estado chip-{{ getEstadoColor(contrato.estado) }}"
+                  [matTooltip]="getEstadoLabel(contrato.estado)">
+                  {{ contrato.estado }}
+                </span>
+              </div>
+              <div class="chip-datos">
+                <span class="chip-renta">{{ formatearMoneda(contrato.rentaMensual) }}</span>
+                <span class="chip-fecha">{{ formatearFecha(contrato.fechaInicio) }} - {{ formatearFecha(contrato.fechaFin) }}</span>
+              </div>
+            </div>
+          </mat-chip-option>  
+      }
+      
+    </mat-chip-listbox>
+  </div>
+
+</div>

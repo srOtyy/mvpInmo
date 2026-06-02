@@ -1,0 +1,266 @@
+@import "../../../../styles.scss";
+
+// el contendor no se adapta al 100% del ancho, se le da un max-width para que no se estire demasiado en pantallas grandes y un min-width para que no se achique demasiado en pantallas pequeñas
+.contenedor-principal{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 16px;
+  padding: 10px;
+  min-width: 300px;
+
+
+  .cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    padding-bottom: 8px;
+    border-bottom: 1px solid $neutral-700;
+
+    .titulo {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: $neutral-50;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-nuevo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: $primary-500;
+      background-color: transparent;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: rgba($primary-500, 0.1);
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      .icono {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  .filtros {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 22px;
+    width: 90%;
+
+    .form-buscar,
+    .form-select {
+      flex: 1;
+
+      ::ng-deep {
+        .mat-mdc-form-field-subscript-wrapper {
+          display: none;
+        }
+
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+          background-color: $neutral-800;
+        }
+
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+          color: $neutral-50;
+          caret-color: $primary-500;
+        }
+
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__outline {
+          color: $neutral-600;
+        }
+
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-text-field__outline {
+          color: $primary-500;
+        }
+
+        .mat-mdc-form-field-type-mat-select .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+          color: $neutral-50;
+        }
+
+        .mat-mdc-form-field-label {
+          color: $neutral-400;
+        }
+
+        .mat-mdc-form-field-label.mdc-floating-label--float-above {
+          color: $primary-400;
+        }
+
+        .mat-mdc-icon-button.mat-mdc-button-base {
+          color: $neutral-400;
+        }
+      }
+    }
+
+    .icono-buscar {
+      color: $neutral-400 !important;
+    }
+  }
+
+  .lista-contratos {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: $neutral-600 $neutral-800;
+
+    padding-left: 10px;
+
+     /* Estilos para WebKit (Chrome, Safari) */
+    mat-chip-listbox {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    mat-chip-option {
+      background-color: $neutral-800;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      width: 90%;
+      margin: 0;
+
+      &:hover {
+        background-color: $neutral-700;
+        border-color: $neutral-600;
+      }
+
+      &[aria-selected="true"] {
+        border-color: $primary-500;
+        background-color: rgba($primary-500, 0.08);
+      }
+
+      &.chip-option-selected {
+        border-color: $primary-500;
+        background-color: rgba($primary-500, 0.1);
+      }
+    }
+
+    .chip-contrato {
+      height: auto;
+      min-height: 10%;
+      padding: 12px 16px;
+      background-color: $neutral-800;
+      border-radius: 8px;
+
+      &.chip-preliminar {
+        border-left: 3px solid $warning;
+      }
+
+      &.chip-activo {
+        border-left: 3px solid $success;
+      }
+
+      &.chip-finalizado {
+        border-left: 3px solid $neutral-500;
+      }
+
+      &.chip-cancelado {
+        border-left: 3px solid $error;
+      }
+
+      &.chip-renovar {
+        border-left: 3px solid $accent-1;
+      }
+    }
+
+    .chip-contenido {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 6px;
+    }
+
+    .chip-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .chip-titulo {
+      font-size: 14px;
+      font-weight: 600;
+      color: $neutral-50;
+      line-height: 1.3;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .chip-estado {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      white-space: nowrap;
+      flex-shrink: 0;
+
+      &.chip-preliminar {
+        background-color: rgba($warning, 0.15);
+        color: $warning;
+      }
+
+      &.chip-activo {
+        background-color: rgba($success, 0.15);
+        color: $success;
+      }
+
+      &.chip-finalizado {
+        background-color: rgba($neutral-400, 0.15);
+        color: $neutral-300;
+      }
+
+      &.chip-cancelado {
+        background-color: rgba($error, 0.15);
+        color: $error;
+      }
+
+      &.chip-renovar {
+        background-color: rgba($accent-1, 0.15);
+        color: $accent-1;
+      }
+    }
+
+    .chip-datos {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    .chip-renta {
+      color: $primary-400;
+      font-weight: 500;
+    }
+
+    .chip-fecha {
+      color: $neutral-400;
+      white-space: nowrap;
+    }
+    }
+}

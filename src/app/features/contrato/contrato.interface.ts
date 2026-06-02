@@ -1,4 +1,4 @@
-type ContractStatus =
+export type ContractStatus =
   | 'preliminar'     // aún no válido
   | 'activo'    // en curso
   | 'finalizado'  // terminó normalmente

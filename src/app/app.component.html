@@ -9,10 +9,9 @@
                         <app-sidebar (evento)="eventoSidenav()" />
                 </mat-drawer>
                 <mat-drawer-content class="drawer-content">
-                    <button mat-button class="container" (click)="eventoSidenav()">Menu</button >
-                        <!-- Acá iría el listado de contratos. Debería ser un componente que maneje la lógica de visualización y selección de contratos -->
+                    <app-lista-contratos (evento)="eventoSidenav()" />
                 </mat-drawer-content>
-        </mat-drawer-container>
+    </mat-drawer-container>
        
 
     <div class="lado-derecho">
