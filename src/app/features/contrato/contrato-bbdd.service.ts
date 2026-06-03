@@ -8,20 +8,35 @@ import { PropietarioRxjsService } from '../propietario/propietario-rxjs.service'
 import { IPropietario } from '../propietario/propietario.interface';
 import { IInquilino } from '../inquilino/inquilino.interface';
 import { IInmueble } from '../inmueble/inmueble.interface';
-import { firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { obtenerCaracteristica } from '../caracteristicas/entity-helpers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContratoBbddService extends BaseCrudService<IContrato> {
- $listaPropietarios: IPropietario[] = [];
+  $listaPropietarios: IPropietario[] = [];
   $listaInquilinos: IInquilino[] = [];
   $listaInmuebles: IInmueble[] = [];
+  private contratoSeleccionado: BehaviorSubject<IContrato> = new BehaviorSubject<IContrato>({
+    id: 0,
+    inquilinoId: 0,
+    inmuebleId: 0,
+    propietarioId: 0,
+    fechaInicio: new Date(),
+    fechaFin: new Date(),
+    estado: 'preliminar',
+    rentaMensual: 0, 
+  } as IContrato);
+  public contratoSeleccionado$: Observable<IContrato> = this.contratoSeleccionado.asObservable();
 
-  constructor( http: HttpClient, private _rxjsInmuebles: InmueblesRxjsService, private _rxjsInquilinos: InquilinoRxjsService, private _rxjsPropietarios: PropietarioRxjsService ) {
+  constructor( http: HttpClient, 
+    private _rxjsInmuebles: InmueblesRxjsService, 
+    private _rxjsInquilinos: InquilinoRxjsService, 
+    private _rxjsPropietarios: PropietarioRxjsService
+    ){
     super(http, 'http://localhost:3000/contratos')
-  }
+    }
  
 
    cargarLista(): void {
@@ -81,8 +96,13 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     }
     return 'Nombre no disponible';
   }
+  // para el contrato BehaviurSubject
+  seleccionarContrato(contrato: IContrato): void {
+    this.contratoSeleccionado.next(contrato);
+  }
 
-  
+
+
 
   //en desuso, evaluar funcionalidad a futuro
   setFetecha(dia: number, mes: number, anio: number): Date {

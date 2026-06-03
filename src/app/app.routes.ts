@@ -38,7 +38,7 @@ export const routes: Routes = [
   {
     path: 'contratos',
     children: [
-      { path: 'lista', component: ContratoCComponent },
+      { path: 'vista', component: ContratoCComponent },
       { path: 'crear', component: CrearContratoComponent },
     
 

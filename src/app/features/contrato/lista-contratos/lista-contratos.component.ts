@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IContrato, ContractStatus } from '../contrato.interface';
+import {Router} from '@angular/router';
 import {ContratoBbddService} from '../contrato-bbdd.service';
 @Component({
   selector: 'app-lista-contratos',
@@ -33,7 +34,8 @@ export class ListaContratosComponent implements OnInit {
       this.getEstadoLabel(contrato.estado).toLowerCase().includes(this.$filtroBusqueda().toLowerCase())
     );
   });
-  constructor( private _contratosService:ContratoBbddService ){}
+  contadorFalopa: number = 0;
+  constructor( private _contratosService:ContratoBbddService, private router:Router ){}
   
   ngOnInit() {
     this._contratosService.cargarLista();
@@ -43,8 +45,23 @@ export class ListaContratosComponent implements OnInit {
   }
   seleccionarContrato(contrato: IContrato) {
     this.contratoSeleccionado.set(contrato);
+    this._contratosService.seleccionarContrato(contrato);
+  }
+  evaluarClick(contrato: IContrato): void {
+  if (this.contratoSeleccionado() === contrato) {
+    // 🚀 Redirige directamente
+    this.contadorFalopa++;
+    if (this.contadorFalopa >= 2) {
+      this.router.navigate(['/contratos/vista']);
+      this.contadorFalopa = 0; // Reinicia el contador después de la redirección
+    }
+  } else {
+    // 📌 Si no estaba seleccionado, el primer click solo lo selecciona
+    this.seleccionarContrato(contrato);
+
   }
 
+}
   getEstadoColor(estado: ContractStatus): string {
     const colores: Record<ContractStatus, string> = {
       preliminar: 'preliminar',

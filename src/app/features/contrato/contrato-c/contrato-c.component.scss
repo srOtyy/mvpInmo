@@ -1,0 +1,142 @@
+
+@import "../../../../styles.scss";
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    max-height: 65vh;
+    max-width: 85vw;
+    padding: 25px 0;
+    margin: 10px;
+    color: $primary-500;
+
+    .sin-seleccion {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 40px;
+        opacity: 0.6;
+
+        mat-icon {
+            font-size: 48px;
+            width: 48px;
+            height: 48px;
+        }
+
+        p {
+            margin: 0;
+            font-size: 16px;
+        }
+    }
+}
+
+.card {
+    background-color: $neutral-800;
+    border-radius: 15px;
+    padding: 25px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $neutral-400;
+
+    .card-titulo {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+        color: $primary-300;
+    }
+
+    .card-estado {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: capitalize;
+    }
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+
+    .label {
+        color: $neutral-300;
+        font-size: 14px;
+    }
+
+    .valor {
+        color: $primary-100;
+        font-weight: 500;
+    }
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 15px;
+    border-top: 1px solid $neutral-400;
+
+    button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .btn-editar mat-icon {
+        color: $secondary-300;
+    }
+
+    .btn-gastos mat-icon {
+        color: $success;
+    }
+
+    .btn-eliminar mat-icon {
+        color: $error;
+    }
+}
+
+// Estados del contrato
+.estado-activo {
+    background-color: rgba($success, 0.2);
+    color: $success;
+}
+
+.estado-preliminar {
+    background-color: rgba($warning, 0.2);
+    color: $warning;
+}
+
+.estado-finalizado {
+    background-color: rgba($neutral-400, 0.2);
+    color: $neutral-300;
+}
+
+.estado-cancelado {
+    background-color: rgba($error, 0.2);
+    color: $error;
+}
+
+.estado-renovar {
+    background-color: rgba($info, 0.2);
+    color: $info;
+}

@@ -1,4 +1,57 @@
+<div class="contenedor">
+    @let contrato = _contratosService.contratoSeleccionado$ | async;
 
-<app-card-list entidad="Contratos">
+    @if (contrato) {
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-titulo">{{ contrato.titulo || 'Contrato #' + contrato.id }}</h3>
+            <span class="card-estado estado-{{ contrato.estado }}">
+                {{ contrato.estado }}
+            </span>
+        </div>
 
-</app-card-list>
+        <div class="card-body">
+            <div class="info-row">
+                <span class="label">Renta Mensual:</span>
+                <span class="valor">{{ contrato.rentaMensual | currency:'USD':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Fecha Inicio:</span>
+                <span class="valor">{{ contrato.fechaInicio | date }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Fecha Fin:</span>
+                <span class="valor">{{ contrato.fechaFin | date }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Inquilino ID:</span>
+                <span class="valor">{{ contrato.inquilinoId }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Inmueble ID:</span>
+                <span class="valor">{{ contrato.inmuebleId }}</span>
+            </div>
+        </div>
+
+        <div class="card-actions">
+            <button mat-icon-button class="btn-gastos" (click)="generarRecibo(contrato)" matTooltip="Generar recibo">
+                <mat-icon>receipt_long</mat-icon>
+            </button>
+            <button mat-icon-button class="btn-editar" (click)="editarContrato(contrato)" matTooltip="Editar contrato">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="btn-gastos" (click)="agregarGastosContrato(contrato)" matTooltip="Agregar gastos">
+                <mat-icon>add_circle</mat-icon>
+            </button>
+            <button mat-icon-button class="btn-eliminar" (click)="eliminarContrato(contrato)" matTooltip="Eliminar contrato">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+    } @else {
+    <div class="sin-seleccion">
+        <mat-icon>description</mat-icon>
+        <p>Selecciona un contrato para ver los detalles</p>
+    </div>
+    }
+</div>

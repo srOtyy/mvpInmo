@@ -225,28 +225,6 @@
   ],
   "contratos": [
     {
-      "id": 8,
-      "inquilinoId": 2,
-      "inmuebleId": 5,
-      "propietarioId": 3,
-      "fechaInicio": "2026-05-14T07:14:25.976Z",
-      "fechaFin": "2026-05-14T07:14:25.976Z",
-      "estado": "activo",
-      "rentaMensual": 890000,
-      "titulo": "PH 4 amb. - Belgrano"
-    },
-    {
-      "id": 456,
-      "inquilinoId": 120459,
-      "inmuebleId": 860236,
-      "propietarioId": 361580,
-      "fechaInicio": "2026-05-14T07:14:25.976Z",
-      "fechaFin": "2026-05-14T07:14:25.976Z",
-      "estado": "preliminar",
-      "rentaMensual": 150000,
-      "titulo": "Inmueble de Octavio - Pendiente"
-    },
-    {
       "id": 649056,
       "propietarioId": 361580,
       "inmuebleId": 860236,
