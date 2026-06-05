@@ -18,17 +18,8 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   $listaPropietarios: IPropietario[] = [];
   $listaInquilinos: IInquilino[] = [];
   $listaInmuebles: IInmueble[] = [];
-  private contratoSeleccionado: BehaviorSubject<IContrato> = new BehaviorSubject<IContrato>({
-    id: 0,
-    inquilinoId: 0,
-    inmuebleId: 0,
-    propietarioId: 0,
-    fechaInicio: new Date(),
-    fechaFin: new Date(),
-    estado: 'preliminar',
-    rentaMensual: 0, 
-  } as IContrato);
-  public contratoSeleccionado$: Observable<IContrato> = this.contratoSeleccionado.asObservable();
+  private contratoSeleccionado: BehaviorSubject<IContrato | null> = new BehaviorSubject<IContrato | null>( null );
+  public contratoSeleccionado$: Observable<IContrato | null> = this.contratoSeleccionado.asObservable();
 
   constructor( http: HttpClient, 
     private _rxjsInmuebles: InmueblesRxjsService, 
@@ -101,7 +92,13 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     this.contratoSeleccionado.next(contrato);
   }
 
-
+  //filtrar por fecha
+  filtrarContratosPorFechaFin(): IContrato[] {
+    return this.$lista().sort((a, b) => new Date(a.fechaFin).getTime() - new Date(b.fechaFin).getTime());
+  }
+  filtrarContratosPorFechaInicio(): IContrato[] {
+    return this.$lista().sort((a, b) => new Date(a.fechaInicio).getTime() - new Date(b.fechaInicio).getTime());
+  }
 
 
   //en desuso, evaluar funcionalidad a futuro

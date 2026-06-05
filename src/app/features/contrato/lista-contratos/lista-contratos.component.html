@@ -29,6 +29,8 @@
         <mat-option value="finalizado" >Finalizado</mat-option>
         <mat-option value="cancelado" >Cancelado</mat-option>
         <mat-option value="renovar" >Renovar</mat-option>
+        <mat-option value="fechaInicio">FechaInicio</mat-option>
+        <mat-option value="fechaFin">FechaFin</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -36,8 +38,7 @@
   <div class="lista-contratos">
     <mat-chip-listbox aria-label="-listado-contratos">
       @for(contrato of $contratosFiltrados(); track contrato.id ){
-          <mat-chip-option class="chip-contrato" [selected]="contratoSeleccionado() === contrato"
-            (click)="evaluarClick(contrato)">
+          <mat-chip-option class="chip-contrato" [selected]="contratoSeleccionado() === contrato"  (click)="evaluarClick(contrato)">
             <div class="chip-contenido">
               <div class="chip-header">
                 <span class="chip-titulo">{{ contrato.titulo || 'Contrato #' + contrato.id }}</span>
@@ -48,7 +49,7 @@
               </div>
               <div class="chip-datos">
                 <span class="chip-renta">{{ formatearMoneda(contrato.rentaMensual) }}</span>
-                <!-- <span class="chip-fecha">{{ formatearFecha(contrato.fechaInicio) }} - {{ formatearFecha(contrato.fechaFin) }}</span> -->
+                <span class="chip-fecha">{{ formatearFecha(contrato.fechaInicio) }} - {{ formatearFecha(contrato.fechaFin) }}</span>
               </div>
             </div>
           </mat-chip-option>  

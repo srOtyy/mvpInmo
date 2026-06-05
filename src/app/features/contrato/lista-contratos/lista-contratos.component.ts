@@ -20,7 +20,6 @@ import {ContratoBbddService} from '../contrato-bbdd.service';
 export class ListaContratosComponent implements OnInit {
   evento = output<void>();
   contratoSeleccionado = signal<IContrato | null>(null);
-
   $contratosOriginales = computed(() => this._contratosService.$lista());
   $filtroBusqueda = signal('todos');
   $contratosFiltrados = computed(() => {
@@ -28,7 +27,12 @@ export class ListaContratosComponent implements OnInit {
     const filtro = this.$filtroBusqueda().toLowerCase();
 
     if (filtro === 'todos') return lista;
-
+    if (filtro === 'fechainicio') {
+      return this._contratosService.filtrarContratosPorFechaInicio();
+    }
+    if (filtro === 'fechafin') {
+      return this._contratosService.filtrarContratosPorFechaFin();
+    }
     return lista.filter(contrato =>
       contrato.titulo?.toLowerCase().includes(this.$filtroBusqueda().toLowerCase()) ||
       this.getEstadoLabel(contrato.estado).toLowerCase().includes(this.$filtroBusqueda().toLowerCase())
@@ -92,11 +96,12 @@ export class ListaContratosComponent implements OnInit {
     }).format(valor);
   }
   formatearFecha(fecha: Date): string {
-    return new Intl.DateTimeFormat('es-AR', {
+    const fechaObj = new Date(fecha);
+    return fechaObj.toLocaleDateString('es-AR', {
       day: '2-digit',
-      month: 'short',
+      month: '2-digit',
       year: 'numeric'
-    }).format(fecha);
+    });
   }
 
   //filtrar listado de contratos
@@ -113,5 +118,6 @@ export class ListaContratosComponent implements OnInit {
      
   //   });
   // }
-
+  
+  
 }

@@ -1,9 +1,5 @@
 <div class="div">
-    <!-- 
-        // el sidenav ( utilice drawer ):
-        // container es el contenedor del despliegue (mat-drawer) y del contenido principal (drawer-content) 
-        podriamos hacer debajo del despliegue ( dentro del drawer-content) el listado de contratos
-    -->
+    <!-- // aca esta el nav bar y el sidebar -->
      <mat-drawer-container class="nav-bar">
                 <mat-drawer mode="over" class="drawer" [opened]="abrirSidenav">
                         <app-sidebar (evento)="eventoSidenav()" />

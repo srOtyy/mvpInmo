@@ -221,20 +221,19 @@
           "valor": 5000
         }
       ]
+    },
+    {
+      "id": 805896,
+      "idPropietario": 476414,
+      "caracteristicas": [
+        {
+          "clave": "m2",
+          "valor": 50000
+        }
+      ]
     }
   ],
   "contratos": [
-    {
-      "id": 649056,
-      "propietarioId": 361580,
-      "inmuebleId": 860236,
-      "inquilinoId": 120459,
-      "fechaInicio": "2001-01-05",
-      "fechaFin": "2009-01-05",
-      "rentaMensual": 500000,
-      "estado": "preliminar",
-      "titulo": "Octavio - Oty"
-    },
     {
       "id": 841791,
       "propietarioId": 330005,
@@ -245,6 +244,28 @@
       "rentaMensual": 290000,
       "estado": "preliminar",
       "titulo": "Nahu - Oty"
+    },
+    {
+      "id": 999179,
+      "propietarioId": 476414,
+      "inmuebleId": 805896,
+      "inquilinoId": 834926,
+      "fechaInicio": "2009-09-09",
+      "fechaFin": "2011-09-09",
+      "rentaMensual": 5000,
+      "estado": "preliminar",
+      "titulo": "Pedro - Abi"
+    },
+    {
+      "id": 966910,
+      "propietarioId": 361580,
+      "inmuebleId": 860236,
+      "inquilinoId": 632140,
+      "fechaInicio": "2003-02-01",
+      "fechaFin": "2005-02-01",
+      "rentaMensual": 123456,
+      "estado": "preliminar",
+      "titulo": "Octa - Inq"
     }
   ],
   "definiciones": [
@@ -485,6 +506,28 @@
       "items": [],
       "montoAlquiler": 290000,
       "total": 290000
+    },
+    {
+      "id": "304986",
+      "contratoId": "999179",
+      "propietarioNombre": "Pedro",
+      "inquilinoNombre": "Abi",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-05T14:40:58.617Z",
+      "items": [],
+      "montoAlquiler": 5000,
+      "total": 5000
+    },
+    {
+      "id": "950978",
+      "contratoId": "966910",
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Inquilinoouu",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-05T14:42:07.527Z",
+      "items": [],
+      "montoAlquiler": 123456,
+      "total": 123456
     }
   ]
 }
