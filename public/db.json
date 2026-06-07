@@ -266,6 +266,17 @@
       "rentaMensual": 123456,
       "estado": "preliminar",
       "titulo": "Octa - Inq"
+    },
+    {
+      "id": 201113,
+      "propietarioId": 361580,
+      "inmuebleId": 860236,
+      "inquilinoId": 834926,
+      "fechaInicio": "2026-06-06T03:00:00.000Z",
+      "fechaFin": "2030-06-04T03:00:00.000Z",
+      "rentaMensual": 123100,
+      "estado": "preliminar",
+      "titulo": "Prueba1"
     }
   ],
   "definiciones": [
@@ -528,6 +539,17 @@
       "items": [],
       "montoAlquiler": 123456,
       "total": 123456
+    },
+    {
+      "id": "597999",
+      "contratoId": "201113",
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Abi",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-06T16:54:09.943Z",
+      "items": [],
+      "montoAlquiler": 123100,
+      "total": 123100
     }
   ]
 }

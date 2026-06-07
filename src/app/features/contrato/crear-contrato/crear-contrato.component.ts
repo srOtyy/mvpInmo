@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectionStrategy } from '@angular/core';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { IContrato } from '../contrato.interface';
@@ -13,11 +13,14 @@ import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
 import { randomId } from '../../../shared/utilitys';
 import { NotificacionesService } from '../../notificaciones/notificaciones.service';
 import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {provideNativeDateAdapter} from '@angular/material/core';
 @Component({
   selector: 'app-crear-contrato',
   standalone: true,
-  imports: [ReactiveFormsModule,MatInputModule, MatSelectModule, MatButtonModule, MatFormFieldModule],
+  imports: [ReactiveFormsModule,MatInputModule, MatSelectModule, MatButtonModule, MatFormFieldModule, MatDatepickerModule],
+  providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './crear-contrato.component.html',
   styleUrl: './crear-contrato.component.scss'
 })

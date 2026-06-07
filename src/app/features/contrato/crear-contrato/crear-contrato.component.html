@@ -45,16 +45,15 @@
         </mat-form-field>
       </div>
       <div class="campo">
-        <mat-form-field appearance="fill">
-          <mat-label>Fecha Inicio</mat-label>
-          <input matInput type="date" formControlName="fechaInicio" />
-        </mat-form-field>
-      </div>
-      <div class="campo">
-        <mat-form-field appearance="fill">
-          <mat-label>Fecha Fin</mat-label>
-          <input matInput type="date" formControlName="fechaFin" />
-        </mat-form-field>
+       <mat-form-field appearance="fill">
+          <mat-label>Tiempo de contrato</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Inicio" formControlName="fechaInicio">
+            <input matEndDate placeholder="Fin" formControlName="fechaFin">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
       </div>
       <div class="campo">
         <mat-form-field appearance="fill">
