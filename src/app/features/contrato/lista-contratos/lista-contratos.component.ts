@@ -10,33 +10,44 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { IContrato, ContractStatus } from '../contrato.interface';
 import {Router} from '@angular/router';
 import {ContratoBbddService} from '../contrato-bbdd.service';
+
+
 @Component({
   selector: 'app-lista-contratos',
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule, MatChipsModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatTooltipModule],
   templateUrl: './lista-contratos.component.html',
-  styleUrl: './lista-contratos.component.scss'
+  styleUrl: './lista-contratos.component.scss',
 })
 export class ListaContratosComponent implements OnInit {
   evento = output<void>();
   contratoSeleccionado = signal<IContrato | null>(null);
+  calendarioIcono = "calendar_today"
   $contratosOriginales = computed(() => this._contratosService.$lista());
   $filtroBusqueda = signal('todos');
+  $filtroFecha = signal(false);
   $contratosFiltrados = computed(() => {
     const lista = this.$contratosOriginales();
     const filtro = this.$filtroBusqueda().toLowerCase();
+   const fechaFiltroActivo = this.$filtroFecha();
+    //filtro por estado:
+if(fechaFiltroActivo) {
+       const listaFiltrada = [...lista].sort((a,b) => new Date(a.fechaFin).getTime() - new Date(b.fechaFin).getTime())
+      console.log(listaFiltrada)
 
-    if (filtro === 'todos') return lista;
-    if (filtro === 'fechainicio') {
-      return this._contratosService.filtrarContratosPorFechaInicio();
+      if (filtro === 'todos') return listaFiltrada;   
+      return listaFiltrada.filter(contrato =>
+        contrato.titulo?.toLowerCase().includes(this.$filtroBusqueda().toLowerCase()) ||
+        this.getEstadoLabel(contrato.estado).toLowerCase().includes(this.$filtroBusqueda().toLowerCase())
+      );
+    }else{
+      if (filtro === 'todos') return lista;
+      return lista.filter(contrato =>
+        contrato.titulo?.toLowerCase().includes(filtro) ||
+        this.getEstadoLabel(contrato.estado).toLowerCase().includes(filtro)
+      );
     }
-    if (filtro === 'fechafin') {
-      return this._contratosService.filtrarContratosPorFechaFin();
-    }
-    return lista.filter(contrato =>
-      contrato.titulo?.toLowerCase().includes(this.$filtroBusqueda().toLowerCase()) ||
-      this.getEstadoLabel(contrato.estado).toLowerCase().includes(this.$filtroBusqueda().toLowerCase())
-    );
+    
   });
   contadorFalopa: number = 0;
   constructor( private _contratosService:ContratoBbddService, private router:Router ){}
@@ -104,20 +115,9 @@ export class ListaContratosComponent implements OnInit {
     });
   }
 
-  //filtrar listado de contratos
-  // filtrarContratos() {
-  //   this.$contratos.update(contratos => {
-  //     if (this.$filtroBusqueda() === 'todos'){
-  //       return this._contratosService.$lista();
-  //     }else{
-  //       return this._contratosService.$lista().filter(contrato =>
-  //         contrato.titulo?.toLowerCase().includes(this.$filtroBusqueda().toLowerCase()) ||
-  //         this.getEstadoLabel(contrato.estado).toLowerCase().includes(this.$filtroBusqueda().toLowerCase())
-  //       );
-  //     };
-     
-  //   });
-  // }
   
-  
+  cambiarEstadoSignalFecha(){
+    this.$filtroFecha.update(estado => !estado);
+
+  }
 }

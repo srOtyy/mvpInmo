@@ -235,48 +235,48 @@
   ],
   "contratos": [
     {
-      "id": 841791,
-      "propietarioId": 330005,
-      "inmuebleId": 130740,
-      "inquilinoId": 120459,
-      "fechaInicio": "2001-01-05",
-      "fechaFin": "2090-01-05",
-      "rentaMensual": 290000,
-      "estado": "preliminar",
-      "titulo": "Nahu - Oty"
-    },
-    {
-      "id": 999179,
-      "propietarioId": 476414,
-      "inmuebleId": 805896,
-      "inquilinoId": 834926,
-      "fechaInicio": "2009-09-09",
-      "fechaFin": "2011-09-09",
-      "rentaMensual": 5000,
-      "estado": "preliminar",
-      "titulo": "Pedro - Abi"
-    },
-    {
-      "id": 966910,
-      "propietarioId": 361580,
-      "inmuebleId": 860236,
+      "id": 338660,
       "inquilinoId": 632140,
-      "fechaInicio": "2003-02-01",
-      "fechaFin": "2005-02-01",
-      "rentaMensual": 123456,
-      "estado": "preliminar",
-      "titulo": "Octa - Inq"
+      "inmuebleId": 860236,
+      "fechaFin": "2026-12-15T03:00:00.000Z",
+      "fechaInicio": "2026-03-15T03:00:00.000Z",
+      "propietarioId": 361580,
+      "estado": "cancelado",
+      "rentaMensual": 10000,
+      "titulo": "Estudiantil 1"
     },
     {
-      "id": 201113,
+      "id": 415055,
+      "inquilinoId": 834926,
+      "inmuebleId": 130740,
+      "fechaFin": "2026-11-30T03:00:00.000Z",
+      "fechaInicio": "2026-03-15T03:00:00.000Z",
+      "propietarioId": 330005,
+      "estado": "activo",
+      "rentaMensual": 15000,
+      "titulo": "Estudiantil 2"
+    },
+    {
+      "id": 554331,
+      "inquilinoId": 120459,
+      "inmuebleId": 805896,
+      "fechaFin": "2028-04-15T03:00:00.000Z",
+      "fechaInicio": "2026-04-15T03:00:00.000Z",
+      "propietarioId": 476414,
+      "estado": "preliminar",
+      "rentaMensual": 12000,
+      "titulo": "Anual 2 años"
+    },
+    {
+      "id": 293300,
       "propietarioId": 361580,
       "inmuebleId": 860236,
-      "inquilinoId": 834926,
-      "fechaInicio": "2026-06-06T03:00:00.000Z",
-      "fechaFin": "2030-06-04T03:00:00.000Z",
-      "rentaMensual": 123100,
+      "inquilinoId": 120459,
+      "fechaInicio": "2026-06-08T03:00:00.000Z",
+      "fechaFin": "2027-07-15T03:00:00.000Z",
+      "rentaMensual": 19000,
       "estado": "preliminar",
-      "titulo": "Prueba1"
+      "titulo": "Prueba fecha"
     }
   ],
   "definiciones": [
@@ -514,7 +514,16 @@
       "inquilinoNombre": "Oty",
       "periodo": "junio de 2026",
       "fechaGeneracion": "2026-06-02T16:10:05.306Z",
-      "items": [],
+      "items": [
+        {
+          "descripcion": "Agua",
+          "monto": 35000
+        },
+        {
+          "descripcion": "Luz",
+          "monto": 15000
+        }
+      ],
       "montoAlquiler": 290000,
       "total": 290000
     },
@@ -550,6 +559,50 @@
       "items": [],
       "montoAlquiler": 123100,
       "total": 123100
+    },
+    {
+      "id": "114462",
+      "contratoId": "338660",
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Inquilinoouu",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-08T21:29:30.437Z",
+      "items": [],
+      "montoAlquiler": 10000,
+      "total": 10000
+    },
+    {
+      "id": "92945",
+      "contratoId": "415055",
+      "propietarioNombre": "Nahuel",
+      "inquilinoNombre": "Abi",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-08T21:31:53.359Z",
+      "items": [],
+      "montoAlquiler": 15000,
+      "total": 15000
+    },
+    {
+      "id": "97130",
+      "contratoId": "554331",
+      "propietarioNombre": "Pedro",
+      "inquilinoNombre": "Oty",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-08T21:32:34.429Z",
+      "items": [],
+      "montoAlquiler": 12000,
+      "total": 12000
+    },
+    {
+      "id": "769011",
+      "contratoId": "293300",
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Oty",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-09T00:06:44.395Z",
+      "items": [],
+      "montoAlquiler": 19000,
+      "total": 19000
     }
   ]
 }

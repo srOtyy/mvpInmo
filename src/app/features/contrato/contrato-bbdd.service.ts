@@ -99,6 +99,10 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   filtrarContratosPorFechaInicio(): IContrato[] {
     return this.$lista().sort((a, b) => new Date(a.fechaInicio).getTime() - new Date(b.fechaInicio).getTime());
   }
+  filtrarContratosPorFecha(fecha: Date): IContrato[] {
+    const fechaObj = new Date(fecha);
+    return this.$lista().filter(contrato => new Date(contrato.fechaFin) >= fechaObj);
+  }
 
 
   //en desuso, evaluar funcionalidad a futuro

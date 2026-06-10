@@ -116,27 +116,27 @@
 }
 
 // Estados del contrato
-.estado-activo {
+.activo {
     background-color: rgba($success, 0.2);
     color: $success;
 }
 
-.estado-preliminar {
+.preliminar {
     background-color: rgba($warning, 0.2);
     color: $warning;
 }
 
-.estado-finalizado {
+.finalizado {
     background-color: rgba($neutral-400, 0.2);
     color: $neutral-300;
 }
 
-.estado-cancelado {
+.cancelado {
     background-color: rgba($error, 0.2);
     color: $error;
 }
 
-.estado-renovar {
+.renovar {
     background-color: rgba($info, 0.2);
     color: $info;
 }

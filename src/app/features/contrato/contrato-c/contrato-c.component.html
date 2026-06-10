@@ -5,7 +5,37 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-titulo">{{ contrato.titulo || 'Contrato #' + contrato.id }}</h3>
-            <span class="card-estado estado-{{ contrato.estado }}">
+            <span class="card-estado" 
+            [class]="contrato?.estado"
+            
+            > 
+                <!-- la clase del span se declara en la creacion del archivo. Por ende cuando se actualiza el signal, no cambia el estilo de este span
+                Esto sucede porque el estilo se aplica en tiempo de compilación, no en tiempo de ejecución 
+                La pregunta es: ¿Cómo hago para que el estilo se actualice cada vez que se actualice el signal? Es necesario que el color se aplique en ejecucion, no en compilacion
+                La ia respondió lo siguiente:
+                Para que el estilo se actualice cada vez que se actualice el signal, puedes usar la función `ngClass` de Angular para aplicar clases dinámicamente en función del estado del contrato. Aquí te muestro cómo hacerlo:
+                En tu componente HTML, puedes modificar el span de la siguiente manera:
+                <span [ngClass]="{
+                    'estado-activo': contrato.estado === 'activo',
+                    'estado-inactivo': contrato.estado === 'inactivo',
+                    'estado-pendiente': contrato.estado === 'pendiente'
+                }">
+                    {{ contrato.estado }}
+                </span>
+                Luego, en tu archivo CSS, puedes definir las clases para cada estado:
+                .estado-activo {
+                    color: green;
+                }
+                .estado-inactivo {
+                    color: red;
+                }
+                .estado-pendiente {
+                    color: orange;
+                }
+                De esta manera, cada vez que el estado del contrato cambie, el estilo del span se actualizará automáticamente para reflejar el nuevo estado.
+
+                
+                -->
                 {{ contrato.estado }}
             </span>
         </div>

@@ -19,10 +19,13 @@
       <input matInput type="text" id="buscar" #buscarInput disabled>
       <mat-icon matSuffix class="icono-buscar">search</mat-icon>
     </mat-form-field>
-
+    <button mat-icon-button matSuffix  (click)="cambiarEstadoSignalFecha()">
+      <mat-icon matSuffix [class]="{'icono-fecha': !$filtroFecha(), 'activo': $filtroFecha()}" >{{calendarioIcono}}</mat-icon>
+    </button>
     <mat-form-field class="form-select" appearance="fill">
       <mat-label>Estado</mat-label>
       <mat-select [(value)]="$filtroBusqueda">
+        <!-- Esto esta hardcodeado, se debe mejorar -->
         <mat-option value="todos" >Todos</mat-option>
         <mat-option value="activo" >Activo</mat-option>
         <mat-option value="preliminar" >Preliminar</mat-option>
@@ -31,6 +34,7 @@
         <mat-option value="renovar" >Renovar</mat-option>
         <mat-option value="fechaInicio">FechaInicio</mat-option>
         <mat-option value="fechaFin">FechaFin</mat-option>
+        <mat-option value="fecha">Fecha</mat-option>
       </mat-select>
     </mat-form-field>
   </div>

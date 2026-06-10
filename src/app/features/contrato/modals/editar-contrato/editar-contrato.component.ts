@@ -22,7 +22,7 @@ export class EditarContratoComponent implements OnInit {
   formularioEditarContrato: FormGroup;
   obtenerCaracteristica = obtenerCaracteristica;
   deshabiliado = true;
-
+  estadosLista: string[] = ['preliminar', 'activo', 'finalizado', 'cancelado', 'renovar'];
   constructor( private formBuilder: FormBuilder,
     private _contratosService: ContratoBbddService,
     private dialogRef: MatDialogRef<ModalComponent>,
@@ -36,7 +36,8 @@ export class EditarContratoComponent implements OnInit {
       fechaInicio: [''],
       propietarioId: [''],
       estado: [''],
-      rentaMensual: ['']
+      rentaMensual: [''],
+      titulo: ['']
     });
     this.formularioEditarContrato.get('inmuebleId')?.disable();
     this.formularioEditarContrato.get('propietarioId')?.disable();
@@ -60,15 +61,21 @@ export class EditarContratoComponent implements OnInit {
       fechaInicio: contratoData.fechaInicio,
       propietarioId: contratoData.propietarioId,
       estado: contratoData.estado,
-      rentaMensual: contratoData.rentaMensual
+      rentaMensual: contratoData.rentaMensual,
+      titulo: contratoData.titulo
     });
       
   }
   guardarCambios(){
+      this.formularioEditarContrato.get('inmuebleId')?.enable();
+      this.formularioEditarContrato.get('propietarioId')?.enable();
+      this.formularioEditarContrato.get('inquilinoId')?.enable();
     this._contratosService.actualizar(this.entidad.id, this.formularioEditarContrato.value).subscribe({
       next: () => {
         this._snackbarService.mensajeSnackBar('Contrato editado con éxito', 'Cerrar');
         this.dialogRef.close(true);
+        this._contratosService.seleccionarContrato(this.formularioEditarContrato.value); //enviar el nuevo contrato al componente que lo esta mostrando 
+        //enviar el nuevo contrato al componente que lo esta mostrando 
       },
       error: () => {
         this._snackbarService.mensajeSnackBar('Error al editar contrato', 'Cerrar');

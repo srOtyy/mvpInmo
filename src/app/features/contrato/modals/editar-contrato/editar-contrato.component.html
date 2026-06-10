@@ -21,6 +21,13 @@
                   }
         </mat-select>
     </mat-form-field> 
+    <mat-form-field>
+       <mat-select formControlName="estado" >
+              @for (estado of estadosLista; track estado) {
+                    <mat-option [value]="estado">{{estado}}</mat-option>
+                  }
+        </mat-select>
+    </mat-form-field>
     </ng-container>
 
 </form>
