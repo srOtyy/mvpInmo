@@ -5,6 +5,7 @@ import { ModalService } from '../../../core/modal/modal.service';
 import { EditarContratoComponent } from '../modals/editar-contrato/editar-contrato.component';
 import { EliminarContratoComponent } from '../modals/eliminar-contrato/eliminar-contrato.component';
 import { AgregarGastosContratoComponent } from '../modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
+import { SolicitarIndiceContratoComponent } from '../modals/solicitar-indice-contrato/solicitar-indice-contrato.component';
 import { Liquidacion } from '../../liquidacion/liquidacion-interface';
 import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
 import { A11yModule } from "@angular/cdk/a11y";
@@ -54,5 +55,12 @@ export class ContratoCComponent implements OnInit {
       console.warn("La liquidacionAux dio undefinded:", liquidacionAux)
     } 
 
+  }
+  solicitarIndice(contrato: IContrato){
+    this._modalService.abrirModal<IContrato>(
+      'Solicitar indice',
+      SolicitarIndiceContratoComponent,
+      contrato
+    );
   }
 }

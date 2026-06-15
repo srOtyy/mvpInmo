@@ -1,0 +1,88 @@
+<form class="formulario" [formGroup]="formulario" (ngSubmit)="solicitarIndice()">
+  <div class="fila">
+    <mat-form-field appearance="outline">
+      <mat-label>Monto</mat-label>
+      <input matInput type="number" formControlName="amount" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha base</mat-label>
+      <input matInput type="date" formControlName="date" />
+    </mat-form-field>
+  </div>
+
+  <div class="fila">
+    <mat-form-field appearance="outline">
+      <mat-label>Meses</mat-label>
+      <input matInput type="number" formControlName="months" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Índice</mat-label>
+      <mat-select formControlName="rate">
+        @for (tasa of tasas; track tasa) {
+          <mat-option [value]="tasa">{{ tasa.toUpperCase() }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="acciones">
+    <button mat-flat-button color="primary" type="submit" [disabled]="cargando">
+      {{ cargando ? 'Consultando...' : 'Consultar índice' }}
+    </button>
+  </div>
+</form>
+
+@if (respuesta) {
+  <section class="resultado">
+    <mat-accordion class="acordeon-respuesta" multi>
+      <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Resumen general</mat-panel-title>
+          <mat-panel-description>{{ respuesta.data.length }} resultados</mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="resumen-general">
+          <p><strong>Success:</strong> {{ respuesta.success }}</p>
+          <p><strong>Resultado principal:</strong> {{ respuesta.data[respuesta.data.length - 1]?.amount | currency:'USD':'symbol':'1.0-0' }}</p>
+        </div>
+      </mat-expansion-panel>
+
+      @for (item of respuesta.data; track item.date) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ formatearFechaDetalle(item.date) }}</mat-panel-title>
+            <mat-panel-description>
+              {{ item.amount | currency:'USD':'symbol':'1.0-0' }} · {{ item.dif }}%
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="resultado-item">
+            <div class="resumen-linea">
+              <span><strong>Valor índice:</strong> {{ item.value }}</span>
+              <span><strong>Estimado:</strong> {{ item.estimated ? 'Sí' : 'No' }}</span>
+            </div>
+
+            @if (item.details.length > 0) {
+              <mat-expansion-panel class="panel-detalles">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Ver detalles</mat-panel-title>
+                  <mat-panel-description>{{ item.details.length }} ajustes</mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div class="detalles-minimal">
+                  @for (detalle of item.details; track detalle.date) {
+                    <div class="detalle-minimal">
+                      {{ resumirDetalle(detalle) }}
+                    </div>
+                  }
+                </div>
+              </mat-expansion-panel>
+            }
+          </div>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  </section>
+}

@@ -1,0 +1,71 @@
+.formulario {
+  display: grid;
+  gap: 1rem;
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.resultado {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.acordeon-respuesta {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.resumen-general,
+.resultado-item {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.resumen-linea {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.panel-detalles {
+  margin-top: 0.75rem;
+}
+
+.detalles-minimal {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.detalle-minimal {
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.75rem;
+  background: rgba(0, 0, 0, 0.04);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 720px) {
+  .fila,
+  .resumen-linea {
+    grid-template-columns: 1fr;
+  }
+
+  .resumen-linea {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .detalle-minimal {
+    grid-template-columns: 1fr;
+  }
+}
