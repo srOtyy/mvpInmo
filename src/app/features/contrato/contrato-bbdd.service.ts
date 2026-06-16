@@ -92,7 +92,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     this.contratoSeleccionado.next(contrato);
   }
 
-  //filtrar por fecha
+  //filtrar por fecha ( al final creo q estoy utilizando una sola funcion de estas )
   filtrarContratosPorFechaFin(): IContrato[] {
     return this.$lista().sort((a, b) => new Date(a.fechaFin).getTime() - new Date(b.fechaFin).getTime());
   }
@@ -104,14 +104,10 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     return this.$lista().filter(contrato => new Date(contrato.fechaFin) >= fechaObj);
   }
 
+  //necesito segun el periodo de aumento declarar una posible variable como Date para mostrar en la vista del contrato el próximo aumento
 
-  //en desuso, evaluar funcionalidad a futuro
-  setFetecha(dia: number, mes: number, anio: number): Date {
-    const fecha = new Date();
-    fecha.setDate(dia);
-    fecha.setMonth(mes - 1);
-    fecha.setFullYear(anio);
-    return fecha;
+  declararProximoMesDeAumento(periodo: number, fechaInicio: Date | string): Date{
+    const fechaDate = new Date(fechaInicio)
+    return new Date(fechaDate.setMonth( fechaDate.getMonth() + periodo))
   }
- 
 }

@@ -45,7 +45,7 @@
 
         <div class="resumen-general">
           <p><strong>Success:</strong> {{ respuesta.success }}</p>
-          <p><strong>Resultado principal:</strong> {{ respuesta.data[respuesta.data.length - 1]?.amount | currency:'USD':'symbol':'1.0-0' }}</p>
+          <p><strong>Resultado principal:</strong> {{ respuesta.data[respuesta.data.length - 1].amount | currency:'USD':'symbol':'1.0-0' }}</p>
         </div>
       </mat-expansion-panel>
 

@@ -15,16 +15,16 @@
 
         <div class="card-body">
             <div class="info-row">
-                <span class="label">Renta Mensual:</span>
+                <span class="label">Alquiler:</span>
                 <span class="valor">{{ contrato.rentaMensual | currency:'USD':'symbol':'1.0-0' }}</span>
             </div>
             <div class="info-row">
-                <span class="label">Fecha Inicio:</span>
-                <span class="valor">{{ contrato.fechaInicio | date }}</span>
+                <span class="label">Proximo aumento (periodo: {{contrato.periodoAumento}} meses):</span>
+                <span class="valor"> {{contrato.proximoAumento | date: 'dd/MM/yy' }} </span>
             </div>
             <div class="info-row">
-                <span class="label">Fecha Fin:</span>
-                <span class="valor">{{ contrato.fechaFin | date }}</span>
+                <span class="label">Período (Inicio - Fin):</span>
+                <span class="valor">{{ contrato.fechaInicio | date: 'dd/MM/yy' }} - {{ contrato.fechaFin | date: 'dd/MM/yy' }} </span>
             </div>
             <div class="info-row">
                 <span class="label">Inquilino ID:</span>

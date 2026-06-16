@@ -235,48 +235,30 @@
   ],
   "contratos": [
     {
-      "id": 338660,
+      "id": 947388,
+      "propietarioId": 361580,
+      "inmuebleId": 860236,
       "inquilinoId": 632140,
-      "inmuebleId": 860236,
-      "fechaFin": "2026-12-15T03:00:00.000Z",
-      "fechaInicio": "2026-03-15T03:00:00.000Z",
-      "propietarioId": 361580,
-      "estado": "cancelado",
-      "rentaMensual": 10000,
-      "titulo": "Estudiantil 1"
+      "fechaInicio": "2026-06-15T03:00:00.000Z",
+      "fechaFin": "2027-06-23T03:00:00.000Z",
+      "rentaMensual": 1000,
+      "estado": "preliminar",
+      "periodoAumento": 2,
+      "proximoAumento": "2026-08-15T03:00:00.000Z",
+      "titulo": "prb1"
     },
     {
-      "id": 415055,
-      "inquilinoId": 834926,
-      "inmuebleId": 130740,
-      "fechaFin": "2026-11-30T03:00:00.000Z",
-      "fechaInicio": "2026-03-15T03:00:00.000Z",
-      "propietarioId": 330005,
-      "estado": "activo",
-      "rentaMensual": 15000,
-      "titulo": "Estudiantil 2"
-    },
-    {
-      "id": 554331,
-      "inquilinoId": 120459,
-      "inmuebleId": 805896,
-      "fechaFin": "2028-04-15T03:00:00.000Z",
-      "fechaInicio": "2026-04-15T03:00:00.000Z",
+      "id": 803205,
       "propietarioId": 476414,
-      "estado": "preliminar",
-      "rentaMensual": 12000,
-      "titulo": "Anual 2 años"
-    },
-    {
-      "id": 293300,
-      "propietarioId": 361580,
-      "inmuebleId": 860236,
+      "inmuebleId": 805896,
       "inquilinoId": 120459,
-      "fechaInicio": "2026-06-08T03:00:00.000Z",
-      "fechaFin": "2027-07-15T03:00:00.000Z",
-      "rentaMensual": 19000,
+      "fechaInicio": "2026-01-01T03:00:00.000Z",
+      "fechaFin": "2027-01-01T03:00:00.000Z",
+      "rentaMensual": 200,
       "estado": "preliminar",
-      "titulo": "Prueba fecha"
+      "periodoAumento": 5,
+      "proximoAumento": "2026-06-01T03:00:00.000Z",
+      "titulo": "Contrato 2"
     }
   ],
   "definiciones": [
@@ -414,195 +396,70 @@
   ],
   "liquidaciones": [
     {
-      "id": "431098",
-      "contratoId": "483577",
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Gerundio",
-      "periodo": "Inicio: 2000-10-10 - Fin: 2001-10-10",
-      "fechaGeneracion": "2026-05-23T01:57:15.923Z",
-      "items": [
-        {
-          "descripcion": "Agua",
-          "monto": 15
-        },
-        {
-          "descripcion": "Gas",
-          "monto": 1
-        }
-      ],
-      "total": 500
-    },
-    {
-      "id": "333766",
-      "contratoId": "269747",
-      "propietarioNombre": "Juancito",
-      "inquilinoNombre": "Pepito",
-      "periodo": "Inicio: 2000-05-05 - Fin: 2001-06-06",
-      "fechaGeneracion": "2026-05-23T02:16:44.338Z",
-      "items": [
-        {
-          "descripcion": "Arreglo calefon",
-          "monto": 100
-        },
-        {
-          "descripcion": "Agua",
-          "monto": 20
-        }
-      ],
-      "montoAlquiler": 500,
-      "total": 500
-    },
-    {
-      "id": "416076",
-      "contratoId": "188333",
-      "propietarioNombre": "Alejandro",
-      "inquilinoNombre": "Gerundio",
-      "periodo": "Inicio: 2004-04-04 - Fin: 2008-04-04",
-      "fechaGeneracion": "2026-05-23T21:10:40.108Z",
-      "items": [],
-      "montoAlquiler": 150,
-      "total": 150
-    },
-    {
-      "id": "966868",
-      "contratoId": "656968",
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Pepito",
-      "periodo": "mayo de 2026",
-      "fechaGeneracion": "2026-05-23T21:18:17.181Z",
-      "items": [],
-      "montoAlquiler": 500,
-      "total": 500
-    },
-    {
-      "id": "729310",
-      "contratoId": "901428",
-      "propietarioNombre": "Juancito",
-      "inquilinoNombre": "Pila",
-      "periodo": "mayo de 2026",
-      "fechaGeneracion": "2026-05-23T21:19:17.597Z",
-      "items": [],
-      "montoAlquiler": 350,
-      "total": 350
-    },
-    {
-      "id": "161231",
-      "contratoId": "39643",
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Otyy",
-      "periodo": "mayo de 2026",
-      "fechaGeneracion": "2026-05-23T22:48:01.588Z",
-      "items": [],
-      "montoAlquiler": 205,
-      "total": 205
-    },
-    {
-      "id": "664677",
-      "contratoId": "649056",
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Oty",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-02T16:09:08.711Z",
-      "items": [],
-      "montoAlquiler": 500000,
-      "total": 500000
-    },
-    {
-      "id": "820348",
-      "contratoId": "841791",
-      "propietarioNombre": "Nahuel",
-      "inquilinoNombre": "Oty",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-02T16:10:05.306Z",
-      "items": [
-        {
-          "descripcion": "Agua",
-          "monto": 35000
-        },
-        {
-          "descripcion": "Luz",
-          "monto": 15000
-        }
-      ],
-      "montoAlquiler": 290000,
-      "total": 290000
-    },
-    {
-      "id": "304986",
-      "contratoId": "999179",
-      "propietarioNombre": "Pedro",
-      "inquilinoNombre": "Abi",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-05T14:40:58.617Z",
-      "items": [],
-      "montoAlquiler": 5000,
-      "total": 5000
-    },
-    {
-      "id": "950978",
-      "contratoId": "966910",
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Inquilinoouu",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-05T14:42:07.527Z",
-      "items": [],
-      "montoAlquiler": 123456,
-      "total": 123456
-    },
-    {
-      "id": "597999",
-      "contratoId": "201113",
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Abi",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-06T16:54:09.943Z",
-      "items": [],
-      "montoAlquiler": 123100,
-      "total": 123100
-    },
-    {
-      "id": "114462",
-      "contratoId": "338660",
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Inquilinoouu",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-08T21:29:30.437Z",
-      "items": [],
-      "montoAlquiler": 10000,
-      "total": 10000
-    },
-    {
-      "id": "92945",
-      "contratoId": "415055",
-      "propietarioNombre": "Nahuel",
-      "inquilinoNombre": "Abi",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-08T21:31:53.359Z",
-      "items": [],
-      "montoAlquiler": 15000,
-      "total": 15000
-    },
-    {
-      "id": "97130",
-      "contratoId": "554331",
+      "id": "292406",
+      "contratoId": "182928",
       "propietarioNombre": "Pedro",
       "inquilinoNombre": "Oty",
       "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-08T21:32:34.429Z",
+      "fechaGeneracion": "2026-06-15T21:30:45.537Z",
       "items": [],
-      "montoAlquiler": 12000,
-      "total": 12000
+      "montoAlquiler": 100,
+      "total": 100
     },
     {
-      "id": "769011",
-      "contratoId": "293300",
+      "id": "23755",
+      "contratoId": "1606",
       "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Inquilinoouu",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-15T21:59:58.038Z",
+      "items": [],
+      "montoAlquiler": 100,
+      "total": 100
+    },
+    {
+      "id": "374227",
+      "contratoId": "618498",
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Inquilinoouu",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-15T22:07:11.125Z",
+      "items": [],
+      "montoAlquiler": 1000,
+      "total": 1000
+    },
+    {
+      "id": "31974",
+      "contratoId": "772307",
+      "propietarioNombre": "Nahuel",
+      "inquilinoNombre": "Abi",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-15T22:08:59.333Z",
+      "items": [],
+      "montoAlquiler": 105,
+      "total": 105
+    },
+    {
+      "id": "556205",
+      "contratoId": "947388",
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Inquilinoouu",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-15T22:14:24.449Z",
+      "items": [],
+      "montoAlquiler": 1000,
+      "total": 1000
+    },
+    {
+      "id": "320912",
+      "contratoId": "803205",
+      "propietarioNombre": "Pedro",
       "inquilinoNombre": "Oty",
       "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-09T00:06:44.395Z",
+      "fechaGeneracion": "2026-06-16T01:36:57.505Z",
       "items": [],
-      "montoAlquiler": 19000,
-      "total": 19000
+      "montoAlquiler": 200,
+      "total": 200
     }
   ]
 }

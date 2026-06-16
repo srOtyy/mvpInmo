@@ -41,7 +41,9 @@ export class CrearContratoComponent implements OnInit {
       fechaFin: new FormControl('', Validators.required),
       rentaMensual: new FormControl('', [Validators.required, Validators.min(0)]),
       estado: new FormControl('preliminar', Validators.required),
-      titulo: new FormControl('')
+      periodoAumento: new FormControl('',Validators.required),
+      proximoAumento: new FormControl(''),
+      titulo: new FormControl(''),
       });
     }
 
@@ -69,30 +71,16 @@ export class CrearContratoComponent implements OnInit {
      }
      return this.inmueblesLista.filter(inmueble => inmueble.idPropietario === propietarioId);
    }
-
-  
-  nombrePropietario(propietario: IPropietario): string {
-    return obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible').toString();
-  }
-  nombreInquilino(inquilino: IInquilino): string {
-    return obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
-  }
-  nombrePropietarioXId(id: number): string {
-    const propietario = this.propietariosLista.find(p => p.id === id);
-    return propietario ? this.nombrePropietario(propietario) : 'Nombre no disponible';
-  }
-    nombreInquilinoXId(id: number): string {
-    const inquilino = this.inquilinosLista.find(i => i.id === id);
-    return inquilino ? this.nombreInquilino(inquilino) : 'Nombre no disponible';
-  }
-  enviarContrato(contrato: IContrato){
+   enviarContrato(){
+    const contrato: IContrato = this.formulario.value
     if(this.formulario.get('titulo')?.value === ''){
       contrato.titulo = this.contratosService.generarTituloContrato(contrato.propietarioId.toString(), contrato.inquilinoId.toString());
     }
+    contrato.proximoAumento = this.contratosService.declararProximoMesDeAumento(contrato.periodoAumento, contrato.fechaInicio);
+    console.log(this.formulario.value)
     this.contratosService.crear(contrato).subscribe({
       next: () => {
         this._snack.mensajeSnackBar('Contrato creado exitosamente', 'Cerrar');
-        console.log("generando liquidacion...")
         /*
         En este lugar se tiene que crear la liquidacion del contrato. ¿Que datos necesito para crear la liquidacion? El contrato, el nombre del propietario, el nombre del inquilino y los items de la liquidacion. 
         */
@@ -100,7 +88,6 @@ export class CrearContratoComponent implements OnInit {
         //suscripcion innecesaria ? o tengo que volverlo una promesa ? 
         this._liquidacion.crear(liquidacion).subscribe({
           next: () => {
-            console.log("Liquidacion creada exitosamente");
           },
           error: () => {
             console.error("Error al crear la liquidacion");
@@ -113,6 +100,24 @@ export class CrearContratoComponent implements OnInit {
         this._snack.mensajeSnackBar('Error al crear contrato', 'Cerrar');
       }
     })
+  }
+  
+
+  // Las funciones de abajo creo que se podrían mejorar porque apuntan a lo mismo
+  
+  nombrePropietario(propietario: IPropietario): string {
+    return obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible').toString();
+  }
+  nombreInquilino(inquilino: IInquilino): string {
+    return obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
+  }
+  nombrePropietarioXId(id: number): string {
+    const propietario = this.propietariosLista.find(p => p.id === id);
+    return propietario ? this.nombrePropietario(propietario) : 'Nombre no disponible';
+  }
+  nombreInquilinoXId(id: number): string {
+    const inquilino = this.inquilinosLista.find(i => i.id === id);
+    return inquilino ? this.nombreInquilino(inquilino) : 'Nombre no disponible';
   }
   
 }

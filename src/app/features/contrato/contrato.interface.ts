@@ -14,5 +14,8 @@ export interface IContrato {
     fechaFin: Date;
     estado: ContractStatus;
     rentaMensual: number;
+    periodoAumento: number;
+    registroActividad?: string[];
     titulo?: string;
+    proximoAumento?: Date;
 }

@@ -29,8 +29,9 @@ export class ContratoCComponent implements OnInit {
   ngOnInit(){
     this._contratosService.cargarLista();
     this._liquidacion.cargarLista()
+    
   }
-  
+
 
   editarContrato(contrato: IContrato){
     this._modalService.abrirModal<IContrato>('Editar Contrato', EditarContratoComponent, contrato);
@@ -63,4 +64,5 @@ export class ContratoCComponent implements OnInit {
       contrato
     );
   }
+
 }

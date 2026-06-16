@@ -7,11 +7,9 @@ import {toObservable} from '@angular/core/rxjs-interop'
   providedIn: 'root'
 })
 export class NotificacionesService extends BaseCrudService<INotificacion> {
-  ahora = new Date();
-  title = this.ahora.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'2-digit'});
+
   constructor( http: HttpClient) {
     super(http, 'http://localhost:3000/notificaciones')
-    console.log('NotificacionesService inicializado: ', this.title);
   }
 
   cargarLista() {

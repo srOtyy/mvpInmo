@@ -52,7 +52,7 @@ export class SolicitarIndiceContratoComponent implements OnInit {
   ngOnInit(): void {
     // Aprovechamos datos reales del contrato para que el usuario no tenga que escribir todo desde cero.
     const fechaBase = this.formatearFechaParaInput(this.entidad.fechaInicio);
-
+    
     this.formulario.patchValue({
       amount: this.entidad.rentaMensual,
       date: fechaBase,

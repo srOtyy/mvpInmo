@@ -1,8 +1,9 @@
 
 <section class="section">
   <h4>Crear Contrato</h4>
-  <form [formGroup]="formulario" (ngSubmit)="enviarContrato(formulario.value)" class="formulario">
+  <form [formGroup]="formulario" (ngSubmit)="enviarContrato()" class="formulario">
     <div class="grid">
+      <!-- Pripietario / inquilino / Inmueble -->
       <div class="campo"> 
         <mat-form-field>
             <mat-label>Propietario</mat-label>
@@ -38,15 +39,22 @@
           </mat-select>
         </mat-form-field>
       </div>
+
       <div class="campo">
         <mat-form-field appearance="fill">
-          <mat-label>Renta Mensual</mat-label>
+          <mat-label>Renta Base</mat-label>
           <input matInput type="number" formControlName="rentaMensual" />
         </mat-form-field>
       </div>
       <div class="campo">
+        <mat-form-field appearance="fill">
+          <mat-label>Período de aumento</mat-label>
+          <input matInput type="number" formControlName="periodoAumento" />
+        </mat-form-field>
+      </div>
+      <div class="campo">
        <mat-form-field appearance="fill">
-          <mat-label>Tiempo de contrato</mat-label>
+          <mat-label>Período de contrato</mat-label>
           <mat-date-range-input [rangePicker]="picker">
             <input matStartDate placeholder="Inicio" formControlName="fechaInicio">
             <input matEndDate placeholder="Fin" formControlName="fechaFin">
