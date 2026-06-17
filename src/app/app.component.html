@@ -1,8 +1,12 @@
 <div class="div">
     <!-- // aca esta el nav bar y el sidebar -->
     <mat-drawer-container class="nav-bar">
-                <mat-drawer mode="over" class="drawer" [opened]="abrirSidenav">
+                <!-- La idea acá es crear un segundo mat-drawer que aparezca por el lado derecho y abra cartas de informacion -->
+                <mat-drawer mode="over" class="drawer drawer-izq" [opened]="abrirSidenav">
                         <app-sidebar (evento)="eventoSidenav()" />
+                </mat-drawer>
+                <mat-drawer position="end" mode="over" class="drawer drawer-der" [opened]="this._contratos.$sideBarInfo()">   
+                    <app-vista-info-entidad/>
                 </mat-drawer>
                 <mat-drawer-content class="drawer-content">
                     <app-lista-contratos (evento)="eventoSidenav()" />

@@ -32,9 +32,7 @@
             font-size: 16px;
         }
     }
-}
-
-.card {
+    .card {
     background-color: $neutral-800;
     border-radius: 15px;
     padding: 25px;
@@ -43,9 +41,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-.card-header {
+    
+    .card-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -66,54 +63,63 @@
         font-weight: 500;
         text-transform: capitalize;
     }
+    }
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+
+            .label {
+                color: $neutral-300;
+                font-size: 14px;
+                text-align: center;
+                align-self: center;
+            }
+
+            .valor {
+                color: $primary-100;
+                font-weight: 500;
+            }
+        }
+    }
+    .card-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding-top: 15px;
+        border-top: 1px solid $neutral-400;
+
+        button {
+            width: 40px;
+            height: 40px;
+        }
+
+        .btn-editar mat-icon {
+            color: $secondary-300;
+        }
+
+        .btn-gastos mat-icon {
+            color: $success;
+        }
+
+        .btn-eliminar mat-icon {
+            color: $error;
+        }
+    }
 }
 
-.card-body {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
 }
 
-.info-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
 
-    .label {
-        color: $neutral-300;
-        font-size: 14px;
-    }
 
-    .valor {
-        color: $primary-100;
-        font-weight: 500;
-    }
-}
 
-.card-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    padding-top: 15px;
-    border-top: 1px solid $neutral-400;
 
-    button {
-        width: 40px;
-        height: 40px;
-    }
 
-    .btn-editar mat-icon {
-        color: $secondary-300;
-    }
-
-    .btn-gastos mat-icon {
-        color: $success;
-    }
-
-    .btn-eliminar mat-icon {
-        color: $error;
-    }
-}
 
 // Estados del contrato
 .activo {

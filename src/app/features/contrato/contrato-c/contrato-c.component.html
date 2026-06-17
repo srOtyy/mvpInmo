@@ -28,11 +28,15 @@
             </div>
             <div class="info-row">
                 <span class="label">Inquilino ID:</span>
-                <span class="valor">{{ contrato.inquilinoId }}</span>
+                <span class="valor">
+                    <button mat-button (click)="cambiarValorSidebarInfo(contrato.inquilinoId,'inquilino')">Ver info</button>
+                </span>
             </div>
             <div class="info-row">
-                <span class="label">Inmueble ID:</span>
-                <span class="valor">{{ contrato.inmuebleId }}</span>
+                <span class="label">Propietario ID:</span>
+                <span class="valor">
+                    <button mat-button (click)="cambiarValorSidebarInfo(contrato.propietarioId,'propietario')">Ver info</button>
+                </span>
             </div>
         </div>
 

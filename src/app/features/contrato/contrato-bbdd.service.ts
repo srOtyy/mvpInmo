@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal, Signal } from '@angular/core';
 import { IContrato } from './contrato.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
@@ -14,19 +14,31 @@ import { obtenerCaracteristica } from '../caracteristicas/entity-helpers';
 @Injectable({
   providedIn: 'root'
 })
-export class ContratoBbddService extends BaseCrudService<IContrato> {
+export class ContratoBbddService extends BaseCrudService<IContrato>{
   $listaPropietarios: IPropietario[] = [];
   $listaInquilinos: IInquilino[] = [];
   $listaInmuebles: IInmueble[] = [];
   private contratoSeleccionado: BehaviorSubject<IContrato | null> = new BehaviorSubject<IContrato | null>( null );
   public contratoSeleccionado$: Observable<IContrato | null> = this.contratoSeleccionado.asObservable();
-
+  //para el sidebar Info
+  $sideBarInfo = signal<boolean>(false)
+  $idSideBarInfo = signal<number>(0)
+  $tipoDatoSideBarInfo = signal<string>('')
+  $inquilinoSideBarInfo = computed(()=>{
+    const id = this.$idSideBarInfo();
+    return this.$listaInquilinos.find(i => i.id === id)
+  })
+  $propietarioSideBarInfo = computed(()=>{
+    const id = this.$idSideBarInfo();
+    return this.$listaPropietarios.find( p => p.id === id)
+  })
   constructor( http: HttpClient, 
     private _rxjsInmuebles: InmueblesRxjsService, 
     private _rxjsInquilinos: InquilinoRxjsService, 
     private _rxjsPropietarios: PropietarioRxjsService
     ){
     super(http, 'http://localhost:3000/contratos')
+    this.obtenerListas()
     }
  
 
@@ -110,4 +122,10 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     const fechaDate = new Date(fechaInicio)
     return new Date(fechaDate.setMonth( fechaDate.getMonth() + periodo))
   }
+
+  // metodo para $sidebarInfo
+  camiarValorSideBar(){
+    this.$sideBarInfo.set(!this.$sideBarInfo())
+  }
+ 
 }

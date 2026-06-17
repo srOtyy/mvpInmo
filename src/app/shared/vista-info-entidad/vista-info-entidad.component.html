@@ -1,0 +1,14 @@
+<h3 class="titulo">{{this._contratos.$idSideBarInfo()}}</h3>
+<mat-divider></mat-divider>
+<mat-list class="lista">
+
+  @switch (this._contratos.$tipoDatoSideBarInfo()) {
+    @case ('propietario') {
+        <app-vista-info-propietario [propietario]="this._contratos.$propietarioSideBarInfo()" ></app-vista-info-propietario>
+    }
+    @case ('inquilino') {
+        <app-vista-info-inquilino [inquilino]="this._contratos.$inquilinoSideBarInfo()"></app-vista-info-inquilino>
+    }
+  }
+  
+</mat-list>
