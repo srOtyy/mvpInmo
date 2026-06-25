@@ -1,0 +1,11 @@
+@import "../../../../styles.scss";
+
+.info-entidad{
+    .caracteristica{
+        color: $neutral-300;
+
+        .strong{
+            color: $primary-900;
+        }
+    }
+}

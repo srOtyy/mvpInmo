@@ -1,14 +1,20 @@
 import { Component, input } from '@angular/core';
 import { IPropietario } from '../propietario.interface';
+import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-vista-info-propietario',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, TitleCasePipe],
   templateUrl: './vista-info-propietario.component.html',
   styleUrl: './vista-info-propietario.component.scss'
 })
 export class VistaInfoPropietarioComponent {
   propietario = input<IPropietario | undefined>(undefined)
   
+  obtenerValor(clave: string): string | number | boolean {
+    const prop = this.propietario();
+    return prop ? obtenerCaracteristica(prop, clave, 'No disponible') : 'No disponible';
+  }
 }

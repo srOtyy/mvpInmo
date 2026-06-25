@@ -22,16 +22,20 @@ export class ContratoBbddService extends BaseCrudService<IContrato>{
   public contratoSeleccionado$: Observable<IContrato | null> = this.contratoSeleccionado.asObservable();
   //para el sidebar Info
   $sideBarInfo = signal<boolean>(false)
-  $idSideBarInfo = signal<number>(0)
-  $tipoDatoSideBarInfo = signal<string>('')
   $inquilinoSideBarInfo = computed(()=>{
-    const id = this.$idSideBarInfo();
-    return this.$listaInquilinos.find(i => i.id === id)
+    const contrato = this.$lista().find(c => c.id === this.$contratoIdSideBarInfo())
+    return this.$listaInquilinos.find(i => i.id === contrato?.inquilinoId)
   })
   $propietarioSideBarInfo = computed(()=>{
-    const id = this.$idSideBarInfo();
-    return this.$listaPropietarios.find( p => p.id === id)
+    const contrato = this.$lista().find( c=> c.id === this.$contratoIdSideBarInfo())
+    return this.$listaPropietarios.find( p => p.id === contrato?.propietarioId)
   })
+  $contratoTituloSideBarInfo = computed( ()=> {
+    const contrato = this.$lista().find(c => c.id === this.$contratoIdSideBarInfo())
+    return contrato?.titulo
+  }) 
+  $contratoIdSideBarInfo = signal<number>(0)
+  
   constructor( http: HttpClient, 
     private _rxjsInmuebles: InmueblesRxjsService, 
     private _rxjsInquilinos: InquilinoRxjsService, 

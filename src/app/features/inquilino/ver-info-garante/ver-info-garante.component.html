@@ -1,0 +1,19 @@
+@if(garantes !== undefined){
+  <div class="info-entidad">
+    @for(garante of garantes ; track garante ){
+      <p class="propiedad">
+        <strong class="strong">Nombre</strong>: {{ garante.nombre| titlecase}}
+      </p>
+      <p class="propiedad">
+        <strong class="strong">email</strong>: {{ garante.email| titlecase}}
+      </p>
+      <p class="propiedad">
+        <strong class="strong">Telefono</strong>: {{ garante.telefono}}
+      </p>
+      <mat-divider></mat-divider>
+
+    }
+  </div>
+} @else {
+  <p>No se pudo acceder a la informacion del inquilino</p>
+}

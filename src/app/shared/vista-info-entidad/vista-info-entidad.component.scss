@@ -1,29 +1,14 @@
+@use '@angular/material' as mat;
 @import '../../../styles.scss';
 
-.titulo{
-    color: $primary-500;
-    text-align: center;
-    padding: 20px 10px;
-}
-.lista{
-    padding: 30px 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 8jpx;
-    .lista-item{
-        display: flex;
-        flex-direction: row;
-        justify-content: start;
-        gap: 20px;
-        padding: 0;
-        margin: 0;
-        .item-clave{
-            font-weight: 600;
-        }
-        .item-valor{
-            color: $neutral-400
-        }
-
+.head{
+    padding-top: 20px;
+    .titulo{
+        color: $primary-500;
+        text-align: center;
+        padding: 20px 10px;
+    }
+    .icono{
+        color: $accent-2;
     }
 }

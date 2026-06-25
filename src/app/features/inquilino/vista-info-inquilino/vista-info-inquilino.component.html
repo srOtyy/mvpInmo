@@ -1,6 +1,12 @@
-@if(inquilino()){
-    <p>{{ this.inquilino()?.id}}</p>
+@if(inquilino() !== undefined){
+  <div class="info-entidad">
+    @for(caracteristica of inquilino()?.caracteristicas ; track caracteristica.clave){
+      <p class="caracteristica">
+        <strong class="strong">{{caracteristica.clave | titlecase}}</strong>: {{caracteristica.valor}}
+      </p>
+    }
 
-}@else {
-    <p>¿?</p>
+  </div>
+} @else {
+  <p>No se pudo acceder a la informacion del inquilino</p>
 }

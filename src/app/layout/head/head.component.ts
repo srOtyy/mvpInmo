@@ -2,15 +2,17 @@ import { Component } from '@angular/core';
 import { INotificacion } from '../../features/notificaciones/notificacion.interface';
 import { NotificacionesService } from '../../features/notificaciones/notificaciones.service';
 import { Observable } from 'rxjs';
+import { TitleCasePipe } from '@angular/common';
 import { AsyncPipe, DatePipe } from '@angular/common';
 @Component({
   selector: 'app-head',
   standalone: true,
-  imports: [AsyncPipe, DatePipe],
+  imports: [AsyncPipe, DatePipe,TitleCasePipe],
   templateUrl: './head.component.html',
   styleUrl: './head.component.scss'
 })
 export class HeadComponent {
+  fechaYHora: Date = new Date()
   listaNotificaciones$!: Observable<INotificacion[]>;
 
   constructor(private _notificacionesService: NotificacionesService) {

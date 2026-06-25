@@ -12,7 +12,8 @@
     }
   </div>
   <div class="head__fecha">
-    <span class="head__fecha--dia">Lunes</span>
-    <span class="head__fecha--mes">12 de Junio</span>
+    <span class="head__fecha--diaDeLaSemana">{{fechaYHora | date:'EEEE' | titlecase}}</span>
+    <span class="head__fecha--mesAnio"> {{fechaYHora | date:'d \'de\' MMMM' }} </span>
+
   </div>
 </div>

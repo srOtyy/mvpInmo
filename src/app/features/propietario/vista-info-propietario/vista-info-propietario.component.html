@@ -1,5 +1,12 @@
-@if(propietario()){
-    <p>{{propietario()?.id}}</p>
-}@else{
-    <p>¿?</p>
+@if(propietario() !== undefined){
+  <div class="info-entidad">
+    @for(caracteristica of propietario()?.caracteristicas ; track caracteristica.clave){
+      <p class="caracteristica">
+        <strong class="strong">{{caracteristica.clave | titlecase }}</strong>: {{caracteristica.valor}}
+      </p>
+    }
+
+  </div>
+} @else {
+  <p>No se pudo acceder a la informacion del propietario</p>
 }

@@ -259,6 +259,19 @@
       "periodoAumento": 5,
       "proximoAumento": "2026-06-01T03:00:00.000Z",
       "titulo": "Contrato 2"
+    },
+    {
+      "id": 687645,
+      "propietarioId": 330005,
+      "inmuebleId": 130740,
+      "inquilinoId": 120459,
+      "fechaInicio": "2025-01-01T03:00:00.000Z",
+      "fechaFin": "2027-01-01T03:00:00.000Z",
+      "rentaMensual": 100,
+      "estado": "preliminar",
+      "periodoAumento": 3,
+      "proximoAumento": "2025-04-01T03:00:00.000Z",
+      "titulo": "Nahuel - Oty"
     }
   ],
   "definiciones": [
@@ -460,6 +473,17 @@
       "items": [],
       "montoAlquiler": 200,
       "total": 200
+    },
+    {
+      "id": "446345",
+      "contratoId": "687645",
+      "propietarioNombre": "Nahuel",
+      "inquilinoNombre": "Oty",
+      "periodo": "junio de 2026",
+      "fechaGeneracion": "2026-06-17T18:20:13.160Z",
+      "items": [],
+      "montoAlquiler": 100,
+      "total": 100
     }
   ]
 }

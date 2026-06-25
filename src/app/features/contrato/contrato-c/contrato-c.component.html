@@ -27,17 +27,12 @@
                 <span class="valor">{{ contrato.fechaInicio | date: 'dd/MM/yy' }} - {{ contrato.fechaFin | date: 'dd/MM/yy' }} </span>
             </div>
             <div class="info-row">
-                <span class="label">Inquilino ID:</span>
+                <span class="label">Información detallada:</span>
                 <span class="valor">
-                    <button mat-button (click)="cambiarValorSidebarInfo(contrato.inquilinoId,'inquilino')">Ver info</button>
+                    <button mat-button (click)="cambiarValorSidebarInfo(contrato.id)">Ver info</button>
                 </span>
             </div>
-            <div class="info-row">
-                <span class="label">Propietario ID:</span>
-                <span class="valor">
-                    <button mat-button (click)="cambiarValorSidebarInfo(contrato.propietarioId,'propietario')">Ver info</button>
-                </span>
-            </div>
+           
         </div>
 
         <div class="card-actions">

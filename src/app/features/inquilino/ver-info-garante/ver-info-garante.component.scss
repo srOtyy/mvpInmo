@@ -1,9 +1,11 @@
 @import "../../../../styles.scss";
 
 .info-entidad{
-    .caracteristica{
+    padding-top: 15px;
+    max-height: 50%;
+    .propiedad{
         color: $neutral-300;
-
+        padding-top: 30px;
         .strong{
             color: $primary-900;
         }

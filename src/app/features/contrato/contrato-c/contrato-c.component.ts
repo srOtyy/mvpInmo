@@ -66,16 +66,9 @@ export class ContratoCComponent implements OnInit {
   }
 
   //cambiar valor $sideBarInfo ( desde el servicio de contratos)
-  cambiarValorSidebarInfo(id: number, tipoDato: string){
-    if(id === this._contratosService.$idSideBarInfo()){
-      //click dos veces en el mismo tipo de dato
-      this._contratosService.camiarValorSideBar()
-    }else{
-      //el id es nuevo / dato nuevo
-      this._contratosService.$idSideBarInfo.set(id)
-      this._contratosService.$sideBarInfo.set(true)
-      this._contratosService.$tipoDatoSideBarInfo.set(tipoDato)
-    }
+  cambiarValorSidebarInfo(id: number){
+    this._contratosService.$sideBarInfo.set(true)
+    this._contratosService.$contratoIdSideBarInfo.set(id)
     
   }
 

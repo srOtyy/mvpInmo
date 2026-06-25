@@ -3,7 +3,10 @@
     .boton-salir{
         display: flex;
         justify-content: flex-end;
-        padding: 20px;
+        padding: 10px 50px;
+        .icono{
+            color: $accent-2;
+        }
     }
     .botones{
         display: flex;
