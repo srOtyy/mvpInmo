@@ -1,120 +1,76 @@
 {
   "inquilinos": [
     {
+      "id": 631601,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Inquilinoouu"
+          "valor": "Nahuel"
         },
         {
           "clave": "dni",
-          "valor": 43044
+          "valor": 44033273
         },
         {
           "clave": "email",
-          "valor": "falopa@falopa"
+          "valor": "oty2013@outlook.com"
         },
         {
           "clave": "telefono",
-          "valor": 123456
+          "valor": 22257646897
         }
       ],
       "garantes": [
         {
-          "id": 512894,
-          "idInquilino": 632140,
-          "nombre": "Garante 1",
-          "telefono": "111",
-          "email": "1@1.com"
-        },
-        {
-          "id": 383472,
-          "idInquilino": 632140,
-          "nombre": "Garante 2",
-          "telefono": "222",
-          "email": "2@2.com"
-        }
-      ],
-      "id": 632140
-    },
-    {
-      "id": 834926,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "Abi"
-        },
-        {
-          "clave": "dni",
-          "valor": 47666666
-        },
-        {
-          "clave": "email",
-          "valor": "A@bi.com"
-        },
-        {
-          "clave": "telefono",
-          "valor": 354169874
-        }
-      ],
-      "garantes": [
-        {
-          "id": 260315,
-          "idInquilino": 834926,
-          "nombre": "Juancito",
-          "telefono": "1122334455",
-          "email": "J@jj.com"
-        },
-        {
-          "id": 684379,
-          "idInquilino": 834926,
-          "nombre": "Zulm",
-          "telefono": "123456798",
-          "email": "123@123"
+          "id": 189827,
+          "idInquilino": 631601,
+          "nombre": "Mabel",
+          "telefono": "2257123457",
+          "email": "mk@hotmail.com"
         }
       ]
     },
     {
-      "id": 120459,
+      "id": 840222,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Oty"
+          "valor": "Pepe"
         },
         {
           "clave": "dni",
-          "valor": 1230000
+          "valor": 35847415
         },
         {
           "clave": "email",
-          "valor": ":p@o.com"
+          "valor": "p3p3@hotmail.com"
         },
         {
           "clave": "telefono",
-          "valor": 15948978
+          "valor": 111548797
         }
       ],
       "garantes": [
         {
-          "id": 111556,
-          "idInquilino": 120459,
-          "nombre": "G1",
-          "telefono": "1548",
-          "email": "g1@g1.com"
+          "id": 253835,
+          "idInquilino": 840222,
+          "nombre": "Monica",
+          "telefono": "22356184791",
+          "email": "moni123@live.com"
         },
         {
-          "id": 464349,
-          "idInquilino": 120459,
-          "nombre": "G2 Caps",
-          "telefono": "00001",
-          "email": "123@456.ar"
+          "id": 154350,
+          "idInquilino": 840222,
+          "nombre": "Juana",
+          "telefono": "22361616984",
+          "email": "DafJ@outlook.com"
         }
       ]
     }
   ],
   "propietarios": [
     {
-      "id": 361580,
+      "id": 994910,
       "caracteristicas": [
         {
           "clave": "nombre",
@@ -126,152 +82,96 @@
         },
         {
           "clave": "cuil",
-          "valor": null
+          "valor": 20430442741
         },
         {
           "clave": "telefono",
-          "valor": 2257
+          "valor": 2257613984
         },
         {
           "clave": "telefono aux",
-          "valor": 223
+          "valor": 0
         },
         {
           "clave": "domicilio",
-          "valor": "30083008"
+          "valor": "BsAs 3008"
         }
       ]
     },
     {
-      "id": 330005,
+      "id": 468718,
       "caracteristicas": [
         {
           "clave": "nombre",
-          "valor": "Nahuel"
+          "valor": "Abril"
         },
         {
           "clave": "dni",
-          "valor": 4304444
+          "valor": 46477477
         },
         {
           "clave": "cuil",
-          "valor": 123456789
+          "valor": 20464774772
         },
         {
           "clave": "telefono",
-          "valor": 22576111
+          "valor": 3851235689
         },
         {
           "clave": "telefono aux",
-          "valor": 222222
+          "valor": 0
         },
         {
           "clave": "domicilio",
-          "valor": "Belgrano343"
-        }
-      ]
-    },
-    {
-      "id": 476414,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "Pedro"
-        },
-        {
-          "clave": "dni",
-          "valor": 453446
-        },
-        {
-          "clave": "cuil",
-          "valor": 4534467
-        },
-        {
-          "clave": "telefono",
-          "valor": 22356889
-        },
-        {
-          "clave": "telefono aux",
-          "valor": 223554887
-        },
-        {
-          "clave": "domicilio",
-          "valor": "BsAs. 3008"
+          "valor": "BsAs 3008"
         }
       ]
     }
   ],
   "inmuebles": [
     {
-      "id": 860236,
-      "idPropietario": 361580,
+      "id": 129072,
+      "idPropietario": 994910,
       "caracteristicas": [
         {
           "clave": "m2",
-          "valor": 150
+          "valor": 43000
         }
       ]
     },
     {
-      "id": 130740,
-      "idPropietario": 330005,
+      "id": 249052,
+      "idPropietario": 468718,
       "caracteristicas": [
         {
           "clave": "m2",
-          "valor": 5000
-        }
-      ]
-    },
-    {
-      "id": 805896,
-      "idPropietario": 476414,
-      "caracteristicas": [
-        {
-          "clave": "m2",
-          "valor": 50000
+          "valor": 47000
         }
       ]
     }
   ],
   "contratos": [
     {
-      "id": 947388,
-      "propietarioId": 361580,
-      "inmuebleId": 860236,
-      "inquilinoId": 632140,
-      "fechaInicio": "2026-06-15T03:00:00.000Z",
-      "fechaFin": "2027-06-23T03:00:00.000Z",
-      "rentaMensual": 1000,
-      "estado": "preliminar",
-      "periodoAumento": 2,
-      "proximoAumento": "2026-08-15T03:00:00.000Z",
-      "titulo": "prb1"
+      "id": 983800,
+      "inquilinoId": 631601,
+      "inmuebleId": 129072,
+      "fechaFin": "2026-12-15T03:00:00.000Z",
+      "fechaInicio": "2026-03-15T03:00:00.000Z",
+      "propietarioId": 994910,
+      "estado": "finalizado",
+      "rentaMensual": 300000,
+      "titulo": "Octavio - Nahuel (9m)"
     },
     {
-      "id": 803205,
-      "propietarioId": 476414,
-      "inmuebleId": 805896,
-      "inquilinoId": 120459,
-      "fechaInicio": "2026-01-01T03:00:00.000Z",
-      "fechaFin": "2027-01-01T03:00:00.000Z",
-      "rentaMensual": 200,
-      "estado": "preliminar",
-      "periodoAumento": 5,
-      "proximoAumento": "2026-06-01T03:00:00.000Z",
-      "titulo": "Contrato 2"
-    },
-    {
-      "id": 687645,
-      "propietarioId": 330005,
-      "inmuebleId": 130740,
-      "inquilinoId": 120459,
-      "fechaInicio": "2025-01-01T03:00:00.000Z",
-      "fechaFin": "2027-01-01T03:00:00.000Z",
-      "rentaMensual": 100,
-      "estado": "preliminar",
-      "periodoAumento": 3,
-      "proximoAumento": "2025-04-01T03:00:00.000Z",
-      "titulo": "Nahuel - Oty"
+      "id": 269967,
+      "inquilinoId": 840222,
+      "inmuebleId": 249052,
+      "fechaFin": "2027-12-15T03:00:00.000Z",
+      "fechaInicio": "2025-11-15T03:00:00.000Z",
+      "propietarioId": 468718,
+      "estado": "activo",
+      "rentaMensual": 350000,
+      "titulo": "Abril - Pepe (24m)"
     }
   ],
   "definiciones": [
@@ -389,101 +289,30 @@
       "fecha": "2026-05-20T15:00:04.906Z",
       "tipo": "recordatorio",
       "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 745271,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-20T15:00:05.937Z",
-      "tipo": "vencimiento",
-      "mensaje": "Este es un recordatorio de prueba"
-    },
-    {
-      "id": 711353,
-      "estado": "pendiente",
-      "contratoId": 123,
-      "fecha": "2026-05-20T15:00:06.607Z",
-      "tipo": "vencimiento",
-      "mensaje": "Este es un recordatorio de prueba"
     }
   ],
   "liquidaciones": [
     {
-      "id": "292406",
-      "contratoId": "182928",
-      "propietarioNombre": "Pedro",
-      "inquilinoNombre": "Oty",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-15T21:30:45.537Z",
-      "items": [],
-      "montoAlquiler": 100,
-      "total": 100
-    },
-    {
-      "id": "23755",
-      "contratoId": "1606",
+      "id": "707735",
+      "contratoId": "983800",
       "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Inquilinoouu",
+      "inquilinoNombre": "Nahuel",
       "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-15T21:59:58.038Z",
+      "fechaGeneracion": "2026-06-26T18:17:23.131Z",
       "items": [],
-      "montoAlquiler": 100,
-      "total": 100
+      "montoAlquiler": 300000,
+      "total": 300000
     },
     {
-      "id": "374227",
-      "contratoId": "618498",
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Inquilinoouu",
+      "id": "728325",
+      "contratoId": "269967",
+      "propietarioNombre": "Abril",
+      "inquilinoNombre": "Pepe",
       "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-15T22:07:11.125Z",
+      "fechaGeneracion": "2026-06-26T18:19:22.191Z",
       "items": [],
-      "montoAlquiler": 1000,
-      "total": 1000
-    },
-    {
-      "id": "31974",
-      "contratoId": "772307",
-      "propietarioNombre": "Nahuel",
-      "inquilinoNombre": "Abi",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-15T22:08:59.333Z",
-      "items": [],
-      "montoAlquiler": 105,
-      "total": 105
-    },
-    {
-      "id": "556205",
-      "contratoId": "947388",
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Inquilinoouu",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-15T22:14:24.449Z",
-      "items": [],
-      "montoAlquiler": 1000,
-      "total": 1000
-    },
-    {
-      "id": "320912",
-      "contratoId": "803205",
-      "propietarioNombre": "Pedro",
-      "inquilinoNombre": "Oty",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-16T01:36:57.505Z",
-      "items": [],
-      "montoAlquiler": 200,
-      "total": 200
-    },
-    {
-      "id": "446345",
-      "contratoId": "687645",
-      "propietarioNombre": "Nahuel",
-      "inquilinoNombre": "Oty",
-      "periodo": "junio de 2026",
-      "fechaGeneracion": "2026-06-17T18:20:13.160Z",
-      "items": [],
-      "montoAlquiler": 100,
-      "total": 100
+      "montoAlquiler": 350000,
+      "total": 350000
     }
   ]
 }

@@ -3,7 +3,6 @@ import { IInmueble } from '../inmueble.interface';
 import { InmueblesRxjsService } from '../inmuebles-rxjs.service';
 import { ModalService } from '../../../core/modal/modal.service';
 import { CardListComponent } from '../../../shared/card-list/card-list.component';
-import { ItemEntidadComponent } from '../../../shared/item-entidad/item-entidad.component';
 import { EditarInmuebleComponent } from '../modals/editar-inmueble/editar-inmueble.component';
 import { EliminarInmuebleComponent } from '../modals/eliminar-inmueble/eliminar-inmueble.component';
 import {MatExpansionModule} from '@angular/material/expansion';
