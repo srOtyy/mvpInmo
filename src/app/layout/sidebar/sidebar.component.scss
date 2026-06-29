@@ -1,25 +1,17 @@
 @import '../../../styles.scss';
 .side-bar{
-    .boton-salir{
-        display: flex;
-        justify-content: flex-end;
-        padding: 10px 50px;
-        .icono{
-            color: $accent-2;
-        }
-    }
+    margin-top :50px ;
     .botones{
         display: flex;
         flex-direction: column;
         gap: 50px;
-        padding-top :30px ;
         width: auto ;
         .contenedor-boton-dominio{
             width: 100%;
             .boton-dominio{
+                padding: 20px;
                 display: flex;
                 flex-direction: column;
-                justify-content: start;
                 text-align: start;
                 width: 100%;
                 border-bottom: 1px solid $primary-300;

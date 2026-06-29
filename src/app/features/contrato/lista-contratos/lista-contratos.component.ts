@@ -115,9 +115,12 @@ if(fechaFiltroActivo) {
     });
   }
 
-  
+
   cambiarEstadoSignalFecha(){
     this.$filtroFecha.update(estado => !estado);
 
+  }
+  irACrearContrato(){
+    this.router.navigate(['/contratos/crear']);
   }
 }

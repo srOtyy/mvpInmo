@@ -33,86 +33,91 @@
         }
     }
     .card {
-    background-color: $neutral-800;
-    border-radius: 15px;
-    padding: 25px;
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    
-    .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-bottom: 15px;
-    border-bottom: 1px solid $neutral-400;
-
-    .card-titulo {
-        margin: 0;
-        font-size: 22px;
-        font-weight: 600;
-        color: $primary-300;
-    }
-
-    .card-estado {
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 500;
-        text-transform: capitalize;
-    }
-    }
-    .card-body {
+        margin-top: 20px;
+        background-color: $neutral-800;
+        border-radius: 15px;
+        padding: 25px;
+        width: 100%;
+        max-width: 500px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
         
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-
-            .label {
-                color: $neutral-300;
-                font-size: 14px;
-                text-align: center;
-                align-self: center;
-            }
-
-            .valor {
-                color: $primary-100;
-                font-weight: 500;
-            }
-        }
-    }
-    .card-actions {
+        .card-header {
         display: flex;
-        justify-content: flex-end;
-        gap: 8px;
-        padding-top: 15px;
-        border-top: 1px solid $neutral-400;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-bottom: 15px;
+        border-bottom: 1px solid $neutral-400;
 
-        button {
-            width: 40px;
-            height: 40px;
+        .card-titulo {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            color: $primary-300;
         }
 
-        .btn-editar mat-icon {
-            color: $secondary-300;
+        .card-estado {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: capitalize;
         }
-
-        .btn-gastos mat-icon {
-            color: $success;
         }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            
+            .info-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 0;
 
-        .btn-eliminar mat-icon {
-            color: $error;
+                .label {
+                    color: $neutral-300;
+                    font-size: 14px;
+                    text-align: center;
+                    align-self: center;
+                }
+
+                .valor {
+                    color: $primary-100;
+                    font-weight: 500;
+                }
+            }
+        }
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            padding-top: 15px;
+            border-top: 1px solid $neutral-400;
+
+            button {
+                width: 40px;
+                height: 40px;
+            }
+
+            .btn-editar mat-icon {
+                color: $secondary-300;
+            }
+
+            .btn-gastos mat-icon {
+                color: $success;
+            }
+
+            .btn-eliminar mat-icon {
+                color: $error;
+            }
         }
     }
-}
-
+    .cabecera{
+        width: 100%;
+        .icono{
+            color: $primary-500
+        }
+    }
 }
 
 

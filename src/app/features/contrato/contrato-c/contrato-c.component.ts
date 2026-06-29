@@ -13,10 +13,12 @@ import { AsyncPipe, DatePipe, CurrencyPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-contrato-c',
   standalone: true,
-  imports: [A11yModule, AsyncPipe, DatePipe, CurrencyPipe, MatIconModule, MatTooltipModule, MatButtonModule],
+  imports: [A11yModule, AsyncPipe, DatePipe, CurrencyPipe, MatIconModule, MatTooltipModule, MatButtonModule,MatDividerModule],
   templateUrl: './contrato-c.component.html',
   styleUrl: './contrato-c.component.scss'
 })
@@ -24,7 +26,8 @@ export class ContratoCComponent implements OnInit {
   constructor(
     public _contratosService: ContratoBbddService,
     private _modalService: ModalService,
-    private _liquidacion: LiquidacionGeneratorService
+    private _liquidacion: LiquidacionGeneratorService,
+    private router:Router 
   ){};
   ngOnInit(){
     this._contratosService.cargarLista();
@@ -70,6 +73,10 @@ export class ContratoCComponent implements OnInit {
     this._contratosService.$sideBarInfo.set(true)
     this._contratosService.$contratoIdSideBarInfo.set(id)
     
+  }
+
+  volverALaListaDeContratos(){
+     this.router.navigate(['/contratos/lista']);
   }
 
 }

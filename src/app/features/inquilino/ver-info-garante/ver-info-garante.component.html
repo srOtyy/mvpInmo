@@ -1,6 +1,6 @@
 @if(garantes !== undefined){
   <div class="info-entidad">
-    @for(garante of garantes ; track garante ){
+    @for(garante of garantes ; track garante.id ){
       <p class="propiedad">
         <strong class="strong">Nombre</strong>: {{ garante.nombre| titlecase}}
       </p>
