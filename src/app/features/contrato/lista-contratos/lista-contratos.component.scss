@@ -161,7 +161,7 @@
       background-color: $neutral-800;
       border-radius: 8px;
       margin-bottom: 5px;
-      &.chip-preliminar {
+      &.chip-dos_meses {
         border-right: 3px solid $warning;
         border-bottom:1px solid $warning;
       }
@@ -171,17 +171,17 @@
         border-bottom:1px solid $success;
       }
 
-      &.chip-finalizado {
+      &.chip-normal {
         border-right: 3px solid $neutral-500;
         border-bottom:1px solid $neutral-500;
       }
 
-      &.chip-cancelado {
+      &.chip-un_mes {
         border-right: 3px solid $error;
         border-bottom:1px solid $error;
       }
 
-      &.chip-renovar {
+      &.chip-vencido {
         border-right: 3px solid $accent-1;
         border-bottom:1px solid $accent-1;
       }
@@ -221,7 +221,7 @@
       border-radius: 10px;
       white-space: nowrap;
       flex-shrink: 0;
-
+      //color de los chips
       &.chip-preliminar {
         background-color: rgba($warning, 0.15);
         color: $warning;
@@ -246,7 +246,22 @@
         background-color: rgba($accent-1, 0.15);
         color: $accent-1;
       }
+      &.chip-un_mes{
+        background-color: rgba($error, 0.15);
+        color: $error;
+      }
+      &.chip-dos_meses{
+        background-color: rgba($error, 0.15);
+        color: $error;
+      }
+      &.chip-vencido{
+        background-color: #ff9f501f;
+        color: $accent-1;
+      }
     }
+
+
+
     .chip-renta {
       color: $primary-400;
       font-weight: 500;

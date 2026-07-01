@@ -35,13 +35,19 @@
   <div class="contenedor-contratos">
     <mat-chip-listbox aria-label="-listado-contratos">
       @for(contrato of $contratosFiltrados(); track contrato.id ){
-          <mat-chip-option class="chip-contrato chip-{{ getEstadoColor(contrato.estado) }}" [selected]="contratoSeleccionado() === contrato"  (click)="evaluarClick(contrato)">
+          <mat-chip-option class="chip-contrato chip-{{contrato.estadoRenovacion}}" [selected]="contratoSeleccionado() === contrato"  (click)="evaluarClick(contrato)">
             <div class="chip-contenido">
               <div class="chip-header">
                 <span class="chip-titulo">{{ contrato.titulo || 'Contrato #' + contrato.id }}</span>
-                <span class="chip-estado chip-{{ getEstadoColor(contrato.estado) }}">
+                <div class="span-estados">
+                  <span class="chip-estado chip-{{contrato.estadoRenovacion}}">
+                     {{convertirChipEstadoRenovacion(contrato.estadoRenovacion)}}
+                    </span>
+                  <span class="chip-estado chip-{{ getEstadoColor(contrato.estado)}} ">
                   {{ contrato.estado }}
                 </span>
+                </div>
+                
               </div>
               <div class="chip-datos">
                 <span class="chip-renta">{{ formatearMoneda(contrato.rentaMensual) }}</span>

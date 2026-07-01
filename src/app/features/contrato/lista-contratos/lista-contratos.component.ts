@@ -7,7 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { IContrato, ContractStatus } from '../contrato.interface';
+import { IContrato, ContractStatus, EstadoRenovacion } from '../contrato.interface';
 import {Router} from '@angular/router';
 import {ContratoBbddService} from '../contrato-bbdd.service';
 
@@ -29,25 +29,25 @@ export class ListaContratosComponent implements OnInit {
   $contratosFiltrados = computed(() => {
     const lista = this.$contratosOriginales();
     const filtro = this.$filtroBusqueda().toLowerCase();
-   const fechaFiltroActivo = this.$filtroFecha();
+    const fechaFiltroActivo = this.$filtroFecha();
     //filtro por estado:
-if(fechaFiltroActivo) {
-       const listaFiltrada = [...lista].sort((a,b) => new Date(a.fechaFin).getTime() - new Date(b.fechaFin).getTime())
-      console.log(listaFiltrada)
+    if(fechaFiltroActivo) {
+          const listaFiltrada = [...lista].sort((a,b) => new Date(a.fechaFin).getTime() - new Date(b.fechaFin).getTime())
+          console.log(listaFiltrada)
 
-      if (filtro === 'todos') return listaFiltrada;   
-      return listaFiltrada.filter(contrato =>
-        contrato.titulo?.toLowerCase().includes(this.$filtroBusqueda().toLowerCase()) ||
-        this.getEstadoLabel(contrato.estado).toLowerCase().includes(this.$filtroBusqueda().toLowerCase())
-      );
-    }else{
-      if (filtro === 'todos') return lista;
-      return lista.filter(contrato =>
-        contrato.titulo?.toLowerCase().includes(filtro) ||
-        this.getEstadoLabel(contrato.estado).toLowerCase().includes(filtro)
-      );
-    }
-    
+          if (filtro === 'todos') return listaFiltrada;   
+          return listaFiltrada.filter(contrato =>
+            contrato.titulo?.toLowerCase().includes(this.$filtroBusqueda().toLowerCase()) ||
+            this.getEstadoLabel(contrato.estado).toLowerCase().includes(this.$filtroBusqueda().toLowerCase())
+          );
+        }else{
+          if (filtro === 'todos') return lista;
+          return lista.filter(contrato =>
+            contrato.titulo?.toLowerCase().includes(filtro) ||
+            this.getEstadoLabel(contrato.estado).toLowerCase().includes(filtro)
+          );
+        }
+        
   });
   contadorFalopa: number = 0;
   constructor( private _contratosService:ContratoBbddService, private router:Router ){}
@@ -122,5 +122,14 @@ if(fechaFiltroActivo) {
   }
   irACrearContrato(){
     this.router.navigate(['/contratos/crear']);
+  }
+
+  convertirChipEstadoRenovacion(estadoRenovacion: EstadoRenovacion): string{
+    if(estadoRenovacion === 'normal') return '';
+    if(estadoRenovacion === 'un_mes') return '1 mes';
+    if(estadoRenovacion === 'dos_meses') return '2 meses';
+    if(estadoRenovacion === 'hoy') return 'hoy';
+    if(estadoRenovacion === 'vencido') return 'vencido';
+    return ''
   }
 }

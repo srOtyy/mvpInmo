@@ -51,5 +51,6 @@ export const routes: Routes = [
     children: [
       {path: 'crear', component: CrearNotificacionComponent}
     ]
-  }
+  },
+  { path: '**', redirectTo: 'contratos/lista', pathMatch: 'full' }
 ];
