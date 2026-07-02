@@ -108,13 +108,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato>{
     this.contratoSeleccionado.next(contrato);
   }
 
-  //filtrar por fecha ( al final creo q estoy utilizando una sola funcion de estas )
-  filtrarContratosPorFechaFin(): IContrato[] {
-    return this.$lista().sort((a, b) => new Date(a.fechaFin).getTime() - new Date(b.fechaFin).getTime());
-  }
-  filtrarContratosPorFechaInicio(): IContrato[] {
-    return this.$lista().sort((a, b) => new Date(a.fechaInicio).getTime() - new Date(b.fechaInicio).getTime());
-  }
+
   filtrarContratosPorFecha(fecha: Date): IContrato[] {
     const fechaObj = new Date(fecha);
     return this.$lista().filter(contrato => new Date(contrato.fechaFin) >= fechaObj);

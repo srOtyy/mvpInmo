@@ -5,6 +5,7 @@ import { ContratoBbddService } from '../../contrato-bbdd.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { IContrato } from '../../contrato.interface';
 import { MatButton } from '@angular/material/button';
+import { LiquidacionGeneratorService } from '../../../liquidacion/liquidacion.service';
 
 @Component({
   selector: 'app-eliminar-contrato',
@@ -17,8 +18,10 @@ export class EliminarContratoComponent {
   @Input() entidad!: IContrato;
   constructor(private _serviceRxJsContratos: ContratoBbddService,
     private dialogRef: MatDialogRef <ModalComponent>,
+    private _liquidacionService: LiquidacionGeneratorService,
     private _snackbarService: SnackbarService){}
   confimarEliminarContrato(){
+    this._liquidacionService.eliminarLiquidacionPorIdDeContrato(this.entidad.id)  
     this._serviceRxJsContratos.eliminar(this.entidad.id).subscribe(
       {
         next: () => {

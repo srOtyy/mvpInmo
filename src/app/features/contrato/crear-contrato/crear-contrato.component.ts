@@ -15,6 +15,7 @@ import { NotificacionesService } from '../../notificaciones/notificaciones.servi
 import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
+import { CicloDeVidaContratosService } from '../ciclo-de-vida-contratos.service';
 @Component({
   selector: 'app-crear-contrato',
   standalone: true,
@@ -30,7 +31,8 @@ export class CrearContratoComponent implements OnInit {
   constructor(
     private contratosService: ContratoBbddService,
     private _snack: SnackbarService,
-    private _liquidacion: LiquidacionGeneratorService
+    private _liquidacion: LiquidacionGeneratorService,
+    private _cicloDeVida: CicloDeVidaContratosService
   ){ 
     this.formulario = new FormGroup({
       id: new FormControl(randomId(), Validators.required), 
@@ -77,6 +79,7 @@ export class CrearContratoComponent implements OnInit {
       contrato.titulo = this.contratosService.generarTituloContrato(contrato.propietarioId.toString(), contrato.inquilinoId.toString());
     }
     contrato.proximoAumento = this.contratosService.declararProximoMesDeAumento(contrato.periodoAumento, contrato.fechaInicio);
+    contrato.estadoRenovacion = this._cicloDeVida.calcularEstadoDeRenovacion(this._cicloDeVida.calcularDiasRestantes(contrato.proximoAumento))
     console.log(this.formulario.value)
     this.contratosService.crear(contrato).subscribe({
       next: () => {

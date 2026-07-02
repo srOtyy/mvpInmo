@@ -1,9 +1,18 @@
+import { Liquidacion } from "../liquidacion/liquidacion-interface";
+
 export type ContractStatus =
   | 'preliminar'     // aún no válido
   | 'activo'    // en curso
   | 'finalizado'  // terminó normalmente
   | 'cancelado' // terminó antes
   | 'renovar' // de me ocurrió como concepto de actualización para la notificación de cobro? 
+
+export type EstadoRenovacion =
+| 'un_mes'
+| 'dos_meses'
+| 'normal'
+| 'vencido'
+| 'hoy'
 
 export interface IContrato {
     id: number;
@@ -13,9 +22,11 @@ export interface IContrato {
     fechaInicio: Date;
     fechaFin: Date;
     estado: ContractStatus;
+    estadoRenovacion: EstadoRenovacion
     rentaMensual: number;
     periodoAumento: number;
     registroActividad?: string[];
     titulo?: string;
     proximoAumento?: Date;
+    // liquidacion: Liquidacion
 }

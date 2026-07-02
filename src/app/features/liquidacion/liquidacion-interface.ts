@@ -1,6 +1,6 @@
 export interface Liquidacion {
-  id: string;
-  contratoId: string;
+  id: number;
+  contratoId: number;
   propietarioNombre: string;
   inquilinoNombre: string;
   periodo: string;

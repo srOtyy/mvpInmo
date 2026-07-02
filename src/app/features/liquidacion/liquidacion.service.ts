@@ -27,8 +27,8 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
  //crear la liquidacion
   crearLiquidacion(contrato: IContrato, nombrePropietario: string, nombreInquilino: string): Liquidacion {
     const liquidacion: Liquidacion = {
-      id: randomId().toString() ,
-      contratoId: contrato.id.toString(),
+      id: randomId() ,
+      contratoId: contrato.id,
       propietarioNombre: nombrePropietario,
       inquilinoNombre: nombreInquilino,
       periodo: new Date().toLocaleDateString('es-AR', { month: 'long', year: 'numeric' }),
@@ -78,7 +78,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
     liquidacion.items = [...liquidacion.items, ...gastos];
     this.actualizar(liquidacion.id, liquidacion);
   }
-  buscarLiquidacionPorId(id: string): Liquidacion | undefined {
+  buscarLiquidacionPorId(id: number): Liquidacion | undefined {
     return this.$lista().find(l => l.id === id);
   }
   eliminarGastosEnDB(liquidacion: Liquidacion){
@@ -88,7 +88,29 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
  
   //buscar liquidacion x id de contrato
   buscarLiquidacionPorContrato(id: number): Liquidacion | undefined  {
-    console.log(this.$lista())
-    return this.$lista().find(l => l.contratoId === id.toString() )
+    return this.$lista().find(l => l.contratoId === id )
   }
+  buscarIdLiquidacionPorContratoId(contratoId:number): number{
+    const contrato = this.$lista().find(c => c.contratoId == contratoId)
+    console.log(contrato)
+    if(contrato){
+      return contrato.id
+    }else{
+      return 0
+    }
+  }
+  eliminarLiquidacionPorIdDeContrato(idDelContrato: number){
+    const idLiquidacion = this.buscarIdLiquidacionPorContratoId(idDelContrato) 
+    if(idLiquidacion !== 0){
+      this.eliminar(idLiquidacion).subscribe({
+        next: ()=>{
+          console.log("liquidacion eliminada?")
+        }
+      })
+    }else{
+      console.warn("No se pudo eliminar la liquidacion con 'eliminarLiquidacionPorIdDeContrato()'")
+      console.log("El id de liquidacion dió 0")
+    }
+  }
+  
 }
