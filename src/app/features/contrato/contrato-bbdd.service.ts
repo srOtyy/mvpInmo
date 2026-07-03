@@ -8,8 +8,10 @@ import { PropietarioRxjsService } from '../propietario/propietario-rxjs.service'
 import { IPropietario } from '../propietario/propietario.interface';
 import { IInquilino } from '../inquilino/inquilino.interface';
 import { IInmueble } from '../inmueble/inmueble.interface';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, forkJoin, Observable } from 'rxjs';
 import { obtenerCaracteristica } from '../caracteristicas/entity-helpers';
+import { CicloDeVidaContratosService } from './ciclo-de-vida-contratos.service';
+import { SnackbarService } from '../../core/snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,17 +41,17 @@ export class ContratoBbddService extends BaseCrudService<IContrato>{
   constructor( http: HttpClient, 
     private _rxjsInmuebles: InmueblesRxjsService, 
     private _rxjsInquilinos: InquilinoRxjsService, 
-    private _rxjsPropietarios: PropietarioRxjsService
+    private _rxjsPropietarios: PropietarioRxjsService,
+    private _cicloDeVida: CicloDeVidaContratosService
     ){
     super(http, 'http://localhost:3000/contratos')
     this.obtenerListas()
     }
- 
-
+  
    cargarLista(): void {
      if (this.$lista().length > 0) return;
      this.cargar().subscribe({
-       next: () => console.log('Contratos cargados'),
+       next: () => this.evaluarVencimientoDeTodosLosContratos(this.$lista()),
        error: () => console.error('Error al cargar contratos')
      });
    }
@@ -125,5 +127,20 @@ export class ContratoBbddService extends BaseCrudService<IContrato>{
   camiarValorSideBar(){
     this.$sideBarInfo.set(!this.$sideBarInfo())
   }
- 
+  evaluarVencimientoDeTodosLosContratos(contratos: IContrato[]){
+    const actualizaciones = contratos.map(contrato => 
+      this.actualizarSinRecargar(contrato.id, this._cicloDeVida.evaluarContrato(contrato))
+    );
+    forkJoin(actualizaciones).subscribe({
+      next: (resultados) => {
+        const listaActual = this.$lista();
+        const nuevaLista = listaActual.map(contrato => {
+          const actualizado = resultados.find(r => (r as any).id === contrato.id);
+          return actualizado ? actualizado : contrato;
+        });
+        this.$lista.set(nuevaLista);
+      },
+      error: (err) => console.error('Error al actualizar contratos', err)
+    });
+  }
 }

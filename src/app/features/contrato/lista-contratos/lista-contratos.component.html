@@ -40,10 +40,10 @@
               <div class="chip-header">
                 <span class="chip-titulo">{{ contrato.titulo || 'Contrato #' + contrato.id }}</span>
                 <div class="span-estados">
-                  <span class="chip-estado chip-{{contrato.estadoRenovacion}}">
+                  <span class="chip-estado chip-{{contrato.estadoRenovacion}}" matTooltip="próxima renovacion">
                      {{convertirChipEstadoRenovacion(contrato.estadoRenovacion)}}
                     </span>
-                  <span class="chip-estado chip-{{ getEstadoColor(contrato.estado)}} ">
+                  <span class="chip-estado chip-{{ getEstadoColor(contrato.estado)}}" matTooltip="estado del contrato">
                   {{ contrato.estado }}
                 </span>
                 </div>

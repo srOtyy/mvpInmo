@@ -36,6 +36,7 @@ export class EditarContratoComponent implements OnInit {
       fechaInicio: [''],
       propietarioId: [''],
       estado: [''],
+      estadoRenovacion:[''],
       rentaMensual: [''],
       titulo: [''],
       proximoAumento: ['']
@@ -62,6 +63,7 @@ export class EditarContratoComponent implements OnInit {
       fechaInicio: contratoData.fechaInicio,
       propietarioId: contratoData.propietarioId,
       estado: contratoData.estado,
+      estadoRenovacion: contratoData.estadoRenovacion,
       rentaMensual: contratoData.rentaMensual,
       titulo: contratoData.titulo,
       proximoAumento: contratoData.proximoAumento

@@ -27,6 +27,5 @@ export interface IContrato {
     periodoAumento: number;
     registroActividad?: string[];
     titulo?: string;
-    proximoAumento?: Date;
-    // liquidacion: Liquidacion
+    proximoAumento: Date;
 }

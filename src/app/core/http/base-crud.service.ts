@@ -29,6 +29,9 @@ export abstract class BaseCrudService<T>{
       switchMap(() => this.cargar())
     );
   }
+  actualizarSinRecargar(id: string | number, entidad: T){
+    return this.http.put<T>(`${this.endpoint}/${id}`, entidad);
+  }
   eliminar(id: number){
     return this.http.delete(`${this.endpoint}/${id}`).pipe(
       switchMap(() => this.cargar())

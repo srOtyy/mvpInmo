@@ -185,6 +185,10 @@
         border-right: 3px solid $accent-1;
         border-bottom:1px solid $accent-1;
       }
+      &.chip-hoy   {
+        border-right: 3px solid $accent-2;
+        border-bottom:1px solid $accent-2;
+      }
     }
 
     .chip-contenido {
@@ -211,7 +215,11 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
+    .span-estados{
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    }
     .chip-estado {
       font-size: 11px;
       font-weight: 600;
@@ -251,12 +259,16 @@
         color: $error;
       }
       &.chip-dos_meses{
-        background-color: rgba($error, 0.15);
-        color: $error;
+        background-color: rgba($warning, 0.15);
+        color: $warning;;
       }
       &.chip-vencido{
         background-color: #ff9f501f;
         color: $accent-1;
+      }
+      &.chip-hoy{
+        background-color: #ff9f501f;
+        color: $accent-2;
       }
     }
 
