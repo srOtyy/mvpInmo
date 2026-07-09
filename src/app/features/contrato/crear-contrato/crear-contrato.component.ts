@@ -1,7 +1,7 @@
 import { Component, OnInit,ChangeDetectionStrategy } from '@angular/core';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { SnackbarService } from '../../../core/snackbar.service';
-import { IContrato } from '../contrato.interface';
+import { IContrato,TipoPago } from '../contrato.interface';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -11,7 +11,6 @@ import { IPropietario } from '../../propietario/propietario.interface';
 import { IInquilino } from '../../inquilino/inquilino.interface';
 import { obtenerCaracteristica } from '../../caracteristicas/entity-helpers';
 import { randomId } from '../../../shared/utilitys';
-import { NotificacionesService } from '../../notificaciones/notificaciones.service';
 import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
@@ -29,6 +28,7 @@ import { InmueblesRxjsService } from '../../inmueble/inmuebles-rxjs.service';
 export class CrearContratoComponent implements OnInit {
   propietarioEleigido: string | null = null;
   formulario: FormGroup = new FormGroup({});
+  tipoPagoOpciones: TipoPago[] = ['efectivo','transferencia']
   constructor(
     private contratosService: ContratoBbddService,
     private _snack: SnackbarService,
@@ -48,7 +48,8 @@ export class CrearContratoComponent implements OnInit {
       periodoAumento: new FormControl('',Validators.required),
       proximoAumento: new FormControl(''),
       titulo: new FormControl(''),
-      porcentajeHonorarios: new FormControl('',Validators.required)
+      porcentajeHonorarios: new FormControl('',Validators.required),
+      tipoPago: new FormControl('',Validators.required)
       });
     }
 

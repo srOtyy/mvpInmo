@@ -1,13 +1,16 @@
 <div class="contenedor-principal">
   <div class="cabecera">
      <div class="filtros">
-    <mat-form-field class="form-buscar" appearance="fill" >
-      <mat-label>Buscar</mat-label>
-      <input matInput type="text" id="buscar" #buscarInput disabled>
-      <mat-icon matSuffix class="icono-buscar">search</mat-icon>
-    </mat-form-field>
+      <mat-form-field class="form-buscar" appearance="fill" >
+        <mat-label>Buscar</mat-label>
+        <input matInput type="text" id="buscar" #buscarInput disabled>
+        <mat-icon matSuffix class="icono-buscar">search</mat-icon>
+      </mat-form-field>
     <button mat-icon-button matSuffix  (click)="cambiarEstadoSignalFecha()">
       <mat-icon matSuffix [class]="{'icono-fecha': !$filtroFecha(), 'activo': $filtroFecha()}" matTooltip="Proximo vencimiento">{{calendarioIcono}}</mat-icon>
+    </button>
+    <button mat-icon-button matSuffix  (click)="cambiarEstadoSignalNombrePropietario()">
+      <mat-icon matSuffix [class]="{'icono-ordenAlfabetico': !$filtroNombrePropietario(), 'activo': $filtroNombrePropietario()}" matTooltip="Ordenar alfabeticamente">sort_by_alpha</mat-icon>
     </button>
     <mat-form-field class="form-select" appearance="fill">
       <mat-label>Estado</mat-label>
@@ -35,7 +38,7 @@
           <mat-chip-option class="chip-contrato chip-{{contrato.estadoRenovacion}}" [selected]="contratoSeleccionado() === contrato"  (click)="evaluarClick(contrato)">
             <div class="chip-contenido">
               <div class="chip-header">
-                <span class="chip-titulo">{{ contrato.titulo || 'Contrato #' + contrato.id }}</span>
+                <span class="chip-titulo">{{contrato.propietarioNombre}} - {{contrato.titulo}}</span>
                 <div class="span-estados">
                   <span class="chip-estado chip-{{contrato.estadoRenovacion}}" matTooltip="próxima renovacion">
                      {{convertirChipEstadoRenovacion(contrato.estadoRenovacion)}}

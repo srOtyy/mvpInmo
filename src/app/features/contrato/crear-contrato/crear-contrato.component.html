@@ -74,6 +74,13 @@
         <mat-label>Porcentaje de honorarios</mat-label>
         <input matInput formControlName="porcentajeHonorarios" type="number">
       </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de pago</mat-label>
+        <mat-select formControlName="tipoPago">
+          <mat-option value="efectivo">efectivo</mat-option>
+          <mat-option value="transferencia">transferencia</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     </div>
     

@@ -13,6 +13,10 @@ export type EstadoRenovacion =
 | 'vencido'
 | 'hoy'
 
+export type TipoPago =
+| 'efectivo'
+| 'transferencia'
+
 export interface IContrato {
     id: number;
     inquilinoId: number;
@@ -28,6 +32,7 @@ export interface IContrato {
     titulo?: string;
     proximoAumento: Date;
     porcentajeHonorarios: number;
+    tipoDePago: TipoPago 
 }
 export interface IContratoVista extends IContrato{
   propietarioNombre: string;

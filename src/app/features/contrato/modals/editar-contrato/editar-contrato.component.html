@@ -1,6 +1,8 @@
 <form [formGroup]="formularioEditarContrato" class="formulario">
     <ng-container >
     <mat-form-field>
+        <mat-label>Propietario</mat-label>
+
        <mat-select formControlName="propietarioId">
               @for (propietario of propietariosLista; track propietario.id) {
                     <mat-option [value]="propietario.id">{{obtenerCaracteristica(propietario,"nombre","Nombre no encontrado")}}</mat-option>
@@ -8,6 +10,8 @@
         </mat-select>
     </mat-form-field> 
    <mat-form-field>
+        <mat-label>Inquilino</mat-label>
+
        <mat-select formControlName="inquilinoId">
               @for (inquilino of inquilinosLista; track inquilino.id) {
                     <mat-option [value]="inquilino.id">{{obtenerCaracteristica(inquilino,"nombre","Nombre no encontrado")}}</mat-option>
@@ -15,6 +19,8 @@
         </mat-select>
     </mat-form-field> 
     <mat-form-field>
+        <mat-label>Id del inmueble</mat-label>
+
        <mat-select formControlName="inmuebleId" >
               @for (inmueble of inmueblesLista; track inmueble.id) {
                     <mat-option [value]="inmueble.id">{{inmueble.id}}</mat-option>
@@ -22,10 +28,19 @@
         </mat-select>
     </mat-form-field> 
     <mat-form-field>
+        <mat-label>Estado del contrato</mat-label>
        <mat-select formControlName="estado" >
               @for (estado of estadosLista; track estado) {
                     <mat-option [value]="estado">{{estado}}</mat-option>
                   }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Tipo de pago</mat-label>
+       <mat-select formControlName="tipoDePago" >
+             <mat-option value="efectivo">efectivo</mat-option>
+             <mat-option value="transferencia">transferencia</mat-option>
+
         </mat-select>
     </mat-form-field>
     </ng-container>

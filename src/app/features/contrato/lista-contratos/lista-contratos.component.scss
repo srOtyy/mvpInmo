@@ -100,11 +100,8 @@
         }
       }
     }
-
-    .icono-buscar {
-      color: $neutral-400 !important;
-    }
-    .icono-fecha {
+    
+    .icono-fecha,.icono-ordenAlfabetico,  .icono-buscar {
       color: $neutral-400 !important;
     }
     .activo{

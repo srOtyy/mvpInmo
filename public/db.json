@@ -168,6 +168,28 @@
         }
       ],
       "direccion": "Buenos Aires 3008"
+    },
+    {
+      "id": 436001,
+      "idPropietario": 468718,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": "1N"
+        }
+      ],
+      "direccion": "Independencia 565"
+    },
+    {
+      "id": 776899,
+      "idPropietario": 418782,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": "-"
+        }
+      ],
+      "direccion": "Belgrano 343"
     }
   ],
   "contratos": [
@@ -185,6 +207,36 @@
       "titulo": "Nahuel BsAs3008",
       "porcentajeHonorarios": 5,
       "estadoRenovacion": "dos_meses"
+    },
+    {
+      "id": 466801,
+      "inquilinoId": 631601,
+      "inmuebleId": 436001,
+      "fechaFin": "2027-07-31T03:00:00.000Z",
+      "fechaInicio": "2026-07-01T03:00:00.000Z",
+      "propietarioId": 468718,
+      "estado": "activo",
+      "estadoRenovacion": "normal",
+      "rentaMensual": 315000,
+      "titulo": "Independencia 565",
+      "proximoAumento": "2026-10-01T03:00:00.000Z",
+      "porcentajeHonorarios": 4,
+      "tipoDePago": "transferencia"
+    },
+    {
+      "id": 145812,
+      "propietarioId": 418782,
+      "inmuebleId": 776899,
+      "inquilinoId": 631601,
+      "fechaInicio": "2026-06-16T03:00:00.000Z",
+      "fechaFin": "2027-01-31T03:00:00.000Z",
+      "rentaMensual": 290000,
+      "estado": "preliminar",
+      "periodoAumento": 1,
+      "proximoAumento": "2026-07-16T03:00:00.000Z",
+      "titulo": "Prueba",
+      "porcentajeHonorarios": 3,
+      "estadoRenovacion": "un_mes"
     }
   ],
   "definiciones": [
@@ -356,6 +408,34 @@
       "montoAlquiler": 300000,
       "total": 300000,
       "honorarios": 5
+    },
+    {
+      "id": 370895,
+      "contratoId": 466801,
+      "propietarioNombre": "Abril",
+      "inquilinoNombre": "Nahuel",
+      "inmuebleId": 436001,
+      "periodo": "julio de 2026",
+      "fechaGeneracion": "2026-07-09T14:00:23.460Z",
+      "itemsInquilino": [],
+      "itemsPropietario": [],
+      "montoAlquiler": 315000,
+      "total": 315000,
+      "honorarios": 4
+    },
+    {
+      "id": 663616,
+      "contratoId": 145812,
+      "propietarioNombre": "Alejandro",
+      "inquilinoNombre": "Nahuel",
+      "inmuebleId": 776899,
+      "periodo": "julio de 2026",
+      "fechaGeneracion": "2026-07-09T14:01:33.847Z",
+      "itemsInquilino": [],
+      "itemsPropietario": [],
+      "montoAlquiler": 290000,
+      "total": 290000,
+      "honorarios": 3
     }
   ]
 }
