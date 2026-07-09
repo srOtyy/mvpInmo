@@ -29,3 +29,6 @@ export interface IContrato {
     proximoAumento: Date;
     porcentajeHonorarios: number;
 }
+export interface IContratoVista extends IContrato{
+  propietarioNombre: string;
+}

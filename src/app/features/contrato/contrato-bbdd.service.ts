@@ -1,5 +1,5 @@
 import { computed, Injectable, signal, Signal } from '@angular/core';
-import { IContrato } from './contrato.interface';
+import { IContrato, IContratoVista } from './contrato.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { InquilinoRxjsService } from '../inquilino/inquilino-rxjs.service';
@@ -143,4 +143,5 @@ export class ContratoBbddService extends BaseCrudService<IContrato>{
       error: (err) => console.error('Error al actualizar contratos', err)
     });
   }
+  
 }

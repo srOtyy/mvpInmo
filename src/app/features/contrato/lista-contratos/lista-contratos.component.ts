@@ -7,11 +7,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { IContrato, ContractStatus, EstadoRenovacion } from '../contrato.interface';
+import { IContrato, ContractStatus, EstadoRenovacion, IContratoVista } from '../contrato.interface';
 import {Router} from '@angular/router';
 import {ContratoBbddService} from '../contrato-bbdd.service';
 import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
-
+import { toContratosVista } from '../contrato.mapper';
+import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.service';
 
 @Component({
   selector: 'app-lista-contratos',
@@ -24,33 +25,20 @@ export class ListaContratosComponent implements OnInit {
   evento = output<void>();
   contratoSeleccionado = signal<IContrato | null>(null);
   calendarioIcono = "calendar_today"
-  $contratosOriginales = computed(() => this._contratosService.$lista());
+  $contratosOriginales = computed(() => {
+    //no me dejaba mandar como argumento $listPropietarios(), solo sin los parentesis
+    return toContratosVista( this._contratosService.$lista(),this._propietariosService.$lista())
+   });
   $filtroBusqueda = signal('todos');
   $filtroFecha = signal(false);
   $contratosFiltrados = computed(() => {
-    const lista = this.$contratosOriginales();
-    const filtro = this.$filtroBusqueda().toLowerCase();
-    const fechaFiltroActivo = this.$filtroFecha();
-    //filtro por estado:
-    if(fechaFiltroActivo) {
-          const listaFiltrada = [...lista].sort((a,b) => new Date(a.proximoAumento).getTime() - new Date(b.proximoAumento).getTime())
-
-          if (filtro === 'todos') return listaFiltrada;   
-          return listaFiltrada.filter(contrato =>
-            contrato.titulo?.toLowerCase().includes(this.$filtroBusqueda().toLowerCase()) ||
-            this.getEstadoLabel(contrato.estado).toLowerCase().includes(this.$filtroBusqueda().toLowerCase())
-          );
-        }else{
-          if (filtro === 'todos') return lista;
-          return lista.filter(contrato =>
-            contrato.titulo?.toLowerCase().includes(filtro) ||
-            this.getEstadoLabel(contrato.estado).toLowerCase().includes(filtro)
-          );
-        }
-        
+    let lista = [...this.$contratosOriginales()];
+    lista = this.aplicarFiltroOrdenPorFecha(lista);
+    lista = this.aplicarFiltroEstado(lista)
+    return lista
   });
   contadorFalopa: number = 0;
-  constructor( private _contratosService:ContratoBbddService, private router:Router, private _liquidacionService:LiquidacionGeneratorService ){}
+  constructor( private _contratosService:ContratoBbddService, private router:Router, private _propietariosService: PropietarioRxjsService){}
   
   ngOnInit() {
     this._contratosService.cargarLista();
@@ -97,7 +85,6 @@ export class ListaContratosComponent implements OnInit {
     };
     return labels[estado];
   }
-
   formatearMoneda(valor: number): string {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
@@ -114,8 +101,6 @@ export class ListaContratosComponent implements OnInit {
       year: 'numeric'
     });
   }
-
-
   cambiarEstadoSignalFecha(){
     this.$filtroFecha.update(estado => !estado);
 
@@ -123,7 +108,6 @@ export class ListaContratosComponent implements OnInit {
   irACrearContrato(){
     this.router.navigate(['/contratos/crear']);
   }
-
   convertirChipEstadoRenovacion(estadoRenovacion: EstadoRenovacion): string{
     if(estadoRenovacion === 'normal') return '';
     if(estadoRenovacion === 'un_mes') return '1 mes';
@@ -131,5 +115,21 @@ export class ListaContratosComponent implements OnInit {
     if(estadoRenovacion === 'hoy') return 'hoy';
     if(estadoRenovacion === 'vencido') return 'vencido';
     return ''
+  }
+
+  //filtros del signal lista de contratos
+  private aplicarFiltroOrdenPorFecha(lista: IContratoVista[]) {
+    const fechaFiltroActivo = this.$filtroFecha();
+    if (fechaFiltroActivo){
+      return [...lista].sort((a,b) => new Date(a.proximoAumento).getTime() - new Date(b.proximoAumento).getTime())
+    }
+    return lista
+  }
+  private aplicarFiltroEstado(lista: IContratoVista[]){
+    const filtroBusqueda = this.$filtroBusqueda();
+    if (filtroBusqueda === 'todos') return lista;   
+    return lista.filter(contrato =>
+      contrato.titulo?.toLowerCase().includes(this.$filtroBusqueda().toLowerCase()) || this.getEstadoLabel(contrato.estado).toLowerCase().includes(this.$filtroBusqueda().toLowerCase())
+    );
   }
 }
