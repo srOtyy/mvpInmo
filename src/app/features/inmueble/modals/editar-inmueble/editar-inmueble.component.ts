@@ -63,7 +63,8 @@ export class EditarInmuebleComponent implements OnInit {
       const inmuebleEditado: IInmueble = {
         id: this.formularioEditarInmueble.value.id,
         idPropietario: this.formularioEditarInmueble.value.idPropietario,
-        caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInmueble.value)
+        caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarInmueble.value),
+        direccion: ''
       };
       return inmuebleEditado;
     }

@@ -1,46 +1,130 @@
 <div class="contenedor">
-  <form [formGroup]="formularioGasatos" class="contenedor_formulario">
-  <mat-form-field class="datos_formulario">
-    <mat-label>Tipo de gasto</mat-label>
-    <input matInput formControlName="tipo" placeholder="Tipo de gasto">
-  </mat-form-field>
-  <mat-form-field class="datos_formulario">
-    <mat-label>Monto</mat-label>
-    <input matInput formControlName="monto" placeholder="Monto" type="number">
-  </mat-form-field>
-  <button mat-raised-button color="primary"  class="datos_formulario" (click)="agregarGastoTemporal()">Agregar gasto</button>
-</form>
-<div class="contenedor_lista">
-    <h6>Gastos cargados</h6>
-    <mat-list  class="lista">
-    @for (gasto of $gastos(); track $index) {
-      <mat-list-item>
-        <div class="item">
-          <div class="item_texto">
-            <p><strong class="item_texto_clave">{{ gasto.tipo }}</strong></p>
-            <p><span>${{ gasto.monto }}</span></p>
-          </div>
-          <div class="item_boton">
-            <button mat-icon-button color="warn" type="button" (click)="eliminarGastoTemporal($index)" class="item_boton_icono">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
-        </div>      
-      </mat-list-item>
+
+    <div class="cabecera">
+      <button mat-icon-button class="btn-nuevo" aria-label="Nuevo contrato" (click)="volverALaVistaDeContratos()" matTooltip="Volver">
+          <mat-icon class="icono">arrow_back</mat-icon>
+      </button>
       <mat-divider></mat-divider>
-     }
-    </mat-list>
-    <div class="contenedor-boton">
-      <button class="boton"
-          mat-raised-button
-          color="accent"
-          type="button"
-          (click)="agregarGastosALiquidacion()"
-          [disabled]="$gastos().length === 0"
-        >
-          Agregar
-        </button>
     </div>
-    
-  </div>
+  
+  <mat-stepper [linear]="false " #stepper class="stepper">
+    <mat-step [stepControl]="formularioInquilino" >
+      <ng-template matStepLabel>Liquidacion inquilino</ng-template>
+      <div class="step1">
+        <form [formGroup]="formularioInquilino" class="formulario">
+          <mat-form-field class="datos_formulario">
+            <mat-label>Tipo de item</mat-label>
+            <input matInput formControlName="tipo" placeholder="Tipo de gasto" >
+          </mat-form-field>
+          <mat-form-field class="datos_formulario">
+            <mat-label>Monto correspondiente</mat-label>
+            <input matInput formControlName="monto" placeholder="Monto" type="number">
+          </mat-form-field>
+          <button mat-icon-button color="primary"  (click)="agregarGastoTemporal(1)" matTooltip="Agregar gasto a la liquidacion" [disabled]="!formularioInquilino.valid">
+            <mat-icon class="icono">arrow_forward</mat-icon>
+          </button>
+        </form>
+        <div class="contenedor_lista">
+          <h6>Items cargados</h6>
+          <div class="items-wrapper">
+            @for (gasto of $gastosInquilino(); track $index) {
+              <div class="item">
+                <div class="item_texto">
+                  <p><strong class="item_texto_clave">{{ gasto.tipo }}</strong></p>
+                  <p><span>${{ gasto.monto }}</span></p>
+                </div>
+                <div class="item_boton">
+                  <button mat-icon-button color="warn" type="button" (click)="eliminarGastoTemporal($index, 1)" class="boton">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="botones">
+        <div class="generar_documentos">
+          <button class="boton" mat-fab extended (click)="generarReciboInquilino(entidad)">
+          <mat-icon>receipt_long</mat-icon>
+          Recibo Inquilino
+          </button>
+          <button class="boton" mat-fab extended (click)="generarLiquidacionInquilino(entidad)">
+            <mat-icon>receipt_long</mat-icon>
+            Liquidacion Inquilino
+          </button>
+        </div>
+        <button class="boton"
+                  mat-raised-button
+                  color="accent"
+                  type="button"
+                  (click)="agregarGastosALiquidacion(1)"
+                  [disabled]="$gastosInquilino().length === 0">
+                  Confirmar items
+          </button>
+                
+      </div>
+
+    </mat-step>
+  
+    <mat-step [stepControl]="formularioPropietario" >
+      <ng-template matStepLabel>Liquidacion propietario</ng-template>
+      <div class="step1">
+        <form [formGroup]="formularioPropietario" class="formulario">
+          <mat-form-field class="datos_formulario">
+            <mat-label>Tipo de item</mat-label>
+            <input matInput formControlName="tipo" placeholder="Tipo de gasto" >
+          </mat-form-field>
+          <mat-form-field class="datos_formulario">
+            <mat-label>Monto correspondiente</mat-label>
+            <input matInput formControlName="monto" placeholder="Monto" type="number">
+          </mat-form-field>
+          <button mat-icon-button color="primary"  (click)="agregarGastoTemporal(2)" matTooltip="Agregar gasto a la liquidacion" [disabled]="!formularioPropietario.valid">
+            <mat-icon class="icono">arrow_forward</mat-icon>
+          </button>
+        </form>
+        <div class="contenedor_lista">
+          <h6>Items cargados</h6>
+          <div class="items-wrapper">
+            @for (gasto of $gastosPropietario(); track $index) {
+              <div class="item">
+                <div class="item_texto">
+                  <p><strong class="item_texto_clave">{{ gasto.tipo }}</strong></p>
+                  <p><span>${{ gasto.monto }}</span></p>
+                </div>
+                <div class="item_boton">
+                  <button mat-icon-button color="warn" type="button" (click)="eliminarGastoTemporal($index, 2)" class="boton">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="botones">
+        <div class="generar_documentos">
+          <button class="boton" mat-fab extended (click)="generarMinutaPropietario(entidad)">
+            <mat-icon>receipt_long</mat-icon>
+            Minuta Propietario
+          </button>
+          <button class="boton" mat-fab extended (click)="generarLiquidacionPropietario(entidad)">
+            <mat-icon>receipt_long</mat-icon>
+            Liquidacion Propietario
+          </button>
+        </div>
+        
+        <button class="boton"
+                  mat-raised-button
+                  color="accent"
+                  type="button"
+                  (click)="agregarGastosALiquidacion(2)"
+                  [disabled]="$gastosPropietario().length === 0">
+                  Confirmar items
+          </button>
+                
+      </div>
+
+    </mat-step>
+  </mat-stepper>
 </div>

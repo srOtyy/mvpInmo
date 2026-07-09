@@ -1,4 +1,3 @@
-import { Liquidacion } from "../liquidacion/liquidacion-interface";
 
 export type ContractStatus =
   | 'preliminar'     // aún no válido
@@ -28,4 +27,5 @@ export interface IContrato {
     registroActividad?: string[];
     titulo?: string;
     proximoAumento: Date;
+    porcentajeHonorarios: number;
 }

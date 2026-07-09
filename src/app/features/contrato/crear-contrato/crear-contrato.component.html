@@ -33,7 +33,7 @@
             }
             @else {
               @for (inmueble of filteredInmueblesLista; track inmueble.id) {
-                  <mat-option [value]="inmueble.id">{{inmueble.id}}</mat-option>
+                  <mat-option [value]="inmueble.id">{{inmueble.direccion}}</mat-option>
                 }
             }
           </mat-select>
@@ -69,7 +69,14 @@
           <input matInput formControlName="titulo" />
         </mat-form-field>
       </div>
+      <div class="campo">
+      <mat-form-field appearance="fill">
+        <mat-label>Porcentaje de honorarios</mat-label>
+        <input matInput formControlName="porcentajeHonorarios" type="number">
+      </mat-form-field>
     </div>
+    </div>
+    
     <button mat-raised-button color="primary" type="submit" [disabled]="formulario.invalid"  >Crear Contrato</button>
   </form>
 

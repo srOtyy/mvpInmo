@@ -27,7 +27,6 @@ export class RutasDinamicasService {
     ],
     contratos: [
       {nombre: 'crear', ruta: ['/contratos', 'crear']},
-      {nombre: 'vista', ruta: ['/contratos', 'vista']},
       {nombre: 'lista', ruta: ['/contratos','lista']}
     ]
   };

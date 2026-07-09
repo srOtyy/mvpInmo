@@ -16,6 +16,7 @@ import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.servi
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { CicloDeVidaContratosService } from '../ciclo-de-vida-contratos.service';
+import { InmueblesRxjsService } from '../../inmueble/inmuebles-rxjs.service';
 @Component({
   selector: 'app-crear-contrato',
   standalone: true,
@@ -32,7 +33,8 @@ export class CrearContratoComponent implements OnInit {
     private contratosService: ContratoBbddService,
     private _snack: SnackbarService,
     private _liquidacion: LiquidacionGeneratorService,
-    private _cicloDeVida: CicloDeVidaContratosService
+    private _cicloDeVida: CicloDeVidaContratosService,
+    private _inmuebleService: InmueblesRxjsService
   ){ 
     this.formulario = new FormGroup({
       id: new FormControl(randomId(), Validators.required), 
@@ -46,6 +48,7 @@ export class CrearContratoComponent implements OnInit {
       periodoAumento: new FormControl('',Validators.required),
       proximoAumento: new FormControl(''),
       titulo: new FormControl(''),
+      porcentajeHonorarios: new FormControl('',Validators.required)
       });
     }
 
@@ -123,4 +126,7 @@ export class CrearContratoComponent implements OnInit {
     return inquilino ? this.nombreInquilino(inquilino) : 'Nombre no disponible';
   }
   
+  obtenerDireccion(id: number):string | number | boolean{
+    return this._inmuebleService.devolverCaracteristica(id,"direccion")
+  }
 }

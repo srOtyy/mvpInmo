@@ -39,7 +39,9 @@ export class EditarContratoComponent implements OnInit {
       estadoRenovacion:[''],
       rentaMensual: [''],
       titulo: [''],
-      proximoAumento: ['']
+      proximoAumento: [''],
+      registroDeActividad: [''],
+      porcentajeHonorarios: ['']
     });
     this.formularioEditarContrato.get('inmuebleId')?.disable();
     this.formularioEditarContrato.get('propietarioId')?.disable();
@@ -66,7 +68,9 @@ export class EditarContratoComponent implements OnInit {
       estadoRenovacion: contratoData.estadoRenovacion,
       rentaMensual: contratoData.rentaMensual,
       titulo: contratoData.titulo,
-      proximoAumento: contratoData.proximoAumento
+      proximoAumento: contratoData.proximoAumento,
+      registroDeActividad: contratoData.registroActividad,
+      porcentajeHonorarios: contratoData.porcentajeHonorarios
     });
       
   }

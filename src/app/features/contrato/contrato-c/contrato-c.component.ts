@@ -43,18 +43,18 @@ export class ContratoCComponent implements OnInit {
     this._modalService.abrirModal<IContrato>('Eliminar Contrato', EliminarContratoComponent, contrato);    
   }
   agregarGastosContrato(contrato: IContrato){
-    //la funcion recibe como argumento un contrato, utilizamos el id del contrato para buscar la liquidacion que le corresponda y la mandamos por el modal
     const liquidacionAux = this._liquidacion.buscarLiquidacionPorContrato(contrato.id)
     if(liquidacionAux){
-      this._modalService.abrirModal<Liquidacion>('Agregar Gastos a la liquidacion', AgregarGastosContratoComponent, liquidacionAux);  
+      this._liquidacion.setSignalSeleccionado(liquidacionAux)
+      this.router.navigate(['/contratos/liquidaciones'])
     }  else{
       console.warn("La liquidacionAux dio undefinded:", liquidacionAux)
     }
   }
-  generarRecibo(contrato: IContrato){
+  generarReciboInquilino(contrato: IContrato){
     const liquidacionAux = this._liquidacion.buscarLiquidacionPorContrato(contrato.id)
     if(liquidacionAux){
-      this._liquidacion.generarLiquidacionDocx(liquidacionAux);
+      this._liquidacion.generarLiquidacionInquilinoDocx(liquidacionAux);
     } else{
       console.warn("La liquidacionAux dio undefinded:", liquidacionAux)
     } 

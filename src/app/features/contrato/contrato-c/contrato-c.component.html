@@ -12,7 +12,6 @@
             <h3 class="card-titulo">{{ contrato.titulo || 'Contrato #' + contrato.id }}</h3>
             <span class="card-estado" 
             [class]="contrato?.estado"
-            
             > 
                 {{ contrato.estado }}
             </span>
@@ -32,6 +31,10 @@
                 <span class="valor">{{ contrato.fechaInicio | date: 'dd/MM/yy' }} - {{ contrato.fechaFin | date: 'dd/MM/yy' }} </span>
             </div>
             <div class="info-row">
+                <span class="label">Honorarios</span>
+                <span class="valor">{{contrato.porcentajeHonorarios}}%</span>
+            </div>
+            <div class="info-row">
                 <span class="label">Información detallada:</span>
                 <span class="valor">
                     <button mat-button (click)="cambiarValorSidebarInfo(contrato.id)">Ver info</button>
@@ -41,21 +44,20 @@
         </div>
 
         <div class="card-actions">
-            <button mat-icon-button class="btn-gastos" (click)="generarRecibo(contrato)" matTooltip="Generar recibo">
-                <mat-icon>receipt_long</mat-icon>
-            </button>
-            <button mat-icon-button class="btn-editar" (click)="editarContrato(contrato)" matTooltip="Editar contrato">
-                <mat-icon>edit</mat-icon>
-            </button>
+                       
             <button mat-icon-button class="btn-gastos" (click)="agregarGastosContrato(contrato)" matTooltip="Agregar gastos">
-                <mat-icon>add_circle</mat-icon>
-            </button>
-            <button mat-icon-button class="btn-eliminar" (click)="eliminarContrato(contrato)" matTooltip="Eliminar contrato">
-                <mat-icon>delete</mat-icon>
+                <mat-icon>receipt_long</mat-icon>
             </button>
             <button mat-icon-button class="btn-indice" (click)="solicitarIndice(contrato)" matTooltip="Solicitar Indice">
                 <mat-icon>percent</mat-icon>
             </button>
+            <button mat-icon-button class="btn-editar" (click)="editarContrato(contrato)" matTooltip="Editar contrato">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="btn-eliminar" (click)="eliminarContrato(contrato)" matTooltip="Eliminar contrato">
+                <mat-icon>delete</mat-icon>
+            </button>
+            
         </div>
     </div>
     } @else {

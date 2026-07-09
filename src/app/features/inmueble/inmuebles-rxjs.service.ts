@@ -32,5 +32,25 @@ cargarLista(): void {
     this._rxjsPropietarios.cargarLista(); // Asegura que la lista de propietarios esté cargada  
     return this._rxjsPropietarios.obtenerNombrePropietarioPorId(idPropietario)
   }
+  devolverCaracteristica(idImueble: number, caracteristica: string):string | number | boolean {
+    const inmueble = this.$lista().find(i => i.id === idImueble)
+    if(inmueble){
+      const valor =  inmueble.caracteristicas.find( c => c.clave == caracteristica )?.valor
+      if (valor){
+        return valor
+      }else{
+        console.warn("valor dió undefinded, id inmueble:",idImueble,"caracteristica:",caracteristica,"valor:",valor,"inmueble",inmueble)
+      }
+    }
+    return ''
+  }
+  obtenerDireccion(idInmueble:number):string{
+    const inmueble = this.$lista().find(i => i.id === idInmueble)
+    if(inmueble){
+      return inmueble.direccion
+    }
+    console.warn("no encontro el inmueble")
+    return ''
+  }
    
 }

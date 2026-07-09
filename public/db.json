@@ -159,57 +159,34 @@
   ],
   "inmuebles": [
     {
-      "id": 129072,
+      "id": 279373,
       "idPropietario": 994910,
       "caracteristicas": [
         {
-          "clave": "m2",
-          "valor": 43000
+          "clave": "piso",
+          "valor": "PB"
         }
-      ]
-    },
-    {
-      "id": 249052,
-      "idPropietario": 468718,
-      "caracteristicas": [
-        {
-          "clave": "m2",
-          "valor": 47000
-        }
-      ]
-    },
-    {
-      "id": 731587,
-      "idPropietario": 994910,
-      "caracteristicas": [
-        {
-          "clave": "m2",
-          "valor": 150
-        }
-      ]
-    },
-    {
-      "id": 161751,
-      "idPropietario": 418782,
-      "caracteristicas": [
-        {
-          "clave": "m2",
-          "valor": 1000
-        }
-      ]
-    },
-    {
-      "id": 224432,
-      "idPropietario": 418782,
-      "caracteristicas": [
-        {
-          "clave": "m2",
-          "valor": 2000
-        }
-      ]
+      ],
+      "direccion": "Buenos Aires 3008"
     }
   ],
-  "contratos": [],
+  "contratos": [
+    {
+      "id": 738990,
+      "propietarioId": 994910,
+      "inmuebleId": 279373,
+      "inquilinoId": 631601,
+      "fechaInicio": "2026-05-01T03:00:00.000Z",
+      "fechaFin": "2027-11-30T03:00:00.000Z",
+      "rentaMensual": 300000,
+      "estado": "preliminar",
+      "periodoAumento": 4,
+      "proximoAumento": "2026-09-01T03:00:00.000Z",
+      "titulo": "Nahuel BsAs3008",
+      "porcentajeHonorarios": 5,
+      "estadoRenovacion": "dos_meses"
+    }
+  ],
   "definiciones": [
     {
       "dominio": "propietarios",
@@ -282,9 +259,9 @@
       "dominio": "inmuebles",
       "caracteristicas": [
         {
-          "clave": "m2",
-          "tipo": "numero",
-          "requerido": true
+          "clave": "piso",
+          "tipo": "texto",
+          "requerido": false
         }
       ],
       "id": 3
@@ -332,5 +309,53 @@
       "mensaje": "Este es un recordatorio de prueba"
     }
   ],
-  "liquidaciones": []
+  "liquidaciones": [
+    {
+      "id": 978378,
+      "contratoId": 484311,
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Nahuel",
+      "periodo": "julio de 2026",
+      "fechaGeneracion": "2026-07-06T18:50:38.098Z",
+      "itemsInquilino": [
+        {
+          "descripcion": "Osse cuota 1",
+          "monto": 100
+        }
+      ],
+      "itemsPropietario": [
+        {
+          "descripcion": "Calefon",
+          "monto": 500
+        }
+      ],
+      "montoAlquiler": 1000,
+      "total": 1000,
+      "honorarios": 5
+    },
+    {
+      "id": 825290,
+      "contratoId": 738990,
+      "propietarioNombre": "Octavio",
+      "inquilinoNombre": "Nahuel",
+      "inmuebleId": 279373,
+      "periodo": "julio de 2026",
+      "fechaGeneracion": "2026-07-07T12:56:33.826Z",
+      "itemsInquilino": [
+        {
+          "descripcion": "Expensas 06",
+          "monto": 55000
+        }
+      ],
+      "itemsPropietario": [
+        {
+          "descripcion": "Expensas extraordinarias",
+          "monto": 95000
+        }
+      ],
+      "montoAlquiler": 300000,
+      "total": 300000,
+      "honorarios": 5
+    }
+  ]
 }

@@ -10,11 +10,12 @@ import { IPropietario } from '../../propietario/propietario.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 import { randomId } from '../../../shared/utilitys';
 @Component({
   selector: 'app-crear-inmueble',
   standalone: true,
-  imports: [CommonModule, FormsModule, FormDinamicoComponent, MatSelectModule, MatFormFieldModule, MatOptionModule],
+  imports: [CommonModule, FormsModule, FormDinamicoComponent, MatSelectModule, MatFormFieldModule, MatOptionModule,MatInputModule],
   templateUrl: './crear-inmueble.component.html',
   styleUrl: './crear-inmueble.component.scss'
 })
@@ -22,6 +23,7 @@ export class CrearInmuebleComponent implements OnInit {
 
   propietarios: IPropietario[] = [];
   propietarioSeleccionado: IPropietario | null = null;
+  direccion: string = ''
 
   constructor(
     private inmueblesService: InmueblesRxjsService,
@@ -55,11 +57,11 @@ export class CrearInmuebleComponent implements OnInit {
       return;
     }
 
-  
     const nuevoInmueble = {
       id: randomId(),
       idPropietario: this.propietarioSeleccionado.id,
-      caracteristicas: [...entidad.caracteristicas]
+      caracteristicas: [...entidad.caracteristicas],
+      direccion: this.direccion
     };
 
     this.inmueblesService.crear(nuevoInmueble).subscribe({

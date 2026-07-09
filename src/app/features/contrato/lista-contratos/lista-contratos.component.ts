@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { IContrato, ContractStatus, EstadoRenovacion } from '../contrato.interface';
 import {Router} from '@angular/router';
 import {ContratoBbddService} from '../contrato-bbdd.service';
+import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
 
 
 @Component({
@@ -32,8 +33,7 @@ export class ListaContratosComponent implements OnInit {
     const fechaFiltroActivo = this.$filtroFecha();
     //filtro por estado:
     if(fechaFiltroActivo) {
-          const listaFiltrada = [...lista].sort((a,b) => new Date(a.fechaFin).getTime() - new Date(b.fechaFin).getTime())
-          console.log(listaFiltrada)
+          const listaFiltrada = [...lista].sort((a,b) => new Date(a.proximoAumento).getTime() - new Date(b.proximoAumento).getTime())
 
           if (filtro === 'todos') return listaFiltrada;   
           return listaFiltrada.filter(contrato =>
@@ -50,7 +50,7 @@ export class ListaContratosComponent implements OnInit {
         
   });
   contadorFalopa: number = 0;
-  constructor( private _contratosService:ContratoBbddService, private router:Router ){}
+  constructor( private _contratosService:ContratoBbddService, private router:Router, private _liquidacionService:LiquidacionGeneratorService ){}
   
   ngOnInit() {
     this._contratosService.cargarLista();

@@ -3,12 +3,15 @@ export interface Liquidacion {
   contratoId: number;
   propietarioNombre: string;
   inquilinoNombre: string;
+  inmuebleId: number,
   periodo: string;
   fechaGeneracion: Date;
-  items: LiquidacionItem[];
+  itemsInquilino: LiquidacionItem[];
+  itemsPropietario: LiquidacionItem[];
   montoAlquiler: number,
   total: number;
   estado?: 'borrador' | 'emitida' | 'enviada';
+  honorarios: number
 }
 export interface LiquidacionItem {
   descripcion: string;

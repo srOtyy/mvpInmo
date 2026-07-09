@@ -12,6 +12,10 @@
         }
       </mat-select>
     </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Direccion</mat-label>
+      <input matInput [(ngModel)]="direccion" required />
+    </mat-form-field>
   </div>
 
   <app-form-dinamico [dominio]="'inmuebles'" (entidadCreada)="onEntidadCreada($event)">

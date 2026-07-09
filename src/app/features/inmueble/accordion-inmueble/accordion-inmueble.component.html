@@ -9,6 +9,8 @@
         </button>
     </div>
     @if(entidad !== null){
+        <p><strong>direccion:</strong> {{entidad.direccion}}</p>
+                <mat-divider></mat-divider>
         @for(c of entidad.caracteristicas; track $index) {
             @if(c.valor !== null){
                 <p><strong>{{c.clave}}:</strong> {{c.valor}}</p>

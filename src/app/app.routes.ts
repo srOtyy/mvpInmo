@@ -10,6 +10,7 @@ import { CrearContratoComponent } from './features/contrato/crear-contrato/crear
 import { ContratoCComponent } from './features/contrato/contrato-c/contrato-c.component';
 import { CrearNotificacionComponent } from './features/notificaciones/crear-notificacion/crear-notificacion.component';
 import { ListaContratosComponent } from './features/contrato/lista-contratos/lista-contratos.component';
+import { AgregarGastosContratoComponent } from './features/contrato/modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
 // es necesario pasar rutas "rutas-dinamicas.service"(core/navegacion) a este archivo para que el router pueda reconocerlas
 export const routes: Routes = [
   {
@@ -41,9 +42,8 @@ export const routes: Routes = [
     children: [
       { path: 'vista', component: ContratoCComponent },
       { path: 'crear', component: CrearContratoComponent },
-      { path: 'lista', component: ListaContratosComponent}
-    
-
+      { path: 'lista', component: ListaContratosComponent},
+      {path: 'liquidaciones',component: AgregarGastosContratoComponent}
     ]
   },
   {

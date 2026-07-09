@@ -1,83 +1,115 @@
 @import '../../../../../styles.scss';
 
 .contenedor{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 100%;
-  .formulario {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    max-width: 85vw;
+    padding: 25px 0;
+    margin: 10px;
+    color: $primary-500;
+  .cabecera{
+    width: 100%;
     padding: 20px;
-  }
-  .contenedor_lista{
-    background-color: $neutral-700;
-    border-bottom-left-radius:8px ;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 12px;
-    max-height: 40vh;
-    padding: 12px;
-
-    h6{
-        font-size: 18px;
-        align-self: center;
-        color: $neutral-200;
-        margin: 0;
-        border-bottom: 1px solid $neutral-600;
+    .icono{
+      color: $primary-500
     }
-    .lista{
-      flex: 1 1 auto;
-      display: block;
-      overflow-y: auto;
-
-      .item{
-        color: $neutral-400;
-        padding: 5px 0;
+}
+  .stepper{
+    margin-top:10px ;
+    width: 65vw;
+    height: 67vh;
+    border-radius: 10px;
+    .step1{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      .formulario{
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        
-        
-        .item_texto{
-            font-size: 13px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 10px;
-            .item_texto_clave{
-                color: $primary-700;
-                opacity: 0.8;
-          }
-          
-
+        flex-direction: column;
+        padding-right: 45px;
+        border-right: 1px solid gray;
+        align-items: center;
+        .datos_formulario{
+          width: 70%;
         }
+       
+      }
+      .contenedor_lista{
+              display: flex;
+              flex-direction: column;
+              height: 40vh;
+              overflow-y: auto;
+              gap: 10px;
+              align-items: start;
+              padding-left: 10px;
+              margin-bottom: 15px;
+              min-width: 0;
+              ::-webkit-scrollbar {
+                width: 5px;
+              }
+              ::-webkit-scrollbar-track {
+                background: $primary-900;
+                border-radius: 5px;
+              }
+              ::-webkit-scrollbar-thumb {
+                background: $neutral-500;
+                border-radius: 10px;
+              }
+              h6{
+                font-size: 18px;
+                color: $neutral-200;
+                margin: 0;
+                align-self: flex-start;
+              }
+              .items-wrapper{
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px 20px;
+                align-items: flex-start;
+                width: 100%;
+                .item{
+                  color: $neutral-400;
+                  padding: 8px 12px;
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  align-items: center;
+                  min-width: 200px;
+                  max-width: 300px;
+                  flex: 1 1 calc(50% - 10px);
+                  background: $neutral-900;
+                  border-radius: 6px;
+                  .item_texto{
+                    font-size: 13px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 10px;
+                    .item_texto_clave{
+                      color: $primary-700;
+                      opacity: 0.8;
+                    }
+                  }
+                }
+              }
       }
     }
-    .contenedor-boton{
-      padding-top:10px ;
-      border-top: 1px solid $neutral-600;
-      align-self: center;
-      .boton{
-        height: 22px;
-        font-size: 11px;
+    .botones{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      .generar_documentos{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        .boton{
+        height: 45px;
+      } 
       }
+      
+    }  
 
-    }
-    ::-webkit-scrollbar {
-    width: 5px; /* Ancho para scroll vertical */
-
-    }
-    ::-webkit-scrollbar-track {
-        background: $primary-900;
-        border-radius: 5px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: $neutral-500;
-      border-radius: 10px;
-    } 
   }
-  
-
 }
