@@ -18,6 +18,8 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
   $liquidacionSeleccionada = signal<Liquidacion>({} as Liquidacion)
   liquidacionInquilino = 'liquidacion-inquilino2.docx'
   liquidacionPropietario = 'liquidacion-propietario2.docx'
+  minutaPropietario = 'propietario-minuta-template.docx'
+  recibiInquilino = 'inquilino-recibi-template.docx'
   ahora = new Date()
   nombresMeses = [
       'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 
@@ -83,8 +85,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
     catch(error){
       console.error('Error 1 al generar la liquidación;', error);
     }
-  }
-  
+  }  
   async generarLiquidacionPropietarioDocx(liquidacion: Liquidacion): Promise<void> {
     const direccion = this._inmueblesService.obtenerDireccion(liquidacion.inmuebleId)
     const piso = this._inmueblesService.devolverCaracteristica(liquidacion.inmuebleId,"piso")
@@ -112,6 +113,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
         itemsInquilino: liquidacion.itemsInquilino,
         montoAlquiler: liquidacion.montoAlquiler,
         porcentajeHonorarios: liquidacion.honorarios,
+        subTotal: subTotal,
         subTotalDescuentos: subtotalDescuento,
         totalHonorarios: totalHonorarios,
         total: total,
@@ -130,8 +132,6 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
       console.error('Error 1 al generar la liquidación;', error);
     }
   }
-
-
   async generarMinutaPropietario(liquidacion: Liquidacion): Promise<void> {
     const totalHonorarios = liquidacion.honorarios * liquidacion.montoAlquiler / 100
     const totalItemsInquilino = liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0)
@@ -142,7 +142,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
 
     try{
       const response = await lastValueFrom(
-        this.http.get(`/templates/propietario-minuta-template.docx`, { responseType: 'arraybuffer' })
+        this.http.get(`/templates/${this.minutaPropietario}`, { responseType: 'arraybuffer' })
       );
       const content = new Uint8Array(response as ArrayBuffer);
       const zip = new PizZip(content);
@@ -168,7 +168,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       });
-      saveAs(blob, `Liquidacion - ${liquidacion.propietarioNombre}.docx`);
+      saveAs(blob, `minuta - ${liquidacion.propietarioNombre}.docx`);
     }
     catch(error){
       console.error('Error 1 al generar la liquidación;', error);
@@ -187,7 +187,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
     const proximoMesYAnioActual = `${proximoMes} del ${anioProximoMes}`;
     try{
       const response = await lastValueFrom(
-        this.http.get(`/templates/inquilino-recibi-template.docx`, { responseType: 'arraybuffer' })
+        this.http.get(`/templates/${this.recibiInquilino}`, { responseType: 'arraybuffer' })
       );
       const content = new Uint8Array(response as ArrayBuffer);
       const zip = new PizZip(content);
@@ -210,7 +210,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
           type: 'blob',
           mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         });
-      saveAs(blob, `Liquidacion - ${liquidacion.inquilinoNombre}.docx`);
+      saveAs(blob, `Recibo - ${liquidacion.inquilinoNombre}.docx`);
     }
     catch(error){
       console.error('Error 1 al generar la liquidación;', error);

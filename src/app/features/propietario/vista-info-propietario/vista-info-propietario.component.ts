@@ -13,8 +13,4 @@ import { CommonModule, TitleCasePipe } from '@angular/common';
 export class VistaInfoPropietarioComponent {
   propietario = input<IPropietario | undefined>(undefined)
   
-  obtenerValor(clave: string): string | number | boolean {
-    const prop = this.propietario();
-    return prop ? obtenerCaracteristica(prop, clave, 'No disponible') : 'No disponible';
-  }
 }
