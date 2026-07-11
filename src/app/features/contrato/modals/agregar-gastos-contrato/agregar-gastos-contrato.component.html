@@ -34,6 +34,9 @@
                   <p><span>${{ gasto.monto }}</span></p>
                 </div>
                 <div class="item_boton">
+                  @if (gasto.confirmado) {
+                    <mat-icon class="icono-confirmado" matTooltip="Gasto confirmado">check_circle</mat-icon>
+                  }
                   <button mat-icon-button color="warn" type="button" (click)="eliminarGastoTemporal($index, 1)" class="boton">
                     <mat-icon>delete</mat-icon>
                   </button>
@@ -93,6 +96,9 @@
                   <p><span>${{ gasto.monto }}</span></p>
                 </div>
                 <div class="item_boton">
+                  @if (gasto.confirmado) {
+                    <mat-icon class="icono-confirmado" matTooltip="Gasto confirmado">check_circle</mat-icon>
+                  }
                   <button mat-icon-button color="warn" type="button" (click)="eliminarGastoTemporal($index, 2)" class="boton">
                     <mat-icon>delete</mat-icon>
                   </button>

@@ -66,6 +66,40 @@
           "email": "DafJ@outlook.com"
         }
       ]
+    },
+    {
+      "id": 499231,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Abril Baez"
+        },
+        {
+          "clave": "dni",
+          "valor": 46477477
+        },
+        {
+          "clave": "email",
+          "valor": "aby@outlook.com"
+        },
+        {
+          "clave": "telefono",
+          "valor": 22345689561
+        },
+        {
+          "clave": "tipo de sangre",
+          "valor": "A"
+        }
+      ],
+      "garantes": [
+        {
+          "id": 133411,
+          "idInquilino": 499231,
+          "nombre": "Viviana L.",
+          "telefono": "2214567894",
+          "email": ""
+        }
+      ]
     }
   ],
   "propietarios": [
@@ -155,6 +189,35 @@
           "valor": "1234124124"
         }
       ]
+    },
+    {
+      "id": 768872,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Octavio Diaz Crespo"
+        },
+        {
+          "clave": "dni",
+          "valor": 43044274
+        },
+        {
+          "clave": "cuil",
+          "valor": 20430442741
+        },
+        {
+          "clave": "telefono",
+          "valor": 2257613984
+        },
+        {
+          "clave": "telefono aux",
+          "valor": 0
+        },
+        {
+          "clave": "domicilio",
+          "valor": "Belgrano 343"
+        }
+      ]
     }
   ],
   "inmuebles": [
@@ -190,53 +253,35 @@
         }
       ],
       "direccion": "Belgrano 343"
+    },
+    {
+      "id": 233770,
+      "idPropietario": 768872,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": "P.B."
+        }
+      ],
+      "direccion": "Buenos Aires 3008"
     }
   ],
   "contratos": [
     {
-      "id": 738990,
-      "propietarioId": 994910,
-      "inmuebleId": 279373,
-      "inquilinoId": 631601,
-      "fechaInicio": "2026-05-01T03:00:00.000Z",
-      "fechaFin": "2027-11-30T03:00:00.000Z",
-      "rentaMensual": 300000,
+      "id": 576083,
+      "propietarioId": 768872,
+      "inmuebleId": 233770,
+      "inquilinoId": 499231,
+      "fechaInicio": "2026-06-01T03:00:00.000Z",
+      "fechaFin": "2027-06-02T03:00:00.000Z",
+      "rentaMensual": 500000,
       "estado": "preliminar",
       "periodoAumento": 4,
-      "proximoAumento": "2026-09-01T03:00:00.000Z",
-      "titulo": "Nahuel BsAs3008",
-      "porcentajeHonorarios": 5,
-      "estadoRenovacion": "dos_meses"
-    },
-    {
-      "id": 466801,
-      "inquilinoId": 631601,
-      "inmuebleId": 436001,
-      "fechaFin": "2027-07-31T03:00:00.000Z",
-      "fechaInicio": "2026-07-01T03:00:00.000Z",
-      "propietarioId": 468718,
-      "estado": "activo",
-      "estadoRenovacion": "normal",
-      "rentaMensual": 315000,
-      "titulo": "Independencia 565",
       "proximoAumento": "2026-10-01T03:00:00.000Z",
-      "porcentajeHonorarios": 4,
-      "tipoDePago": "transferencia"
-    },
-    {
-      "id": 145812,
-      "propietarioId": 418782,
-      "inmuebleId": 776899,
-      "inquilinoId": 631601,
-      "fechaInicio": "2026-06-16T03:00:00.000Z",
-      "fechaFin": "2027-01-31T03:00:00.000Z",
-      "rentaMensual": 290000,
-      "estado": "preliminar",
-      "periodoAumento": 1,
-      "proximoAumento": "2026-07-16T03:00:00.000Z",
-      "titulo": "Prueba",
-      "porcentajeHonorarios": 3,
-      "estadoRenovacion": "un_mes"
+      "titulo": "Buenos Aires 3008",
+      "porcentajeHonorarios": 5,
+      "tipoPago": "transferencia",
+      "estadoRenovacion": "normal"
     }
   ],
   "definiciones": [
@@ -363,79 +408,40 @@
   ],
   "liquidaciones": [
     {
-      "id": 978378,
-      "contratoId": 484311,
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Nahuel",
+      "id": 491219,
+      "contratoId": 576083,
+      "propietarioNombre": "Octavio Diaz Crespo",
+      "inquilinoNombre": "Abril Baez",
+      "inmuebleId": 233770,
       "periodo": "julio de 2026",
-      "fechaGeneracion": "2026-07-06T18:50:38.098Z",
+      "fechaGeneracion": "2026-07-11T16:42:49.231Z",
       "itemsInquilino": [
         {
-          "descripcion": "Osse cuota 1",
-          "monto": 100
+          "descripcion": "Expensas 07",
+          "monto": 55541,
+          "montoTexto": "CINCUENTA Y CINCO MIL QUINIENTOS CUARENTA Y UNO"
+        },
+        {
+          "descripcion": "Osse 07",
+          "monto": 23015,
+          "montoTexto": "VEINTITRÉS MIL QUINCE"
+        },
+        {
+          "descripcion": "Camuzzi",
+          "monto": 33012,
+          "montoTexto": "TREINTA Y TRES MIL DOCE"
         }
       ],
       "itemsPropietario": [
         {
           "descripcion": "Calefon",
-          "monto": 500
+          "monto": 135000,
+          "montoTexto": "CIENTO TREINTA Y CINCO MIL"
         }
       ],
-      "montoAlquiler": 1000,
-      "total": 1000,
+      "montoAlquiler": 500000,
+      "total": 500000,
       "honorarios": 5
-    },
-    {
-      "id": 825290,
-      "contratoId": 738990,
-      "propietarioNombre": "Octavio",
-      "inquilinoNombre": "Nahuel",
-      "inmuebleId": 279373,
-      "periodo": "julio de 2026",
-      "fechaGeneracion": "2026-07-07T12:56:33.826Z",
-      "itemsInquilino": [
-        {
-          "descripcion": "Expensas 06",
-          "monto": 55000
-        }
-      ],
-      "itemsPropietario": [
-        {
-          "descripcion": "Expensas extraordinarias",
-          "monto": 95000
-        }
-      ],
-      "montoAlquiler": 300000,
-      "total": 300000,
-      "honorarios": 5
-    },
-    {
-      "id": 370895,
-      "contratoId": 466801,
-      "propietarioNombre": "Abril",
-      "inquilinoNombre": "Nahuel",
-      "inmuebleId": 436001,
-      "periodo": "julio de 2026",
-      "fechaGeneracion": "2026-07-09T14:00:23.460Z",
-      "itemsInquilino": [],
-      "itemsPropietario": [],
-      "montoAlquiler": 315000,
-      "total": 315000,
-      "honorarios": 4
-    },
-    {
-      "id": 663616,
-      "contratoId": 145812,
-      "propietarioNombre": "Alejandro",
-      "inquilinoNombre": "Nahuel",
-      "inmuebleId": 776899,
-      "periodo": "julio de 2026",
-      "fechaGeneracion": "2026-07-09T14:01:33.847Z",
-      "itemsInquilino": [],
-      "itemsPropietario": [],
-      "montoAlquiler": 290000,
-      "total": 290000,
-      "honorarios": 3
     }
   ]
 }

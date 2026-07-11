@@ -16,5 +16,6 @@ export interface Liquidacion {
 export interface LiquidacionItem {
   descripcion: string;
   monto: number;
+  montoTexto: string;
 }
 

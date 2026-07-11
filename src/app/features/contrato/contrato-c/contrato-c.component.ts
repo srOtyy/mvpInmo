@@ -32,7 +32,7 @@ export class ContratoCComponent implements OnInit {
   ngOnInit(){
     this._contratosService.cargarLista();
     this._liquidacion.cargarLista()
-    
+    console.log(this._contratosService.contratoSeleccionado$)
   }
 
 

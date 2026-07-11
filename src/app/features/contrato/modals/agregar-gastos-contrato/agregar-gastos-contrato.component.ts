@@ -12,7 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatStepperModule } from '@angular/material/stepper';
 import { Router } from '@angular/router';
-
+import { numeroALetras } from '../../../../shared/utilitys';
 export enum TipoGasto {
   Inquilino = 1,
   Propietario = 2
@@ -21,6 +21,7 @@ export enum TipoGasto {
 interface GastoLiquidacion {
   tipo: string;
   monto: number;
+  confirmado: boolean;
 }
 
 @Component({
@@ -63,7 +64,8 @@ export class AgregarGastosContratoComponent implements OnInit {
     if (items) {
       const gastosIniciales = items.map(item => ({
         tipo: item.descripcion,
-        monto: item.monto
+        monto: item.monto,
+        confirmado: true
       }));
       signal.set(gastosIniciales);
     }
@@ -75,7 +77,8 @@ export class AgregarGastosContratoComponent implements OnInit {
     if (formulario.valid) {
       const nuevoGasto: GastoLiquidacion = {
         tipo: formulario.controls.tipo.value!,
-        monto: +(formulario.controls.monto.value!)
+        monto: +(formulario.controls.monto.value!),
+        confirmado: false
       };
 
       if (tipo === TipoGasto.Inquilino) {
@@ -103,7 +106,8 @@ export class AgregarGastosContratoComponent implements OnInit {
     const gastos = tipo === TipoGasto.Inquilino ? this.$gastosInquilino() : this.$gastosPropietario();
     return gastos.map(gasto => ({
       descripcion: gasto.tipo,
-      monto: gasto.monto
+      monto: gasto.monto,
+      montoTexto: numeroALetras(gasto.monto)
     }));
   }
 
@@ -116,6 +120,11 @@ export class AgregarGastosContratoComponent implements OnInit {
 
     this._liquidacion.actualizar(this.entidad.id, this.entidad).subscribe({
       next: () => {
+        if (tipo === TipoGasto.Inquilino) {
+          this.$gastosInquilino.update(gastos => gastos.map(g => ({ ...g, confirmado: true })));
+        } else {
+          this.$gastosPropietario.update(gastos => gastos.map(g => ({ ...g, confirmado: true })));
+        }
         this.formularioInquilino.reset();
         this.formularioInquilino.markAllAsTouched();
         this.formularioPropietario.reset();

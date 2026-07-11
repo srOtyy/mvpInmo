@@ -72,7 +72,7 @@ export class EditarContratoComponent implements OnInit {
       proximoAumento: contratoData.proximoAumento,
       registroDeActividad: contratoData.registroActividad,
       porcentajeHonorarios: contratoData.porcentajeHonorarios,
-      tipoDePago: contratoData.tipoDePago
+      tipoDePago: contratoData.tipoPago
     });
       
   }

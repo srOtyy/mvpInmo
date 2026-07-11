@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { InmueblesRxjsService } from '../inmueble/inmuebles-rxjs.service';
+import { numeroALetras } from '../../shared/utilitys';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,14 +28,17 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
     ];
   constructor( _http: HttpClient, private _inmueblesService: InmueblesRxjsService ) { 
     super(_http, 'http://localhost:3000/liquidaciones')
+
   }
+
   cargarLista(): void {
      if (this.$lista().length > 0) return;
      this.cargar().subscribe({
        next: () => console.log('Liquidacion cargada'),
        error: () => console.error('Error al cargar las liquidaciones')
      });
-   }
+  }
+   
  //crear la liquidacion
   crearLiquidacion(contrato: IContrato, nombrePropietario: string, nombreInquilino: string): Liquidacion {
     const liquidacion: Liquidacion = {
@@ -133,6 +137,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
     }
   }
   async generarMinutaPropietario(liquidacion: Liquidacion): Promise<void> {
+  
     const totalHonorarios = liquidacion.honorarios * liquidacion.montoAlquiler / 100
     const totalItemsInquilino = liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0)
     const totalItemsPropietario = liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0)
@@ -175,6 +180,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
     }
   }
    async generarReciboInquilino(liquidacion: Liquidacion): Promise<void> {
+    const montoAlquilerTexto = numeroALetras(liquidacion.montoAlquiler)
     const direccion = this._inmueblesService.obtenerDireccion(liquidacion.inmuebleId)
     const piso = this._inmueblesService.devolverCaracteristica(liquidacion.inmuebleId,"piso")
     const anioActual = this.ahora.getFullYear();
@@ -203,6 +209,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
         inquilino: liquidacion.inquilinoNombre,
         itemsInquilino: liquidacion.itemsInquilino,
         montoAlquiler: liquidacion.montoAlquiler,
+        montoAlquilerTexto: montoAlquilerTexto,
         total: liquidacion.montoAlquiler + liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0)
       });
 
@@ -239,7 +246,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
     if(idLiquidacion !== 0){
       this.eliminar(idLiquidacion).subscribe({
         next: ()=>{
-          console.log("liquidacion eliminada?")
+          console.log("liquidacion eliminada")
         }
       })
     }else{
