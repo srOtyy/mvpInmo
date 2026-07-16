@@ -15,7 +15,7 @@ import {FormControl} from '@angular/forms';
 import { IInquilino } from '../inquilino.interface';
 import { Garante } from '../../garantes/garante-interface';
 import { MatIconModule } from '@angular/material/icon';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 @Component({
   selector: 'app-crear-inquilino',
   standalone: true,
@@ -43,13 +43,14 @@ export class CrearInquilinoComponent {
     private _garantes: GarantesService    
   ) {}
   // boton submit form dinamico
-  onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }): void {
+  onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }, stepper: MatStepper): void {
     const nuevoInquilino = {
       id: randomId(),
       caracteristicas: entidad.caracteristicas,
       garantes: [] 
     };
     this.inquilinoAux = nuevoInquilino;
+    stepper.next()
 
   } 
  

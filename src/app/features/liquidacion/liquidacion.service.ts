@@ -15,13 +15,16 @@ import { numeroALetras } from '../../shared/utilitys';
   providedIn: 'root'
 })
 export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
+  //dia mostrado en el header
+  ahora = new Date()
+
+
   $gastos: LiquidacionItem[] = [];
   $liquidacionSeleccionada = signal<Liquidacion>({} as Liquidacion)
   liquidacionInquilino = 'liquidacion-inquilino2.docx'
   liquidacionPropietario = 'liquidacion-propietario2.docx'
   minutaPropietario = 'propietario-minuta-template.docx'
   recibiInquilino = 'inquilino-recibi-template.docx'
-  ahora = new Date()
   nombresMeses = [
       'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 
       'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
@@ -53,7 +56,8 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
       itemsPropietario: [],
       montoAlquiler: contrato.rentaMensual,
       total: contrato.rentaMensual,
-      honorarios: contrato.porcentajeHonorarios
+      honorarios: contrato.porcentajeHonorarios,
+      inicioDelPeriodo: contrato.inicioDelPeriodo ? contrato.inicioDelPeriodo : 1
     }
     return liquidacion
   }
@@ -210,7 +214,8 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion>{
         itemsInquilino: liquidacion.itemsInquilino,
         montoAlquiler: liquidacion.montoAlquiler,
         montoAlquilerTexto: montoAlquilerTexto,
-        total: liquidacion.montoAlquiler + liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0)
+        total: liquidacion.montoAlquiler + liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0),
+        inicioDelPeriodo: liquidacion.inicioDelPeriodo
       });
 
       const blob = doc.getZip().generate({

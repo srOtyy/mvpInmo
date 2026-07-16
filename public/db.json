@@ -100,6 +100,40 @@
           "email": ""
         }
       ]
+    },
+    {
+      "id": 560448,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Juan Perez"
+        },
+        {
+          "clave": "dni",
+          "valor": 123456789
+        },
+        {
+          "clave": "email",
+          "valor": "o@o.com"
+        },
+        {
+          "clave": "telefono",
+          "valor": 15151148
+        },
+        {
+          "clave": "tipo de sangre",
+          "valor": "B"
+        }
+      ],
+      "garantes": [
+        {
+          "id": 679820,
+          "idInquilino": 560448,
+          "nombre": "Pepe",
+          "telefono": "22585585848",
+          "email": "p3p3@0utl00k.com"
+        }
+      ]
     }
   ],
   "propietarios": [
@@ -218,6 +252,35 @@
           "valor": "Belgrano 343"
         }
       ]
+    },
+    {
+      "id": 855639,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Juan Pérez"
+        },
+        {
+          "clave": "dni",
+          "valor": 23568945
+        },
+        {
+          "clave": "cuil",
+          "valor": 20235645891
+        },
+        {
+          "clave": "telefono",
+          "valor": 222211412
+        },
+        {
+          "clave": "telefono aux",
+          "valor": 222211522
+        },
+        {
+          "clave": "domicilio",
+          "valor": "C. 151 "
+        }
+      ]
     }
   ],
   "inmuebles": [
@@ -264,6 +327,17 @@
         }
       ],
       "direccion": "Buenos Aires 3008"
+    },
+    {
+      "id": 947368,
+      "idPropietario": 855639,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": "11"
+        }
+      ],
+      "direccion": "Av. 66 "
     }
   ],
   "contratos": [
@@ -282,6 +356,23 @@
       "porcentajeHonorarios": 5,
       "tipoPago": "transferencia",
       "estadoRenovacion": "normal"
+    },
+    {
+      "id": 432667,
+      "propietarioId": 855639,
+      "inmuebleId": 947368,
+      "inquilinoId": 840222,
+      "fechaInicio": "2026-05-01T03:00:00.000Z",
+      "fechaFin": "2027-07-31T03:00:00.000Z",
+      "rentaMensual": 290000,
+      "estado": "preliminar",
+      "periodoAumento": 3,
+      "proximoAumento": "2026-08-01T03:00:00.000Z",
+      "titulo": "Pepe Av.66",
+      "porcentajeHonorarios": 7,
+      "tipoPago": "efectivo",
+      "inicioDelPeriodo": 5,
+      "estadoRenovacion": "un_mes"
     }
   ],
   "definiciones": [
@@ -442,6 +533,27 @@
       "montoAlquiler": 500000,
       "total": 500000,
       "honorarios": 5
+    },
+    {
+      "id": 615409,
+      "contratoId": 432667,
+      "propietarioNombre": "Juan Pérez",
+      "inquilinoNombre": "Pepe",
+      "inmuebleId": 947368,
+      "periodo": "julio de 2026",
+      "fechaGeneracion": "2026-07-12T17:56:11.330Z",
+      "itemsInquilino": [
+        {
+          "descripcion": "Expensas Julio",
+          "monto": 35762,
+          "montoTexto": "TREINTA Y CINCO MIL SETECIENTOS SESENTA Y DOS"
+        }
+      ],
+      "itemsPropietario": [],
+      "montoAlquiler": 290000,
+      "total": 290000,
+      "honorarios": 7,
+      "inicioDelPeriodo": 5
     }
   ]
 }

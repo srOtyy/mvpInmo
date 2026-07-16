@@ -39,17 +39,18 @@ export class CrearContratoComponent implements OnInit {
     this.formulario = new FormGroup({
       id: new FormControl(randomId(), Validators.required), 
       propietarioId: new FormControl('', Validators.required),
-      inmuebleId: new FormControl('', Validators.required),
+      inmuebleId: new FormControl({ value: '', disabled: true }, Validators.required),
       inquilinoId: new FormControl('', Validators.required),
       fechaInicio: new FormControl('', Validators.required),
       fechaFin: new FormControl('', Validators.required),
       rentaMensual: new FormControl('', [Validators.required, Validators.min(0)]),
       estado: new FormControl('preliminar', Validators.required),
-      periodoAumento: new FormControl('',Validators.required),
+      periodoAumento: new FormControl('',[Validators.required,Validators.min(0)]),
       proximoAumento: new FormControl(''),
       titulo: new FormControl(''),
-      porcentajeHonorarios: new FormControl('',Validators.required),
-      tipoPago: new FormControl('',Validators.required)
+      porcentajeHonorarios: new FormControl('',[Validators.required,Validators.min(0)]),
+      tipoPago: new FormControl('',Validators.required),
+      inicioDelPeriodo: new FormControl('1',[Validators.max(31),Validators.min(1)])
       });
     }
 
@@ -58,6 +59,16 @@ export class CrearContratoComponent implements OnInit {
         console.error('Error al cargar las listas para el formulario de contratos:', error);
         this._snack.mensajeSnackBar('Error al cargar datos para el formulario', 'Cerrar');
     });
+    this.formulario.get('propietarioId')?.valueChanges.subscribe( valor => {
+      const controlInmuebles = this.formulario.get('inmuebleId')
+
+      if(valor){
+        controlInmuebles?.enable()
+      }else{
+        controlInmuebles?.disable()
+        controlInmuebles?.reset()
+      }
+    })
   }
 
   get propietariosLista() {
@@ -130,4 +141,5 @@ export class CrearContratoComponent implements OnInit {
   obtenerDireccion(id: number):string | number | boolean{
     return this._inmuebleService.devolverCaracteristica(id,"direccion")
   }
+  
 }

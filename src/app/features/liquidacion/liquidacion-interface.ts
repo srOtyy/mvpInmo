@@ -11,7 +11,8 @@ export interface Liquidacion {
   montoAlquiler: number,
   total: number;
   estado?: 'borrador' | 'emitida' | 'enviada';
-  honorarios: number
+  honorarios: number,
+  inicioDelPeriodo: number
 }
 export interface LiquidacionItem {
   descripcion: string;

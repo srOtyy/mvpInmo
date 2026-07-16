@@ -39,17 +39,24 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <!-- Pripietario / inquilino / Inmueble -->
 
       <div class="campo">
         <mat-form-field appearance="fill">
-          <mat-label>Renta Base</mat-label>
+          <mat-label>Valor del alquiler</mat-label>
           <input matInput type="number" formControlName="rentaMensual" />
+          @if(formulario.get('rentaMensual')?.hasError('min')){
+          <mat-error>El valor del alquiler debe ser positivo</mat-error>
+          }
         </mat-form-field>
       </div>
       <div class="campo">
         <mat-form-field appearance="fill">
           <mat-label>Período de aumento</mat-label>
           <input matInput type="number" formControlName="periodoAumento" />
+          @if(formulario.get('periodoAumento')?.hasError('min')){
+          <mat-error>El periodo debe ser positivo</mat-error>
+          }
         </mat-form-field>
       </div>
       <div class="campo">
@@ -70,18 +77,36 @@
         </mat-form-field>
       </div>
       <div class="campo">
-      <mat-form-field appearance="fill">
-        <mat-label>Porcentaje de honorarios</mat-label>
-        <input matInput formControlName="porcentajeHonorarios" type="number">
+        <mat-form-field appearance="fill">
+          <mat-label>Porcentaje de honorarios</mat-label>
+          <input matInput formControlName="porcentajeHonorarios" type="number">
+          @if(formulario.get('porcentajeHonorarios')?.hasError('min')){
+          <mat-error>El porcentaje de honorarios debe ser positivo</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="campo">
+        <mat-form-field appearance="fill">
+        <mat-label>Inicio del periodo de cobro</mat-label>
+        <input matInput formControlName="inicioDelPeriodo" type="number">
+        @if (formulario.get('inicioDelPeriodo')?.hasError('max')) {
+          <mat-error>El inicio del periodo debe ser igual o menor a 31</mat-error>
+        }
+        @if(formulario.get('inicioDelPeriodo')?.hasError('min')){
+          <mat-error>El inicio del periodo debe ser igual o mayor a 1</mat-error>
+        }
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      
+      </div>
+      <div class="campo">
+        <mat-form-field appearance="fill">
         <mat-label>Tipo de pago</mat-label>
         <mat-select formControlName="tipoPago">
           <mat-option value="efectivo">efectivo</mat-option>
           <mat-option value="transferencia">transferencia</mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+      </div>
     </div>
     
     <button mat-raised-button color="primary" type="submit" [disabled]="formulario.invalid"  >Crear Contrato</button>

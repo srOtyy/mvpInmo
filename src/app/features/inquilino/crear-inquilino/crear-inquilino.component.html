@@ -1,11 +1,8 @@
 
 <section class="section">
-  <mat-stepper class="stepper">
+  <mat-stepper class="stepper" #stepper>
     <mat-step label="Inquilino" >
-        <app-form-dinamico [dominio]="'inquilinos'" (entidadCreada)="onEntidadCreada($event)"></app-form-dinamico>
-      <div>
-        <button mat-button matStepperNext>Garantes</button>
-      </div>
+        <app-form-dinamico [dominio]="'inquilinos'" (entidadCreada)="onEntidadCreada($event, stepper)"></app-form-dinamico>
     </mat-step>
     <mat-step label="Garantes" >
         <form class="form-garantes" [formGroup]="formularioGarante" >
@@ -25,19 +22,19 @@
 
           <div class="botones">
             <button mat-fab extended color="primary" (click)="agregarGarante(this.inquilinoAux.id)">
-              <mat-icon>add</mat-icon>
-              Agregar Garante
+              <mat-icon>check</mat-icon>
+              Confirmar Garante
             </button>
           </div>
   
         </form>
       <div>
-        <button mat-button matStepperPrevious>Inquilino</button>
-        <button mat-button matStepperNext>Terminar</button>
+        <button mat-button matStepperPrevious>Atras</button>
+        <button mat-button matStepperNext>Finalizar</button>
       </div>
     </mat-step>
-    <mat-step label="Finalizar">
-      <p><button mat-raised-button   color="accent" (click)="terminarCreacion()">Cargar Inquilino</button>
+    <mat-step label="Confirmar">
+      <p><button mat-raised-button   color="accent" (click)="terminarCreacion()">Cargar Inquilino y garantes</button>
     </mat-step>
 
   </mat-stepper>

@@ -32,7 +32,8 @@ export interface IContrato {
     titulo?: string;
     proximoAumento: Date;
     porcentajeHonorarios: number;
-    tipoPago: TipoPago 
+    tipoPago: TipoPago;
+    inicioDelPeriodo?: number;
 }
 export interface IContratoVista extends IContrato{
   propietarioNombre: string;
