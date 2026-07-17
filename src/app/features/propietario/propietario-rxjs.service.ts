@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPropietario } from './propietario.interface';
+import { IPropietario, IPropietarioVista } from './propietario.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { firstValueFrom } from 'rxjs';
@@ -67,6 +67,15 @@ export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
         return nombreB.localeCompare(nombreA);
       }));
       this.ordenAlfabetico = false;
+    }
+  }
+
+  //convertir IPropietario --> IPropietarioVista
+  convertirAVista(p: IPropietario): IPropietarioVista{
+    const nombre = this.obtenerNombre(p)
+    return {
+      ...p,
+      nombre
     }
   }
 }

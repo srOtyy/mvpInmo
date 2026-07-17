@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IInquilino } from './inquilino.interface';
+import { IInquilino, IInquilinoVista } from './inquilino.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import {obtenerNombre} from '../caracteristicas/entity-helpers';
@@ -48,6 +48,14 @@ export class InquilinoRxjsService extends BaseCrudService<IInquilino> {
         return nombreB.localeCompare(nombreA);
       }));
       this.ordenAlfabetico = false;
+    }
+  }
+
+  convertirAVista(i: IInquilino):IInquilinoVista{
+    const nombre = this.obtenerNombre(i)
+    return{
+      ...i,
+      nombre
     }
   }
 }

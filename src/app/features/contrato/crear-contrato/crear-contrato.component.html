@@ -6,22 +6,30 @@
       <!-- Pripietario / inquilino / Inmueble -->
       <div class="campo"> 
         <mat-form-field>
-            <mat-label>Propietario</mat-label>
-            <mat-select formControlName="propietarioId" >
-              @for (propietario of propietariosLista; track propietario.id) {
-                    <mat-option [value]="propietario.id" >{{nombrePropietario(propietario)}}</mat-option>
-                  }
-            </mat-select>
-          </mat-form-field>
+          <mat-label>Propietario</mat-label>
+            <input type="text"
+                matInput
+                formControlName="propietarioId"
+                [matAutocomplete]="autoProp">
+            <mat-autocomplete #autoProp="matAutocomplete" [displayWith]="displayPropietario" (optionSelected)="obtenerIdDelPropietario($event)">
+              @for (propietario of propietariosFiltrados | async; track propietario.id) {
+                <mat-option [value]="propietario">{{propietario.nombre}}</mat-option>
+              }
+            </mat-autocomplete>
+        </mat-form-field>
       </div>
       <div class="campo">
         <mat-form-field>
           <mat-label>Inquilino</mat-label>
-          <mat-select formControlName="inquilinoId">
-            @for (inquilino of inquilinosLista; track inquilino.id) {
-                  <mat-option [value]="inquilino.id">{{nombreInquilino(inquilino)}}</mat-option>
-                }
-          </mat-select>
+          <input type="text"
+                matInput
+                formControlName="inquilinoId"
+                [matAutocomplete]="autoInq">
+            <mat-autocomplete #autoInq="matAutocomplete" [displayWith]="displayInquilino" (optionSelected)="obtenerIdDelInquilino($event)">
+              @for (inquilino of inquilinosFiltrados | async; track inquilino.id) {
+                <mat-option [value]="inquilino">{{inquilino.nombre}}</mat-option>
+              }
+            </mat-autocomplete>
         </mat-form-field>
       </div>
       <div class="campo">

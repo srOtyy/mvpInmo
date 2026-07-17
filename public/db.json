@@ -138,35 +138,6 @@
   ],
   "propietarios": [
     {
-      "id": 994910,
-      "caracteristicas": [
-        {
-          "clave": "nombre",
-          "valor": "Octavio"
-        },
-        {
-          "clave": "dni",
-          "valor": 43044274
-        },
-        {
-          "clave": "cuil",
-          "valor": 20430442741
-        },
-        {
-          "clave": "telefono",
-          "valor": 2257613984
-        },
-        {
-          "clave": "telefono aux",
-          "valor": 0
-        },
-        {
-          "clave": "domicilio",
-          "valor": "BsAs 3008"
-        }
-      ]
-    },
-    {
       "id": 468718,
       "caracteristicas": [
         {
@@ -338,6 +309,17 @@
         }
       ],
       "direccion": "Av. 66 "
+    },
+    {
+      "id": 756997,
+      "idPropietario": 855639,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": "-"
+        }
+      ],
+      "direccion": "Santa Fe 1721"
     }
   ],
   "contratos": [
@@ -372,6 +354,23 @@
       "porcentajeHonorarios": 7,
       "tipoPago": "efectivo",
       "inicioDelPeriodo": 5,
+      "estadoRenovacion": "un_mes"
+    },
+    {
+      "id": 843571,
+      "propietarioId": 855639,
+      "inmuebleId": 756997,
+      "inquilinoId": 560448,
+      "fechaInicio": "2026-07-01T03:00:00.000Z",
+      "fechaFin": "2026-07-31T03:00:00.000Z",
+      "rentaMensual": 1,
+      "estado": "preliminar",
+      "periodoAumento": 1,
+      "proximoAumento": "2026-08-01T03:00:00.000Z",
+      "titulo": "1",
+      "porcentajeHonorarios": 1,
+      "tipoPago": "efectivo",
+      "inicioDelPeriodo": "1",
       "estadoRenovacion": "un_mes"
     }
   ],
@@ -554,6 +553,21 @@
       "total": 290000,
       "honorarios": 7,
       "inicioDelPeriodo": 5
+    },
+    {
+      "id": 845882,
+      "contratoId": 843571,
+      "propietarioNombre": "Juan Pérez",
+      "inquilinoNombre": "Juan Perez",
+      "inmuebleId": 756997,
+      "periodo": "julio de 2026",
+      "fechaGeneracion": "2026-07-17T14:57:13.076Z",
+      "itemsInquilino": [],
+      "itemsPropietario": [],
+      "montoAlquiler": 1,
+      "total": 1,
+      "honorarios": 1,
+      "inicioDelPeriodo": "1"
     }
   ]
 }
