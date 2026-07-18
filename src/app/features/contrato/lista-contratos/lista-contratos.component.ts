@@ -1,5 +1,5 @@
 import { Component, computed, OnInit, output, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -10,14 +10,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { IContrato, ContractStatus, EstadoRenovacion, IContratoVista } from '../contrato.interface';
 import {Router} from '@angular/router';
 import {ContratoBbddService} from '../contrato-bbdd.service';
-import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
 import { toContratosVista } from '../contrato.mapper';
 import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.service';
 
 @Component({
   selector: 'app-lista-contratos',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatChipsModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatTooltipModule],
+  imports: [FormsModule, MatIconModule, MatButtonModule, MatChipsModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatTooltipModule],
   templateUrl: './lista-contratos.component.html',
   styleUrl: './lista-contratos.component.scss',
 })
@@ -32,18 +31,38 @@ export class ListaContratosComponent implements OnInit {
   $filtroBusqueda = signal('todos');
   $filtroFecha = signal(false);
   $filtroNombrePropietario = signal(false);
+  $busquedaTexto = signal('');
   $contratosFiltrados = computed(() => {
     let lista = [...this.$contratosOriginales()];
     lista = this.aplicarFiltroOrdenPorFecha(lista);
     lista = this.aplicarFiltroEstado(lista)
+    lista = this.aplicarFiltroBusquedaTexto(lista)
     lista = this.aplicarFiltrosNombrePropietario(lista)
     return lista
   });
   contadorFalopa: number = 0;
   constructor( private _contratosService:ContratoBbddService, private router:Router, private _propietariosService: PropietarioRxjsService){}
-  
+
   ngOnInit() {
     this._contratosService.cargarLista();
+  }
+
+  navegarPrimerResultado() {
+    const primerResultado = this.$contratosFiltrados()[0];
+    if (primerResultado) {
+      this.contratoSeleccionado.set(primerResultado as IContrato);
+      this._contratosService.seleccionarContrato(primerResultado as IContrato);
+      this.router.navigate(['/contratos/vista']);
+    }
+  }
+
+  private aplicarFiltroBusquedaTexto(lista: IContratoVista[]): IContratoVista[] {
+    const texto = this.$busquedaTexto().trim().toLowerCase();
+    if (!texto) return lista;
+    return lista.filter(p =>
+      p.propietarioNombre.toLowerCase().includes(texto) ||
+      p.titulo?.toLowerCase().includes(texto)
+    );
   }
   eventoSidenav() {
       this.evento.emit();

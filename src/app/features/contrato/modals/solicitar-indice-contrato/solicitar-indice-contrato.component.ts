@@ -30,10 +30,10 @@ export class SolicitarIndiceContratoComponent implements OnInit {
   @Input() entidad!: IContrato;
 
   cargando = false;
-  respuesta?: ArquilerApiCalculateResponse;
+  respuesta!: ArquilerApiCalculateResponse  ;
   formulario: FormGroup;
-
-  readonly tasas = ['ipc', 'icac', 'uva'];
+  //poner las tasas q usa la inmobiliaria 
+  readonly tasas = ['ipc', 'icl', 'uva'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +41,7 @@ export class SolicitarIndiceContratoComponent implements OnInit {
     private dialogRef: MatDialogRef<ModalComponent>,
     private snackbarService: SnackbarService
   ) {
+    //este es lo que enviamos a la API
     this.formulario = this.formBuilder.group({
       amount: [0, [Validators.required, Validators.min(1)]],
       date: ['', Validators.required],
@@ -50,18 +51,20 @@ export class SolicitarIndiceContratoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.respuesta = this.arquilerApiService.TemporalArquilerApliCalculateResponse
     // Aprovechamos datos reales del contrato para que el usuario no tenga que escribir todo desde cero.
     const fechaBase = this.formatearFechaParaInput(this.entidad.fechaInicio);
     
     this.formulario.patchValue({
       amount: this.entidad.rentaMensual,
       date: fechaBase,
-      months: 1,
+      months: this.entidad.periodoAumento,
       rate: 'ipc'
     });
   }
 
   solicitarIndice(): void {
+    console.log("solicitando indice:")
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
       this.snackbarService.mensajeSnackBar('Revisá los campos antes de consultar el índice', 'Cerrar');
@@ -70,6 +73,7 @@ export class SolicitarIndiceContratoComponent implements OnInit {
 
     this.cargando = true;
     const payload = this.formulario.getRawValue();
+    console.log(payload)
 
     this.arquilerApiService.calcularActualizacion({
       amount: Number(payload.amount),

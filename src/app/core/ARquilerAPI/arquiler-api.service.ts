@@ -25,6 +25,7 @@ export interface ArquilerApiCalculateResult {
   details: ArquilerApiCalculateDetail[];
 }
 
+
 export interface ArquilerApiCalculateDetail {
   date: string;
   value: number;
@@ -36,6 +37,11 @@ export interface ArquilerApiCalculateDetail {
   providedIn: 'root'
 })
 export class ArquilerApiService {
+  TemporalArquilerApliCalculateResponse: ArquilerApiCalculateResponse = {
+    success: true,
+    data: [{date: 'string', value: 0, estimated: true, dif: 0, amount: 0, details: [{date: '', value: 0,month_before:0,accumulate:0}]}]
+  }
+
 
   private readonly baseUrl = environment.rapidApi.baseUrl;
   private readonly apiHost = environment.rapidApi.host;

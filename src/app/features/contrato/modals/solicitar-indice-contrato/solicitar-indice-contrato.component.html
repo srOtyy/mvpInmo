@@ -13,7 +13,7 @@
 
   <div class="fila">
     <mat-form-field appearance="outline">
-      <mat-label>Meses</mat-label>
+      <mat-label>Período de aumento</mat-label>
       <input matInput type="number" formControlName="months" />
     </mat-form-field>
 
@@ -40,12 +40,13 @@
       <mat-expansion-panel expanded>
         <mat-expansion-panel-header>
           <mat-panel-title>Resumen general</mat-panel-title>
-          <mat-panel-description>{{ respuesta.data.length }} resultados</mat-panel-description>
         </mat-expansion-panel-header>
 
         <div class="resumen-general">
-          <p><strong>Success:</strong> {{ respuesta.success }}</p>
-          <p><strong>Resultado principal:</strong> {{ respuesta.data[respuesta.data.length - 1].amount | currency:'USD':'symbol':'1.0-0' }}</p>
+          @if(!respuesta.success){
+            <p><strong>Success:</strong> {{ respuesta.success }}</p>
+          }
+          <p><strong>Resultado principal:</strong>$ {{ respuesta.data[respuesta.data.length - 1].amount | currency:'ARS':'symbol':'1.0-0' }}</p>
         </div>
       </mat-expansion-panel>
 
@@ -53,8 +54,8 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>{{ formatearFechaDetalle(item.date) }}</mat-panel-title>
-            <mat-panel-description>
-              {{ item.amount | currency:'USD':'symbol':'1.0-0' }} · {{ item.dif }}%
+            <mat-panel-description>$
+              {{ item.amount | currency:'ARS':'symbol':'1.0-0' }} · {{ item.dif }}%
             </mat-panel-description>
           </mat-expansion-panel-header>
 
