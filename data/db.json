@@ -325,19 +325,18 @@
   "contratos": [
     {
       "id": 576083,
-      "propietarioId": 768872,
-      "inmuebleId": 233770,
       "inquilinoId": 499231,
-      "fechaInicio": "2026-06-01T03:00:00.000Z",
+      "inmuebleId": 233770,
       "fechaFin": "2027-06-02T03:00:00.000Z",
+      "fechaInicio": "2026-06-01T03:00:00.000Z",
+      "propietarioId": 768872,
+      "estado": "activo",
+      "estadoRenovacion": "normal",
       "rentaMensual": 500000,
-      "estado": "preliminar",
-      "periodoAumento": 4,
-      "proximoAumento": "2026-10-01T03:00:00.000Z",
       "titulo": "Buenos Aires 3008",
+      "proximoAumento": "2026-10-01T03:00:00.000Z",
       "porcentajeHonorarios": 5,
-      "tipoPago": "transferencia",
-      "estadoRenovacion": "normal"
+      "tipoPago": "efectivo"
     },
     {
       "id": 432667,
@@ -358,20 +357,18 @@
     },
     {
       "id": 843571,
-      "propietarioId": 855639,
-      "inmuebleId": 756997,
       "inquilinoId": 560448,
-      "fechaInicio": "2026-07-01T03:00:00.000Z",
+      "inmuebleId": 756997,
       "fechaFin": "2026-07-31T03:00:00.000Z",
+      "fechaInicio": "2026-07-01T03:00:00.000Z",
+      "propietarioId": 855639,
+      "estado": "cancelado",
+      "estadoRenovacion": "un_mes",
       "rentaMensual": 1,
-      "estado": "preliminar",
-      "periodoAumento": 1,
-      "proximoAumento": "2026-08-01T03:00:00.000Z",
       "titulo": "1",
+      "proximoAumento": "2026-08-01T03:00:00.000Z",
       "porcentajeHonorarios": 1,
-      "tipoPago": "efectivo",
-      "inicioDelPeriodo": "1",
-      "estadoRenovacion": "un_mes"
+      "tipoPago": "efectivo"
     }
   ],
   "definiciones": [
