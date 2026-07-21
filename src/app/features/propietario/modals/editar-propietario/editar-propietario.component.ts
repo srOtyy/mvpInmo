@@ -66,7 +66,8 @@ export class EditarPropietarioComponent implements OnInit, ModalContentComponent
   setPropietarioNuevo(): IPropietario{
     const propietarioEditado: IPropietario = {
        id: this.formularioEditarPropietario.value.id,
-      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarPropietario)
+      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarPropietario),
+      listaInmuebles: this.entidad.listaInmuebles
     };  
     return propietarioEditado;
   }
