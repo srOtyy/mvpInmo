@@ -21,7 +21,8 @@ export class CrearPropietarioComponent {
   onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }): void {
     const nuevoPropietario: IPropietario = {
       id: randomId(),
-      caracteristicas: entidad.caracteristicas
+      caracteristicas: entidad.caracteristicas,
+      listaInmuebles: []
     };
 
     this.propietariosService.crear(nuevoPropietario).subscribe({

@@ -10,8 +10,9 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './accordion-inmueble.component.scss'
 })
 export class AccordionInmuebleComponent {
-    @Input() entidad!: IInmueble;
+    @Input() entidad!: IInmueble | undefined;
     @Output() eliminar = new EventEmitter<IInmueble>();
     @Output() editar = new EventEmitter<IInmueble>()
+  
   
 }

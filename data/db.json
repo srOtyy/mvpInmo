@@ -164,6 +164,9 @@
           "clave": "domicilio",
           "valor": "BsAs 3008"
         }
+      ],
+      "listaInmuebles": [
+        436001
       ]
     },
     {
@@ -193,6 +196,9 @@
           "clave": "domicilio",
           "valor": "1234124124"
         }
+      ],
+      "listaInmuebles": [
+        776899
       ]
     },
     {
@@ -222,6 +228,9 @@
           "clave": "domicilio",
           "valor": "Belgrano 343"
         }
+      ],
+      "listaInmuebles": [
+        233770
       ]
     },
     {
@@ -251,6 +260,10 @@
           "clave": "domicilio",
           "valor": "C. 151 "
         }
+      ],
+      "listaInmuebles": [
+        947368,
+        756997
       ]
     }
   ],

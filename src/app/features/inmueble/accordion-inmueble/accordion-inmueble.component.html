@@ -8,7 +8,7 @@
             Editar
         </button>
     </div>
-    @if(entidad !== null){
+    @if(entidad !== undefined){
         <p><strong>direccion:</strong> {{entidad.direccion}}</p>
                 <mat-divider></mat-divider>
         @for(c of entidad.caracteristicas; track $index) {

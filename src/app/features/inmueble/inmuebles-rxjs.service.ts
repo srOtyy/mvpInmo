@@ -52,5 +52,7 @@ cargarLista(): void {
     console.warn("no encontro el inmueble")
     return ''
   }
-   
+   obtenerInmueblePorId(idInmueble: number): IInmueble | undefined {
+    return this.$lista().find(i => i.id === idInmueble)
+  }
 }

@@ -73,12 +73,7 @@ export class ListaContratosComponent implements OnInit {
   }
   evaluarClick(contrato: IContrato): void {
   if (this.contratoSeleccionado() === contrato) {
-    // 🚀 Redirige directamente
-    this.contadorFalopa++;
-    if (this.contadorFalopa >= 2) {
-      this.router.navigate(['/contratos/vista']);
-      this.contadorFalopa = 0; // Reinicia el contador después de la redirección
-    }
+    this.router.navigate(['/contratos/vista']);
   } else {
     // 📌 Si no estaba seleccionado, el primer click solo lo selecciona
     this.seleccionarContrato(contrato);
