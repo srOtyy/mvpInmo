@@ -6,25 +6,24 @@
            <p> {{propietario.nombre}} </p>
         </div>
         @for(inmueble of propietario.listaInmuebles; track inmueble) {
-        <div class="item">
-            <mat-accordion>
+            <div class="item">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                        <mat-expansion-panel-header>
+                        <mat-panel-title> {{obtenerInmueblePorId(inmueble)?.direccion}} </mat-panel-title>
+                        <!-- <mat-panel-description>
+                        </mat-panel-description> -->
+                        </mat-expansion-panel-header>
+                    <app-accordion-inmueble 
+                    [entidad]="obtenerInmueblePorId(inmueble)"
+                    (eliminar)="eliminarInmueble($event)"
+                    (editar)="editarInmueble($event)"
+                    ></app-accordion-inmueble>
 
-                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-                    <mat-expansion-panel-header>
-                    <mat-panel-title> {{obtenerInmueblePorId(inmueble)?.direccion}} </mat-panel-title>
-                    <!-- <mat-panel-description>
-                    </mat-panel-description> -->
-                    </mat-expansion-panel-header>
-                <app-accordion-inmueble 
-                [entidad]="obtenerInmueblePorId(inmueble)"
-                (eliminar)="eliminarInmueble($event)"
-                (editar)="editarInmueble($event)"
-                ></app-accordion-inmueble>
 
-
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
         }
 
      }

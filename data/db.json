@@ -166,7 +166,8 @@
         }
       ],
       "listaInmuebles": [
-        436001
+        436001,
+        852641
       ]
     },
     {
@@ -198,7 +199,8 @@
         }
       ],
       "listaInmuebles": [
-        776899
+        776899,
+        89209
       ]
     },
     {
@@ -333,6 +335,28 @@
         }
       ],
       "direccion": "Santa Fe 1721"
+    },
+    {
+      "id": 852641,
+      "idPropietario": 468718,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": null
+        }
+      ],
+      "direccion": "Prueba 2"
+    },
+    {
+      "id": 89209,
+      "idPropietario": 418782,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": null
+        }
+      ],
+      "direccion": "Siemp 15"
     }
   ],
   "contratos": [

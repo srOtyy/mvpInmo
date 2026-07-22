@@ -78,4 +78,5 @@ export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
       nombre
     }
   }
+
 }

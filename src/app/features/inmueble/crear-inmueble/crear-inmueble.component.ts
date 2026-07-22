@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { randomId } from '../../../shared/utilitys';
+import { take } from 'rxjs';
 @Component({
   selector: 'app-crear-inmueble',
   standalone: true,
@@ -63,7 +64,8 @@ export class CrearInmuebleComponent implements OnInit {
       caracteristicas: [...entidad.caracteristicas],
       direccion: this.direccion
     };
-
+    this.propietarioSeleccionado.listaInmuebles.push(nuevoInmueble.id)
+    this.propietariosService.actualizarSinRecargar(this.propietarioSeleccionado.id,this.propietarioSeleccionado).pipe(take(1)).subscribe()
     this.inmueblesService.crear(nuevoInmueble).subscribe({
       next: () => {
         this.snackbar.mensajeSnackBar('Inmueble creado exitosamente', 'Cerrar');
