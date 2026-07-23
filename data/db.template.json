@@ -1,0 +1,190 @@
+{
+  "inquilinos": [
+    {
+      "id": 631601,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Nahuel"
+        },
+        {
+          "clave": "dni",
+          "valor": 44033273
+        },
+        {
+          "clave": "email",
+          "valor": "oty2013@outlook.com"
+        },
+        {
+          "clave": "telefono",
+          "valor": 22257646897
+        }
+      ],
+      "garantes": [
+        {
+          "id": 189827,
+          "idInquilino": 631601,
+          "nombre": "Mabel",
+          "telefono": "2257123457",
+          "email": "mk@hotmail.com"
+        }
+      ]
+    }
+  ],
+  "propietarios": [
+    {
+      "id": 468718,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Abril"
+        },
+        {
+          "clave": "dni",
+          "valor": 46477477
+        },
+        {
+          "clave": "cuil",
+          "valor": 20464774772
+        },
+        {
+          "clave": "telefono",
+          "valor": 3851235689
+        },
+        {
+          "clave": "telefono aux",
+          "valor": 0
+        },
+        {
+          "clave": "domicilio",
+          "valor": "BsAs 3008"
+        }
+      ],
+      "listaInmuebles": [
+        436001,
+        852641
+      ]
+    }
+  ],
+  "inmuebles": [
+
+    {
+      "id": 436001,
+      "idPropietario": 468718,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": "1N"
+        }
+      ],
+      "direccion": "Independencia 565"
+    },
+    {
+      "id": 852641,
+      "idPropietario": 468718,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": null
+        }
+      ],
+      "direccion": "Prueba 2"
+    }
+  ],
+  "contratos": [
+    
+  ],
+  "definiciones": [
+    {
+      "dominio": "propietarios",
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "tipo": "texto",
+          "requerido": true
+        },
+        {
+          "clave": "dni",
+          "tipo": "numero",
+          "requerido": true
+        },
+        {
+          "clave": "cuil",
+          "tipo": "numero",
+          "requerido": false
+        },
+        {
+          "clave": "telefono",
+          "tipo": "numero",
+          "requerido": true
+        },
+        {
+          "clave": "telefono aux",
+          "tipo": "numero",
+          "requerido": true
+        },
+        {
+          "clave": "domicilio",
+          "tipo": "texto",
+          "requerido": true
+        }
+      ],
+      "id": 1
+    },
+    {
+      "dominio": "inquilinos",
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "tipo": "texto",
+          "requerido": true
+        },
+        {
+          "clave": "dni",
+          "tipo": "numero",
+          "requerido": false
+        },
+        {
+          "clave": "email",
+          "tipo": "texto",
+          "requerido": false
+        },
+        {
+          "clave": "telefono",
+          "tipo": "numero",
+          "requerido": false
+        },
+        {
+          "clave": "tipo de sangre",
+          "tipo": "texto",
+          "requerido": true
+        }
+      ],
+      "id": 2
+    },
+    {
+      "dominio": "inmuebles",
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "tipo": "texto",
+          "requerido": false
+        }
+      ],
+      "id": 3
+    }
+  ],
+  "notificaciones": [
+    {
+      "id": 540826,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-14T07:14:25.976Z",
+      "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    }
+  ],
+  "liquidaciones": [
+   
+  ]
+}
