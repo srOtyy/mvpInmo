@@ -58,7 +58,7 @@ export class CrearContratoComponent implements OnInit {
       titulo: new FormControl(''),
       porcentajeHonorarios: new FormControl('',[Validators.required,Validators.min(0)]),
       tipoPago: new FormControl('',Validators.required),
-      inicioDelPeriodo: new FormControl('1',[Validators.max(31),Validators.min(1)])
+      inicioDelPeriodo: new FormControl('1',[Validators.max(31),Validators.min(1)]),
       });
     }
 
