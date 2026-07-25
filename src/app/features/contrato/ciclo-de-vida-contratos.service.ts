@@ -6,8 +6,8 @@ import { ContratoBbddService } from './contrato-bbdd.service';
   providedIn: 'root'
 })
 export class CicloDeVidaContratosService{
-  public ahora: Date = new Date();
-  private MS_POR_DIA: number = 1000 * 60 * 60 * 24;
+  public ahora: Date = new Date(); // Fecha actual para pruebas
+  private MS_POR_DIA: number = 1000 * 60 * 60 * 24
   
 
   constructor(){}
@@ -43,15 +43,18 @@ export class CicloDeVidaContratosService{
 
   evaluarContrato(contrato: IContrato): IContrato {
     const diasRestantes = this.calcularDiasRestantes(contrato.proximoAumento);
-    const necesitaActualizacion = !contrato.proximoAumento || diasRestantes < 0;
+    const necesitaActualizacion = !contrato.proximoAumento || diasRestantes <= 0;
 
     if (necesitaActualizacion) {
-      console.log("Necesita actualizacion")
-      return {
+      const contratoActualizado = {
         ...contrato,
         proximoAumento: this.calcularProximoAumento(contrato),
         estadoRenovacion: this.calcularEstadoDeRenovacion(this.calcularDiasRestantes(this.calcularProximoAumento(contrato)))
       };
+      console.log("Contrato actualizado:", structuredClone(contratoActualizado));
+      return contratoActualizado;
+
+      
     }else{
       console.log("no necesita actualizacion")
       return {
