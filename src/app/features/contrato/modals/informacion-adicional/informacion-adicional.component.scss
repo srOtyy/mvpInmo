@@ -1,0 +1,10 @@
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: min(100%, 520px);
+}
+
+.campo-informacion {
+  width: 100%;
+}

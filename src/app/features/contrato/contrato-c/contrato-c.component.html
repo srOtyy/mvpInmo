@@ -1,73 +1,116 @@
 <div class="contenedor">
-    @let contrato = _contratosService.contratoSeleccionado$ | async;
-   <div class="cabecera">
-     <button mat-icon-button class="btn-nuevo" aria-label="Nuevo contrato" (click)="volverALaListaDeContratos()" matTooltip="Volver">
-        <mat-icon class="icono">arrow_back</mat-icon>
+  @let contrato = _contratosService.contratoSeleccionado$ | async;
+  <div class="cabecera">
+    <button
+      mat-icon-button
+      class="btn-nuevo"
+      aria-label="Nuevo contrato"
+      (click)="volverALaListaDeContratos()"
+      matTooltip="Volver"
+    >
+      <mat-icon class="icono">arrow_back</mat-icon>
     </button>
     <mat-divider></mat-divider>
-   </div>
-    @if (contrato) {
+  </div>
+  @if (contrato) {
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-titulo">{{ contrato.titulo || 'Contrato #' + contrato.id }}</h3>
-            <span class="card-estado" 
-            [class]="contrato?.estado"
-            > 
-                {{ contrato.estado }}
-            </span>
-        </div>
+      <div class="card-header">
+        <h3 class="card-titulo">
+          {{ contrato.titulo || "Contrato #" + contrato.id }}
+        </h3>
+        <span class="card-estado" [class]="contrato?.estado">
+          {{ contrato.estado }}
+        </span>
+      </div>
 
-        <div class="card-body">
-            <div class="info-row">
-                <span class="label">Alquiler:</span>
-                <span class="valor">{{ contrato.rentaMensual | currency:'$':'symbol':'1.0-0' }}</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Proximo aumento (periodo: {{contrato.periodoAumento}} meses):</span>
-                <span class="valor"> {{contrato.proximoAumento | date: 'dd/MM/yy' }} </span>
-            </div>
-            <div class="info-row">
-                <span class="label">Período (Inicio - Fin):</span>
-                <span class="valor">{{ contrato.fechaInicio | date: 'dd/MM/yy' }} - {{ contrato.fechaFin | date: 'dd/MM/yy' }} </span>
-            </div>
-            <div class="info-row">
-                <span class="label">Honorarios</span>
-                <span class="valor">{{contrato.porcentajeHonorarios}}%</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Tipo de pago</span>
-                <span class="valor">{{contrato.tipoPago}}</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Información detallada:</span>
-                <span class="valor">
-                    <button mat-button (click)="cambiarValorSidebarInfo(contrato.id)">Ver info</button>
-                </span>
-            </div>
-           
+      <div class="card-body">
+        <div class="info-row">
+          <span class="label">Alquiler:</span>
+          <span class="valor">{{
+            contrato.rentaMensual | currency: "$" : "symbol" : "1.0-0"
+          }}</span>
         </div>
+        <div class="info-row">
+          <span class="label"
+            >Proximo aumento (periodo:
+            {{ contrato.periodoAumento }} meses):</span
+          >
+          <span class="valor">
+            {{ contrato.proximoAumento | date: "dd/MM/yy" }}
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="label">Período (Inicio - Fin):</span>
+          <span class="valor"
+            >{{ contrato.fechaInicio | date: "dd/MM/yy" }} -
+            {{ contrato.fechaFin | date: "dd/MM/yy" }}
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="label">Honorarios</span>
+          <span class="valor">{{ contrato.porcentajeHonorarios }}%</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Tipo de pago</span>
+          <span class="valor">{{ contrato.tipoPago }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Información detallada:</span>
+          <span class="valor">
+            <button mat-button (click)="cambiarValorSidebarInfo(contrato.id)">
+              Ver info
+            </button>
+          </span>
+        </div>
+      </div>
 
-        <div class="card-actions">
-                       
-            <button mat-icon-button class="btn-gastos" (click)="agregarGastosContrato(contrato)" matTooltip="Agregar gastos">
-                <mat-icon>receipt_long</mat-icon>
-            </button>
-            <button mat-icon-button class="btn-indice" (click)="solicitarIndice(contrato)" matTooltip="Solicitar Indice">
-                <mat-icon>percent</mat-icon>
-            </button>
-            <button mat-icon-button class="btn-editar" (click)="editarContrato(contrato)" matTooltip="Editar contrato">
-                <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button class="btn-eliminar" (click)="eliminarContrato(contrato)" matTooltip="Eliminar contrato">
-                <mat-icon>delete</mat-icon>
-            </button>
-            
-        </div>
+      <div class="card-actions">
+        <button
+          mat-icon-button
+          class="btn-infoAdicional"
+          (click)="agregarInformacionAdicional(contrato)"
+          matTooltip="Información adicional"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          class="btn-gastos"
+          (click)="agregarGastosContrato(contrato)"
+          matTooltip="Agregar gastos"
+        >
+          <mat-icon>receipt_long</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          class="btn-indice"
+          (click)="solicitarIndice(contrato)"
+          matTooltip="Solicitar Indice"
+        >
+          <mat-icon>percent</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          class="btn-editar"
+          (click)="editarContrato(contrato)"
+          matTooltip="Editar contrato"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          class="btn-eliminar"
+          (click)="eliminarContrato(contrato)"
+          matTooltip="Eliminar contrato"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     </div>
-    } @else {
+  } @else {
     <div class="sin-seleccion">
-        <mat-icon>description</mat-icon>
-        <p>Selecciona un contrato para ver los detalles</p>
+      <mat-icon>description</mat-icon>
+      <p>Selecciona un contrato para ver los detalles</p>
     </div>
-    }
+  }
 </div>

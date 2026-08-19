@@ -1,0 +1,34 @@
+<form
+  class="formulario"
+  [formGroup]="informacionAdicional"
+  (ngSubmit)="guardarInformacion()"
+>
+  <mat-form-field appearance="outline" class="campo-informacion">
+    <mat-label>Título</mat-label>
+    <input
+      matInput
+      formControlName="titulo"
+      placeholder="Ej. Llaves, servicios, mascotas"
+    />
+    @if (informacionAdicional.controls.titulo.hasError("required")) {
+      <mat-error>El título es obligatorio.</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="campo-informacion">
+    <mat-label>Valor</mat-label>
+    <textarea
+      matInput
+      formControlName="valor"
+      rows="8"
+      placeholder="Escriba aquí los detalles adicionales del contrato"
+    ></textarea>
+    @if (informacionAdicional.controls.valor.hasError("required")) {
+      <mat-error>El valor es obligatorio.</mat-error>
+    }
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" type="submit">
+    Guardar información
+  </button>
+</form>
