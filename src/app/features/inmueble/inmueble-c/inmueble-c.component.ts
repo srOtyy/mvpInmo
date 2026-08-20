@@ -11,11 +11,10 @@ import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.servi
 import { IPropietario, IPropietarioVista } from '../../propietario/propietario.interface';
 import {MatDividerModule} from '@angular/material/divider';
 @Component({
-  selector: 'app-inmueble-c',
-  standalone: true,
-  imports: [CardListComponent, AccordionInmuebleComponent, MatExpansionModule, MatDividerModule],
-  templateUrl: './inmueble-c.component.html',
-  styleUrl: './inmueble-c.component.scss'
+    selector: 'app-inmueble-c',
+    imports: [CardListComponent, AccordionInmuebleComponent, MatExpansionModule, MatDividerModule],
+    templateUrl: './inmueble-c.component.html',
+    styleUrl: './inmueble-c.component.scss'
 })
 export class InmuebleCComponent implements OnInit{
   inmueble!: IInmueble;

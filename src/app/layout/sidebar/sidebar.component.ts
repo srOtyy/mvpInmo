@@ -5,11 +5,10 @@ import { Dominio, IBotonRuta } from '../../core/navegacion/navegacionRutas';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [MatButtonModule, RouterLink, MatIconModule],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+    selector: 'app-sidebar',
+    imports: [MatButtonModule, RouterLink, MatIconModule],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
   evento = output<void>();

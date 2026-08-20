@@ -17,20 +17,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 @Component({
-  selector: 'app-contrato-c',
-  standalone: true,
-  imports: [
-    A11yModule,
-    AsyncPipe,
-    DatePipe,
-    CurrencyPipe,
-    MatIconModule,
-    MatTooltipModule,
-    MatButtonModule,
-    MatDividerModule,
-  ],
-  templateUrl: './contrato-c.component.html',
-  styleUrl: './contrato-c.component.scss',
+    selector: 'app-contrato-c',
+    imports: [
+        A11yModule,
+        AsyncPipe,
+        DatePipe,
+        CurrencyPipe,
+        MatIconModule,
+        MatTooltipModule,
+        MatButtonModule,
+        MatDividerModule,
+    ],
+    templateUrl: './contrato-c.component.html',
+    styleUrl: './contrato-c.component.scss'
 })
 export class ContratoCComponent implements OnInit {
   constructor(

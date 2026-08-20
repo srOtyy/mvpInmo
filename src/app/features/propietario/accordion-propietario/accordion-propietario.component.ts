@@ -4,11 +4,10 @@ import { IPropietario } from '../propietario.interface';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 @Component({
-  selector: 'app-accordion-propietario',
-  standalone: true,
-  imports: [MatDividerModule, MatButtonModule],
-  templateUrl: './accordion-propietario.component.html',
-  styleUrl: './accordion-propietario.component.scss'
+    selector: 'app-accordion-propietario',
+    imports: [MatDividerModule, MatButtonModule],
+    templateUrl: './accordion-propietario.component.html',
+    styleUrl: './accordion-propietario.component.scss'
 })
 export class AccordionPropietarioComponent {
     @Input() entidad!: IPropietario;

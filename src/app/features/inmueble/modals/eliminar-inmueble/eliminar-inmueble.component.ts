@@ -7,11 +7,10 @@ import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 import { MatButton } from '@angular/material/button';
 import { IInmueble } from '../../inmueble.interface';
 @Component({
-  selector: 'app-eliminar-inmueble',
-  standalone: true,
-  imports: [MatButton],
-  templateUrl: './eliminar-inmueble.component.html',
-  styleUrl: './eliminar-inmueble.component.scss'
+    selector: 'app-eliminar-inmueble',
+    imports: [MatButton],
+    templateUrl: './eliminar-inmueble.component.html',
+    styleUrl: './eliminar-inmueble.component.scss'
 })
 export class EliminarInmuebleComponent {
   @Input() entidad!: IInmueble;

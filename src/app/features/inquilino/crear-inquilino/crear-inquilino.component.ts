@@ -17,11 +17,10 @@ import { Garante } from '../../garantes/garante-interface';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 @Component({
-  selector: 'app-crear-inquilino',
-  standalone: true,
-  imports: [FormDinamicoComponent, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatStepperModule,  FormsModule, ReactiveFormsModule],
-  templateUrl: './crear-inquilino.component.html',
-  styleUrl: './crear-inquilino.component.scss'
+    selector: 'app-crear-inquilino',
+    imports: [FormDinamicoComponent, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatStepperModule, FormsModule, ReactiveFormsModule],
+    templateUrl: './crear-inquilino.component.html',
+    styleUrl: './crear-inquilino.component.scss'
 })
 export class CrearInquilinoComponent {
   garantesAux: Garante[] = [];

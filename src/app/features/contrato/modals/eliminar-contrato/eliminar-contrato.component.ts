@@ -8,11 +8,10 @@ import { MatButton } from '@angular/material/button';
 import { LiquidacionGeneratorService } from '../../../liquidacion/liquidacion.service';
 
 @Component({
-  selector: 'app-eliminar-contrato',
-  standalone: true,
-  imports: [MatButton],
-  templateUrl: './eliminar-contrato.component.html',
-  styleUrl: './eliminar-contrato.component.scss'
+    selector: 'app-eliminar-contrato',
+    imports: [MatButton],
+    templateUrl: './eliminar-contrato.component.html',
+    styleUrl: './eliminar-contrato.component.scss'
 })
 export class EliminarContratoComponent {
   @Input() entidad!: IContrato;

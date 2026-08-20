@@ -8,11 +8,10 @@ import { MatButton } from '@angular/material/button';
 import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 
 @Component({
-  selector: 'app-eliminar-inquilino',
-  standalone: true,
-  imports: [MatButton],
-  templateUrl: './eliminar-inquilino.component.html',
-  styleUrl: './eliminar-inquilino.component.scss'
+    selector: 'app-eliminar-inquilino',
+    imports: [MatButton],
+    templateUrl: './eliminar-inquilino.component.html',
+    styleUrl: './eliminar-inquilino.component.scss'
 })
 export class EliminarInquilinoComponent {
   @Input() entidad!: IInquilino;

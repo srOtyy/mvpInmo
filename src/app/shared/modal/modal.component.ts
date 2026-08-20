@@ -6,11 +6,10 @@ import { NgComponentOutlet } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { SimpleModalData } from '../../core/modal/modalData-interface';
 @Component({
-  selector: 'app-modal',
-  standalone: true,
-  imports: [MatButtonModule, MatDialogModule,NgComponentOutlet,MatDividerModule],
-  templateUrl: './modal.component.html',
-  styleUrl: './modal.component.scss'
+    selector: 'app-modal',
+    imports: [MatButtonModule, MatDialogModule, NgComponentOutlet, MatDividerModule],
+    templateUrl: './modal.component.html',
+    styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
   public data: SimpleModalData<unknown>;

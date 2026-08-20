@@ -10,11 +10,10 @@ import { VistaInfoEntidadComponent } from './shared/vista-info-entidad/vista-inf
 import { ContratoBbddService } from './features/contrato/contrato-bbdd.service';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [SidebarComponent, MainComponent, HeadComponent, MatButtonModule, MatSidenavModule, A11yModule, ListaContratosComponent, VistaInfoEntidadComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [SidebarComponent, MainComponent, HeadComponent, MatButtonModule, MatSidenavModule, A11yModule, ListaContratosComponent, VistaInfoEntidadComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   abrirSidenav: boolean = false;

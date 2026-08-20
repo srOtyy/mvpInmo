@@ -15,16 +15,15 @@ import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { SnackbarService } from '../../../../core/snackbar.service';
 
 @Component({
-  selector: 'app-informacion-adicional',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-  ],
-  templateUrl: './informacion-adicional.component.html',
-  styleUrl: './informacion-adicional.component.scss',
+    selector: 'app-informacion-adicional',
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+    ],
+    templateUrl: './informacion-adicional.component.html',
+    styleUrl: './informacion-adicional.component.scss'
 })
 export class InformacionAdicionalComponent implements OnInit {
   @Input() entidad!: IContrato;

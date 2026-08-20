@@ -16,22 +16,21 @@ import { DefinicionCaracteristica} from '../../features/caracteristicas/definici
 import { DefinicionesCaracteristicasService } from '../../features/caracteristicas/definiciones-caracteristicas.service';
 
 @Component({
-  selector: 'app-formulario-caracteristicas',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatListModule,
-    MatSelectModule,
-    MatDividerModule,
-    MatIconModule
-  ],
-  templateUrl: './formulario-caracteristicas.component.html',
-  styleUrl: './formulario-caracteristicas.component.scss'
+    selector: 'app-formulario-caracteristicas',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatListModule,
+        MatSelectModule,
+        MatDividerModule,
+        MatIconModule
+    ],
+    templateUrl: './formulario-caracteristicas.component.html',
+    styleUrl: './formulario-caracteristicas.component.scss'
 })
 export class FormularioCaracteristicasComponent implements OnInit {
 

@@ -14,11 +14,10 @@ import { MatInputModule } from '@angular/material/input';
 import { randomId } from '../../../shared/utilitys';
 import { take } from 'rxjs';
 @Component({
-  selector: 'app-crear-inmueble',
-  standalone: true,
-  imports: [CommonModule, FormsModule, FormDinamicoComponent, MatSelectModule, MatFormFieldModule, MatOptionModule,MatInputModule],
-  templateUrl: './crear-inmueble.component.html',
-  styleUrl: './crear-inmueble.component.scss'
+    selector: 'app-crear-inmueble',
+    imports: [CommonModule, FormsModule, FormDinamicoComponent, MatSelectModule, MatFormFieldModule, MatOptionModule, MatInputModule],
+    templateUrl: './crear-inmueble.component.html',
+    styleUrl: './crear-inmueble.component.scss'
 })
 export class CrearInmuebleComponent implements OnInit {
 

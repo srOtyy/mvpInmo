@@ -11,11 +11,10 @@ import { SnackbarService } from '../../../../core/snackbar.service';
 import { construirCaracteristicasDesdeForm } from '../../../caracteristicas/entity-helpers';
 import { ModalContentComponent } from '../../../../core/modal/modalData-interface';
 @Component({
-  selector: 'app-editar-propietario',
-  standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButton],
-  templateUrl: './editar-propietario.component.html',
-  styleUrl: './editar-propietario.component.scss'
+    selector: 'app-editar-propietario',
+    imports: [MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButton],
+    templateUrl: './editar-propietario.component.html',
+    styleUrl: './editar-propietario.component.scss'
 })
 export class EditarPropietarioComponent implements OnInit, ModalContentComponent<IPropietario>{
   @Input() entidad!: IPropietario;

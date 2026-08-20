@@ -25,11 +25,10 @@ interface GastoLiquidacion {
 }
 
 @Component({
-  selector: 'app-agregar-gastos-contrato',
-  standalone: true,
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIcon, MatListModule, MatTooltipModule, MatDividerModule, MatStepperModule],
-  templateUrl: './agregar-gastos-contrato.component.html',
-  styleUrl: './agregar-gastos-contrato.component.scss'
+    selector: 'app-agregar-gastos-contrato',
+    imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIcon, MatListModule, MatTooltipModule, MatDividerModule, MatStepperModule],
+    templateUrl: './agregar-gastos-contrato.component.html',
+    styleUrl: './agregar-gastos-contrato.component.scss'
 })
 
 export class AgregarGastosContratoComponent implements OnInit {

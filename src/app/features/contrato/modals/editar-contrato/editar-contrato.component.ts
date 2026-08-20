@@ -11,11 +11,10 @@ import { MatButton } from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 @Component({
-  selector: 'app-editar-contrato',
-  standalone: true,
-  imports: [MatFormField, MatInputModule,MatButton,ReactiveFormsModule,MatSelectModule],
-  templateUrl: './editar-contrato.component.html',
-  styleUrl: './editar-contrato.component.scss'
+    selector: 'app-editar-contrato',
+    imports: [MatFormField, MatInputModule, MatButton, ReactiveFormsModule, MatSelectModule],
+    templateUrl: './editar-contrato.component.html',
+    styleUrl: './editar-contrato.component.scss'
 })
 export class EditarContratoComponent implements OnInit {
   @Input() entidad!: IContrato

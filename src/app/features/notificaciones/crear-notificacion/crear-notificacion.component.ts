@@ -3,11 +3,10 @@ import { INotificacion } from '../notificacion.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { NotificacionesService } from '../notificaciones.service';
 @Component({
-  selector: 'app-crear-notificacion',
-  standalone: true,
-  imports: [MatButtonModule],
-  templateUrl: './crear-notificacion.component.html',
-  styleUrl: './crear-notificacion.component.scss'
+    selector: 'app-crear-notificacion',
+    imports: [MatButtonModule],
+    templateUrl: './crear-notificacion.component.html',
+    styleUrl: './crear-notificacion.component.scss'
 })
 export class CrearNotificacionComponent {
 
