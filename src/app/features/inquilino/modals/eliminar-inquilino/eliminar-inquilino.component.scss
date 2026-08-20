@@ -1,4 +1,4 @@
-@import '../../../../../styles.scss';
+@use '../../../../../styles.scss' as *;
 .mensaje{
     text-align: center;
     height: 150px;

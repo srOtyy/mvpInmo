@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinamico.component';
 import { InmueblesRxjsService } from '../inmuebles-rxjs.service';
@@ -15,7 +15,7 @@ import { randomId } from '../../../shared/utilitys';
 import { take } from 'rxjs';
 @Component({
     selector: 'app-crear-inmueble',
-    imports: [CommonModule, FormsModule, FormDinamicoComponent, MatSelectModule, MatFormFieldModule, MatOptionModule, MatInputModule],
+    imports: [FormsModule, FormDinamicoComponent, MatSelectModule, MatFormFieldModule, MatOptionModule, MatInputModule],
     templateUrl: './crear-inmueble.component.html',
     styleUrl: './crear-inmueble.component.scss'
 })

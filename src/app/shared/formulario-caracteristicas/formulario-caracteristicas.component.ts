@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,17 +18,16 @@ import { DefinicionesCaracteristicasService } from '../../features/caracteristic
 @Component({
     selector: 'app-formulario-caracteristicas',
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatListModule,
-        MatSelectModule,
-        MatDividerModule,
-        MatIconModule
-    ],
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    MatSelectModule,
+    MatDividerModule,
+    MatIconModule
+],
     templateUrl: './formulario-caracteristicas.component.html',
     styleUrl: './formulario-caracteristicas.component.scss'
 })

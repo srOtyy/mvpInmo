@@ -1,4 +1,4 @@
-@import "../../../../styles.scss";
+@use "../../../../styles.scss" as *;
 
 // el contendor no se adapta al 100% del ancho, se le da un max-width para que no se estire demasiado en pantallas grandes y un min-width para que no se achique demasiado en pantallas pequeñas
 .contenedor-principal{

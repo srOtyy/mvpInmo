@@ -1,4 +1,4 @@
-@import "../styles.scss";
+@use "../styles.scss" as *;
 .div {
   display: grid;
   grid-template-columns: 3fr 7fr;

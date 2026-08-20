@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { IInquilino } from '../inquilino.interface';
-import { CommonModule,TitleCasePipe } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 
 
 

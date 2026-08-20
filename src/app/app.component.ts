@@ -5,13 +5,12 @@ import { HeadComponent } from './layout/head/head.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { A11yModule } from "@angular/cdk/a11y";
-import { ListaContratosComponent } from './features/contrato/lista-contratos/lista-contratos.component';
 import { VistaInfoEntidadComponent } from './shared/vista-info-entidad/vista-info-entidad.component';
 import { ContratoBbddService } from './features/contrato/contrato-bbdd.service';
 
 @Component({
     selector: 'app-root',
-    imports: [SidebarComponent, MainComponent, HeadComponent, MatButtonModule, MatSidenavModule, A11yModule, ListaContratosComponent, VistaInfoEntidadComponent],
+    imports: [SidebarComponent, MainComponent, HeadComponent, MatButtonModule, MatSidenavModule, A11yModule, VistaInfoEntidadComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })

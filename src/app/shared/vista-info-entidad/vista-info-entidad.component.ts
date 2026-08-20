@@ -7,12 +7,12 @@ import { VistaInfoPropietarioComponent } from '../../features/propietario/vista-
 
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 import { VerInfoGaranteComponent } from '../../features/inquilino/ver-info-garante/ver-info-garante.component';
 @Component({
     selector: 'app-vista-info-entidad',
-    imports: [MatDividerModule, MatListModule, MatIconModule, VistaInfoPropietarioComponent, VistaInfoInquilinoComponent, MatStepperModule, MatButtonModule, CommonModule, VerInfoGaranteComponent],
+    imports: [MatDividerModule, MatListModule, MatIconModule, VistaInfoPropietarioComponent, VistaInfoInquilinoComponent, MatStepperModule, MatButtonModule, VerInfoGaranteComponent],
     templateUrl: './vista-info-entidad.component.html',
     styleUrl: './vista-info-entidad.component.scss'
 })
