@@ -43,7 +43,7 @@
           <mat-chip-option class="chip-contrato chip-{{contrato.estadoRenovacion}}" [selected]="contratoSeleccionado() === contrato"  (click)="evaluarClick(contrato)">
             <div class="chip-contenido">
               <div class="chip-header">
-                <span class="chip-titulo">{{contrato.propietarioNombre}} - {{contrato.titulo}} </span>
+                <span class="chip-titulo">{{contrato.propietarioNombre}} / {{contrato.titulo}} </span>
                 <div class="span-estados">
                   <span class="chip-estado chip-{{contrato.estadoRenovacion}}" matTooltip="próxima renovacion">
                      {{convertirChipEstadoRenovacion(contrato.estadoRenovacion)}}
