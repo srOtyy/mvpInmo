@@ -33,7 +33,9 @@ export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
    * Usa async/await porque cargar() es una operación asíncrona (HTTP).
    * Si la lista no está cargada, espera a que termine la petición antes de retornar.
    */
-  //probablemente elimine esta funcion ya que estoy haciendo una version más amplia y mas general 
+
+
+//probablemente elimine esta funcion ya que estoy haciendo una version más amplia y mas general 
 
   async obtenerPropietarioPorId(idPropietario: number): Promise<IPropietario | undefined> {
     if (this.$lista().length === 0) {

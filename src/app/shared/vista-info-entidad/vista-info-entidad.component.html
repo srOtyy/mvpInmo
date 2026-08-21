@@ -1,32 +1,56 @@
 <div class="head">
-  <button mat-icon-button (click)="cerrarInfoSideBar()" class="boton"  matTooltip="cerrar">
+  <button
+    mat-icon-button
+    (click)="cerrarInfoSideBar()"
+    class="boton"
+    matTooltip="cerrar"
+  >
     <mat-icon class="icono">close</mat-icon>
   </button>
-  <h3 class="titulo">{{this._contratos.$contratoTituloSideBarInfo()}}</h3>
-
+  <h3 class="titulo">{{ this._contratos.$contratoTituloSideBarInfo() }}</h3>
 </div>
 <mat-divider></mat-divider>
 <div class="stepper">
-  <mat-stepper orientation="vertical" >
-  <mat-step>
-    <ng-template matStepLabel>Propietario</ng-template>
-    <ng-template matStepContent>
-      <app-vista-info-propietario [propietario]="this._contratos.$propietarioSideBarInfo()" ></app-vista-info-propietario>
-      <button mat-button matStepperNext  class="boton">Inquilino</button>
-    </ng-template>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Inquilino</ng-template>
-    <ng-template matStepContent>
-      <app-vista-info-inquilino [inquilino]="this._contratos.$inquilinoSideBarInfo()"></app-vista-info-inquilino>
-      <button mat-button matStepperPrevious class="boton">Propietario</button>
-      <button mat-button matStepperNext class="boton">Garantes</button>
-    </ng-template>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Garante</ng-template>
-    <app-ver-info-garante [inquilino]="this._contratos.$inquilinoSideBarInfo()"></app-ver-info-garante>
-    <button mat-button matStepperPrevious class="boton">Inquilino</button>
-  </mat-step>
-</mat-stepper>
+  <mat-stepper orientation="vertical">
+    <mat-step>
+      <ng-template matStepLabel>Notas</ng-template>
+      <ng-template matStepContent>
+        <div class="notas-contrato">
+          @for (
+            nota of this._contratos.$contratoNotasSideBarInfo();
+            track $index
+          ) {
+            <div class="nota-contrato">
+              <span class="nota-titulo">{{ nota.titulo }}</span>
+              <span class="nota-valor">{{ nota.valor }}</span>
+            </div>
+          } @empty {
+            <p class="sin-notas">No hay información adicional.</p>
+          }
+        </div>
+      </ng-template>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Propietario</ng-template>
+      <ng-template matStepContent>
+        <app-vista-info-propietario
+          [propietario]="this._contratos.$propietarioSideBarInfo()"
+        ></app-vista-info-propietario>
+      </ng-template>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Inquilino</ng-template>
+      <ng-template matStepContent>
+        <app-vista-info-inquilino
+          [inquilino]="this._contratos.$inquilinoSideBarInfo()"
+        ></app-vista-info-inquilino>
+      </ng-template>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Garante</ng-template>
+      <app-ver-info-garante
+        [inquilino]="this._contratos.$inquilinoSideBarInfo()"
+      ></app-ver-info-garante>
+    </mat-step>
+  </mat-stepper>
 </div>

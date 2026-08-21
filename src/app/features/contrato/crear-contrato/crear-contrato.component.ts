@@ -21,13 +21,12 @@ import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/ma
 import { AsyncPipe } from '@angular/common';
 import { InquilinoRxjsService } from '../../inquilino/inquilino-rxjs.service';
 @Component({
-  selector: 'app-crear-contrato',
-  standalone: true,
-  imports: [ReactiveFormsModule,MatInputModule, MatSelectModule, MatButtonModule, MatFormFieldModule, MatDatepickerModule, MatAutocompleteModule,AsyncPipe],
-  providers: [provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './crear-contrato.component.html',
-  styleUrl: './crear-contrato.component.scss'
+    selector: 'app-crear-contrato',
+    imports: [ReactiveFormsModule, MatInputModule, MatSelectModule, MatButtonModule, MatFormFieldModule, MatDatepickerModule, MatAutocompleteModule, AsyncPipe],
+    providers: [provideNativeDateAdapter()],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './crear-contrato.component.html',
+    styleUrl: './crear-contrato.component.scss'
 })
 export class CrearContratoComponent implements OnInit {
   formulario: FormGroup = new FormGroup({});

@@ -12,11 +12,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 @Component({
-  selector: 'app-propietario-c',
-  standalone: true,
-  imports: [CardListComponent, AccordionPropietarioComponent, MatExpansionModule, MatButtonModule, MatIconModule, MatDividerModule ],
-  templateUrl: './propietario-c.component.html',
-  styleUrl: './propietario-c.component.scss'
+    selector: 'app-propietario-c',
+    imports: [CardListComponent, AccordionPropietarioComponent, MatExpansionModule, MatButtonModule, MatIconModule, MatDividerModule],
+    templateUrl: './propietario-c.component.html',
+    styleUrl: './propietario-c.component.scss'
 })
 
 export class PropietarioCComponent implements OnInit {

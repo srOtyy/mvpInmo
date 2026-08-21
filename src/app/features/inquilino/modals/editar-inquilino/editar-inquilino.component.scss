@@ -1,4 +1,4 @@
-@import '../../../../../styles.scss';
+@use '../../../../../styles.scss' as *;
 .formulario{
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -13,11 +13,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { obtenerNombre } from '../../caracteristicas/entity-helpers'; 
 @Component({
-  selector: 'app-inquilino-c',
-  standalone: true,
-  imports: [CardListComponent, AccordionInquilinoComponent, MatExpansionModule, MatDividerModule, MatButtonModule, MatIconModule],
-  templateUrl: './inquilino-c.component.html',
-  styleUrl: './inquilino-c.component.scss'
+    selector: 'app-inquilino-c',
+    imports: [CardListComponent, AccordionInquilinoComponent, MatExpansionModule, MatDividerModule, MatButtonModule, MatIconModule],
+    templateUrl: './inquilino-c.component.html',
+    styleUrl: './inquilino-c.component.scss'
 })
 
 export class InquilinoCComponent implements OnInit{

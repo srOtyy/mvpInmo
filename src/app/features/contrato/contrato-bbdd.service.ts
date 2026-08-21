@@ -14,68 +14,97 @@ import { CicloDeVidaContratosService } from './ciclo-de-vida-contratos.service';
 import { SnackbarService } from '../../core/snackbar.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ContratoBbddService extends BaseCrudService<IContrato>{
+export class ContratoBbddService extends BaseCrudService<IContrato> {
   $listaPropietarios: IPropietario[] = [];
   $listaInquilinos: IInquilino[] = [];
   $listaInmuebles: IInmueble[] = [];
-  private contratoSeleccionado: BehaviorSubject<IContrato | null> = new BehaviorSubject<IContrato | null>( null );
-  public contratoSeleccionado$: Observable<IContrato | null> = this.contratoSeleccionado.asObservable();
+  private contratoSeleccionado: BehaviorSubject<IContrato | null> =
+    new BehaviorSubject<IContrato | null>(null);
+  public contratoSeleccionado$: Observable<IContrato | null> =
+    this.contratoSeleccionado.asObservable();
   //para el sidebar Info
-  $sideBarInfo = signal<boolean>(false)
-  $inquilinoSideBarInfo = computed(()=>{
-    const contrato = this.$lista().find(c => c.id === this.$contratoIdSideBarInfo())
-    return this.$listaInquilinos.find(i => i.id === contrato?.inquilinoId)
-  })
-  $propietarioSideBarInfo = computed(()=>{
-    const contrato = this.$lista().find( c=> c.id === this.$contratoIdSideBarInfo())
-    return this.$listaPropietarios.find( p => p.id === contrato?.propietarioId)
-  })
-  $contratoTituloSideBarInfo = computed( ()=> {
-    const contrato = this.$lista().find(c => c.id === this.$contratoIdSideBarInfo())
-    return contrato?.titulo
-  }) 
-  $contratoIdSideBarInfo = signal<number>(0)
-  
-  constructor( http: HttpClient, 
-    private _rxjsInmuebles: InmueblesRxjsService, 
-    private _rxjsInquilinos: InquilinoRxjsService, 
+  $sideBarInfo = signal<boolean>(false);
+  $inquilinoSideBarInfo = computed(() => {
+    const contrato = this.$lista().find(
+      (c) => c.id === this.$contratoIdSideBarInfo(),
+    );
+    return this.$listaInquilinos.find((i) => i.id === contrato?.inquilinoId);
+  });
+  $propietarioSideBarInfo = computed(() => {
+    const contrato = this.$lista().find(
+      (c) => c.id === this.$contratoIdSideBarInfo(),
+    );
+    return this.$listaPropietarios.find(
+      (p) => p.id === contrato?.propietarioId,
+    );
+  });
+  $contratoTituloSideBarInfo = computed(() => {
+    const contrato = this.$lista().find(
+      (c) => c.id === this.$contratoIdSideBarInfo(),
+    );
+    return contrato?.titulo;
+  });
+  $contratoNotasSideBarInfo = computed(() => {
+    const contrato = this.$lista().find(
+      (c) => c.id === this.$contratoIdSideBarInfo(),
+    );
+    return contrato?.informacionAdicional;
+  });
+  $contratoIdSideBarInfo = signal<number>(0);
+
+  constructor(
+    http: HttpClient,
+    private _rxjsInmuebles: InmueblesRxjsService,
+    private _rxjsInquilinos: InquilinoRxjsService,
     private _rxjsPropietarios: PropietarioRxjsService,
-    private _cicloDeVida: CicloDeVidaContratosService
-    ){
-    super(http, 'http://localhost:3000/contratos')
-    this.obtenerListas()
+    private _cicloDeVida: CicloDeVidaContratosService,
+  ) {
+    super(http, 'http://localhost:3000/contratos');
+    this.obtenerListas();
+  }
+
+  cargarLista(): void {
+    if (this.$lista().length > 0) return;
+    this.cargar().subscribe({
+      next: () => this.evaluarVencimientoDeTodosLosContratos(this.$lista()),
+      error: () => console.error('Error al cargar contratos'),
+    });
+  }
+  async obtenerListas(): Promise<void> {
+    try {
+      await Promise.all([
+        firstValueFrom(this._rxjsPropietarios.cargar()),
+        firstValueFrom(this._rxjsInquilinos.cargar()),
+        firstValueFrom(this._rxjsInmuebles.cargar()),
+      ]);
+      this.$listaPropietarios = this._rxjsPropietarios.$lista();
+      this.$listaInquilinos = this._rxjsInquilinos.$lista();
+      this.$listaInmuebles = this._rxjsInmuebles.$lista();
+    } catch (error) {
+      console.error('Error al cargar las listas:', error);
     }
-  
-   cargarLista(): void {
-     if (this.$lista().length > 0) return;
-     this.cargar().subscribe({
-       next: () => this.evaluarVencimientoDeTodosLosContratos(this.$lista()),
-       error: () => console.error('Error al cargar contratos')
-     });
-   }
-   async obtenerListas(): Promise<void> {
-   try {
-     await Promise.all([
-       firstValueFrom(this._rxjsPropietarios.cargar()),
-       firstValueFrom(this._rxjsInquilinos.cargar()),
-       firstValueFrom(this._rxjsInmuebles.cargar())
-     ]);
-     this.$listaPropietarios = this._rxjsPropietarios.$lista();
-     this.$listaInquilinos = this._rxjsInquilinos.$lista();
-     this.$listaInmuebles = this._rxjsInmuebles.$lista();
-   } catch (error) {
-     console.error('Error al cargar las listas:', error);
-   }
   }
 
   generarTituloContrato(idPropietario: string, idInquilino: string): string {
-    const propietario = this.$listaPropietarios.find(p => p.id.toString() === idPropietario);
-    const inquilino = this.$listaInquilinos.find(i => i.id.toString() === idInquilino);
-    if( propietario && inquilino) {
-      const nombrePropietario = obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible');
-      const nombreInquilino = obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible');
+    const propietario = this.$listaPropietarios.find(
+      (p) => p.id.toString() === idPropietario,
+    );
+    const inquilino = this.$listaInquilinos.find(
+      (i) => i.id.toString() === idInquilino,
+    );
+    if (propietario && inquilino) {
+      const nombrePropietario = obtenerCaracteristica(
+        propietario,
+        'nombre',
+        'Nombre no disponible',
+      );
+      const nombreInquilino = obtenerCaracteristica(
+        inquilino,
+        'nombre',
+        'Nombre no disponible',
+      );
       return `${nombrePropietario} - ${nombreInquilino}`;
     }
     return 'Título no disponible';
@@ -83,25 +112,34 @@ export class ContratoBbddService extends BaseCrudService<IContrato>{
   mostrarListas(): void {
     console.log('Propietarios:', this.$listaPropietarios);
     console.log('Inquilinos:', this.$listaInquilinos);
-    console.log('Inmuebles:', this.$listaInmuebles);  
+    console.log('Inmuebles:', this.$listaInmuebles);
   }
-  obtenerContratoPorId(id : number): IContrato | undefined {
-    return this.$lista().find(contrato => contrato.id === id);
+  obtenerContratoPorId(id: number): IContrato | undefined {
+    return this.$lista().find((contrato) => contrato.id === id);
   }
 
   // para setear el nombre del item-entidad del contrato " propietario - inquilino "
-  async setNombrePropietario(id: number): Promise<string>{
-      const propietario = await this._rxjsPropietarios.obtenerPropietarioPorId(id);
-      if (propietario !== undefined){ 
-       return obtenerCaracteristica(propietario, 'nombre', 'Nombre no disponible').toString();
-      }
-      return 'Nombre no disponible';
+  async setNombrePropietario(id: number): Promise<string> {
+    const propietario =
+      await this._rxjsPropietarios.obtenerPropietarioPorId(id);
+    if (propietario !== undefined) {
+      return obtenerCaracteristica(
+        propietario,
+        'nombre',
+        'Nombre no disponible',
+      ).toString();
     }
+    return 'Nombre no disponible';
+  }
 
-  async setNombreInquilino(id: number): Promise<string>{
+  async setNombreInquilino(id: number): Promise<string> {
     const inquilino = await this._rxjsInquilinos.obtenerInquilinoPorId(id);
-    if (inquilino !== undefined){
-      return obtenerCaracteristica(inquilino, 'nombre', 'Nombre no disponible').toString();
+    if (inquilino !== undefined) {
+      return obtenerCaracteristica(
+        inquilino,
+        'nombre',
+        'Nombre no disponible',
+      ).toString();
     }
     return 'Nombre no disponible';
   }
@@ -110,38 +148,46 @@ export class ContratoBbddService extends BaseCrudService<IContrato>{
     this.contratoSeleccionado.next(contrato);
   }
 
-
   filtrarContratosPorFecha(fecha: Date): IContrato[] {
     const fechaObj = new Date(fecha);
-    return this.$lista().filter(contrato => new Date(contrato.fechaFin) >= fechaObj);
+    return this.$lista().filter(
+      (contrato) => new Date(contrato.fechaFin) >= fechaObj,
+    );
   }
 
   //necesito segun el periodo de aumento declarar una posible variable como Date para mostrar en la vista del contrato el próximo aumento
 
-  declararProximoMesDeAumento(periodo: number, fechaInicio: Date | string): Date{
-    const fechaDate = new Date(fechaInicio)
-    return new Date(fechaDate.setMonth( fechaDate.getMonth() + periodo))
+  declararProximoMesDeAumento(
+    periodo: number,
+    fechaInicio: Date | string,
+  ): Date {
+    const fechaDate = new Date(fechaInicio);
+    return new Date(fechaDate.setMonth(fechaDate.getMonth() + periodo));
   }
 
   // metodo para $sidebarInfo
-  camiarValorSideBar(){
-    this.$sideBarInfo.set(!this.$sideBarInfo())
+  camiarValorSideBar() {
+    this.$sideBarInfo.set(!this.$sideBarInfo());
   }
-  evaluarVencimientoDeTodosLosContratos(contratos: IContrato[]){
-    const actualizaciones = contratos.map(contrato => 
-      this.actualizarSinRecargar(contrato.id, this._cicloDeVida.evaluarContrato(contrato))
+  evaluarVencimientoDeTodosLosContratos(contratos: IContrato[]) {
+    const actualizaciones = contratos.map((contrato) =>
+      this.actualizarSinRecargar(
+        contrato.id,
+        this._cicloDeVida.evaluarContrato(contrato),
+      ),
     );
     forkJoin(actualizaciones).subscribe({
       next: (resultados) => {
         const listaActual = this.$lista();
-        const nuevaLista = listaActual.map(contrato => {
-          const actualizado = resultados.find(r => (r as any).id === contrato.id);
+        const nuevaLista = listaActual.map((contrato) => {
+          const actualizado = resultados.find(
+            (r) => (r as any).id === contrato.id,
+          );
           return actualizado ? actualizado : contrato;
         });
         this.$lista.set(nuevaLista);
       },
-      error: (err) => console.error('Error al actualizar contratos', err)
+      error: (err) => console.error('Error al actualizar contratos', err),
     });
   }
-  
 }

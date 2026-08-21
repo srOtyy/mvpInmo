@@ -6,11 +6,10 @@ import { SnackbarService } from '../../../core/snackbar.service';
 import { CaracteristicaEntidad } from '../../caracteristicas/entity-base.interface';
 import { randomId } from '../../../shared/utilitys';
 @Component({
-  selector: 'app-crear-propietario',
-  standalone: true,
-  imports: [FormDinamicoComponent],
-  templateUrl: './crear-propietario.component.html',
-  styleUrl: './crear-propietario.component.scss'
+    selector: 'app-crear-propietario',
+    imports: [FormDinamicoComponent],
+    templateUrl: './crear-propietario.component.html',
+    styleUrl: './crear-propietario.component.scss'
 })
 export class CrearPropietarioComponent {
 

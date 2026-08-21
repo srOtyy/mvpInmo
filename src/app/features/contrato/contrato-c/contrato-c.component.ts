@@ -6,9 +6,10 @@ import { EditarContratoComponent } from '../modals/editar-contrato/editar-contra
 import { EliminarContratoComponent } from '../modals/eliminar-contrato/eliminar-contrato.component';
 import { AgregarGastosContratoComponent } from '../modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
 import { SolicitarIndiceContratoComponent } from '../modals/solicitar-indice-contrato/solicitar-indice-contrato.component';
+import { InformacionAdicionalComponent } from '../modals/informacion-adicional/informacion-adicional.component';
 import { Liquidacion } from '../../liquidacion/liquidacion-interface';
 import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
-import { A11yModule } from "@angular/cdk/a11y";
+import { A11yModule } from '@angular/cdk/a11y';
 import { AsyncPipe, DatePipe, CurrencyPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -16,66 +17,91 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 @Component({
-  selector: 'app-contrato-c',
-  standalone: true,
-  imports: [A11yModule, AsyncPipe, DatePipe, CurrencyPipe, MatIconModule, MatTooltipModule, MatButtonModule,MatDividerModule],
-  templateUrl: './contrato-c.component.html',
-  styleUrl: './contrato-c.component.scss'
+    selector: 'app-contrato-c',
+    imports: [
+        A11yModule,
+        AsyncPipe,
+        DatePipe,
+        CurrencyPipe,
+        MatIconModule,
+        MatTooltipModule,
+        MatButtonModule,
+        MatDividerModule,
+    ],
+    templateUrl: './contrato-c.component.html',
+    styleUrl: './contrato-c.component.scss'
 })
 export class ContratoCComponent implements OnInit {
   constructor(
     public _contratosService: ContratoBbddService,
     private _modalService: ModalService,
     private _liquidacion: LiquidacionGeneratorService,
-    private router:Router 
-  ){};
-  ngOnInit(){
+    private router: Router,
+  ) {}
+  ngOnInit() {
     this._contratosService.cargarLista();
-    this._liquidacion.cargarLista()
+    this._liquidacion.cargarLista();
   }
 
+  // botones de accion para el contrato
+  agregarInformacionAdicional(contrato: IContrato) {
+    this._modalService.abrirModal<IContrato>(
+      'Agregar detalles al contrato',
+      InformacionAdicionalComponent,
+      contrato,
+    );
+  }
 
-  editarContrato(contrato: IContrato){
-    this._modalService.abrirModal<IContrato>('Editar Contrato', EditarContratoComponent, contrato);
+  editarContrato(contrato: IContrato) {
+    this._modalService.abrirModal<IContrato>(
+      'Editar Contrato',
+      EditarContratoComponent,
+      contrato,
+    );
   }
-  eliminarContrato(contrato: IContrato){
-    this._modalService.abrirModal<IContrato>('Eliminar Contrato', EliminarContratoComponent, contrato);    
+  eliminarContrato(contrato: IContrato) {
+    this._modalService.abrirModal<IContrato>(
+      'Eliminar Contrato',
+      EliminarContratoComponent,
+      contrato,
+    );
   }
-  agregarGastosContrato(contrato: IContrato){
-    const liquidacionAux = this._liquidacion.buscarLiquidacionPorContrato(contrato.id)
-    if(liquidacionAux){
-      this._liquidacion.setSignalSeleccionado(liquidacionAux)
-      this.router.navigate(['/contratos/liquidaciones'])
-    }  else{
-      console.warn("La liquidacionAux dio undefinded:", liquidacionAux)
+  agregarGastosContrato(contrato: IContrato) {
+    const liquidacionAux = this._liquidacion.buscarLiquidacionPorContrato(
+      contrato.id,
+    );
+    if (liquidacionAux) {
+      this._liquidacion.setSignalSeleccionado(liquidacionAux);
+      this.router.navigate(['/contratos/liquidaciones']);
+    } else {
+      console.warn('La liquidacionAux dio undefinded:', liquidacionAux);
     }
   }
-  generarReciboInquilino(contrato: IContrato){
-    const liquidacionAux = this._liquidacion.buscarLiquidacionPorContrato(contrato.id)
-    if(liquidacionAux){
+  generarReciboInquilino(contrato: IContrato) {
+    const liquidacionAux = this._liquidacion.buscarLiquidacionPorContrato(
+      contrato.id,
+    );
+    if (liquidacionAux) {
       this._liquidacion.generarLiquidacionInquilinoDocx(liquidacionAux);
-    } else{
-      console.warn("La liquidacionAux dio undefinded:", liquidacionAux)
-    } 
-
+    } else {
+      console.warn('La liquidacionAux dio undefinded:', liquidacionAux);
+    }
   }
-  solicitarIndice(contrato: IContrato){
+  solicitarIndice(contrato: IContrato) {
     this._modalService.abrirModal<IContrato>(
       'Solicitar indice',
       SolicitarIndiceContratoComponent,
-      contrato
+      contrato,
     );
   }
 
   //cambiar valor $sideBarInfo ( desde el servicio de contratos)
-  cambiarValorSidebarInfo(id: number){
-    this._contratosService.$sideBarInfo.set(true)
-    this._contratosService.$contratoIdSideBarInfo.set(id)
-    
+  cambiarValorSidebarInfo(id: number) {
+    this._contratosService.$sideBarInfo.set(true);
+    this._contratosService.$contratoIdSideBarInfo.set(id);
   }
 
-  volverALaListaDeContratos(){
-     this.router.navigate(['/contratos/lista']);
+  volverALaListaDeContratos() {
+    this.router.navigate(['/contratos/lista']);
   }
-
 }

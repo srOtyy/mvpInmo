@@ -10,11 +10,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { construirCaracteristicasDesdeForm } from '../../../caracteristicas/entity-helpers';
 @Component({
-  selector: 'app-editar-inquilino',
-  standalone: true,
-  imports: [MatFormField,ReactiveFormsModule,MatInputModule,MatButton],
-  templateUrl: './editar-inquilino.component.html',
-  styleUrl: './editar-inquilino.component.scss'
+    selector: 'app-editar-inquilino',
+    imports: [MatFormField, ReactiveFormsModule, MatInputModule, MatButton],
+    templateUrl: './editar-inquilino.component.html',
+    styleUrl: './editar-inquilino.component.scss'
 })
 export class EditarInquilinoComponent implements OnInit{
  @Input() entidad!: IInquilino;

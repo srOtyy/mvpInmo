@@ -14,11 +14,10 @@ import { toContratosVista } from '../contrato.mapper';
 import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.service';
 
 @Component({
-  selector: 'app-lista-contratos',
-  standalone: true,
-  imports: [FormsModule, MatIconModule, MatButtonModule, MatChipsModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatTooltipModule],
-  templateUrl: './lista-contratos.component.html',
-  styleUrl: './lista-contratos.component.scss',
+    selector: 'app-lista-contratos',
+    imports: [FormsModule, MatIconModule, MatButtonModule, MatChipsModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatTooltipModule],
+    templateUrl: './lista-contratos.component.html',
+    styleUrl: './lista-contratos.component.scss'
 })
 export class ListaContratosComponent implements OnInit {
   evento = output<void>();

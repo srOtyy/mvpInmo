@@ -6,11 +6,10 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { IInquilino } from '../inquilino.interface';
 import { MatIconModule } from '@angular/material/icon';
 @Component({
-  selector: 'app-accordion-inquilino',
-  standalone: true,
-  imports: [MatDividerModule, MatButtonModule, MatStepperModule, MatIconModule],
-  templateUrl: './accordion-inquilino.component.html',
-  styleUrl: './accordion-inquilino.component.scss'
+    selector: 'app-accordion-inquilino',
+    imports: [MatDividerModule, MatButtonModule, MatStepperModule, MatIconModule],
+    templateUrl: './accordion-inquilino.component.html',
+    styleUrl: './accordion-inquilino.component.scss'
 })
 export class AccordionInquilinoComponent {
      @Input() entidad!: IInquilino;

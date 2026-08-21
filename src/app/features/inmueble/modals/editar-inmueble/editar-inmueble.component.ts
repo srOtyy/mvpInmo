@@ -10,11 +10,10 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 @Component({
-  selector: 'app-editar-inmueble',
-  standalone: true,
-  imports: [MatFormField, MatInputModule,MatButton,ReactiveFormsModule],
-  templateUrl: './editar-inmueble.component.html',
-  styleUrl: './editar-inmueble.component.scss'
+    selector: 'app-editar-inmueble',
+    imports: [MatFormField, MatInputModule, MatButton, ReactiveFormsModule],
+    templateUrl: './editar-inmueble.component.html',
+    styleUrl: './editar-inmueble.component.scss'
 })
 export class EditarInmuebleComponent implements OnInit {
   @Input() entidad!: IInmueble;

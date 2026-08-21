@@ -1,4 +1,4 @@
-@import '../../../styles.scss';
+@use '../../../styles.scss' as *;
 .modal-base {
   padding: 20px;
   padding-top: 70px;

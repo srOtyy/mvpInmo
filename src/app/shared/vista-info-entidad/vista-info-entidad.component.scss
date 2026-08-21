@@ -1,14 +1,50 @@
-@use '@angular/material' as mat;
-@import '../../../styles.scss';
+@use "@angular/material" as mat;
+@use "../../../styles.scss" as *;
 
-.head{
-    padding-top: 20px;
-    .titulo{
-        color: $primary-500;
-        text-align: center;
-        padding: 20px 10px;
-    }
-    .icono{
-        color: $accent-2;
-    }
+.head {
+  padding-top: 20px;
+  .titulo {
+    color: $primary-500;
+    text-align: center;
+    padding: 20px 10px;
+  }
+  .icono {
+    color: $accent-2;
+  }
+}
+
+.notas-contrato {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 0;
+}
+
+.nota-contrato {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  max-height: 320px;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border-left: 3px solid $primary-500;
+  background-color: rgba($primary-500, 0.08);
+  overflow-y: auto;
+}
+
+.nota-titulo {
+  font-weight: 600;
+  color: $primary-500;
+}
+
+.nota-valor {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.sin-notas {
+  margin: 12px 0;
 }

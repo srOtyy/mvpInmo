@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,11 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CaracteristicaEntidad } from '../../features/caracteristicas/entity-base.interface';
 @Component({
-  selector: 'app-form-dinamico',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatCheckboxModule, MatButtonModule, MatFormFieldModule],
-  templateUrl: './form-dinamico.component.html',
-  styleUrl: './form-dinamico.component.scss'
+    selector: 'app-form-dinamico',
+    imports: [ReactiveFormsModule, MatInputModule, MatCheckboxModule, MatButtonModule, MatFormFieldModule],
+    templateUrl: './form-dinamico.component.html',
+    styleUrl: './form-dinamico.component.scss'
 })
 export class FormDinamicoComponent implements OnInit, OnDestroy {
 

@@ -12,19 +12,18 @@ import { ModalComponent } from '../../../../shared/modal/modal.component';
 import { ArquilerApiCalculateResponse, ArquilerApiService } from '../../../../core/ARquilerAPI/arquiler-api.service';
 import { IContrato } from '../../contrato.interface';
 @Component({
-  selector: 'app-solicitar-indice-contrato',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatSelectModule,
-    CurrencyPipe
-  ],
-  templateUrl: './solicitar-indice-contrato.component.html',
-  styleUrl: './solicitar-indice-contrato.component.scss'
+    selector: 'app-solicitar-indice-contrato',
+    imports: [
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatExpansionModule,
+        MatInputModule,
+        MatSelectModule,
+        CurrencyPipe
+    ],
+    templateUrl: './solicitar-indice-contrato.component.html',
+    styleUrl: './solicitar-indice-contrato.component.scss'
 })
 export class SolicitarIndiceContratoComponent implements OnInit {
   @Input() entidad!: IContrato;

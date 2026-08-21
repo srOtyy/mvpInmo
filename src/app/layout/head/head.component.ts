@@ -6,11 +6,10 @@ import { TitleCasePipe } from '@angular/common';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { CicloDeVidaContratosService } from '../../features/contrato/ciclo-de-vida-contratos.service';
 @Component({
-  selector: 'app-head',
-  standalone: true,
-  imports: [AsyncPipe, DatePipe,TitleCasePipe],
-  templateUrl: './head.component.html',
-  styleUrl: './head.component.scss'
+    selector: 'app-head',
+    imports: [AsyncPipe, DatePipe, TitleCasePipe],
+    templateUrl: './head.component.html',
+    styleUrl: './head.component.scss'
 })
 export class HeadComponent implements OnInit{
   fechaYHora: Date = new Date()

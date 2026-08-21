@@ -7,11 +7,10 @@ import { MatButton } from '@angular/material/button';
 import { SnackbarService } from '../../../../core/snackbar.service';
 import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 @Component({
-  selector: 'app-eliminar-propietario',
-  standalone: true,
-  imports: [MatButton],
-  templateUrl: './eliminar-propietario.component.html',
-  styleUrl: './eliminar-propietario.component.scss'
+    selector: 'app-eliminar-propietario',
+    imports: [MatButton],
+    templateUrl: './eliminar-propietario.component.html',
+    styleUrl: './eliminar-propietario.component.scss'
 })
 export class EliminarPropietarioComponent {
   @Input() entidad!: IPropietario;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { FormDinamicoComponent } from '../../../shared/form-dinamico/form-dinamico.component';
 import { InmueblesRxjsService } from '../inmuebles-rxjs.service';
@@ -14,11 +14,10 @@ import { MatInputModule } from '@angular/material/input';
 import { randomId } from '../../../shared/utilitys';
 import { take } from 'rxjs';
 @Component({
-  selector: 'app-crear-inmueble',
-  standalone: true,
-  imports: [CommonModule, FormsModule, FormDinamicoComponent, MatSelectModule, MatFormFieldModule, MatOptionModule,MatInputModule],
-  templateUrl: './crear-inmueble.component.html',
-  styleUrl: './crear-inmueble.component.scss'
+    selector: 'app-crear-inmueble',
+    imports: [FormsModule, FormDinamicoComponent, MatSelectModule, MatFormFieldModule, MatOptionModule, MatInputModule],
+    templateUrl: './crear-inmueble.component.html',
+    styleUrl: './crear-inmueble.component.scss'
 })
 export class CrearInmuebleComponent implements OnInit {
 
