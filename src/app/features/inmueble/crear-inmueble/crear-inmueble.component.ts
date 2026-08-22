@@ -14,21 +14,27 @@ import { MatInputModule } from '@angular/material/input';
 import { randomId } from '../../../shared/utilitys';
 import { take } from 'rxjs';
 @Component({
-    selector: 'app-crear-inmueble',
-    imports: [FormsModule, FormDinamicoComponent, MatSelectModule, MatFormFieldModule, MatOptionModule, MatInputModule],
-    templateUrl: './crear-inmueble.component.html',
-    styleUrl: './crear-inmueble.component.scss'
+  selector: 'app-crear-inmueble',
+  imports: [
+    FormsModule,
+    FormDinamicoComponent,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatInputModule,
+  ],
+  templateUrl: './crear-inmueble.component.html',
+  styleUrl: './crear-inmueble.component.scss',
 })
 export class CrearInmuebleComponent implements OnInit {
-
   propietarios: IPropietario[] = [];
   propietarioSeleccionado: IPropietario | null = null;
-  direccion: string = ''
+  direccion: string = '';
 
   constructor(
     private inmueblesService: InmueblesRxjsService,
     private propietariosService: PropietarioRxjsService,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
   ) {}
 
   ngOnInit(): void {
@@ -42,18 +48,23 @@ export class CrearInmuebleComponent implements OnInit {
       },
       error: () => {
         this.snackbar.mensajeSnackBar('Error al cargar propietarios', 'Cerrar');
-      }
+      },
     });
   }
 
   getNombrePropietario(propietario: IPropietario): string {
-    return propietario.caracteristicas
-      .find(c => c.clave === 'nombre')?.valor as string || 'Sin nombre';
+    return (
+      (propietario.caracteristicas.find((c) => c.clave === 'nombre')
+        ?.valor as string) || 'Sin nombre'
+    );
   }
 
   onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }): void {
     if (!this.propietarioSeleccionado) {
-      this.snackbar.mensajeSnackBar('Por favor selecciona un propietario', 'Cerrar');
+      this.snackbar.mensajeSnackBar(
+        'Por favor selecciona un propietario',
+        'Cerrar',
+      );
       return;
     }
 
@@ -61,10 +72,17 @@ export class CrearInmuebleComponent implements OnInit {
       id: randomId(),
       idPropietario: this.propietarioSeleccionado.id,
       caracteristicas: [...entidad.caracteristicas],
-      direccion: this.direccion
+      direccion: this.direccion,
+      activo: false,
     };
-    this.propietarioSeleccionado.listaInmuebles.push(nuevoInmueble.id)
-    this.propietariosService.actualizarSinRecargar(this.propietarioSeleccionado.id,this.propietarioSeleccionado).pipe(take(1)).subscribe()
+    this.propietarioSeleccionado.listaInmuebles.push(nuevoInmueble.id);
+    this.propietariosService
+      .actualizarSinRecargar(
+        this.propietarioSeleccionado.id,
+        this.propietarioSeleccionado,
+      )
+      .pipe(take(1))
+      .subscribe();
     this.inmueblesService.crear(nuevoInmueble).subscribe({
       next: () => {
         this.snackbar.mensajeSnackBar('Inmueble creado exitosamente', 'Cerrar');
@@ -73,7 +91,7 @@ export class CrearInmuebleComponent implements OnInit {
       error: (error) => {
         this.snackbar.mensajeSnackBar('Error al crear inmueble', 'Cerrar');
         console.error('Error al crear inmueble', error);
-      }
-    })
+      },
+    });
   }
 }

@@ -1,7 +1,13 @@
-import { Component, Input, OnInit,  } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { IPropietario } from '../../propietario.interface';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { ModalComponent } from '../../../../shared/modal/modal.component';
@@ -11,12 +17,14 @@ import { SnackbarService } from '../../../../core/snackbar.service';
 import { construirCaracteristicasDesdeForm } from '../../../caracteristicas/entity-helpers';
 import { ModalContentComponent } from '../../../../core/modal/modalData-interface';
 @Component({
-    selector: 'app-editar-propietario',
-    imports: [MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButton],
-    templateUrl: './editar-propietario.component.html',
-    styleUrl: './editar-propietario.component.scss'
+  selector: 'app-editar-propietario',
+  imports: [MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButton],
+  templateUrl: './editar-propietario.component.html',
+  styleUrl: './editar-propietario.component.scss',
 })
-export class EditarPropietarioComponent implements OnInit, ModalContentComponent<IPropietario>{
+export class EditarPropietarioComponent
+  implements OnInit, ModalContentComponent<IPropietario>
+{
   @Input() entidad!: IPropietario;
 
   formularioEditarPropietario: FormGroup;
@@ -25,10 +33,10 @@ export class EditarPropietarioComponent implements OnInit, ModalContentComponent
     private formBuilder: FormBuilder,
     private propietarioService: PropietarioRxjsService,
     private dialogRef: MatDialogRef<ModalComponent>,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
   ) {
     this.formularioEditarPropietario = this.formBuilder.group({
-      id: new FormControl('', [Validators.required])
+      id: new FormControl('', [Validators.required]),
     });
   }
 
@@ -40,36 +48,44 @@ export class EditarPropietarioComponent implements OnInit, ModalContentComponent
 
   pasarDatosPropietario(propietarioData: IPropietario): void {
     this.formularioEditarPropietario.patchValue({
-      id: propietarioData.id
+      id: propietarioData.id,
     });
 
-    propietarioData.caracteristicas.forEach(c => {
+    propietarioData.caracteristicas.forEach((c) => {
       this.formularioEditarPropietario.addControl(
         c.clave,
-        new FormControl(c.valor)
+        new FormControl(c.valor),
       );
     });
   }
 
-  guardarCambios() {  
-    this.propietarioService.actualizar(this.setPropietarioNuevo().id, this.setPropietarioNuevo()).subscribe({
-      next: () => {
-        this.snackbarService.mensajeSnackBar('Propietario editado con éxito', 'Cerrar');
-        this.dialogRef.close(true);
-      },
-      error: () => {
-        this.snackbarService.mensajeSnackBar('Error al editar propietario', 'Cerrar');
-      }
-    });
+  guardarCambios() {
+    this.propietarioService
+      .actualizar(this.entidad.id, this.setPropietarioNuevo())
+      .subscribe({
+        next: () => {
+          this.snackbarService.mensajeSnackBar(
+            'Propietario editado con éxito',
+            'Cerrar',
+          );
+          this.dialogRef.close(true);
+        },
+        error: () => {
+          this.snackbarService.mensajeSnackBar(
+            'Error al editar propietario',
+            'Cerrar',
+          );
+        },
+      });
   }
-  setPropietarioNuevo(): IPropietario{
+  setPropietarioNuevo(): IPropietario {
     const propietarioEditado: IPropietario = {
-       id: this.formularioEditarPropietario.value.id,
-      caracteristicas: construirCaracteristicasDesdeForm(this.formularioEditarPropietario),
-      listaInmuebles: this.entidad.listaInmuebles
-    };  
+      id: this.formularioEditarPropietario.value.id,
+      caracteristicas: construirCaracteristicasDesdeForm(
+        this.formularioEditarPropietario,
+      ),
+      listaInmuebles: this.entidad.listaInmuebles,
+    };
     return propietarioEditado;
   }
-
 }
-

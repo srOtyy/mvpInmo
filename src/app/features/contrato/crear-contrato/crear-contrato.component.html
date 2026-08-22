@@ -1,48 +1,76 @@
-
 <section class="section">
   <h4>Crear Contrato</h4>
-  <form [formGroup]="formulario" (ngSubmit)="enviarContrato()" class="formulario">
+  <form
+    [formGroup]="formulario"
+    (ngSubmit)="enviarContrato()"
+    class="formulario"
+  >
     <div class="grid">
       <!-- Pripietario / inquilino / Inmueble -->
-      <div class="campo"> 
+      <div class="campo">
         <mat-form-field>
           <mat-label>Propietario</mat-label>
-            <input type="text"
-                matInput
-                formControlName="propietarioId"
-                [matAutocomplete]="autoProp">
-            <mat-autocomplete #autoProp="matAutocomplete" [displayWith]="displayPropietario" (optionSelected)="obtenerIdDelPropietario($event)">
-              @for (propietario of propietariosFiltrados | async; track propietario.id) {
-                <mat-option [value]="propietario">{{propietario.nombre}}</mat-option>
-              }
-            </mat-autocomplete>
+          <input
+            type="text"
+            matInput
+            formControlName="propietarioId"
+            [matAutocomplete]="autoProp"
+          />
+          <mat-autocomplete
+            #autoProp="matAutocomplete"
+            [displayWith]="displayPropietario"
+            (optionSelected)="obtenerIdDelPropietario($event)"
+          >
+            @for (
+              propietario of propietariosFiltrados | async;
+              track propietario.id
+            ) {
+              <mat-option [value]="propietario">{{
+                propietario.nombre
+              }}</mat-option>
+            }
+          </mat-autocomplete>
         </mat-form-field>
       </div>
       <div class="campo">
         <mat-form-field>
           <mat-label>Inquilino</mat-label>
-          <input type="text"
-                matInput
-                formControlName="inquilinoId"
-                [matAutocomplete]="autoInq">
-            <mat-autocomplete #autoInq="matAutocomplete" [displayWith]="displayInquilino" (optionSelected)="obtenerIdDelInquilino($event)">
-              @for (inquilino of inquilinosFiltrados | async; track inquilino.id) {
-                <mat-option [value]="inquilino">{{inquilino.nombre}}</mat-option>
-              }
-            </mat-autocomplete>
+          <input
+            type="text"
+            matInput
+            formControlName="inquilinoId"
+            [matAutocomplete]="autoInq"
+          />
+          <mat-autocomplete
+            #autoInq="matAutocomplete"
+            [displayWith]="displayInquilino"
+            (optionSelected)="obtenerIdDelInquilino($event)"
+          >
+            @for (
+              inquilino of inquilinosFiltrados | async;
+              track inquilino.id
+            ) {
+              <mat-option [value]="inquilino">{{
+                inquilino.nombre
+              }}</mat-option>
+            }
+          </mat-autocomplete>
         </mat-form-field>
       </div>
       <div class="campo">
         <mat-form-field appearance="fill">
           <mat-label>Inmueble</mat-label>
           <mat-select formControlName="inmuebleId">
-            @if(filteredInmueblesLista.length === 0) {
-              <mat-option disabled>No hay inmuebles disponibles para este propietario</mat-option>
-            }
-            @else {
+            @if (filteredInmueblesLista.length === 0) {
+              <mat-option disabled
+                >No hay inmuebles disponibles para este propietario</mat-option
+              >
+            } @else {
               @for (inmueble of filteredInmueblesLista; track inmueble.id) {
-                  <mat-option [value]="inmueble.id">{{inmueble.direccion}}</mat-option>
-                }
+                <mat-option [value]="inmueble.id">{{
+                  inmueble.direccion
+                }}</mat-option>
+              }
             }
           </mat-select>
         </mat-form-field>
@@ -53,8 +81,8 @@
         <mat-form-field appearance="fill">
           <mat-label>Valor del alquiler</mat-label>
           <input matInput type="number" formControlName="rentaMensual" />
-          @if(formulario.get('rentaMensual')?.hasError('min')){
-          <mat-error>El valor del alquiler debe ser positivo</mat-error>
+          @if (formulario.get("rentaMensual")?.hasError("min")) {
+            <mat-error>El valor del alquiler debe ser positivo</mat-error>
           }
         </mat-form-field>
       </div>
@@ -62,21 +90,28 @@
         <mat-form-field appearance="fill">
           <mat-label>Período de aumento</mat-label>
           <input matInput type="number" formControlName="periodoAumento" />
-          @if(formulario.get('periodoAumento')?.hasError('min')){
-          <mat-error>El periodo debe ser positivo</mat-error>
+          @if (formulario.get("periodoAumento")?.hasError("min")) {
+            <mat-error>El periodo debe ser positivo</mat-error>
           }
         </mat-form-field>
       </div>
       <div class="campo">
-       <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill">
           <mat-label>Período de contrato</mat-label>
           <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Inicio" formControlName="fechaInicio">
-            <input matEndDate placeholder="Fin" formControlName="fechaFin">
+            <input
+              matStartDate
+              placeholder="Inicio"
+              formControlName="fechaInicio"
+            />
+            <input matEndDate placeholder="Fin" formControlName="fechaFin" />
           </mat-date-range-input>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
-      </mat-form-field>
+        </mat-form-field>
       </div>
       <div class="campo">
         <mat-form-field appearance="fill">
@@ -87,38 +122,50 @@
       <div class="campo">
         <mat-form-field appearance="fill">
           <mat-label>Porcentaje de honorarios</mat-label>
-          <input matInput formControlName="porcentajeHonorarios" type="number">
-          @if(formulario.get('porcentajeHonorarios')?.hasError('min')){
-          <mat-error>El porcentaje de honorarios debe ser positivo</mat-error>
+          <input
+            matInput
+            formControlName="porcentajeHonorarios"
+            type="number"
+          />
+          @if (formulario.get("porcentajeHonorarios")?.hasError("min")) {
+            <mat-error>El porcentaje de honorarios debe ser positivo</mat-error>
           }
         </mat-form-field>
       </div>
       <div class="campo">
         <mat-form-field appearance="fill">
-        <mat-label>Inicio del periodo de cobro</mat-label>
-        <input matInput formControlName="inicioDelPeriodo" type="number">
-        @if (formulario.get('inicioDelPeriodo')?.hasError('max')) {
-          <mat-error>El inicio del periodo debe ser igual o menor a 31</mat-error>
-        }
-        @if(formulario.get('inicioDelPeriodo')?.hasError('min')){
-          <mat-error>El inicio del periodo debe ser igual o mayor a 1</mat-error>
-        }
-      </mat-form-field>
-      
+          <mat-label>Inicio del periodo de cobro</mat-label>
+          <input matInput formControlName="inicioDelPeriodo" type="number" />
+          @if (formulario.get("inicioDelPeriodo")?.hasError("max")) {
+            <mat-error
+              >El inicio del periodo debe ser igual o menor a 31</mat-error
+            >
+          }
+          @if (formulario.get("inicioDelPeriodo")?.hasError("min")) {
+            <mat-error
+              >El inicio del periodo debe ser igual o mayor a 1</mat-error
+            >
+          }
+        </mat-form-field>
       </div>
       <div class="campo">
         <mat-form-field appearance="fill">
-        <mat-label>Tipo de pago</mat-label>
-        <mat-select formControlName="tipoPago">
-          <mat-option value="efectivo">efectivo</mat-option>
-          <mat-option value="transferencia">transferencia</mat-option>
-        </mat-select>
-      </mat-form-field>
+          <mat-label>Tipo de pago</mat-label>
+          <mat-select formControlName="tipoPago">
+            <mat-option value="efectivo">efectivo</mat-option>
+            <mat-option value="transferencia">transferencia</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </div>
-    
-    <button mat-raised-button color="primary" type="submit" [disabled]="formulario.invalid"  >Crear Contrato</button>
-  </form>
 
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="formulario.invalid"
+    >
+      Crear Contrato
+    </button>
+  </form>
 </section>
-    

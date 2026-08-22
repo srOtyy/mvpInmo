@@ -1,7 +1,7 @@
-import {IEntityBase } from '../caracteristicas/entity-base.interface';
+import { IEntityBase } from '../caracteristicas/entity-base.interface';
 
 export interface IInmueble extends IEntityBase {
-    idPropietario: number,
-    direccion: string
+  idPropietario: number;
+  direccion: string;
+  activo: boolean;
 }
-
