@@ -1,76 +1,81 @@
 // =============================
 // PRIMARY — Cyan (#00DDDD)
 // =============================
-$primary-100: #CCFFFF;
-$primary-200: #99F6F6;
-$primary-300: #66EEEE;
-$primary-400: #33E5E5;
-$primary-500: #00DDDD;
-$primary-600: #00B8B8;
+$primary-100: #ccffff;
+$primary-200: #99f6f6;
+$primary-300: #66eeee;
+$primary-400: #33e5e5;
+$primary-500: #00dddd;
+$primary-600: #00b8b8;
 $primary-700: #009999;
-$primary-800: #007A7A;
-$primary-900: #005A5A;
+$primary-800: #007a7a;
+$primary-900: #005a5a;
 
 // =============================
 // SECONDARY — Verde petróleo (#004747)
 // =============================
-$secondary-100: #C4E5E5;
-$secondary-200: #9ACBCB;
-$secondary-300: #70B2B2;
+$secondary-100: #c4e5e5;
+$secondary-200: #9acbcb;
+$secondary-300: #70b2b2;
 $secondary-400: #468888;
 $secondary-500: #004747;
-$secondary-600: #003C3C;
+$secondary-600: #003c3c;
 $secondary-700: #003232;
 $secondary-800: #002828;
-$secondary-900: #001E1E;
+$secondary-900: #001e1e;
 
 // =============================
 // NEUTRALS — Gris verdoso (#3E4849)
 // =============================
-$neutral-50:  #F1F5F5;
-$neutral-100: #DDE3E3;
-$neutral-200: #C8D0D0;
-$neutral-300: #AAB6B6;
+$neutral-50: #f1f5f5;
+$neutral-100: #dde3e3;
+$neutral-200: #c8d0d0;
+$neutral-300: #aab6b6;
 $neutral-400: #889595;
-$neutral-500: #3E4849;
-$neutral-600: #323A3B;
-$neutral-700: #262C2D;
-$neutral-800: #191E1E;
-$neutral-900: #0D1010;
+$neutral-500: #3e4849;
+$neutral-600: #323a3b;
+$neutral-700: #262c2d;
+$neutral-800: #191e1e;
+$neutral-900: #0d1010;
 
 // =============================
 // ACCENTS (complementarios cálidos)
 // =============================
-$accent-1: #FF9F50;  // naranja suave
-$accent-2: #FF6F4C;  // coral apagado
-$accent-3: #FFD5B3;  // durazno claro
+$accent-1: #ff9f50; // naranja suave
+$accent-2: #ff6f4c; // coral apagado
+$accent-3: #ffd5b3; // durazno claro
 
 // =============================
 // FUNCIONALES (UI states)
 // =============================
-$success: #3CB878;
-$warning: #F4B400;
-$error:   #D64550;
-$info:    #00BEBE;
+$success: #3cb878;
+$warning: #f4b400;
+$error: #d64550;
+$info: #00bebe;
 
-
-body{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+//lilas y violetas
+$violeta-oscuro: #3e064fab;
+$violeta-claro: #994081;
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
-.snackbar-color{
-    .mdc-snackbar__surface {
+.snackbar-color {
+  .mdc-snackbar__surface {
     background-color: $neutral-800 !important;
   }
-  
+
   .mdc-snackbar__label {
-    color: $primary-200 ;
+    color: $primary-200;
   }
 
   .mdc-snackbar__actions .mdc-button {
-    color: $secondary-300  !important;
+    color: $secondary-300 !important;
   }
 }
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
