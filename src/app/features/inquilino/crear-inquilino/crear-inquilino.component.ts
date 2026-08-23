@@ -9,18 +9,26 @@ import { GarantesService } from '../../garantes/garantes.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import {MatDivider} from '@angular/material/divider';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { IInquilino } from '../inquilino.interface';
 import { Garante } from '../../garantes/garante-interface';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 @Component({
-    selector: 'app-crear-inquilino',
-    imports: [FormDinamicoComponent, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatStepperModule, FormsModule, ReactiveFormsModule],
-    templateUrl: './crear-inquilino.component.html',
-    styleUrl: './crear-inquilino.component.scss'
+  selector: 'app-crear-inquilino',
+  imports: [
+    FormDinamicoComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  templateUrl: './crear-inquilino.component.html',
+  styleUrl: './crear-inquilino.component.scss',
 })
 export class CrearInquilinoComponent {
   garantesAux: Garante[] = [];
@@ -29,41 +37,53 @@ export class CrearInquilinoComponent {
   inquilinoAux: IInquilino = {
     id: 0,
     caracteristicas: [],
-    garantes: []
-  }
+    garantes: [],
+    activo: false,
+  };
   formularioGarante: FormGroup = new FormGroup({
     nombre: new FormControl(''),
     email: new FormControl(''),
-    telefono: new FormControl('')
+    telefono: new FormControl(''),
   });
   constructor(
     private _inquilinosService: InquilinoRxjsService,
     private _snack: SnackbarService,
-    private _garantes: GarantesService    
+    private _garantes: GarantesService,
   ) {}
   // boton submit form dinamico
-  onEntidadCreada(entidad: { caracteristicas: CaracteristicaEntidad[] }, stepper: MatStepper): void {
+  onEntidadCreada(
+    entidad: { caracteristicas: CaracteristicaEntidad[] },
+    stepper: MatStepper,
+  ): void {
     const nuevoInquilino = {
       id: randomId(),
       caracteristicas: entidad.caracteristicas,
-      garantes: [] 
+      garantes: [],
+      activo: false,
     };
     this.inquilinoAux = nuevoInquilino;
-    stepper.next()
+    stepper.next();
+  }
 
-  } 
- 
-  //boton agregar otro garante 
-  agregarGarante(id: number){
-    const garante = this._garantes.crearGarante(id, this.formularioGarante.controls['nombre'].value, this.formularioGarante.controls['telefono'].value, this.formularioGarante.controls['email'].value);
+  //boton agregar otro garante
+  agregarGarante(id: number) {
+    const garante = this._garantes.crearGarante(
+      id,
+      this.formularioGarante.controls['nombre'].value,
+      this.formularioGarante.controls['telefono'].value,
+      this.formularioGarante.controls['email'].value,
+    );
     this.garantesAux.push(garante);
     this._snack.mensajeSnackBar('Garante agregado exitosamente', 'Cerrar');
     this.formularioGarante.reset();
     this.formularioGarante.markAsTouched();
   }
   // finalizar creacion inquilino con garantes ( ambos formularios)
-  terminarCreacion(){
-    const inquilinoConGarantes = this._garantes.agregarGarantesalInquilino(this.inquilinoAux, this.garantesAux);
+  terminarCreacion() {
+    const inquilinoConGarantes = this._garantes.agregarGarantesalInquilino(
+      this.inquilinoAux,
+      this.garantesAux,
+    );
     this.enviarInquilinoABD(inquilinoConGarantes);
     this._snack.mensajeSnackBar('Inquilino creado exitosamente', 'Cerrar');
   }
@@ -74,7 +94,7 @@ export class CrearInquilinoComponent {
       },
       error: (error) => {
         this._snack.mensajeSnackBar('Error al crear inquilino', 'Cerrar');
-      }
+      },
     });
   }
 }

@@ -67,9 +67,9 @@
               >
             } @else {
               @for (inmueble of filteredInmueblesLista; track inmueble.id) {
-                <mat-option [value]="inmueble.id">{{
-                  inmueble.direccion
-                }}</mat-option>
+                <mat-option [value]="inmueble.id"
+                  >{{ displayInmueble(inmueble) }}
+                </mat-option>
               }
             }
           </mat-select>

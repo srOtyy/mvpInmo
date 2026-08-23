@@ -2,9 +2,10 @@ import { IEntityBase } from '../caracteristicas/entity-base.interface';
 import { Garante } from '../garantes/garante-interface';
 
 export interface IInquilino extends IEntityBase {
-    garantes: Garante[];
+  garantes: Garante[];
+  activo: boolean;
 }
 
-export interface IInquilinoVista extends IInquilino{
-    nombre: string;
+export interface IInquilinoVista extends IInquilino {
+  nombre: string;
 }

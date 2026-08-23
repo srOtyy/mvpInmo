@@ -190,4 +190,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
       error: (err) => console.error('Error al actualizar contratos', err),
     });
   }
+
+  //para mostrar en el select de la creacion de contratos; quiero que el inmueble muestre alguna especificacion
+  devolverAlgunaCaracteristica() {}
 }

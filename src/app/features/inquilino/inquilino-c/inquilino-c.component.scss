@@ -1,14 +1,17 @@
 @use "../../../../styles.scss" as *;
-.acciones{
-    display: flex;
-    flex-direction: row;
-    p{
-        color: $neutral-500;
-        margin:0;
-        font-size: 18px;
-        align-self: center;
-    }
+.acciones {
+  display: flex;
+  flex-direction: row;
+  p {
+    color: $neutral-500;
+    margin: 0;
+    font-size: 18px;
+    align-self: center;
+  }
 }
-.item{
-    width: 100%;
+.item {
+  width: 100%;
+  .descripcion {
+    color: $neutral-500;
+  }
 }

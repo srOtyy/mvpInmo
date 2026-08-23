@@ -40,6 +40,8 @@ export class EditarInmuebleComponent implements OnInit {
   ) {
     this.formularioEditarInmueble = this.formBuilder.group({
       id: new FormControl('', [Validators.required]),
+      idPropietario: new FormControl(''),
+      direccion: new FormControl(''),
       activo: new FormControl(false),
     });
   }
@@ -55,7 +57,6 @@ export class EditarInmuebleComponent implements OnInit {
       direccion: inmuebleData.direccion,
       activo: inmuebleData.activo,
     });
-
     inmuebleData.caracteristicas.forEach((c) => {
       this.formularioEditarInmueble.addControl(
         c.clave,
@@ -94,6 +95,7 @@ export class EditarInmuebleComponent implements OnInit {
       direccion: this.entidad.direccion,
       activo: this.formularioEditarInmueble.value.activo,
     };
+    console.log(inmuebleEditado);
     return inmuebleEditado;
   }
 }

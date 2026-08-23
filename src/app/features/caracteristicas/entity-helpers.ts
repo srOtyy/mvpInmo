@@ -22,9 +22,15 @@ export function obtenerClavesCaracteristicas(entidad: IEntityBase): string[] {
 export function construirCaracteristicasDesdeForm(
   form: FormGroup,
 ): CaracteristicaEntidad[] {
-  console.log(form);
-  const claves = Object.keys(form.controls).filter((key) => key !== 'id');
-  console.log(claves);
+  const claves = Object.keys(form.controls).filter(
+    // lastimosamente tuve q hardcodear esto porque esta agregando ciertas 'caracteristcas' que no deberian estar ahí
+    // espero pronto poder cambiar esto
+    (key) =>
+      key !== 'id' &&
+      key !== 'activo' &&
+      key !== 'idPropietario' &&
+      key !== 'direccion',
+  );
   return claves.map((clave) => ({
     clave,
     valor: form.controls[clave].value,

@@ -12,20 +12,21 @@
     color: $primary-500;
     margin: 0;
   }
-  .formulario{
-  padding: 20px;
-  p{
-    color: $neutral-400;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin-bottom: 1rem;
-    gap: 25px;
-    .campo {
-      display: flex;
-      flex-direction: column;
-      width: 230px;
+  .formulario {
+    padding: 20px;
+    p {
+      color: $neutral-400;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      margin-bottom: 1rem;
+      gap: 25px;
+      .campo {
+        display: flex;
+        flex-direction: column;
+        width: 230px;
+      }
     }
   }
 }
