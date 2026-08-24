@@ -1,4 +1,11 @@
-import { Component, computed, OnInit, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,6 +41,7 @@ import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.servi
   styleUrl: './lista-contratos.component.scss',
 })
 export class ListaContratosComponent implements OnInit {
+  private _contratosService = inject(ContratoBbddService);
   evento = output<void>();
   contratoSeleccionado = signal<IContrato | null>(null);
   calendarioIcono = 'calendar_today';
@@ -44,11 +52,12 @@ export class ListaContratosComponent implements OnInit {
       this._propietariosService.$lista(),
     );
   });
-  $filtroBusqueda = signal('todos');
-  $filtroFecha = signal(false);
-  $filtroNombrePropietario = signal(false);
-  $filtroAdministracionTotal = signal(false);
-  $busquedaTexto = signal('');
+  $filtroBusqueda = this._contratosService.$filtroBusqueda;
+  $filtroFecha = this._contratosService.$filtroFecha;
+  $filtroNombrePropietario = this._contratosService.$filtroNombrePropietario;
+  $filtroAdministracionTotal =
+    this._contratosService.$filtroAdministracionTotal;
+  $busquedaTexto = this._contratosService.$busquedaTexto;
   $contratosFiltrados = computed(() => {
     let lista = [...this.$contratosOriginales()];
     lista = this.aplicarFiltroOrdenPorFecha(lista);
@@ -60,7 +69,6 @@ export class ListaContratosComponent implements OnInit {
   });
   contadorFalopa: number = 0;
   constructor(
-    private _contratosService: ContratoBbddService,
     private router: Router,
     private _propietariosService: PropietarioRxjsService,
   ) {}
@@ -201,11 +209,7 @@ export class ListaContratosComponent implements OnInit {
   private aplicarFiltrosAdministracionTotal(lista: IContratoVista[]) {
     const filtroAdminTotal = this.$filtroAdministracionTotal();
     if (filtroAdminTotal) {
-      console.log(
-        lista.map((c) => ({ id: c.id, adminTotal: c.administracionTotal })),
-      );
-
-      return lista.filter((contratos) => contratos.administracionTotal);
+      return lista.filter((contratos) => !contratos.administracionTotal);
     }
     return lista;
   }

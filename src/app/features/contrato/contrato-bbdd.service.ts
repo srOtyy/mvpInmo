@@ -17,6 +17,11 @@ import { SnackbarService } from '../../core/snackbar.service';
   providedIn: 'root',
 })
 export class ContratoBbddService extends BaseCrudService<IContrato> {
+  $filtroBusqueda = signal('todos');
+  $filtroFecha = signal(false);
+  $filtroNombrePropietario = signal(false);
+  $filtroAdministracionTotal = signal(false);
+  $busquedaTexto = signal('');
   $listaPropietarios: IPropietario[] = [];
   $listaInquilinos: IInquilino[] = [];
   $listaInmuebles: IInmueble[] = [];

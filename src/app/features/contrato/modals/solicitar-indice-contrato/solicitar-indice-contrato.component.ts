@@ -31,7 +31,6 @@ import { ContratoBbddService } from '../../contrato-bbdd.service';
     MatInputModule,
     MatSelectModule,
     CurrencyPipe,
-    MatIcon,
   ],
   templateUrl: './solicitar-indice-contrato.component.html',
   styleUrl: './solicitar-indice-contrato.component.scss',

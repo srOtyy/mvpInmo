@@ -44,6 +44,7 @@
             'icono-admttl': !$filtroAdministracionTotal(),
             activo: $filtroAdministracionTotal(),
           }"
+          matTooltip="quitar los administrados por los dueños"
           >person_off</mat-icon
         >
       </button>
@@ -71,6 +72,7 @@
     </button>
     <button
       mat-icon-button
+      [disabled]="true"
       class="btn-nuevo"
       (click)="evaluarVencimientosContratos()"
     >
