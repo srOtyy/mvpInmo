@@ -36,6 +36,17 @@
           >sort_by_alpha</mat-icon
         >
       </button>
+      <button mat-icon-button matSuffix>
+        <mat-icon
+          matSuffix
+          (click)="cambiarEstadoSignalAdministracionTotal()"
+          [class]="{
+            'icono-admttl': !$filtroAdministracionTotal(),
+            activo: $filtroAdministracionTotal(),
+          }"
+          >person_off</mat-icon
+        >
+      </button>
       <mat-form-field class="form-select" appearance="fill">
         <mat-label>Estado</mat-label>
         <mat-select [(value)]="$filtroBusqueda">
@@ -81,6 +92,15 @@
                 >{{ contrato.propietarioNombre }} / {{ contrato.titulo }}
               </span>
               <div class="span-estados">
+                @if (contrato.administracionTotal) {
+                  <span
+                    class="chip-estado chip-administracionTotal"
+                    matTooltip="
+                Administracion"
+                  >
+                    adm: propietario</span
+                  >
+                }
                 <span
                   class="chip-estado chip-{{ contrato.estadoRenovacion }}"
                   matTooltip="próxima renovacion"

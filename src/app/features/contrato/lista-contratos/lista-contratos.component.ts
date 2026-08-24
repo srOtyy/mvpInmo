@@ -47,6 +47,7 @@ export class ListaContratosComponent implements OnInit {
   $filtroBusqueda = signal('todos');
   $filtroFecha = signal(false);
   $filtroNombrePropietario = signal(false);
+  $filtroAdministracionTotal = signal(false);
   $busquedaTexto = signal('');
   $contratosFiltrados = computed(() => {
     let lista = [...this.$contratosOriginales()];
@@ -54,6 +55,7 @@ export class ListaContratosComponent implements OnInit {
     lista = this.aplicarFiltroEstado(lista);
     lista = this.aplicarFiltroBusquedaTexto(lista);
     lista = this.aplicarFiltrosNombrePropietario(lista);
+    lista = this.aplicarFiltrosAdministracionTotal(lista);
     return lista;
   });
   contadorFalopa: number = 0;
@@ -144,6 +146,9 @@ export class ListaContratosComponent implements OnInit {
   cambiarEstadoSignalNombrePropietario() {
     this.$filtroNombrePropietario.update((estado) => !estado);
   }
+  cambiarEstadoSignalAdministracionTotal() {
+    this.$filtroAdministracionTotal.update((estado) => !estado);
+  }
   irACrearContrato() {
     this.router.navigate(['/contratos/crear']);
   }
@@ -190,6 +195,17 @@ export class ListaContratosComponent implements OnInit {
         return nombreA.localeCompare(nombreB);
       });
       return lista;
+    }
+    return lista;
+  }
+  private aplicarFiltrosAdministracionTotal(lista: IContratoVista[]) {
+    const filtroAdminTotal = this.$filtroAdministracionTotal();
+    if (filtroAdminTotal) {
+      console.log(
+        lista.map((c) => ({ id: c.id, adminTotal: c.administracionTotal })),
+      );
+
+      return lista.filter((contratos) => contratos.administracionTotal);
     }
     return lista;
   }
