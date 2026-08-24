@@ -60,6 +60,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     private _rxjsInquilinos: InquilinoRxjsService,
     private _rxjsPropietarios: PropietarioRxjsService,
     private _cicloDeVida: CicloDeVidaContratosService,
+    private _snackBar: SnackbarService,
   ) {
     super(http, 'http://localhost:3000/contratos');
     this.obtenerListas();
@@ -196,4 +197,22 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
 
   //para mostrar en el select de la creacion de contratos; quiero que el inmueble muestre alguna especificacion
   devolverAlgunaCaracteristica() {}
+
+  //ActualizarMonto del alquiler
+  actualizarMontoAlquiler(id: number, monto: number) {
+    const contrato = this.$lista().find((c) => c.id === id);
+    if (contrato && monto) {
+      const montoReducido = parseFloat(monto.toFixed(2)); // 473271.69 (number)
+      contrato.rentaMensual = montoReducido;
+      this.actualizarSinRecargar(id, contrato).subscribe({
+        next: () =>
+          this._snackBar.mensajeSnackBar(
+            'Monto actualizado al recargar',
+            'cerrar',
+          ),
+      });
+    } else {
+      console.warn('no se encontro contrato(1) o monto(2)', contrato, monto);
+    }
+  }
 }
