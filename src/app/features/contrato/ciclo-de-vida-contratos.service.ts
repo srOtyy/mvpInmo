@@ -1,28 +1,26 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IContrato, EstadoRenovacion } from './contrato.interface';
-import { ContratoBbddService } from './contrato-bbdd.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class CicloDeVidaContratosService{
+export class CicloDeVidaContratosService {
   public ahora: Date = new Date(); // Fecha actual para pruebas
-  private MS_POR_DIA: number = 1000 * 60 * 60 * 24
-  
+  private MS_POR_DIA: number = 1000 * 60 * 60 * 24;
 
-  constructor(){}
+  constructor() {}
   private parseFecha(fecha: Date | string | undefined): Date | undefined {
     if (!fecha) return undefined;
     return fecha instanceof Date ? fecha : new Date(fecha);
   }
 
-  
-
   calcularProximoAumento(contrato: IContrato): Date {
     const proximoAumentoActual = new Date(contrato.proximoAumento);
     const proximoAumentoCalculado = new Date(proximoAumentoActual);
-    proximoAumentoCalculado.setMonth(proximoAumentoActual.getMonth() + contrato.periodoAumento);
-    return proximoAumentoCalculado 
+    proximoAumentoCalculado.setMonth(
+      proximoAumentoActual.getMonth() + contrato.periodoAumento,
+    );
+    return proximoAumentoCalculado;
   }
 
   calcularDiasRestantes(proximoAumento: Date | string | undefined): number {
@@ -43,27 +41,24 @@ export class CicloDeVidaContratosService{
 
   evaluarContrato(contrato: IContrato): IContrato {
     const diasRestantes = this.calcularDiasRestantes(contrato.proximoAumento);
-    const necesitaActualizacion = !contrato.proximoAumento || diasRestantes <= 0;
+    const necesitaActualizacion =
+      !contrato.proximoAumento || diasRestantes <= 0;
 
     if (necesitaActualizacion) {
       const contratoActualizado = {
         ...contrato,
         proximoAumento: this.calcularProximoAumento(contrato),
-        estadoRenovacion: this.calcularEstadoDeRenovacion(this.calcularDiasRestantes(this.calcularProximoAumento(contrato)))
+        estadoRenovacion: this.calcularEstadoDeRenovacion(
+          this.calcularDiasRestantes(this.calcularProximoAumento(contrato)),
+        ),
       };
-      console.log("Contrato actualizado:", structuredClone(contratoActualizado));
       return contratoActualizado;
-
-      
-    }else{
-      console.log("no necesita actualizacion")
+    } else {
+      console.log('no necesita actualizacion');
       return {
-      ...contrato,
-      estadoRenovacion: this.calcularEstadoDeRenovacion(diasRestantes)
+        ...contrato,
+        estadoRenovacion: this.calcularEstadoDeRenovacion(diasRestantes),
       };
     }
-
-    
   }
-  
 }

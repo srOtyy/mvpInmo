@@ -179,13 +179,16 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     forkJoin(actualizaciones).subscribe({
       next: (resultados) => {
         const listaActual = this.$lista();
+        console.log(listaActual);
         const nuevaLista = listaActual.map((contrato) => {
           const actualizado = resultados.find(
             (r) => (r as any).id === contrato.id,
           );
           return actualizado ? actualizado : contrato;
         });
+
         this.$lista.set(nuevaLista);
+        console.log(nuevaLista);
       },
       error: (err) => console.error('Error al actualizar contratos', err),
     });

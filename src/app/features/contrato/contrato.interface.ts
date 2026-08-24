@@ -18,6 +18,7 @@ export type InformacionAdicional = {
   titulo: string;
   valor: string;
 };
+export type tipoIndice = 'IPC' | 'ICL';
 
 export interface IContrato {
   id: number;
@@ -36,7 +37,9 @@ export interface IContrato {
   proximoAumento: Date;
   porcentajeHonorarios: number;
   tipoPago: TipoPago;
+  tipoIndice: tipoIndice;
   inicioDelPeriodo?: number;
+  administracionTotal: boolean;
 }
 export interface IContratoVista extends IContrato {
   propietarioNombre: string;

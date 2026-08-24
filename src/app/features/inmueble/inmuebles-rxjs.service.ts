@@ -82,4 +82,16 @@ export class InmueblesRxjsService extends BaseCrudService<IInmueble> {
     }
     return inmuebles;
   }
+  activarInmueble(id: number) {
+    const inmAux = this.$lista().find((i) => i.id === id);
+    if (inmAux) {
+      inmAux.activo = true;
+      this.actualizarSinRecargar(id, inmAux).subscribe({
+        next: () => console.log('inmueble activo'),
+        error: (err) => console.error(err),
+      });
+    } else {
+      console.warn('error al activar inmueble');
+    }
+  }
 }

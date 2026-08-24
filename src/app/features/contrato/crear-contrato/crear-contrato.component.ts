@@ -99,6 +99,7 @@ export class CrearContratoComponent implements OnInit {
         Validators.min(0),
       ]),
       tipoPago: new FormControl('', Validators.required),
+      tipoIndice: new FormControl('IPC'),
       inicioDelPeriodo: new FormControl('1', [
         Validators.max(31),
         Validators.min(1),
@@ -136,7 +137,7 @@ export class CrearContratoComponent implements OnInit {
         map((nombre) =>
           nombre
             ? this._filtrarInquilinos(nombre)
-            : this.inquilinosLista.slice(),
+            : this.inquilinosDisponiblesLista.slice(),
         ),
       );
   }
@@ -152,7 +153,7 @@ export class CrearContratoComponent implements OnInit {
   }
   private _filtrarInquilinos(nombre: string): IInquilinoVista[] {
     const filterValue = nombre.toLowerCase();
-    return this.inquilinosLista.filter((i) =>
+    return this.inquilinosDisponiblesLista.filter((i) =>
       i.nombre.toLowerCase().includes(filterValue),
     );
   }
@@ -183,13 +184,19 @@ export class CrearContratoComponent implements OnInit {
       this.contratosService.$listaInquilinos,
     );
   }
+  get inquilinosDisponiblesLista() {
+    return this.inquilinosLista.filter((inquilino) => !inquilino.activo);
+  }
   get inmueblesLista() {
     return this.contratosService.$listaInmuebles;
+  }
+  get inmueblesDisponiblesLista() {
+    return this.inmueblesLista.filter((inmueble) => !inmueble.activo);
   }
   get filteredInmueblesLista() {
     const propietarioId = this.$propietarioId();
     if (!propietarioId) {
-      return this.inmueblesLista;
+      return this.inmueblesDisponiblesLista;
     } else {
       const inmueblesArray =
         this._propietariosService.obtenerArrayDeInmueblesPorId(propietarioId);
@@ -217,7 +224,6 @@ export class CrearContratoComponent implements OnInit {
     contrato.estadoRenovacion = this._cicloDeVida.calcularEstadoDeRenovacion(
       this._cicloDeVida.calcularDiasRestantes(contrato.proximoAumento),
     );
-    console.log(this.formulario.value);
     this.contratosService.crear(contrato).subscribe({
       next: () => {
         this._snack.mensajeSnackBar('Contrato creado exitosamente', 'Cerrar');
@@ -236,6 +242,8 @@ export class CrearContratoComponent implements OnInit {
             console.error('Error al crear la liquidacion');
           },
         });
+        this._inmueblesService.activarInmueble(contrato.inmuebleId);
+        this._inquilinoService.activarInquilino(contrato.inquilinoId);
         this.formulario.reset();
         this.formulario.markAllAsTouched();
       },

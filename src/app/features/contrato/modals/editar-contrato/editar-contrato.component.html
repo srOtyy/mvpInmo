@@ -1,45 +1,68 @@
 <form [formGroup]="formularioEditarContrato" class="formulario">
-    <ng-container >
+  <ng-container>
     <mat-form-field>
-        <mat-label>Propietario</mat-label>
+      <mat-label>Propietario</mat-label>
 
-       <mat-select formControlName="propietarioId">
-              @for (propietario of propietariosLista; track propietario.id) {
-                    <mat-option [value]="propietario.id">{{obtenerCaracteristica(propietario,"nombre","Nombre no encontrado")}}</mat-option>
-                  }
-        </mat-select>
-    </mat-form-field> 
-   <mat-form-field>
-        <mat-label>Inquilino</mat-label>
-
-       <mat-select formControlName="inquilinoId">
-              @for (inquilino of inquilinosLista; track inquilino.id) {
-                    <mat-option [value]="inquilino.id">{{obtenerCaracteristica(inquilino,"nombre","Nombre no encontrado")}}</mat-option>
-                  }
-        </mat-select>
-    </mat-form-field> 
-    <mat-form-field>
-        <mat-label>Estado del contrato</mat-label>
-       <mat-select formControlName="estado" >
-              @for (estado of estadosLista; track estado) {
-                    <mat-option [value]="estado">{{estado}}</mat-option>
-                  }
-        </mat-select>
+      <mat-select formControlName="propietarioId">
+        @for (propietario of propietariosLista; track propietario.id) {
+          <mat-option [value]="propietario.id">{{
+            obtenerCaracteristica(propietario, "nombre", "Nombre no encontrado")
+          }}</mat-option>
+        }
+      </mat-select>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Tipo de pago</mat-label>
-       <mat-select formControlName="tipoPago" >
-             <mat-option value="efectivo">efectivo</mat-option>
-             <mat-option value="transferencia">transferencia</mat-option>
+      <mat-label>Inquilino</mat-label>
 
-        </mat-select>
+      <mat-select formControlName="inquilinoId">
+        @for (inquilino of inquilinosLista; track inquilino.id) {
+          <mat-option [value]="inquilino.id">{{
+            obtenerCaracteristica(inquilino, "nombre", "Nombre no encontrado")
+          }}</mat-option>
+        }
+      </mat-select>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Valor alquiler</mat-label>
-        <span matTextPrefix>$&nbsp;</span>
-         <input matInput  formControlName="rentaMensual">
+      <mat-label>Estado del contrato</mat-label>
+      <mat-select formControlName="estado">
+        @for (estado of estadosLista; track estado) {
+          <mat-option [value]="estado">{{ estado }}</mat-option>
+        }
+      </mat-select>
     </mat-form-field>
-    </ng-container>
-
+    <mat-form-field>
+      <mat-label>Tipo de pago</mat-label>
+      <mat-select formControlName="tipoPago">
+        <mat-option value="efectivo">efectivo</mat-option>
+        <mat-option value="transferencia">transferencia</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Valor alquiler</mat-label>
+      <span matTextPrefix>$&nbsp;</span>
+      <input matInput formControlName="rentaMensual" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo de indice</mat-label>
+      <mat-select formControlName="tipoIndice">
+        <mat-option value="IPC">IPC</mat-option>
+        <mat-option value="ICL">ICL</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Administracion total</mat-label>
+      <mat-select formControlName="administracionTotal">
+        <mat-option [value]="true">Sí</mat-option>
+        <mat-option [value]="false">No</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
 </form>
-    <button type="submit" mat-flat-button [disabled]="!this.formularioEditarContrato.valid" (click)="guardarCambios()">Guardar cambios</button>
+<button
+  type="submit"
+  mat-flat-button
+  [disabled]="!this.formularioEditarContrato.valid"
+  (click)="guardarCambios()"
+>
+  Guardar cambios
+</button>

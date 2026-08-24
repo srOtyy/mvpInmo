@@ -1,68 +1,111 @@
 <div class="contenedor-principal">
   <div class="cabecera">
-     <div class="filtros">
-       <mat-form-field class="form-buscar" appearance="fill" >
-         <mat-label>Buscar</mat-label>
-         <mat-icon matSuffix class="icono-buscar">search</mat-icon>
-          <input type="text"
-                matInput
-                [ngModel]="$busquedaTexto()"
-                (ngModelChange)="$busquedaTexto.set($event)"
-                (keyup.enter)="navegarPrimerResultado()"
-                placeholder="Propietario o título">
-       </mat-form-field>
-    <button mat-icon-button matSuffix  (click)="cambiarEstadoSignalFecha()">
-      <mat-icon matSuffix [class]="{'icono-fecha': !$filtroFecha(), 'activo': $filtroFecha()}" matTooltip="Proximo vencimiento">{{calendarioIcono}}</mat-icon>
+    <div class="filtros">
+      <mat-form-field class="form-buscar" appearance="fill">
+        <mat-label>Buscar</mat-label>
+        <mat-icon matSuffix class="icono-buscar">search</mat-icon>
+        <input
+          type="text"
+          matInput
+          [ngModel]="$busquedaTexto()"
+          (ngModelChange)="$busquedaTexto.set($event)"
+          (keyup.enter)="navegarPrimerResultado()"
+          placeholder="Propietario o título"
+        />
+      </mat-form-field>
+      <button mat-icon-button matSuffix (click)="cambiarEstadoSignalFecha()">
+        <mat-icon
+          matSuffix
+          [class]="{ 'icono-fecha': !$filtroFecha(), activo: $filtroFecha() }"
+          matTooltip="Proximo vencimiento"
+          >{{ calendarioIcono }}</mat-icon
+        >
+      </button>
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="cambiarEstadoSignalNombrePropietario()"
+      >
+        <mat-icon
+          matSuffix
+          [class]="{
+            'icono-ordenAlfabetico': !$filtroNombrePropietario(),
+            activo: $filtroNombrePropietario(),
+          }"
+          matTooltip="Ordenar alfabeticamente"
+          >sort_by_alpha</mat-icon
+        >
+      </button>
+      <mat-form-field class="form-select" appearance="fill">
+        <mat-label>Estado</mat-label>
+        <mat-select [(value)]="$filtroBusqueda">
+          <!-- Esto esta hardcodeado, se debe mejorar -->
+          <mat-option value="todos">Todos</mat-option>
+          <mat-option value="activo">Activo</mat-option>
+          <mat-option value="preliminar">Preliminar</mat-option>
+          <mat-option value="finalizado">Finalizado</mat-option>
+          <mat-option value="cancelado">Cancelado</mat-option>
+          <mat-option value="renovar">Renovar</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button
+      mat-icon-button
+      class="btn-nuevo"
+      aria-label="Nuevo contrato"
+      (click)="irACrearContrato()"
+      matTooltip="Agregar contrato"
+    >
+      <mat-icon class="icono">add</mat-icon>
     </button>
-    <button mat-icon-button matSuffix  (click)="cambiarEstadoSignalNombrePropietario()">
-      <mat-icon matSuffix [class]="{'icono-ordenAlfabetico': !$filtroNombrePropietario(), 'activo': $filtroNombrePropietario()}" matTooltip="Ordenar alfabeticamente">sort_by_alpha</mat-icon>
+    <button
+      mat-icon-button
+      class="btn-nuevo"
+      (click)="evaluarVencimientosContratos()"
+    >
+      <mat-icon>person</mat-icon>
     </button>
-    <mat-form-field class="form-select" appearance="fill">
-      <mat-label>Estado</mat-label>
-      <mat-select [(value)]="$filtroBusqueda">
-        <!-- Esto esta hardcodeado, se debe mejorar -->
-        <mat-option value="todos" >Todos</mat-option>
-        <mat-option value="activo" >Activo</mat-option>
-        <mat-option value="preliminar" >Preliminar</mat-option>
-        <mat-option value="finalizado" >Finalizado</mat-option>
-        <mat-option value="cancelado" >Cancelado</mat-option>
-        <mat-option value="renovar" >Renovar</mat-option>
-      </mat-select>
-    </mat-form-field>
   </div>
-        <button mat-icon-button class="btn-nuevo" aria-label="Nuevo contrato" (click)="irACrearContrato()" matTooltip="Agregar contrato">
-            <mat-icon class="icono">add</mat-icon>
-        </button>
-  </div>
-
- 
 
   <div class="contenedor-contratos">
     <mat-chip-listbox aria-label="-listado-contratos">
-      @for(contrato of $contratosFiltrados(); track contrato.id ){
-          <mat-chip-option class="chip-contrato chip-{{contrato.estadoRenovacion}}" [selected]="contratoSeleccionado() === contrato"  (click)="evaluarClick(contrato)">
-            <div class="chip-contenido">
-              <div class="chip-header">
-                <span class="chip-titulo">{{contrato.propietarioNombre}} / {{contrato.titulo}} </span>
-                <div class="span-estados">
-                  <span class="chip-estado chip-{{contrato.estadoRenovacion}}" matTooltip="próxima renovacion">
-                     {{convertirChipEstadoRenovacion(contrato.estadoRenovacion)}}
-                    </span>
-                  <span class="chip-estado chip-{{ getEstadoColor(contrato.estado)}}" matTooltip="estado del contrato">
+      @for (contrato of $contratosFiltrados(); track contrato.id) {
+        <mat-chip-option
+          class="chip-contrato chip-{{ contrato.estadoRenovacion }}"
+          [selected]="contratoSeleccionado() === contrato"
+          (click)="evaluarClick(contrato)"
+        >
+          <div class="chip-contenido">
+            <div class="chip-header">
+              <span class="chip-titulo"
+                >{{ contrato.propietarioNombre }} / {{ contrato.titulo }}
+              </span>
+              <div class="span-estados">
+                <span
+                  class="chip-estado chip-{{ contrato.estadoRenovacion }}"
+                  matTooltip="próxima renovacion"
+                >
+                  {{ convertirChipEstadoRenovacion(contrato.estadoRenovacion) }}
+                </span>
+                <span
+                  class="chip-estado chip-{{ getEstadoColor(contrato.estado) }}"
+                  matTooltip="estado del contrato"
+                >
                   {{ contrato.estado }}
                 </span>
-                </div>
-                
-              </div>
-              <div class="chip-datos">
-                <span class="chip-renta">{{ formatearMoneda(contrato.rentaMensual) }}</span>
-                <span class="chip-fecha"> proximo aumento - {{ formatearFecha(contrato.proximoAumento) }} </span>
               </div>
             </div>
-          </mat-chip-option>  
+            <div class="chip-datos">
+              <span class="chip-renta">{{
+                formatearMoneda(contrato.rentaMensual)
+              }}</span>
+              <span class="chip-fecha">
+                proximo aumento - {{ formatearFecha(contrato.proximoAumento) }}
+              </span>
+            </div>
+          </div>
+        </mat-chip-option>
       }
-      
     </mat-chip-listbox>
   </div>
-
 </div>
