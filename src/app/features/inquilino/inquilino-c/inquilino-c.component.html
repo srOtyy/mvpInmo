@@ -4,6 +4,18 @@
     <button mat-icon-button color="primary" (click)="ordenarAlfabeticamente()">
       <mat-icon>sort_by_alpha</mat-icon>
     </button>
+    <mat-form-field class="form-buscar" appearance="fill">
+      <mat-label>Buscar</mat-label>
+      <mat-icon matSuffix class="icono-buscar">search</mat-icon>
+      <input
+        type="text"
+        matInput
+        [ngModel]="$busquedaTexto()"
+        (ngModelChange)="$busquedaTexto.set($event)"
+        placeholder="Nombre del inquilino"
+        aria-label="Buscar inquilino por nombre"
+      />
+    </mat-form-field>
   </div>
   <mat-divider></mat-divider>
 

@@ -3,14 +3,26 @@
     <h4>Crear Inmueble</h4>
     <mat-form-field class="form-field">
       <mat-label>Propietario</mat-label>
-      <mat-select [(ngModel)]="propietarioSeleccionado" required>
-        @for (propietario of propietarios; track $index) {
+      <input
+        matInput
+        type="text"
+        [formControl]="propietarioControl"
+        [matAutocomplete]="autoPropietario"
+        required
+      />
+      <mat-autocomplete
+        #autoPropietario="matAutocomplete"
+        [displayWith]="displayPropietario"
+        (optionSelected)="onPropietarioSeleccionado($event)"
+      >
+        @for (propietario of propietariosFiltrados; track propietario.id) {
           <mat-option [value]="propietario">
             {{ getNombrePropietario(propietario) }}
           </mat-option>
         }
-      </mat-select>
+      </mat-autocomplete>
     </mat-form-field>
+
     <mat-form-field class="form-field">
       <mat-label>Direccion</mat-label>
       <input matInput [(ngModel)]="direccion" required />

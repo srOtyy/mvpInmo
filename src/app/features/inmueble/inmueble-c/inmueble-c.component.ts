@@ -64,7 +64,7 @@ export class InmuebleCComponent implements OnInit {
     if (inmueble) {
       return inmueble;
     } else {
-      console.warn('no encontro el inmueble');
+      console.warn('no encontro el inmueble', idInmueble);
       return undefined;
     }
   }

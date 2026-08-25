@@ -1,30 +1,46 @@
 <app-card-list entidad="Propietarios">
-    
-    <div class="acciones">
-        <p>Filtrar: </p>
-        <button mat-icon-button color="primary" (click)="ordenarAlfabeticamente()">
-            <mat-icon>sort_by_alpha</mat-icon>
-        </button>
+  <div class="acciones">
+    <p>Filtrar:</p>
+    <button mat-icon-button color="primary" (click)="ordenarAlfabeticamente()">
+      <mat-icon>sort_by_alpha</mat-icon>
+    </button>
+    <mat-form-field class="form-buscar" appearance="fill">
+      <mat-label>Buscar</mat-label>
+      <mat-icon matSuffix class="icono-buscar">search</mat-icon>
+      <input
+        type="text"
+        matInput
+        [ngModel]="$busquedaTexto()"
+        (ngModelChange)="$busquedaTexto.set($event)"
+        placeholder="Nombre del propietario"
+        aria-label="Buscar propietario por nombre"
+      />
+    </mat-form-field>
+  </div>
+  <mat-divider></mat-divider>
+  @for (propietario of $listaPropietarios; track propietario.id) {
+    <br />
+    <div class="item">
+      <mat-accordion>
+        <mat-expansion-panel
+          (opened)="panelOpenState.set(true)"
+          (closed)="panelOpenState.set(false)"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ obtenerNombre(propietario) }}
+            </mat-panel-title>
+            <mat-panel-description class="descripcion">
+              Tel: {{ obtenerCaracteristica(propietario, "telefono") }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-accordion-propietario
+            [entidad]="propietario"
+            (eliminar)="eliminarPropietario($event)"
+            (editar)="editarPropietario($event)"
+          ></app-accordion-propietario>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
-    <mat-divider></mat-divider>
-    @for(propietario of $listaPropietarios; track propietario.id) {
-        <br>
-        <div class="item">
-            <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-                    <mat-expansion-panel-header>
-                    <mat-panel-title> {{obtenerNombre(propietario)}} </mat-panel-title>
-                    <mat-panel-description class="descripcion">
-                        Tel: {{obtenerCaracteristica(propietario, 'telefono')}}
-                    </mat-panel-description>
-                    </mat-expansion-panel-header>
-                <app-accordion-propietario 
-                    [entidad]="propietario" 
-                    (eliminar)="eliminarPropietario($event)"
-                    (editar)="editarPropietario($event)"
-                ></app-accordion-propietario>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
-    }
+  }
 </app-card-list>
