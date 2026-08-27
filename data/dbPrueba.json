@@ -1,0 +1,208 @@
+{
+  "inquilinos": [
+    {
+      "id": 652261,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "Prueba"
+        },
+        {
+          "clave": "dni",
+          "valor": 1
+        },
+        {
+          "clave": "telefono",
+          "valor": 1
+        },
+        {
+          "clave": "cuil",
+          "valor": "1"
+        }
+      ],
+      "garantes": [],
+      "activo": true
+    }
+  ],
+  "propietarios": [
+    {
+      "id": 932157,
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "valor": "prueba"
+        },
+        {
+          "clave": "dni",
+          "valor": 1
+        },
+        {
+          "clave": "cuil",
+          "valor": 1
+        },
+        {
+          "clave": "domicilio",
+          "valor": "1"
+        },
+        {
+          "clave": "telefono",
+          "valor": 1
+        }
+      ],
+      "listaInmuebles": [
+        936644
+      ]
+    }
+  ],
+  "inmuebles": [
+    {
+      "id": 936644,
+      "idPropietario": 932157,
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "valor": "1"
+        },
+        {
+          "clave": "letra",
+          "valor": null
+        },
+        {
+          "clave": "numero",
+          "valor": null
+        }
+      ],
+      "direccion": "1",
+      "activo": true
+    }
+  ],
+  "contratos": [
+    {
+      "id": 41503,
+      "propietarioId": 932157,
+      "inmuebleId": 936644,
+      "inquilinoId": 652261,
+      "fechaInicio": "2026-07-02T03:00:00.000Z",
+      "fechaFin": "2026-09-02T03:00:00.000Z",
+      "rentaMensual": 100,
+      "estado": "preliminar",
+      "periodoAumento": 4,
+      "proximoAumento": "2026-11-02T03:00:00.000Z",
+      "titulo": "prueba - Prueba",
+      "porcentajeHonorarios": 1,
+      "tipoPago": "efectivo",
+      "tipoIndice": "IPC",
+      "inicioDelPeriodo": "1",
+      "estadoFinalizacion": "un_mes",
+      "estadoRenovacion": "excede",
+      "propietarioNombre": "prueba"
+    }
+  ],
+  "definiciones": [
+    {
+      "dominio": "propietarios",
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "tipo": "texto",
+          "requerido": true
+        },
+        {
+          "clave": "dni",
+          "tipo": "numero",
+          "requerido": true
+        },
+        {
+          "clave": "cuil",
+          "tipo": "numero",
+          "requerido": false
+        },
+        {
+          "clave": "domicilio",
+          "tipo": "texto",
+          "requerido": true
+        },
+        {
+          "clave": "telefono",
+          "tipo": "numero",
+          "requerido": false
+        }
+      ],
+      "id": 1
+    },
+    {
+      "dominio": "inquilinos",
+      "caracteristicas": [
+        {
+          "clave": "nombre",
+          "tipo": "texto",
+          "requerido": true
+        },
+        {
+          "clave": "dni",
+          "tipo": "numero",
+          "requerido": false
+        },
+        {
+          "clave": "telefono",
+          "tipo": "numero",
+          "requerido": false
+        },
+        {
+          "clave": "cuil",
+          "tipo": "texto",
+          "requerido": false
+        }
+      ],
+      "id": 2
+    },
+    {
+      "dominio": "inmuebles",
+      "caracteristicas": [
+        {
+          "clave": "piso",
+          "tipo": "texto",
+          "requerido": false
+        },
+        {
+          "clave": "letra",
+          "tipo": "texto",
+          "requerido": false
+        },
+        {
+          "clave": "numero",
+          "tipo": "numero",
+          "requerido": false
+        }
+      ],
+      "id": 3
+    }
+  ],
+  "notificaciones": [
+    {
+      "id": 540826,
+      "estado": "pendiente",
+      "contratoId": 123,
+      "fecha": "2026-05-14T07:14:25.976Z",
+      "tipo": "recordatorio",
+      "mensaje": "Este es un recordatorio de prueba"
+    }
+  ],
+  "liquidaciones": [
+    {
+      "id": 416043,
+      "contratoId": 41503,
+      "propietarioNombre": "prueba",
+      "inquilinoNombre": "Prueba",
+      "inmuebleId": 936644,
+      "periodo": "agosto de 2026",
+      "fechaGeneracion": "2026-08-26T16:30:22.386Z",
+      "itemsInquilino": [],
+      "itemsPropietario": [],
+      "montoAlquiler": 100,
+      "total": 100,
+      "honorarios": 1,
+      "inicioDelPeriodo": "1"
+    }
+  ]
+}

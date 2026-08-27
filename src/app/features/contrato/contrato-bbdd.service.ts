@@ -68,7 +68,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   cargarLista(): void {
     if (this.$lista().length > 0) return;
     this.cargar().subscribe({
-      next: () => this.evaluarVencimientoDeTodosLosContratos(this.$lista()),
+      next: () => console.log('contratos cargados'),
       error: () => console.error('Error al cargar contratos'),
     });
   }
@@ -170,25 +170,38 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     this.$sideBarInfo.set(!this.$sideBarInfo());
   }
   evaluarVencimientoDeTodosLosContratos(contratos: IContrato[]) {
-    const actualizaciones = contratos.map((contrato) =>
-      this.actualizarSinRecargar(
-        contrato.id,
-        this._cicloDeVida.evaluarContrato(contrato),
-      ),
+    const contratosEvaluados = contratos.map((contrato) =>
+      this._cicloDeVida.evaluarContrato(contrato),
     );
+    const contratosConCambios = contratosEvaluados.filter(
+      (evaluado, indice) => {
+        const original = contratos[indice];
+        return (
+          original.estadoRenovacion !== evaluado.estadoRenovacion ||
+          new Date(original.proximoAumento).getTime() !==
+            new Date(evaluado.proximoAumento).getTime()
+        );
+      },
+    );
+    const actualizaciones = contratosConCambios.map((contrato) =>
+      this.actualizarSinRecargar(contrato.id, contrato),
+    );
+
+    if (actualizaciones.length === 0) {
+      this.$lista.set(contratosEvaluados);
+      return;
+    }
+
     forkJoin(actualizaciones).subscribe({
       next: (resultados) => {
-        const listaActual = this.$lista();
-        console.log(listaActual);
-        const nuevaLista = listaActual.map((contrato) => {
-          const actualizado = resultados.find(
-            (r) => (r as any).id === contrato.id,
-          );
-          return actualizado ? actualizado : contrato;
-        });
-
-        this.$lista.set(nuevaLista);
-        console.log(nuevaLista);
+        const resultadosPorId = new Map(
+          resultados.map((resultado) => [resultado.id, resultado]),
+        );
+        this.$lista.set(
+          contratosEvaluados.map(
+            (contrato) => resultadosPorId.get(contrato.id) ?? contrato,
+          ),
+        );
       },
       error: (err) => console.error('Error al actualizar contratos', err),
     });

@@ -15,11 +15,25 @@ export class CicloDeVidaContratosService {
   }
 
   calcularProximoAumento(contrato: IContrato): Date {
-    const proximoAumentoActual = new Date(contrato.proximoAumento);
-    const proximoAumentoCalculado = new Date(proximoAumentoActual);
-    proximoAumentoCalculado.setMonth(
-      proximoAumentoActual.getMonth() + contrato.periodoAumento,
-    );
+    const proximoAumento = this.parseFecha(contrato.proximoAumento);
+    const fechaInicio = this.parseFecha(contrato.fechaInicio);
+    let fechaBase =
+      proximoAumento && !Number.isNaN(proximoAumento.getTime())
+        ? proximoAumento
+        : fechaInicio;
+    if (!fechaBase || Number.isNaN(fechaBase.getTime())) {
+      throw new Error(`El contrato ${contrato.id} no tiene una fecha válida`);
+    }
+    if (contrato.periodoAumento <= 0) {
+      throw new Error(`El contrato ${contrato.id} tiene un período inválido`);
+    }
+
+    const proximoAumentoCalculado = new Date(fechaBase);
+    while (proximoAumentoCalculado <= this.ahora) {
+      proximoAumentoCalculado.setMonth(
+        proximoAumentoCalculado.getMonth() + contrato.periodoAumento,
+      );
+    }
     return proximoAumentoCalculado;
   }
 
@@ -27,6 +41,7 @@ export class CicloDeVidaContratosService {
     //esto podria devolver numeros negativos como respuesta a que no necesita renovacion
     if (!proximoAumento) return -1;
     const proximoAumentoDate = this.parseFecha(proximoAumento)!;
+    if (Number.isNaN(proximoAumentoDate.getTime())) return -1;
     const diferenciaMs = proximoAumentoDate.getTime() - this.ahora.getTime();
     return Math.round(diferenciaMs / this.MS_POR_DIA);
   }
