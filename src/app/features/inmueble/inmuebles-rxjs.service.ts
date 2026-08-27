@@ -67,7 +67,7 @@ export class InmueblesRxjsService extends BaseCrudService<IInmueble> {
       return inmueble.direccion;
     }
     console.warn('no encontro el inmueble');
-    return '';
+    return 'no encontro el inmueble';
   }
   obtenerInmueblePorId(idInmueble: number): IInmueble | undefined {
     return this.$lista().find((i) => i.id === idInmueble);

@@ -16,20 +16,21 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
+import { InmueblesRxjsService } from '../../inmueble/inmuebles-rxjs.service';
 @Component({
-    selector: 'app-contrato-c',
-    imports: [
-        A11yModule,
-        AsyncPipe,
-        DatePipe,
-        CurrencyPipe,
-        MatIconModule,
-        MatTooltipModule,
-        MatButtonModule,
-        MatDividerModule,
-    ],
-    templateUrl: './contrato-c.component.html',
-    styleUrl: './contrato-c.component.scss'
+  selector: 'app-contrato-c',
+  imports: [
+    A11yModule,
+    AsyncPipe,
+    DatePipe,
+    CurrencyPipe,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatDividerModule,
+  ],
+  templateUrl: './contrato-c.component.html',
+  styleUrl: './contrato-c.component.scss',
 })
 export class ContratoCComponent implements OnInit {
   constructor(
@@ -37,6 +38,7 @@ export class ContratoCComponent implements OnInit {
     private _modalService: ModalService,
     private _liquidacion: LiquidacionGeneratorService,
     private router: Router,
+    private _inmuebleService: InmueblesRxjsService,
   ) {}
   ngOnInit() {
     this._contratosService.cargarLista();
@@ -103,5 +105,8 @@ export class ContratoCComponent implements OnInit {
 
   volverALaListaDeContratos() {
     this.router.navigate(['/contratos/lista']);
+  }
+  devolverDireccionInmueble(id: number): string {
+    return this._inmuebleService.obtenerDireccion(id);
   }
 }
