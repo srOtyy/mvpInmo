@@ -1,4 +1,8 @@
-<form class="formulario" [formGroup]="formulario" (ngSubmit)="solicitarIndice()">
+<form
+  class="formulario"
+  [formGroup]="formulario"
+  (ngSubmit)="solicitarIndice()"
+>
   <div class="fila">
     <mat-form-field appearance="outline">
       <mat-label>Monto</mat-label>
@@ -29,7 +33,7 @@
 
   <div class="acciones">
     <button mat-flat-button color="primary" type="submit" [disabled]="cargando">
-      {{ cargando ? 'Consultando...' : 'Consultar índice' }}
+      {{ cargando ? "Consultando..." : "Consultar índice" }}
     </button>
   </div>
 </form>
@@ -43,33 +47,54 @@
         </mat-expansion-panel-header>
 
         <div class="resumen-general">
-          @if(!respuesta.success){
+          @if (!respuesta.success) {
             <p><strong>Success:</strong> {{ respuesta.success }}</p>
           }
-          <p><strong>Resultado principal:</strong>$ {{ respuesta.data[respuesta.data.length - 1].amount | currency:'ARS':'symbol':'1.0-0' }}</p>
+          <p>
+            <strong>Resultado principal:</strong>$
+            {{
+              respuesta.data[respuesta.data.length - 1].amount
+                | currency: "ARS" : "symbol" : "1.0-0"
+            }}
+          </p>
         </div>
       </mat-expansion-panel>
 
       @for (item of respuesta.data; track item.date) {
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>{{ formatearFechaDetalle(item.date) }}</mat-panel-title>
-            <mat-panel-description>$
-              {{ item.amount | currency:'ARS':'symbol':'1.0-0' }} · {{ item.dif }}%
+            <mat-panel-title>{{
+              formatearFechaDetalle(item.date)
+            }}</mat-panel-title>
+            <mat-panel-description
+              >$ {{ item.amount | currency: "ARS" : "symbol" : "1.0-0" }} ·
+              {{ item.dif }}%
             </mat-panel-description>
           </mat-expansion-panel-header>
 
           <div class="resultado-item">
             <div class="resumen-linea">
               <span><strong>Valor índice:</strong> {{ item.value }}</span>
-              <span><strong>Estimado:</strong> {{ item.estimated ? 'Sí' : 'No' }}</span>
+              <span
+                ><strong>Estimado:</strong>
+                {{ item.estimated ? "Sí" : "No" }}</span
+              >
+              <button
+                mat-raised-button
+                class="boton"
+                (click)="actualizarAlquiler(entidad.id, item.amount)"
+              >
+                Actualizar con este monto
+              </button>
             </div>
 
             @if (item.details.length > 0) {
               <mat-expansion-panel class="panel-detalles">
                 <mat-expansion-panel-header>
                   <mat-panel-title>Ver detalles</mat-panel-title>
-                  <mat-panel-description>{{ item.details.length }} ajustes</mat-panel-description>
+                  <mat-panel-description
+                    >{{ item.details.length }} ajustes</mat-panel-description
+                  >
                 </mat-expansion-panel-header>
 
                 <div class="detalles-minimal">

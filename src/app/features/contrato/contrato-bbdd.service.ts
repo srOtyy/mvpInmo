@@ -1,5 +1,5 @@
-import { computed, Injectable, signal, Signal } from '@angular/core';
-import { IContrato, IContratoVista } from './contrato.interface';
+import { computed, Injectable, signal } from '@angular/core';
+import { IContrato } from './contrato.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { InquilinoRxjsService } from '../inquilino/inquilino-rxjs.service';
@@ -17,6 +17,11 @@ import { SnackbarService } from '../../core/snackbar.service';
   providedIn: 'root',
 })
 export class ContratoBbddService extends BaseCrudService<IContrato> {
+  $filtroBusqueda = signal('todos');
+  $filtroFecha = signal(false);
+  $filtroNombrePropietario = signal(false);
+  $filtroAdministracionTotal = signal(false);
+  $busquedaTexto = signal('');
   $listaPropietarios: IPropietario[] = [];
   $listaInquilinos: IInquilino[] = [];
   $listaInmuebles: IInmueble[] = [];
@@ -60,6 +65,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     private _rxjsInquilinos: InquilinoRxjsService,
     private _rxjsPropietarios: PropietarioRxjsService,
     private _cicloDeVida: CicloDeVidaContratosService,
+    private _snackBar: SnackbarService,
   ) {
     super(http, 'http://localhost:3000/contratos');
     this.obtenerListas();
@@ -68,7 +74,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   cargarLista(): void {
     if (this.$lista().length > 0) return;
     this.cargar().subscribe({
-      next: () => console.log('contratos cargados'),
+      next: () => this.evaluarVencimientoDeTodosLosContratos(this.$lista()),
       error: () => console.error('Error al cargar contratos'),
     });
   }
@@ -170,38 +176,25 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     this.$sideBarInfo.set(!this.$sideBarInfo());
   }
   evaluarVencimientoDeTodosLosContratos(contratos: IContrato[]) {
-    const contratosEvaluados = contratos.map((contrato) =>
-      this._cicloDeVida.evaluarContrato(contrato),
+    const actualizaciones = contratos.map((contrato) =>
+      this.actualizarSinRecargar(
+        contrato.id,
+        this._cicloDeVida.evaluarContrato(contrato),
+      ),
     );
-    const contratosConCambios = contratosEvaluados.filter(
-      (evaluado, indice) => {
-        const original = contratos[indice];
-        return (
-          original.estadoRenovacion !== evaluado.estadoRenovacion ||
-          new Date(original.proximoAumento).getTime() !==
-            new Date(evaluado.proximoAumento).getTime()
-        );
-      },
-    );
-    const actualizaciones = contratosConCambios.map((contrato) =>
-      this.actualizarSinRecargar(contrato.id, contrato),
-    );
-
-    if (actualizaciones.length === 0) {
-      this.$lista.set(contratosEvaluados);
-      return;
-    }
-
     forkJoin(actualizaciones).subscribe({
       next: (resultados) => {
-        const resultadosPorId = new Map(
-          resultados.map((resultado) => [resultado.id, resultado]),
-        );
-        this.$lista.set(
-          contratosEvaluados.map(
-            (contrato) => resultadosPorId.get(contrato.id) ?? contrato,
-          ),
-        );
+        const listaActual = this.$lista();
+        console.log(listaActual);
+        const nuevaLista = listaActual.map((contrato) => {
+          const actualizado = resultados.find(
+            (r) => (r as any).id === contrato.id,
+          );
+          return actualizado ? actualizado : contrato;
+        });
+
+        this.$lista.set(nuevaLista);
+        console.log(nuevaLista);
       },
       error: (err) => console.error('Error al actualizar contratos', err),
     });
@@ -209,4 +202,22 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
 
   //para mostrar en el select de la creacion de contratos; quiero que el inmueble muestre alguna especificacion
   devolverAlgunaCaracteristica() {}
+
+  //ActualizarMonto del alquiler
+  actualizarMontoAlquiler(id: number, monto: number) {
+    const contrato = this.$lista().find((c) => c.id === id);
+    if (contrato && monto) {
+      const montoReducido = parseFloat(monto.toFixed(2)); // 473271.69 (number)
+      contrato.rentaMensual = montoReducido;
+      this.actualizarSinRecargar(id, contrato).subscribe({
+        next: () =>
+          this._snackBar.mensajeSnackBar(
+            'Monto actualizado al recargar',
+            'cerrar',
+          ),
+      });
+    } else {
+      console.warn('no se encontro contrato(1) o monto(2)', contrato, monto);
+    }
+  }
 }

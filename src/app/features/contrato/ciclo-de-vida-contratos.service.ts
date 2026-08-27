@@ -29,6 +29,7 @@ export class CicloDeVidaContratosService {
     }
 
     const proximoAumentoCalculado = new Date(fechaBase);
+    proximoAumentoCalculado.setDate(1);
     while (proximoAumentoCalculado <= this.ahora) {
       proximoAumentoCalculado.setMonth(
         proximoAumentoCalculado.getMonth() + contrato.periodoAumento,
@@ -67,6 +68,7 @@ export class CicloDeVidaContratosService {
           this.calcularDiasRestantes(this.calcularProximoAumento(contrato)),
         ),
       };
+
       return contratoActualizado;
     } else {
       console.log('no necesita actualizacion');

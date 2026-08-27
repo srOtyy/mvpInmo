@@ -1,3 +1,5 @@
+@use "../../../../../styles.scss" as *;
+
 .formulario {
   display: grid;
   gap: 1rem;
@@ -33,8 +35,13 @@
 
 .resumen-linea {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
+  .boton {
+    background-color: $neutral-500;
+  }
 }
 
 .panel-detalles {

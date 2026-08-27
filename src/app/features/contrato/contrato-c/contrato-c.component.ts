@@ -4,10 +4,8 @@ import { ContratoBbddService } from '../contrato-bbdd.service';
 import { ModalService } from '../../../core/modal/modal.service';
 import { EditarContratoComponent } from '../modals/editar-contrato/editar-contrato.component';
 import { EliminarContratoComponent } from '../modals/eliminar-contrato/eliminar-contrato.component';
-import { AgregarGastosContratoComponent } from '../modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
 import { SolicitarIndiceContratoComponent } from '../modals/solicitar-indice-contrato/solicitar-indice-contrato.component';
 import { InformacionAdicionalComponent } from '../modals/informacion-adicional/informacion-adicional.component';
-import { Liquidacion } from '../../liquidacion/liquidacion-interface';
 import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
 import { A11yModule } from '@angular/cdk/a11y';
 import { AsyncPipe, DatePipe, CurrencyPipe } from '@angular/common';
@@ -73,7 +71,9 @@ export class ContratoCComponent implements OnInit {
       contrato.id,
     );
     if (liquidacionAux) {
+      liquidacionAux.montoAlquiler = contrato.rentaMensual;
       this._liquidacion.setSignalSeleccionado(liquidacionAux);
+      this._liquidacion.actualizarLiquidacionSeleccionada();
       this.router.navigate(['/contratos/liquidaciones']);
     } else {
       console.warn('La liquidacionAux dio undefinded:', liquidacionAux);

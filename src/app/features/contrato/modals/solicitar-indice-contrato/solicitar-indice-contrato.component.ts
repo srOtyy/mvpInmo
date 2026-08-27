@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators,
+  FormGroup,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -9,87 +14,103 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { CurrencyPipe } from '@angular/common';
 import { SnackbarService } from '../../../../core/snackbar.service';
 import { ModalComponent } from '../../../../shared/modal/modal.component';
-import { ArquilerApiCalculateResponse, ArquilerApiService } from '../../../../core/ARquilerAPI/arquiler-api.service';
+import {
+  ArquilerApiCalculateResponse,
+  ArquilerApiService,
+} from '../../../../core/ARquilerAPI/arquiler-api.service';
 import { IContrato } from '../../contrato.interface';
+import { ContratoBbddService } from '../../contrato-bbdd.service';
+import { LiquidacionGeneratorService } from '../../../liquidacion/liquidacion.service';
 @Component({
-    selector: 'app-solicitar-indice-contrato',
-    imports: [
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatExpansionModule,
-        MatInputModule,
-        MatSelectModule,
-        CurrencyPipe
-    ],
-    templateUrl: './solicitar-indice-contrato.component.html',
-    styleUrl: './solicitar-indice-contrato.component.scss'
+  selector: 'app-solicitar-indice-contrato',
+  imports: [
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatSelectModule,
+    CurrencyPipe,
+  ],
+  templateUrl: './solicitar-indice-contrato.component.html',
+  styleUrl: './solicitar-indice-contrato.component.scss',
 })
 export class SolicitarIndiceContratoComponent implements OnInit {
   @Input() entidad!: IContrato;
 
   cargando = false;
-  respuesta!: ArquilerApiCalculateResponse  ;
+  respuesta!: ArquilerApiCalculateResponse;
   formulario: FormGroup;
-  //poner las tasas q usa la inmobiliaria 
+  //poner las tasas q usa la inmobiliaria
   readonly tasas = ['ipc', 'icl', 'uva'];
 
   constructor(
     private formBuilder: FormBuilder,
     private arquilerApiService: ArquilerApiService,
     private dialogRef: MatDialogRef<ModalComponent>,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private _contratosService: ContratoBbddService,
+    private _liquidacionService: LiquidacionGeneratorService,
   ) {
     //este es lo que enviamos a la API
     this.formulario = this.formBuilder.group({
       amount: [0, [Validators.required, Validators.min(1)]],
       date: ['', Validators.required],
       months: [1, [Validators.required, Validators.min(1)]],
-      rate: ['ipc', Validators.required]
+      rate: ['ipc', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.respuesta = this.arquilerApiService.TemporalArquilerApliCalculateResponse
+    this.respuesta =
+      this.arquilerApiService.TemporalArquilerApliCalculateResponse;
     // Aprovechamos datos reales del contrato para que el usuario no tenga que escribir todo desde cero.
     const fechaBase = this.formatearFechaParaInput(this.entidad.fechaInicio);
-    
+
     this.formulario.patchValue({
       amount: this.entidad.rentaMensual,
       date: fechaBase,
       months: this.entidad.periodoAumento,
-      rate: 'ipc'
+      rate: 'ipc',
     });
   }
 
   solicitarIndice(): void {
-    console.log("solicitando indice:")
+    console.log('solicitando indice:');
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
-      this.snackbarService.mensajeSnackBar('Revisá los campos antes de consultar el índice', 'Cerrar');
+      this.snackbarService.mensajeSnackBar(
+        'Revisá los campos antes de consultar el índice',
+        'Cerrar',
+      );
       return;
     }
 
     this.cargando = true;
     const payload = this.formulario.getRawValue();
-    console.log(payload)
+    console.log(payload);
 
-    this.arquilerApiService.calcularActualizacion({
-      amount: Number(payload.amount),
-      date: String(payload.date),
-      months: Number(payload.months),
-      rate: String(payload.rate)
-    }).subscribe({
-      next: (respuesta) => {
-        this.respuesta = respuesta;
-        this.cargando = false;
-        this.snackbarService.mensajeSnackBar('Índice calculado con éxito', 'Cerrar');
-      },
-      error: (error: Error) => {
-        this.cargando = false;
-        this.snackbarService.mensajeSnackBar(error.message, 'Cerrar');
-      }
-    });
+    this.arquilerApiService
+      .calcularActualizacion({
+        amount: Number(payload.amount),
+        date: String(payload.date),
+        months: Number(payload.months),
+        rate: String(payload.rate),
+      })
+      .subscribe({
+        next: (respuesta) => {
+          this.respuesta = respuesta;
+          this.cargando = false;
+          this.snackbarService.mensajeSnackBar(
+            'Índice calculado con éxito',
+            'Cerrar',
+          );
+        },
+        error: (error: Error) => {
+          this.cargando = false;
+          this.snackbarService.mensajeSnackBar(error.message, 'Cerrar');
+        },
+      });
   }
 
   cerrarModal(): void {
@@ -99,16 +120,24 @@ export class SolicitarIndiceContratoComponent implements OnInit {
   formatearFechaDetalle(fecha: string): string {
     return new Date(fecha).toLocaleDateString('es-AR', {
       month: 'short',
-      year: 'numeric'
+      year: 'numeric',
     });
   }
 
-  resumirDetalle(detalle: { date: string; month_before: number; accumulate: number }): string {
+  resumirDetalle(detalle: {
+    date: string;
+    month_before: number;
+    accumulate: number;
+  }): string {
     return `${this.formatearFechaDetalle(detalle.date)} · ${detalle.month_before}% · acum ${detalle.accumulate}%`;
   }
 
   private formatearFechaParaInput(fecha: Date | string): string {
     const fechaObj = new Date(fecha);
     return fechaObj.toISOString().slice(0, 10);
+  }
+  actualizarAlquiler(id: number, monto: number) {
+    this._contratosService.actualizarMontoAlquiler(id, monto);
+    this._liquidacionService.actualizarMontoAlquiler(id, monto);
   }
 }
