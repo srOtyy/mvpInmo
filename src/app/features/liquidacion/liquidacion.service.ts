@@ -161,8 +161,13 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     );
     const subtotalDescuento = totalItemsPropietario + totalHonorarios;
     const subTotal =
-      liquidacion.montoAlquiler +
+      +liquidacion.montoAlquiler +
       liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0);
+    console.log(
+      liquidacion.montoAlquiler,
+      liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0),
+      subTotal,
+    );
     const total = subTotal - totalHonorarios;
     try {
       const response = await lastValueFrom(
