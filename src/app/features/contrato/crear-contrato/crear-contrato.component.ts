@@ -140,6 +140,7 @@ export class CrearContratoComponent implements OnInit {
             : this.inquilinosDisponiblesLista.slice(),
         ),
       );
+    console.log(this.formulario.value);
   }
   // para el oninit del observable para inquilinos y propietarios (autocomplete)
   private _filtrarPropietarios(nombre: string): IPropietarioVista[] {
@@ -245,6 +246,10 @@ export class CrearContratoComponent implements OnInit {
         this._inmueblesService.activarInmueble(contrato.inmuebleId);
         this._inquilinoService.activarInquilino(contrato.inquilinoId);
         this.formulario.reset();
+        this.formulario.patchValue({
+          id: randomId(),
+          estado: 'preliminar',
+        });
         this.formulario.markAllAsTouched();
       },
       error: () => {

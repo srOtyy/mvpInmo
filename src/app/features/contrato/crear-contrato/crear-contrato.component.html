@@ -22,7 +22,7 @@
             (optionSelected)="obtenerIdDelPropietario($event)"
           >
             @for (
-              propietario of propietariosFiltrados | async;
+              propietario of (propietariosFiltrados | async)?.slice(0, 10);
               track propietario.id
             ) {
               <mat-option [value]="propietario">{{
