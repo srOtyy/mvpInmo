@@ -1,4 +1,11 @@
-import { Component, computed, OnInit, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +24,7 @@ import { Router } from '@angular/router';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { toContratosVista } from '../contrato.mapper';
 import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.service';
+import { ListaDeContratosService } from '../lista-de-contratos.service';
 
 @Component({
   selector: 'app-lista-contratos',
@@ -34,41 +42,27 @@ import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.servi
   styleUrl: './lista-contratos.component.scss',
 })
 export class ListaContratosComponent implements OnInit {
+  private _listaContratosService = inject(ListaDeContratosService);
+  private _contratosService = inject(ContratoBbddService);
+  private router = inject(Router);
   evento = output<void>();
   contratoSeleccionado = signal<IContrato | null>(null);
   calendarioIcono = 'calendar_today';
-  $contratosOriginales = computed(() => {
-    //no me dejaba mandar como argumento $listPropietarios(), solo sin los parentesis
-    return toContratosVista(
-      this._contratosService.$lista(),
-      this._propietariosService.$lista(),
-    );
-  });
-  $filtroBusqueda = signal('todos');
-  $filtroFecha = signal(false);
-  $filtroNombrePropietario = signal(false);
-  $busquedaTexto = signal('');
-  $contratosFiltrados = computed(() => {
-    let lista = [...this.$contratosOriginales()];
-    lista = this.aplicarFiltroOrdenPorFecha(lista);
-    lista = this.aplicarFiltroEstado(lista);
-    lista = this.aplicarFiltroBusquedaTexto(lista);
-    lista = this.aplicarFiltrosNombrePropietario(lista);
-    return lista;
-  });
   contadorFalopa: number = 0;
-  constructor(
-    private _contratosService: ContratoBbddService,
-    private router: Router,
-    private _propietariosService: PropietarioRxjsService,
-  ) {}
+  contratosFiltrados = this._listaContratosService.$contratosFiltrados;
+  $busquedaTexto = this._listaContratosService.$busquedaTexto;
+  $filtroFecha = this._listaContratosService.$filtroFecha;
+  $filtroNombrePropietario =
+    this._listaContratosService.$filtroNombrePropietario;
+  $filtroBusqueda = this._listaContratosService.$filtroBusqueda;
 
+  $contratosFiltrados = this._listaContratosService.$contratosFiltrados;
   ngOnInit() {
     this._contratosService.cargarLista();
   }
 
   navegarPrimerResultado() {
-    const primerResultado = this.$contratosFiltrados()[0];
+    const primerResultado = this.contratosFiltrados()[0];
     if (primerResultado) {
       this.contratoSeleccionado.set(primerResultado as IContrato);
       this._contratosService.seleccionarContrato(primerResultado as IContrato);
@@ -76,17 +70,6 @@ export class ListaContratosComponent implements OnInit {
     }
   }
 
-  private aplicarFiltroBusquedaTexto(
-    lista: IContratoVista[],
-  ): IContratoVista[] {
-    const texto = this.$busquedaTexto().trim().toLowerCase();
-    if (!texto) return lista;
-    return lista.filter(
-      (p) =>
-        p.propietarioNombre.toLowerCase().includes(texto) ||
-        p.titulo?.toLowerCase().includes(texto),
-    );
-  }
   eventoSidenav() {
     this.evento.emit();
   }
@@ -138,12 +121,7 @@ export class ListaContratosComponent implements OnInit {
       year: 'numeric',
     });
   }
-  cambiarEstadoSignalFecha() {
-    this.$filtroFecha.update((estado) => !estado);
-  }
-  cambiarEstadoSignalNombrePropietario() {
-    this.$filtroNombrePropietario.update((estado) => !estado);
-  }
+
   irACrearContrato() {
     this.router.navigate(['/contratos/crear']);
   }
@@ -155,47 +133,14 @@ export class ListaContratosComponent implements OnInit {
     if (estadoRenovacion === 'vencido') return 'vencido';
     return '';
   }
-
-  //filtros del signal lista de contratos
-  private aplicarFiltroOrdenPorFecha(lista: IContratoVista[]) {
-    const fechaFiltroActivo = this.$filtroFecha();
-    if (fechaFiltroActivo) {
-      return [...lista].sort(
-        (a, b) =>
-          new Date(a.proximoAumento).getTime() -
-          new Date(b.proximoAumento).getTime(),
-      );
-    }
-    return lista;
-  }
-  private aplicarFiltroEstado(lista: IContratoVista[]) {
-    const filtroBusqueda = this.$filtroBusqueda();
-    if (filtroBusqueda === 'todos') return lista;
-    return lista.filter(
-      (contrato) =>
-        contrato.titulo
-          ?.toLowerCase()
-          .includes(this.$filtroBusqueda().toLowerCase()) ||
-        this.getEstadoLabel(contrato.estado)
-          .toLowerCase()
-          .includes(this.$filtroBusqueda().toLowerCase()),
-    );
-  }
-  private aplicarFiltrosNombrePropietario(lista: IContratoVista[]) {
-    const filtroNombrePropietario = this.$filtroNombrePropietario();
-    if (filtroNombrePropietario) {
-      lista.sort((a, b) => {
-        const nombreA = a.propietarioNombre;
-        const nombreB = b.propietarioNombre;
-        return nombreA.localeCompare(nombreB);
-      });
-      return lista;
-    }
-    return lista;
-  }
+  //aplicar filtros enviandoselos al servicio
   evaluarVencimientosContratos() {
-    this._contratosService.evaluarVencimientoDeTodosLosContratos(
-      this.$contratosOriginales(),
-    );
+    this._listaContratosService.evaluarVencimientosContratos();
+  }
+  cambiarEstadoSignalFecha() {
+    this._listaContratosService.cambiarEstadoSignalFecha();
+  }
+  cambiarEstadoSignalNombrePropietario() {
+    this._listaContratosService.cambiarEstadoSignalNombrePropietario();
   }
 }

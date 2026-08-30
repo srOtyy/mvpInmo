@@ -69,7 +69,7 @@
 
   <div class="contenedor-contratos">
     <mat-chip-listbox aria-label="-listado-contratos">
-      @for (contrato of $contratosFiltrados(); track contrato.id) {
+      @for (contrato of contratosFiltrados(); track contrato.id) {
         <mat-chip-option
           class="chip-contrato chip-{{ contrato.estadoRenovacion }}"
           [selected]="contratoSeleccionado() === contrato"
