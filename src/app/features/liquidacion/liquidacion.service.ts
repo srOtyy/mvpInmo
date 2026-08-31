@@ -162,12 +162,9 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     const subtotalDescuento = totalItemsPropietario + totalHonorarios;
     const subTotal =
       +liquidacion.montoAlquiler +
-      liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0);
-    console.log(
-      liquidacion.montoAlquiler,
-      liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0),
-      subTotal,
-    );
+      liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0) +
+      liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0);
+
     const total = subTotal - totalHonorarios;
     try {
       const response = await lastValueFrom(
@@ -186,7 +183,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         periodo: liquidacion.periodo,
         propietario: liquidacion.propietarioNombre,
         inquilino: liquidacion.inquilinoNombre,
-        itemsPropietario: itemsPropietario,
+        itemsPropietario,
         itemsInquilino,
         montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
         porcentajeHonorarios: liquidacion.honorarios,
@@ -380,6 +377,17 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     if (liquidacion) {
       liquidacion.montoAlquiler = monto;
       this.actualizar(id, liquidacion);
+    }
+  }
+  actualizarHonorarios(idContrato: number, honorarios: number) {
+    const liquidacionAux = this.buscarLiquidacionPorContrato(idContrato);
+    if (liquidacionAux) {
+      liquidacionAux.honorarios = honorarios;
+      this.actualizar(liquidacionAux.id, liquidacionAux).subscribe({
+        next: () => console.log('liquidacion actualizada'),
+      });
+    } else {
+      console.warn('liquidacion no encontrada :(');
     }
   }
   formatearMonto(monto: number): string {

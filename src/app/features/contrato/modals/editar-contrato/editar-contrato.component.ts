@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { IContrato } from '../../contrato.interface';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SnackbarService } from '../../../../core/snackbar.service';
@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
+import { LiquidacionGeneratorService } from '../../../liquidacion/liquidacion.service';
 @Component({
   selector: 'app-editar-contrato',
   imports: [
@@ -23,6 +24,7 @@ import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
   styleUrl: './editar-contrato.component.scss',
 })
 export class EditarContratoComponent implements OnInit {
+  private _liquidacionService = inject(LiquidacionGeneratorService);
   @Input() entidad!: IContrato;
   formularioEditarContrato: FormGroup;
   obtenerCaracteristica = obtenerCaracteristica;
@@ -106,6 +108,10 @@ export class EditarContratoComponent implements OnInit {
     });
   }
   guardarCambios() {
+    this._liquidacionService.actualizarHonorarios(
+      this.entidad.id,
+      this.entidad.porcentajeHonorarios,
+    );
     this.formularioEditarContrato.get('inmuebleId')?.enable();
     this.formularioEditarContrato.get('propietarioId')?.enable();
     this.formularioEditarContrato.get('inquilinoId')?.enable();

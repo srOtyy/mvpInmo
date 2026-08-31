@@ -11,6 +11,7 @@ export class CicloDeVidaContratosService {
   private _finalizacionContrato = inject(FinalizacionContratoService);
 
   constructor() {}
+
   private parseFecha(fecha: Date | string | undefined): Date | undefined {
     if (!fecha) return undefined;
     return fecha instanceof Date ? fecha : new Date(fecha);
@@ -57,35 +58,45 @@ export class CicloDeVidaContratosService {
     return 'normal';
   }
 
+  /**
+   * Evalúa el ciclo de vida completo del contrato
+   * Incluye: próximo aumento, estado de renovación y finalización
+   */
   evaluarContrato(contrato: IContrato): IContrato {
     const diasRestantes = this.calcularDiasRestantes(contrato.proximoAumento);
     const necesitaActualizacion =
       !contrato.proximoAumento || diasRestantes <= 0;
 
+    // Paso 1: Actualizar próximo aumento si es necesario
+    let contratoActualizado: IContrato;
+
     if (necesitaActualizacion) {
-      const contratoActualizado = {
+      const nuevoProximoAumento = this.calcularProximoAumento(contrato);
+      contratoActualizado = {
         ...contrato,
-        proximoAumento: this.calcularProximoAumento(contrato),
+        proximoAumento: nuevoProximoAumento,
         estadoRenovacion: this.calcularEstadoDeRenovacion(
-          this.calcularDiasRestantes(this.calcularProximoAumento(contrato)),
+          this.calcularDiasRestantes(nuevoProximoAumento),
         ),
       };
-
-      return contratoActualizado;
     } else {
-      console.log('no necesita actualizacion');
-      return {
+      contratoActualizado = {
         ...contrato,
         estadoRenovacion: this.calcularEstadoDeRenovacion(diasRestantes),
       };
     }
-  }
-  evaluarVencimiento(contrato: IContrato) {
-    this._finalizacionContrato.setContrato(contrato);
-    this._finalizacionContrato.aumentoExcedeFin()
-      ? console.log('si excede jjieji')
-      : console.log('no excede :o');
-    this._finalizacionContrato.calcularDiasDeFinalizacion();
-    this._finalizacionContrato.actualizarContratoConFechaFinalizacion();
+
+    // Paso 2: Evaluar el estado de finalización
+    contratoActualizado =
+      this._finalizacionContrato.evaluarFinalizacion(contratoActualizado);
+
+    // Paso 3: Verificar si hay conflicto entre próximo aumento y fecha de fin
+    if (this._finalizacionContrato.aumentoExcedeFin(contratoActualizado)) {
+      console.warn(
+        `⚠️ ALERTA: Contrato ${contrato.id} - El próximo aumento excede la fecha de finalización`,
+      );
+    }
+
+    return contratoActualizado;
   }
 }
