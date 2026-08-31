@@ -60,6 +60,7 @@ export class EditarContratoComponent implements OnInit {
       inicioDelPeriodo: [''],
       informacionAdicional: [[]],
       administracionTotal: [false],
+      diasFinalizacion: [''],
     });
     this.formularioEditarContrato.get('inmuebleId')?.disable();
     this.formularioEditarContrato.get('propietarioId')?.disable();
@@ -101,6 +102,7 @@ export class EditarContratoComponent implements OnInit {
       inicioDelPeriodo: contratoData.inicioDelPeriodo,
       tipoIndice: contratoData.tipoIndice,
       administracionTotal: contratoData.administracionTotal,
+      diasFinalizacion: contratoData.diasFinalizacion,
     });
   }
   guardarCambios() {

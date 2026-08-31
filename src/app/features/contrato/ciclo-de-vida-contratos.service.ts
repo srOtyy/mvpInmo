@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IContrato, EstadoRenovacion } from './contrato.interface';
+import { FinalizacionContratoService } from './finalizacion-contrato.service';
 
 @Injectable({
   providedIn: 'root',
@@ -7,6 +8,7 @@ import { IContrato, EstadoRenovacion } from './contrato.interface';
 export class CicloDeVidaContratosService {
   public ahora: Date = new Date(); // Fecha actual para pruebas
   private MS_POR_DIA: number = 1000 * 60 * 60 * 24;
+  private _finalizacionContrato = inject(FinalizacionContratoService);
 
   constructor() {}
   private parseFecha(fecha: Date | string | undefined): Date | undefined {
@@ -29,12 +31,12 @@ export class CicloDeVidaContratosService {
     }
 
     const proximoAumentoCalculado = new Date(fechaBase);
-    proximoAumentoCalculado.setDate(1);
     while (proximoAumentoCalculado <= this.ahora) {
       proximoAumentoCalculado.setMonth(
         proximoAumentoCalculado.getMonth() + contrato.periodoAumento,
       );
     }
+    proximoAumentoCalculado.setDate(1);
     return proximoAumentoCalculado;
   }
 
@@ -77,5 +79,13 @@ export class CicloDeVidaContratosService {
         estadoRenovacion: this.calcularEstadoDeRenovacion(diasRestantes),
       };
     }
+  }
+  evaluarVencimiento(contrato: IContrato) {
+    this._finalizacionContrato.setContrato(contrato);
+    this._finalizacionContrato.aumentoExcedeFin()
+      ? console.log('si excede jjieji')
+      : console.log('no excede :o');
+    this._finalizacionContrato.calcularDiasDeFinalizacion();
+    this._finalizacionContrato.actualizarContratoConFechaFinalizacion();
   }
 }
