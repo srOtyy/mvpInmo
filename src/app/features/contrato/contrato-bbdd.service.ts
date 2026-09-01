@@ -74,7 +74,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   cargarLista(): void {
     if (this.$lista().length > 0) return;
     this.cargar().subscribe({
-      next: () => this.evaluarVencimientoDeTodosLosContratos(this.$lista()),
+      next: () => console.log('listas cargadas'),
       error: () => console.error('Error al cargar contratos'),
     });
   }

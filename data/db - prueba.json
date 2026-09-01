@@ -79,23 +79,24 @@
   "contratos": [
     {
       "id": 41503,
-      "propietarioId": 932157,
-      "inmuebleId": 936644,
       "inquilinoId": 652261,
-      "fechaInicio": "2026-07-02T03:00:00.000Z",
+      "inmuebleId": 936644,
       "fechaFin": "2026-09-02T03:00:00.000Z",
+      "fechaInicio": "2026-07-02T03:00:00.000Z",
+      "propietarioId": 932157,
+      "estado": "activo",
+      "estadoRenovacion": "normal",
       "rentaMensual": 100,
-      "estado": "preliminar",
-      "periodoAumento": 4,
-      "proximoAumento": "2026-11-02T03:00:00.000Z",
       "titulo": "prueba - Prueba",
+      "proximoAumento": "2026-11-02T03:00:00.000Z",
       "porcentajeHonorarios": 1,
       "tipoPago": "efectivo",
       "tipoIndice": "IPC",
+      "periodoAumento": 4,
       "inicioDelPeriodo": "1",
-      "estadoFinalizacion": "un_mes",
-      "estadoRenovacion": "excede",
-      "propietarioNombre": "prueba"
+      "diasFinalizacion": 1,
+      "propietarioNombre": "prueba",
+      "porFinalizar": true
     }
   ],
   "definiciones": [

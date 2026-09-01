@@ -1,7 +1,7 @@
 @use "../../../../styles.scss" as *;
 
 // el contendor no se adapta al 100% del ancho, se le da un max-width para que no se estire demasiado en pantallas grandes y un min-width para que no se achique demasiado en pantallas pequeñas
-.contenedor-principal{
+.contenedor-principal {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -70,20 +70,27 @@
           background-color: $neutral-800;
         }
 
-        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+          .mdc-text-field__input {
           color: $neutral-50;
           caret-color: $primary-500;
         }
 
-        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__outline {
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+          .mdc-text-field__outline {
           color: $neutral-600;
         }
 
-        .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-text-field__outline {
+        .mdc-text-field--outlined:not(
+            .mdc-text-field--disabled
+          ).mdc-text-field--focused
+          .mdc-text-field__outline {
           color: $primary-500;
         }
 
-        .mat-mdc-form-field-type-mat-select .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+        .mat-mdc-form-field-type-mat-select
+          .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+          .mdc-text-field__input {
           color: $neutral-50;
         }
 
@@ -100,14 +107,15 @@
         }
       }
     }
-    
-    .icono-fecha,.icono-ordenAlfabetico,  .icono-buscar {
+
+    .icono-fecha,
+    .icono-ordenAlfabetico,
+    .icono-buscar {
       color: $neutral-400 !important;
     }
-    .activo{
+    .activo {
       color: $primary-500 !important;
     }
-    
   }
 
   .contenedor-contratos {
@@ -160,31 +168,31 @@
       margin-bottom: 5px;
       &.chip-dos_meses {
         border-right: 3px solid $warning;
-        border-bottom:1px solid $warning;
+        border-bottom: 1px solid $warning;
       }
 
       &.chip-activo {
         border-right: 3px solid $success;
-        border-bottom:1px solid $success;
+        border-bottom: 1px solid $success;
       }
 
       &.chip-normal {
         border-right: 3px solid $neutral-500;
-        border-bottom:1px solid $neutral-500;
+        border-bottom: 1px solid $neutral-500;
       }
 
       &.chip-un_mes {
         border-right: 3px solid $error;
-        border-bottom:1px solid $error;
+        border-bottom: 1px solid $error;
       }
 
       &.chip-vencido {
         border-right: 3px solid $accent-1;
-        border-bottom:1px solid $accent-1;
+        border-bottom: 1px solid $accent-1;
       }
-      &.chip-hoy   {
+      &.chip-hoy {
         border-right: 3px solid $accent-2;
-        border-bottom:1px solid $accent-2;
+        border-bottom: 1px solid $accent-2;
       }
     }
 
@@ -195,7 +203,8 @@
       gap: 6px;
     }
 
-    .chip-header, .chip-datos{
+    .chip-header,
+    .chip-datos {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -212,7 +221,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .span-estados{
+    .span-estados {
       display: flex;
       flex-direction: row;
       gap: 20px;
@@ -251,25 +260,27 @@
         background-color: rgba($accent-1, 0.15);
         color: $accent-1;
       }
-      &.chip-un_mes{
+      &.chip-porFinalizar {
+        background-color: rgba($secondary-100, 0.15);
+        color: $primary-700;
+      }
+      &.chip-un_mes {
         background-color: rgba($error, 0.15);
         color: $error;
       }
-      &.chip-dos_meses{
+      &.chip-dos_meses {
         background-color: rgba($warning, 0.15);
-        color: $warning;;
+        color: $warning;
       }
-      &.chip-vencido{
+      &.chip-vencido {
         background-color: #ff9f501f;
         color: $accent-1;
       }
-      &.chip-hoy{
+      &.chip-hoy {
         background-color: #ff9f501f;
         color: $accent-2;
       }
     }
-
-
 
     .chip-renta {
       color: $primary-400;
@@ -280,5 +291,5 @@
       color: $neutral-400;
       white-space: nowrap;
     }
-    }
+  }
 }

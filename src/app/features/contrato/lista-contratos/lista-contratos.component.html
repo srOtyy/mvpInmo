@@ -91,8 +91,17 @@
                   class="chip-estado chip-{{ getEstadoColor(contrato.estado) }}"
                   matTooltip="estado del contrato"
                 >
-                  {{ contrato.estado }}
+                  {{ convertirChipEstadoContrato(contrato.estado) }}
                 </span>
+                @if (contrato.porFinalizar) {
+                  <span
+                    class="chip-estado chip-porFinalizar"
+                    matTooltip="Contrato por finalizar"
+                  >
+                    {{ calcularDiasDeFinalizacion(contrato) }} día(s) para que
+                    finalice
+                  </span>
+                }
               </div>
             </div>
             <div class="chip-datos">

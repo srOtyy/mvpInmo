@@ -105,6 +105,7 @@ export class CrearContratoComponent implements OnInit {
         Validators.min(1),
       ]),
       diasFinalizacion: new FormControl(-1),
+      porFinalizar: new FormControl(false),
     });
   }
 

@@ -1,11 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  OnInit,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, inject, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,13 +11,12 @@ import {
   IContrato,
   ContractStatus,
   EstadoRenovacion,
-  IContratoVista,
 } from '../contrato.interface';
 import { Router } from '@angular/router';
 import { ContratoBbddService } from '../contrato-bbdd.service';
-import { toContratosVista } from '../contrato.mapper';
-import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.service';
+
 import { ListaDeContratosService } from '../lista-de-contratos.service';
+import { FinalizacionContratoService } from '../finalizacion-contrato.service';
 
 @Component({
   selector: 'app-lista-contratos',
@@ -45,6 +37,7 @@ export class ListaContratosComponent implements OnInit {
   private _listaContratosService = inject(ListaDeContratosService);
   private _contratosService = inject(ContratoBbddService);
   private router = inject(Router);
+  private _finalizacionContratosService = inject(FinalizacionContratoService);
   evento = output<void>();
   contratoSeleccionado = signal<IContrato | null>(null);
   calendarioIcono = 'calendar_today';
@@ -133,6 +126,14 @@ export class ListaContratosComponent implements OnInit {
     if (estadoRenovacion === 'vencido') return 'vencido';
     return '';
   }
+  convertirChipEstadoContrato(estado: ContractStatus): string {
+    if (estado === 'activo') return 'Activo';
+    if (estado === 'cancelado') return 'Cancelado';
+    if (estado === 'finalizado') return 'Finalizado';
+    if (estado === 'preliminar') return 'Preliminar';
+    if (estado === 'renovar') return 'Por renovar';
+    return '';
+  }
   //aplicar filtros enviandoselos al servicio
   evaluarVencimientosContratos() {
     this._listaContratosService.evaluarVencimientosContratos();
@@ -142,5 +143,11 @@ export class ListaContratosComponent implements OnInit {
   }
   cambiarEstadoSignalNombrePropietario() {
     this._listaContratosService.cambiarEstadoSignalNombrePropietario();
+  }
+  //dias restantes para la finalizacion
+  calcularDiasDeFinalizacion(contrato: IContrato): number {
+    return this._finalizacionContratosService.calcularDiasDeFinalizacion(
+      contrato,
+    );
   }
 }

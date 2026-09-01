@@ -40,7 +40,8 @@ export interface IContrato {
   tipoIndice: tipoIndice;
   inicioDelPeriodo?: number;
   administracionTotal: boolean;
-  diasFinalizacion:number
+  diasFinalizacion: number;
+  porFinalizar: boolean;
 }
 export interface IContratoVista extends IContrato {
   propietarioNombre: string;
