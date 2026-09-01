@@ -3,14 +3,15 @@ export type ContractStatus =
   | 'activo' // en curso
   | 'finalizado' // terminó normalmente
   | 'cancelado' // terminó antes
-  | 'renovar'; // de me ocurrió como concepto de actualización para la notificación de cobro?
+  | 'renovar';
 
 export type EstadoRenovacion =
   | 'un_mes'
   | 'dos_meses'
   | 'normal'
   | 'vencido'
-  | 'hoy';
+  | 'hoy'
+  | 'porFinalizar';
 
 export type TipoPago = 'efectivo' | 'transferencia';
 

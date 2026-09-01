@@ -124,6 +124,7 @@ export class ListaContratosComponent implements OnInit {
     if (estadoRenovacion === 'dos_meses') return '2 meses';
     if (estadoRenovacion === 'hoy') return 'hoy';
     if (estadoRenovacion === 'vencido') return 'vencido';
+    if (estadoRenovacion === 'porFinalizar') return 'por finalizar';
     return '';
   }
   convertirChipEstadoContrato(estado: ContractStatus): string {

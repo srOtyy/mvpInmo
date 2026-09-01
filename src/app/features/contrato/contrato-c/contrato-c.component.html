@@ -41,9 +41,15 @@
             >Proximo aumento (periodo:
             {{ contrato.periodoAumento }} meses):</span
           >
-          <span class="valor">
-            {{ contrato.proximoAumento | date: "dd/MM/yy" }}
-          </span>
+          @if (contrato.porFinalizar) {
+            <span class="valor">
+              finaliza en {{ contrato.diasFinalizacion }} día(s)
+            </span>
+          } @else {
+            <span class="valor">
+              {{ contrato.proximoAumento | date: "dd/MM/yy" }}
+            </span>
+          }
         </div>
         <div class="info-row">
           <span class="label">Período (Inicio - Fin):</span>

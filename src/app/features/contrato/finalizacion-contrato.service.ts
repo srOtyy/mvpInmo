@@ -61,12 +61,11 @@ export class FinalizacionContratoService {
 
     if (diasFinalizacion <= 0) {
       estado = 'finalizado';
-      console.log('estado cambiado');
     } else if (aumentoExcedeFinalizacion) {
       contrato.porFinalizar = true;
       console.warn(
         `⚠️ Contrato ${contrato.id}: El próximo aumento (${proximoAumento.toISOString()}) ` +
-          `excede la fecha de finalización (${new Date(contrato.fechaFin).toISOString()}), ${contrato.diasFinalizacion} dias restantes`,
+          `excede la fecha de finalización (${new Date(contrato.fechaFin).toISOString()}), ${contrato.diasFinalizacion} dias restantes, ${contrato.porFinalizar} por finalizar`,
       );
     }
 

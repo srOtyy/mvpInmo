@@ -57,7 +57,6 @@ export class CicloDeVidaContratosService {
     if (diasRestantes <= 60) return 'dos_meses';
     return 'normal';
   }
-
   /**
    * Evalúa el ciclo de vida completo del contrato
    * Incluye: próximo aumento, estado de renovación y finalización
@@ -92,8 +91,9 @@ export class CicloDeVidaContratosService {
 
     // Paso 3: Verificar si hay conflicto entre próximo aumento y fecha de fin
     if (this._finalizacionContrato.aumentoExcedeFin(contratoActualizado)) {
+      contratoActualizado.estadoRenovacion = 'porFinalizar';
       console.warn(
-        `⚠️ ALERTA: Contrato ${contrato.id} - El próximo aumento excede la fecha de finalización`,
+        `⚠️ ALERTA: Contrato ${contrato.id} - El próximo aumento excede la fecha de finalización. Contrato marcado como 'por vencer'`,
       );
     }
 

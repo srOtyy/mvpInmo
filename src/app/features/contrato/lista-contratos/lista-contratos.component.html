@@ -93,24 +93,25 @@
                 >
                   {{ convertirChipEstadoContrato(contrato.estado) }}
                 </span>
-                @if (contrato.porFinalizar) {
-                  <span
-                    class="chip-estado chip-porFinalizar"
-                    matTooltip="Contrato por finalizar"
-                  >
-                    {{ calcularDiasDeFinalizacion(contrato) }} día(s) para que
-                    finalice
-                  </span>
-                }
               </div>
             </div>
             <div class="chip-datos">
-              <span class="chip-renta">{{
-                formatearMoneda(contrato.rentaMensual)
-              }}</span>
-              <span class="chip-fecha">
-                proximo aumento - {{ formatearFecha(contrato.proximoAumento) }}
+              <span class="chip-renta"
+                >{{ formatearMoneda(contrato.rentaMensual) }}
               </span>
+              @if (contrato.porFinalizar) {
+                <span
+                  class="chip-estado chip-porFinalizar"
+                  matTooltip="Contrato por finalizar"
+                >
+                  {{ contrato.diasFinalizacion }} día(s) para que finalice
+                </span>
+              } @else {
+                <span class="chip-fecha">
+                  proximo aumento -
+                  {{ formatearFecha(contrato.proximoAumento) }}
+                </span>
+              }
             </div>
           </div>
         </mat-chip-option>
