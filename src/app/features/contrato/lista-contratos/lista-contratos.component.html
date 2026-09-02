@@ -36,6 +36,21 @@
           >sort_by_alpha</mat-icon
         >
       </button>
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="cambiarEstadoSignalPorVencer()"
+      >
+        <mat-icon
+          matSuffix
+          [class]="{
+            'icono-porVencer': !$filtroPorVencer(),
+            activo: $filtroPorVencer(),
+          }"
+          matTooltip="Filtrar por contratos por vencer"
+          >schedule</mat-icon
+        >
+      </button>
       <mat-form-field class="form-select" appearance="fill">
         <mat-label>Estado</mat-label>
         <mat-select [(value)]="$filtroBusqueda">

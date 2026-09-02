@@ -45,6 +45,7 @@ export class ListaContratosComponent implements OnInit {
   contratosFiltrados = this._listaContratosService.$contratosFiltrados;
   $busquedaTexto = this._listaContratosService.$busquedaTexto;
   $filtroFecha = this._listaContratosService.$filtroFecha;
+  $filtroPorVencer = this._listaContratosService.$filtroPorVencer;
   $filtroNombrePropietario =
     this._listaContratosService.$filtroNombrePropietario;
   $filtroBusqueda = this._listaContratosService.$filtroBusqueda;
@@ -144,6 +145,9 @@ export class ListaContratosComponent implements OnInit {
   }
   cambiarEstadoSignalNombrePropietario() {
     this._listaContratosService.cambiarEstadoSignalNombrePropietario();
+  }
+  cambiarEstadoSignalPorVencer() {
+    this._listaContratosService.cambiarEstadoSignalPorVencer();
   }
   //dias restantes para la finalizacion
   calcularDiasDeFinalizacion(contrato: IContrato): number {

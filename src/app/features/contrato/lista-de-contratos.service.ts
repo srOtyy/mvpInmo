@@ -18,6 +18,7 @@ export class ListaDeContratosService {
   });
   $filtroBusqueda = signal('todos');
   $filtroFecha = signal(false);
+  $filtroPorVencer = signal(false);
   $filtroNombrePropietario = signal(false);
   $busquedaTexto = signal('');
   $contratosFiltrados = computed(() => {
@@ -25,6 +26,7 @@ export class ListaDeContratosService {
     lista = this.aplicarFiltroOrdenPorFecha(lista);
     lista = this.aplicarFiltroEstado(lista);
     lista = this.aplicarFiltroBusquedaTexto(lista);
+    lista = this.aplicarFiltroPorVencer(lista);
     lista = this.aplicarFiltrosNombrePropietario(lista);
     return lista;
   });
@@ -34,6 +36,9 @@ export class ListaDeContratosService {
   }
   cambiarEstadoSignalNombrePropietario() {
     this.$filtroNombrePropietario.update((estado) => !estado);
+  }
+  cambiarEstadoSignalPorVencer() {
+    this.$filtroPorVencer.update((estado) => !estado);
   }
 
   //aplicar filtros a lista de contratos
@@ -48,6 +53,7 @@ export class ListaDeContratosService {
     }
     return lista;
   }
+
   aplicarFiltroEstado(lista: IContratoVista[]) {
     const filtroBusqueda = this.$filtroBusqueda();
     if (filtroBusqueda === 'todos') return lista;
@@ -81,6 +87,16 @@ export class ListaDeContratosService {
         p.propietarioNombre.toLowerCase().includes(texto) ||
         p.titulo?.toLowerCase().includes(texto),
     );
+  }
+  aplicarFiltroPorVencer(lista: IContratoVista[]): IContratoVista[] {
+    if (!this.$filtroPorVencer()) return lista;
+    const listaAux = lista.filter((contrato) => {
+      return contrato.porFinalizar === true;
+    });
+    return this.ordenarPorDiasParaVencimiento(listaAux);
+  }
+  ordenarPorDiasParaVencimiento(lista: IContratoVista[]): IContratoVista[] {
+    return [...lista].sort((a, b) => a.diasFinalizacion - b.diasFinalizacion);
   }
   //Labels
   getEstadoLabel(estado: ContractStatus): string {
