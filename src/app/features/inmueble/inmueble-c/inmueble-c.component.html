@@ -1,5 +1,21 @@
 <app-card-list entidad="Inmuebles">
-  <!-- filtrar esta lista segun propietario  -->
+  <div class="acciones">
+    <p>Filtrar:</p>
+
+    <mat-form-field class="form-buscar" appearance="fill">
+      <mat-label>Buscar</mat-label>
+      <mat-icon matSuffix class="icono-buscar">search</mat-icon>
+      <input
+        type="text"
+        matInput
+        [ngModel]="$busquedaTexto()"
+        (ngModelChange)="$busquedaTexto.set($event)"
+        placeholder="Nombre del propietario "
+        aria-label="Buscar propietario "
+      />
+    </mat-form-field>
+  </div>
+  <mat-divider></mat-divider>
   @for (propietario of $listaPropietarios; track propietario.id) {
     <div class="header-item">
       <mat-divider></mat-divider>

@@ -89,6 +89,9 @@ export class PropietarioRxjsService extends BaseCrudService<IPropietario> {
       nombre,
     };
   }
+  convertirArrayAVista(propietarios: IPropietario[]): IPropietarioVista[] {
+    return propietarios.map((p) => this.convertirAVista(p));
+  }
   obtenerArrayDeInmueblesPorId(id: number): number[] {
     const propietario = this.$lista().find((p) => p.id === id);
     if (propietario) {

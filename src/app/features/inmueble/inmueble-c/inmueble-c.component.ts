@@ -8,6 +8,12 @@ import { EliminarInmuebleComponent } from '../modals/eliminar-inmueble/eliminar-
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AccordionInmuebleComponent } from '../accordion-inmueble/accordion-inmueble.component';
 import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.service';
+import { obtenerNombre } from '../../caracteristicas/entity-helpers';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+
 import {
   IPropietario,
   IPropietarioVista,
@@ -20,6 +26,11 @@ import { MatDividerModule } from '@angular/material/divider';
     AccordionInmuebleComponent,
     MatExpansionModule,
     MatDividerModule,
+    MatFormField,
+    FormsModule,
+    MatInputModule,
+    MatLabel,
+    MatIconModule,
   ],
   templateUrl: './inmueble-c.component.html',
   styleUrl: './inmueble-c.component.scss',
@@ -27,7 +38,8 @@ import { MatDividerModule } from '@angular/material/divider';
 export class InmuebleCComponent implements OnInit {
   // inmueble!: IInmueble;
   readonly panelOpenState = signal(false);
-
+  obtenerNombre = obtenerNombre;
+  $busquedaTexto = signal('');
   constructor(
     private _inmueblesService: InmueblesRxjsService,
     private _modalService: ModalService,
@@ -35,10 +47,30 @@ export class InmuebleCComponent implements OnInit {
   ) {}
 
   get $listaInmuebles(): IInmueble[] {
-    return this._inmueblesService.$lista();
+    //y este return ??
+    return this._inmueblesService.$lista().filter((inmueble) => {
+      const texto = this.$busquedaTexto().trim().toLowerCase();
+      if (!texto) return true;
+
+      const direccion = inmueble.direccion.toLowerCase();
+      const propietario = this._propietariosService
+        .obtenerNombrePropietarioPorId(inmueble.idPropietario)
+        .toLowerCase();
+
+      return direccion.includes(texto) || propietario.includes(texto);
+    });
   }
   get $listaPropietarios(): IPropietarioVista[] {
-    return this.convertirAVista(this._propietariosService.$lista());
+    const texto = this.$busquedaTexto().trim().toLowerCase();
+    const lista = this._propietariosService.convertirArrayAVista(
+      this._propietariosService.$lista(),
+    );
+
+    if (!texto) return lista;
+
+    return lista.filter((inmueble) =>
+      this.obtenerNombre(inmueble).toLowerCase().includes(texto),
+    );
   }
   ngOnInit(): void {
     this._inmueblesService.cargarLista();

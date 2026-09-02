@@ -62,6 +62,9 @@ export class InquilinoRxjsService extends BaseCrudService<IInquilino> {
       nombre,
     };
   }
+  convertirArrayAVista(inquilinos: IInquilino[]): IInquilinoVista[] {
+    return inquilinos.map((i) => this.convertirAVista(i));
+  }
   activarInquilino(id: number) {
     const inqAux = this.$lista().find((i) => i.id === id);
     if (inqAux) {
