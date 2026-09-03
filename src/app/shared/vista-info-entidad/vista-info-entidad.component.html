@@ -47,6 +47,14 @@
       </ng-template>
     </mat-step>
     <mat-step>
+      <ng-template matStepLabel>Inmueble</ng-template>
+      <ng-template matStepContent>
+        <app-vista-info-inmueble
+          [inmueble]="this._contratos.$inmuebleSideBarInfo()"
+        ></app-vista-info-inmueble>
+      </ng-template>
+    </mat-step>
+    <mat-step>
       <ng-template matStepLabel>Garante</ng-template>
       <app-ver-info-garante
         [inquilino]="this._contratos.$inquilinoSideBarInfo()"

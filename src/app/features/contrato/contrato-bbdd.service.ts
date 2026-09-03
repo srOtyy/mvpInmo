@@ -31,6 +31,12 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     this.contratoSeleccionado.asObservable();
   //para el sidebar Info
   $sideBarInfo = signal<boolean>(false);
+  $inmuebleSideBarInfo = computed(() => {
+    const contrato = this.$lista().find(
+      (c) => c.id === this.$contratoIdSideBarInfo(),
+    );
+    return this.$listaInmuebles.find((i) => i.id === contrato?.inmuebleId);
+  });
   $inquilinoSideBarInfo = computed(() => {
     const contrato = this.$lista().find(
       (c) => c.id === this.$contratoIdSideBarInfo(),
@@ -207,9 +213,6 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     });
   }
 
-  //para mostrar en el select de la creacion de contratos; quiero que el inmueble muestre alguna especificacion
-  devolverAlgunaCaracteristica() {}
-
   //ActualizarMonto del alquiler
   actualizarMontoAlquiler(id: number, monto: number) {
     const contrato = this.$lista().find((c) => c.id === id);
@@ -226,5 +229,9 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     } else {
       console.warn('no se encontro contrato(1) o monto(2)', contrato, monto);
     }
+  }
+  // metodo para obtener el contrato seleccionado
+  obtenerContratoSeleccionado(): IContrato | null {
+    return this.contratoSeleccionado.getValue();
   }
 }
