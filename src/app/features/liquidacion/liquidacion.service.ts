@@ -135,6 +135,80 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       console.error('Error 1 al generar la liquidación;', error);
     }
   }
+  async generarLiquidacionPropietario(liquidacion: Liquidacion): Promise<void> {
+    const direccion = this._inmueblesService.obtenerDireccion(
+      liquidacion.inmuebleId,
+    );
+    const piso = this._inmueblesService.devolverCaracteristica(
+      liquidacion.inmuebleId,
+      'piso',
+    );
+    const letra = this._inmueblesService.devolverCaracteristica(
+      liquidacion.inmuebleId,
+      'letra',
+    );
+    const itemsInquilino = liquidacion.itemsInquilino.map((item) => ({
+      ...item,
+      monto: this.formatearMonto(item.monto),
+    }));
+    const itemsPropietario = liquidacion.itemsPropietario.map((item) => ({
+      ...item,
+      monto: this.formatearMonto(item.monto),
+    }));
+    const totalHonorarios =
+      (liquidacion.honorarios * liquidacion.montoAlquiler) / 100;
+    const totalItemsPropietario = liquidacion.itemsPropietario.reduce(
+      (sum, item) => sum + item.monto,
+      0,
+    );
+    const subtotalDcto = totalItemsPropietario + totalHonorarios;
+    const subTotal =
+      +liquidacion.montoAlquiler +
+      liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0) +
+      liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0);
+
+    const total = subTotal - totalHonorarios;
+    try {
+      const response = await lastValueFrom(
+        this.http.get(`/templates/liquidacion - Propietario - Base`, {
+          responseType: 'arraybuffer',
+        }),
+      );
+      const content = new Uint8Array(response as ArrayBuffer);
+      const zip = new PizZip(content);
+      const doc = new Docxtemplater(zip, {
+        paragraphLoop: true,
+        linebreaks: true,
+      });
+      doc.render({
+        contrato: liquidacion.contratoId,
+        periodo: liquidacion.periodo,
+        propietario: liquidacion.propietarioNombre,
+        inquilino: liquidacion.inquilinoNombre,
+        itemsPropietario,
+        itemsInquilino,
+        montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
+        porcentajeHonorarios: liquidacion.honorarios,
+        subTotal: this.formatearMonto(subTotal),
+        subTotalDescuentos: this.formatearMonto(subtotalDcto),
+        totalHonorarios: this.formatearMonto(totalHonorarios),
+        total: this.formatearMonto(total),
+        totalEscrito: numeroALetras(total),
+        direccion: direccion,
+        piso: piso,
+        letra: letra,
+      });
+
+      const blob = doc.getZip().generate({
+        type: 'blob',
+        mimeType:
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      });
+      saveAs(blob, `Liquidacion - ${liquidacion.propietarioNombre}.docx`);
+    } catch (error) {
+      console.error('Error 1 al generar la liquidación;', error);
+    }
+  }
   async generarLiquidacionPropietarioDocx(
     liquidacion: Liquidacion,
   ): Promise<void> {
