@@ -282,6 +282,13 @@
         background-color: #ff9f501f;
         color: $accent-2;
       }
+      &.chip-requiereAccion-true {
+        background-color: rgba($primary-500, 0.15);
+        color: $primary-500;
+      }
+      &.chip-requiereAccion-false {
+        display: none;
+      }
     }
 
     .chip-renta {

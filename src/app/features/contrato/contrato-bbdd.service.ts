@@ -183,7 +183,12 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   }
   evaluarVencimientoDeTodosLosContratos(contratos: IContrato[]) {
     // Filtrar solo contratos activos - evitar procesar finalizados o cancelados
-    const contratosActivos = contratos.filter((c) => c.estado === 'activo');
+    const contratosActivos = contratos.filter(
+      (c) =>
+        c.estado === 'activo' &&
+        c.estadoRenovacion !== 'hoy' &&
+        c.estadoRenovacion !== 'vencido',
+    );
 
     if (contratosActivos.length === 0) {
       console.log('No hay contratos activos para evaluar');
@@ -233,5 +238,15 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   // metodo para obtener el contrato seleccionado
   obtenerContratoSeleccionado(): IContrato | null {
     return this.contratoSeleccionado.getValue();
+  }
+  setAccionContratoTrue(contrato: IContrato) {
+    contrato.requiereAccion = true;
+    this.actualizarSinRecargar(contrato.id, contrato).subscribe({
+      next: () =>
+        this._snackBar.mensajeSnackBar(
+          'Contrato actualizado con requiereAccion = true',
+          'cerrar',
+        ),
+    });
   }
 }

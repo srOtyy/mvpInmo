@@ -50,7 +50,8 @@ export class CicloDeVidaContratosService {
     return Math.round(diferenciaMs / this.MS_POR_DIA);
   }
 
-  calcularEstadoDeRenovacion(diasRestantes: number): EstadoRenovacion {
+  calcularEstadoDeRenovacion(contrato: IContrato): EstadoRenovacion {
+    const diasRestantes = this.calcularDiasRestantes(contrato.proximoAumento);
     if (diasRestantes < 0) return 'vencido';
     if (diasRestantes === 0) return 'hoy';
     if (diasRestantes <= 30) return 'un_mes';
@@ -74,14 +75,12 @@ export class CicloDeVidaContratosService {
       contratoActualizado = {
         ...contrato,
         proximoAumento: nuevoProximoAumento,
-        estadoRenovacion: this.calcularEstadoDeRenovacion(
-          this.calcularDiasRestantes(nuevoProximoAumento),
-        ),
+        estadoRenovacion: this.calcularEstadoDeRenovacion(contrato),
       };
     } else {
       contratoActualizado = {
         ...contrato,
-        estadoRenovacion: this.calcularEstadoDeRenovacion(diasRestantes),
+        estadoRenovacion: this.calcularEstadoDeRenovacion(contrato),
       };
     }
 

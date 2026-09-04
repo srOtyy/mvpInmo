@@ -106,6 +106,7 @@ export class CrearContratoComponent implements OnInit {
       ]),
       diasFinalizacion: new FormControl(-1),
       porFinalizar: new FormControl(false),
+      requiereAccion: new FormControl(false),
     });
   }
 
@@ -224,9 +225,11 @@ export class CrearContratoComponent implements OnInit {
       contrato.periodoAumento,
       contrato.fechaInicio,
     );
-    contrato.estadoRenovacion = this._cicloDeVida.calcularEstadoDeRenovacion(
-      this._cicloDeVida.calcularDiasRestantes(contrato.proximoAumento),
-    );
+    contrato.estadoRenovacion =
+      this._cicloDeVida.calcularEstadoDeRenovacion(contrato);
+    if (contrato.requiereAccion) {
+      this.contratosService.setAccionContratoTrue(contrato);
+    }
     this.contratosService.crear(contrato).subscribe({
       next: () => {
         this._snack.mensajeSnackBar('Contrato creado exitosamente', 'Cerrar');

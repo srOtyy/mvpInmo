@@ -43,6 +43,7 @@ export interface IContrato {
   administracionTotal: boolean;
   diasFinalizacion: number;
   porFinalizar: boolean;
+  requiereAccion: boolean;
 }
 export interface IContratoVista extends IContrato {
   propietarioNombre: string;
