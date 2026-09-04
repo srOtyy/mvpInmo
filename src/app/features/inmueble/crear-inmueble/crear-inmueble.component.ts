@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { map, startWith, take } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs';
 import {
   MatAutocompleteModule,
   MatAutocompleteSelectedEvent,
@@ -120,25 +120,38 @@ export class CrearInmuebleComponent implements OnInit {
       direccion: this.direccion,
       activo: false,
     };
-    this.propietarioSeleccionado.listaInmuebles.push(nuevoInmueble.id);
-    this.propietariosService
-      .actualizarSinRecargar(
-        this.propietarioSeleccionado.id,
-        this.propietarioSeleccionado,
+    const propietarioActualizado = {
+      ...this.propietarioSeleccionado,
+      listaInmuebles: [
+        ...(this.propietarioSeleccionado.listaInmuebles ?? []),
+        nuevoInmueble.id,
+      ],
+    };
+
+    this.inmueblesService
+      .crear(nuevoInmueble)
+      .pipe(
+        switchMap(() =>
+          this.propietariosService.actualizarSinRecargar(
+            propietarioActualizado.id,
+            propietarioActualizado,
+          ),
+        ),
       )
-      .pipe(take(1))
-      .subscribe();
-    this.inmueblesService.crear(nuevoInmueble).subscribe({
-      next: () => {
-        this.snackbar.mensajeSnackBar('Inmueble creado exitosamente', 'Cerrar');
-        this.propietarioSeleccionado = null;
-        this.direccion = '';
-        this.propietarioControl.reset('');
-      },
-      error: (error) => {
-        this.snackbar.mensajeSnackBar('Error al crear inmueble', 'Cerrar');
-        console.error('Error al crear inmueble', error);
-      },
-    });
+      .subscribe({
+        next: () => {
+          this.snackbar.mensajeSnackBar(
+            'Inmueble creado exitosamente',
+            'Cerrar',
+          );
+          this.propietarioSeleccionado = null;
+          this.direccion = '';
+          this.propietarioControl.reset('');
+        },
+        error: (error) => {
+          this.snackbar.mensajeSnackBar('Error al crear inmueble', 'Cerrar');
+          console.error('Error al crear inmueble', error);
+        },
+      });
   }
 }

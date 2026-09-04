@@ -32,7 +32,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { CicloDeVidaContratosService } from '../ciclo-de-vida-contratos.service';
 import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.service';
-import { map, Observable, startWith } from 'rxjs';
+import { map, Observable, startWith, switchMap } from 'rxjs';
 import {
   MatAutocompleteModule,
   MatAutocompleteSelectedEvent,
@@ -214,7 +214,16 @@ export class CrearContratoComponent implements OnInit {
   enviarContrato() {
     this.formulario.patchValue({ propietarioId: this.$propietarioId() });
     this.formulario.patchValue({ inquilinoId: this.$inquilinoId() });
-    const contrato: IContrato = this.formulario.value;
+    if (this.formulario.invalid) {
+      this.formulario.markAllAsTouched();
+      this._snack.mensajeSnackBar(
+        'Completa los campos obligatorios del contrato',
+        'Cerrar',
+      );
+      return;
+    }
+
+    const contrato: IContrato = this.formulario.getRawValue();
     if (this.formulario.get('titulo')?.value === '') {
       contrato.titulo = this.contratosService.generarTituloContrato(
         contrato.propietarioId.toString(),
@@ -227,12 +236,8 @@ export class CrearContratoComponent implements OnInit {
     );
     contrato.estadoRenovacion =
       this._cicloDeVida.calcularEstadoDeRenovacion(contrato);
-    if (contrato.requiereAccion) {
-      this.contratosService.setAccionContratoTrue(contrato);
-    }
     this.contratosService.crear(contrato).subscribe({
       next: () => {
-        this._snack.mensajeSnackBar('Contrato creado exitosamente', 'Cerrar');
         /*
         En este lugar se tiene que crear la liquidacion del contrato. ¿Que datos necesito para crear la liquidacion? El contrato, el nombre del propietario, el nombre del inquilino y los items de la liquidacion. 
         */
@@ -241,21 +246,35 @@ export class CrearContratoComponent implements OnInit {
           this.nombrePropietarioXId(contrato.propietarioId),
           this.nombreInquilinoXId(contrato.inquilinoId),
         );
-        //suscripcion innecesaria ? o tengo que volverlo una promesa ?
-        this._liquidacion.crear(liquidacion).subscribe({
-          next: () => {},
-          error: () => {
-            console.error('Error al crear la liquidacion');
-          },
-        });
-        this._inmueblesService.activarInmueble(contrato.inmuebleId);
-        this._inquilinoService.activarInquilino(contrato.inquilinoId);
-        this.formulario.reset();
-        this.formulario.patchValue({
-          id: randomId(),
-          estado: 'preliminar',
-        });
-        this.formulario.markAllAsTouched();
+        this._liquidacion
+          .crear(liquidacion)
+          .pipe(
+            switchMap(() =>
+              this._inmueblesService.activarInmueble(contrato.inmuebleId),
+            ),
+            switchMap(() =>
+              this._inquilinoService.activarInquilino(contrato.inquilinoId),
+            ),
+          )
+          .subscribe({
+            next: () => {
+              this._snack.mensajeSnackBar(
+                'Contrato creado exitosamente',
+                'Cerrar',
+              );
+              this.formulario.reset();
+              this.formulario.patchValue({
+                id: randomId(),
+                estado: 'preliminar',
+              });
+            },
+            error: () => {
+              this._snack.mensajeSnackBar(
+                'Contrato creado, pero no se pudieron completar las actualizaciones relacionadas',
+                'Cerrar',
+              );
+            },
+          });
       },
       error: () => {
         this._snack.mensajeSnackBar('Error al crear contrato', 'Cerrar');

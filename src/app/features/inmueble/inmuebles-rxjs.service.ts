@@ -3,6 +3,7 @@ import { IInmueble } from './inmueble.interface';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { HttpClient } from '@angular/common/http';
 import { PropietarioRxjsService } from '../propietario/propietario-rxjs.service';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -82,16 +83,11 @@ export class InmueblesRxjsService extends BaseCrudService<IInmueble> {
     }
     return inmuebles;
   }
-  activarInmueble(id: number) {
+  activarInmueble(id: number): Observable<IInmueble> {
     const inmAux = this.$lista().find((i) => i.id === id);
     if (inmAux) {
-      inmAux.activo = true;
-      this.actualizarSinRecargar(id, inmAux).subscribe({
-        next: () => console.log('inmueble activo'),
-        error: (err) => console.error(err),
-      });
-    } else {
-      console.warn('error al activar inmueble');
+      return this.actualizarSinRecargar(id, { ...inmAux, activo: true });
     }
+    throw new Error(`Inmueble ${id} no encontrado`);
   }
 }

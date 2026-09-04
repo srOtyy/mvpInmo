@@ -3,7 +3,7 @@ import { IInquilino, IInquilinoVista } from './inquilino.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { obtenerNombre } from '../caracteristicas/entity-helpers';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -65,16 +65,11 @@ export class InquilinoRxjsService extends BaseCrudService<IInquilino> {
   convertirArrayAVista(inquilinos: IInquilino[]): IInquilinoVista[] {
     return inquilinos.map((i) => this.convertirAVista(i));
   }
-  activarInquilino(id: number) {
+  activarInquilino(id: number): Observable<IInquilino> {
     const inqAux = this.$lista().find((i) => i.id === id);
     if (inqAux) {
-      inqAux.activo = true;
-      this.actualizarSinRecargar(id, inqAux).subscribe({
-        next: () => console.log('inquilino actualziado'),
-        error: (err) => console.error(err),
-      });
-    } else {
-      console.warn('inquilino no encontrado');
+      return this.actualizarSinRecargar(id, { ...inqAux, activo: true });
     }
+    throw new Error(`Inquilino ${id} no encontrado`);
   }
 }

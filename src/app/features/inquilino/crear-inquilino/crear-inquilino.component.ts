@@ -85,14 +85,20 @@ export class CrearInquilinoComponent {
       this.garantesAux,
     );
     this.enviarInquilinoABD(inquilinoConGarantes);
-    this._snack.mensajeSnackBar('Inquilino creado exitosamente', 'Cerrar');
   }
   private enviarInquilinoABD(inquilino: IInquilino) {
     this._inquilinosService.crear(inquilino).subscribe({
       next: () => {
         this._snack.mensajeSnackBar('Inquilino creado exitosamente', 'Cerrar');
+        this.garantesAux = [];
+        this.inquilinoAux = {
+          id: 0,
+          caracteristicas: [],
+          garantes: [],
+          activo: false,
+        };
       },
-      error: (error) => {
+      error: () => {
         this._snack.mensajeSnackBar('Error al crear inquilino', 'Cerrar');
       },
     });
