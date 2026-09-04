@@ -11,6 +11,7 @@ import { MatButton } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { obtenerCaracteristica } from '../../../caracteristicas/entity-helpers';
 import { LiquidacionGeneratorService } from '../../../liquidacion/liquidacion.service';
+import { switchMap } from 'rxjs';
 @Component({
   selector: 'app-editar-contrato',
   imports: [
@@ -112,15 +113,25 @@ export class EditarContratoComponent implements OnInit {
     });
   }
   guardarCambios() {
-    this._liquidacionService.actualizarHonorarios(
-      this.entidad.id,
-      this.entidad.porcentajeHonorarios,
-    );
     this.formularioEditarContrato.get('inmuebleId')?.enable();
     this.formularioEditarContrato.get('propietarioId')?.enable();
     this.formularioEditarContrato.get('inquilinoId')?.enable();
-    this._contratosService
-      .actualizar(this.entidad.id, this.formularioEditarContrato.value)
+    const contratoActualizado: IContrato =
+      this.formularioEditarContrato.getRawValue();
+
+    this._liquidacionService
+      .actualizarHonorarios(
+        contratoActualizado.id,
+        contratoActualizado.porcentajeHonorarios,
+      )
+      .pipe(
+        switchMap(() =>
+          this._contratosService.actualizar(
+            this.entidad.id,
+            contratoActualizado,
+          ),
+        ),
+      )
       .subscribe({
         next: () => {
           this._snackbarService.mensajeSnackBar(
@@ -128,10 +139,7 @@ export class EditarContratoComponent implements OnInit {
             'Cerrar',
           );
           this.dialogRef.close(true);
-          this._contratosService.seleccionarContrato(
-            this.formularioEditarContrato.value,
-          ); //enviar el nuevo contrato al componente que lo esta mostrando
-          //enviar el nuevo contrato al componente que lo esta mostrando
+          this._contratosService.seleccionarContrato(contratoActualizado);
         },
         error: () => {
           this._snackbarService.mensajeSnackBar(

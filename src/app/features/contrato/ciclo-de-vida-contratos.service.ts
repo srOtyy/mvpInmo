@@ -64,18 +64,37 @@ export class CicloDeVidaContratosService {
    */
   evaluarContrato(contrato: IContrato): IContrato {
     const diasRestantes = this.calcularDiasRestantes(contrato.proximoAumento);
-    const necesitaActualizacion =
-      !contrato.proximoAumento || diasRestantes <= 0;
+    const necesitaCalcularFecha = !contrato.proximoAumento;
+    const estadoRenovacion = this.calcularEstadoDeRenovacion(contrato);
+    const aumentoPendiente =
+      Boolean(contrato.proximoAumento) && diasRestantes <= 0;
+
+    // Una acción pendiente bloquea el recálculo hasta que se aplique el aumento.
+    if (contrato.requiereAccion) {
+      return this._finalizacionContrato.evaluarFinalizacion({
+        ...contrato,
+        estadoRenovacion,
+      });
+    }
 
     // Paso 1: Actualizar próximo aumento si es necesario
     let contratoActualizado: IContrato;
 
-    if (necesitaActualizacion) {
+    if (necesitaCalcularFecha) {
       const nuevoProximoAumento = this.calcularProximoAumento(contrato);
       contratoActualizado = {
         ...contrato,
         proximoAumento: nuevoProximoAumento,
-        estadoRenovacion: this.calcularEstadoDeRenovacion(contrato),
+        estadoRenovacion: this.calcularEstadoDeRenovacion({
+          ...contrato,
+          proximoAumento: nuevoProximoAumento,
+        }),
+      };
+    } else if (aumentoPendiente || estadoRenovacion === 'hoy') {
+      contratoActualizado = {
+        ...contrato,
+        requiereAccion: true,
+        estadoRenovacion,
       };
     } else {
       contratoActualizado = {
@@ -92,7 +111,7 @@ export class CicloDeVidaContratosService {
     if (this._finalizacionContrato.aumentoExcedeFin(contratoActualizado)) {
       contratoActualizado.estadoRenovacion = 'porFinalizar';
       console.warn(
-        `⚠️ ALERTA: Contrato ${contrato.id} - El próximo aumento excede la fecha de finalización. Contrato marcado como 'por vencer'`,
+        `⚠️ ALERTA: Contrato ${contrato.titulo} - El próximo aumento excede la fecha de finalización. Contrato marcado como 'por vencer'`,
       );
     }
 

@@ -14,9 +14,7 @@ import {
 } from '../contrato.interface';
 import { Router } from '@angular/router';
 import { ContratoBbddService } from '../contrato-bbdd.service';
-
 import { ListaDeContratosService } from '../lista-de-contratos.service';
-import { FinalizacionContratoService } from '../finalizacion-contrato.service';
 
 @Component({
   selector: 'app-lista-contratos',
@@ -37,7 +35,6 @@ export class ListaContratosComponent implements OnInit {
   private _listaContratosService = inject(ListaDeContratosService);
   private _contratosService = inject(ContratoBbddService);
   private router = inject(Router);
-  private _finalizacionContratosService = inject(FinalizacionContratoService);
   evento = output<void>();
   contratoSeleccionado = signal<IContrato | null>(null);
   calendarioIcono = 'calendar_today';
@@ -150,9 +147,9 @@ export class ListaContratosComponent implements OnInit {
     this._listaContratosService.cambiarEstadoSignalPorVencer();
   }
   //dias restantes para la finalizacion
-  calcularDiasDeFinalizacion(contrato: IContrato): number {
-    return this._finalizacionContratosService.calcularDiasDeFinalizacion(
-      contrato,
-    );
-  }
+  // calcularDiasDeFinalizacion(contrato: IContrato): number {
+  //   return this._finalizacionContratosService.calcularDiasDeFinalizacion(
+  //     contrato,
+  //   );
+  // }
 }

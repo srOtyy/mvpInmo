@@ -43,7 +43,6 @@ export class FinalizacionContratoService {
    * Evalúa el estado del contrato en relación a su finalización
    * Retorna el contrato actualizado con los datos de finalización
    *
-   * Responsabilidad: Lógica de negocio de finalización
    * La persistencia es responsabilidad de ContratoBbddService
    */
   evaluarFinalizacion(contrato: IContrato): IContrato {
@@ -64,7 +63,7 @@ export class FinalizacionContratoService {
     } else if (aumentoExcedeFinalizacion) {
       contrato.porFinalizar = true;
       console.warn(
-        `⚠️ Contrato ${contrato.id}: El próximo aumento (${proximoAumento.toISOString()}) ` +
+        `⚠️ Contrato ${contrato.titulo}: El próximo aumento (${proximoAumento.toISOString()}) ` +
           `excede la fecha de finalización (${new Date(contrato.fechaFin).toISOString()}), ${contrato.diasFinalizacion} dias restantes, ${contrato.porFinalizar} por finalizar`,
       );
     }

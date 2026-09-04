@@ -6,7 +6,7 @@ import { Liquidacion, LiquidacionItem } from './liquidacion-interface';
 import { IContrato } from '../contrato/contrato.interface';
 import { randomId } from '../../shared/utilitys';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable, of } from 'rxjs';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { InmueblesRxjsService } from '../inmueble/inmuebles-rxjs.service';
 import { numeroALetras } from '../../shared/utilitys';
@@ -453,16 +453,19 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       this.actualizar(id, liquidacion);
     }
   }
-  actualizarHonorarios(idContrato: number, honorarios: number) {
+  actualizarHonorarios(
+    idContrato: number,
+    honorarios: number,
+  ): Observable<Liquidacion[]> {
     const liquidacionAux = this.buscarLiquidacionPorContrato(idContrato);
     if (liquidacionAux) {
-      liquidacionAux.honorarios = honorarios;
-      this.actualizar(liquidacionAux.id, liquidacionAux).subscribe({
-        next: () => console.log('liquidacion actualizada'),
+      return this.actualizar(liquidacionAux.id, {
+        ...liquidacionAux,
+        honorarios,
       });
-    } else {
-      console.warn('liquidacion no encontrada :(');
     }
+
+    return of(this.$lista());
   }
   formatearMonto(monto: number): string {
     return new Intl.NumberFormat('es-AR', {

@@ -8,7 +8,14 @@ import { PropietarioRxjsService } from '../propietario/propietario-rxjs.service'
 import { IPropietario } from '../propietario/propietario.interface';
 import { IInquilino } from '../inquilino/inquilino.interface';
 import { IInmueble } from '../inmueble/inmueble.interface';
-import { BehaviorSubject, firstValueFrom, forkJoin, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  concatMap,
+  firstValueFrom,
+  from,
+  Observable,
+  toArray,
+} from 'rxjs';
 import { obtenerCaracteristica } from '../caracteristicas/entity-helpers';
 import { CicloDeVidaContratosService } from './ciclo-de-vida-contratos.service';
 import { SnackbarService } from '../../core/snackbar.service';
@@ -182,40 +189,38 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     this.$sideBarInfo.set(!this.$sideBarInfo());
   }
   evaluarVencimientoDeTodosLosContratos(contratos: IContrato[]) {
-    // Filtrar solo contratos activos - evitar procesar finalizados o cancelados
-    const contratosActivos = contratos.filter(
-      (c) =>
-        c.estado === 'activo' &&
-        c.estadoRenovacion !== 'hoy' &&
-        c.estadoRenovacion !== 'vencido',
-    );
+    // Los contratos vencidos también deben evaluarse para calcular su próxima fecha.
+    const contratosActivos = contratos.filter((c) => c.estado === 'activo');
 
     if (contratosActivos.length === 0) {
       console.log('No hay contratos activos para evaluar');
       return;
     }
 
-    const actualizaciones = contratosActivos.map((contrato) =>
-      this.actualizarSinRecargar(
-        contrato.id,
-        this._cicloDeVida.evaluarContrato(contrato),
-      ),
-    );
-    forkJoin(actualizaciones).subscribe({
-      next: (resultados) => {
-        const listaActual = this.$lista();
-        const nuevaLista = listaActual.map((contrato) => {
-          const actualizado = resultados.find(
-            (r) => (r as any).id === contrato.id,
-          );
-          return actualizado ? actualizado : contrato;
-        });
+    from(contratosActivos)
+      .pipe(
+        concatMap((contrato) => {
+          const contratoActualizado =
+            this._cicloDeVida.evaluarContrato(contrato);
+          return this.actualizarSinRecargar(contrato.id, contratoActualizado);
+        }),
+        toArray(),
+      )
+      .subscribe({
+        next: (resultados) => {
+          const listaActual = this.$lista();
+          const nuevaLista = listaActual.map((contrato) => {
+            const actualizado = resultados.find(
+              (r) => (r as any).id === contrato.id,
+            );
+            return actualizado ? actualizado : contrato;
+          });
 
-        this.$lista.set(nuevaLista);
-        console.log('Contratos activos evaluados:', contratosActivos.length);
-      },
-      error: (err) => console.error('Error al actualizar contratos', err),
-    });
+          this.$lista.set(nuevaLista);
+          console.log('Contratos activos evaluados:', contratosActivos.length);
+        },
+        error: (err) => console.error('Error al actualizar contratos', err),
+      });
   }
 
   //ActualizarMonto del alquiler
