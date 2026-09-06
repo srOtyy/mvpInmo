@@ -91,10 +91,15 @@
           (click)="evaluarClick(contrato)"
         >
           <div class="chip-contenido">
-            <div class="chip-header">
+            <div class="chip-header chip-contenido-lado-izq">
               <span class="chip-titulo"
                 >{{ contrato.propietarioNombre }} / {{ contrato.titulo }}
               </span>
+              <span class="chip-renta"
+                >{{ formatearMoneda(contrato.rentaMensual) }}
+              </span>
+            </div>
+            <div class="chip-datos chip-contenido-lado-der">
               <div class="span-estados">
                 <span
                   class="chip-estado chip-requiereAccion-{{
@@ -117,11 +122,6 @@
                   {{ convertirChipEstadoContrato(contrato.estado) }}
                 </span>
               </div>
-            </div>
-            <div class="chip-datos">
-              <span class="chip-renta"
-                >{{ formatearMoneda(contrato.rentaMensual) }}
-              </span>
               @if (contrato.porFinalizar) {
                 <span
                   class="chip-estado chip-porFinalizar"

@@ -71,12 +71,15 @@ export class CicloDeVidaContratosService {
 
     // Una acción pendiente bloquea el recálculo hasta que se aplique el aumento.
     if (contrato.requiereAccion) {
-      return this._finalizacionContrato.evaluarFinalizacion({
+      const actualizado = this._finalizacionContrato.evaluarFinalizacion({
         ...contrato,
         estadoRenovacion,
       });
+      if (this._finalizacionContrato.aumentoExcedeFin(actualizado)) {
+        actualizado.estadoRenovacion = 'porFinalizar';
+      }
+      return actualizado;
     }
-
     // Paso 1: Actualizar próximo aumento si es necesario
     let contratoActualizado: IContrato;
 
@@ -90,11 +93,7 @@ export class CicloDeVidaContratosService {
           proximoAumento: nuevoProximoAumento,
         }),
       };
-    } else if (
-      aumentoPendiente ||
-      estadoRenovacion === 'hoy' ||
-      estadoRenovacion === 'vencido'
-    ) {
+    } else if (aumentoPendiente) {
       contratoActualizado = {
         ...contrato,
         requiereAccion: true,
