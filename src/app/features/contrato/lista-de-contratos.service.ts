@@ -111,7 +111,7 @@ export class ListaDeContratosService {
   }
   //vencimientos
   evaluarVencimientosContratos() {
-    this._contratosService.evaluarVencimientoDeTodosLosContratos(
+    this._contratosService.sincronizarContratosActivos(
       this._contratosService.$lista(),
     );
   }

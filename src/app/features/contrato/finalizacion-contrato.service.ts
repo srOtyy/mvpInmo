@@ -64,7 +64,7 @@ export class FinalizacionContratoService {
       contrato.porFinalizar = true;
       console.warn(
         `⚠️ Contrato ${contrato.titulo}: El próximo aumento (${proximoAumento.toISOString()}) ` +
-          `excede la fecha de finalización (${new Date(contrato.fechaFin).toISOString()}), ${contrato.diasFinalizacion} dias restantes, ${contrato.porFinalizar} por finalizar`,
+          `excede la fecha de finalización (${new Date(contrato.fechaFin).toISOString()}). Se marcará como "por finalizar".`,
       );
     }
 

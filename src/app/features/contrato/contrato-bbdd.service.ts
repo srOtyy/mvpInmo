@@ -10,7 +10,9 @@ import { IInquilino } from '../inquilino/inquilino.interface';
 import { IInmueble } from '../inmueble/inmueble.interface';
 import {
   BehaviorSubject,
+  catchError,
   concatMap,
+  EMPTY,
   firstValueFrom,
   from,
   Observable,
@@ -188,8 +190,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   camiarValorSideBar() {
     this.$sideBarInfo.set(!this.$sideBarInfo());
   }
-  evaluarVencimientoDeTodosLosContratos(contratos: IContrato[]) {
-    // Los contratos vencidos también deben evaluarse para calcular su próxima fecha.
+  sincronizarContratosActivos(contratos: IContrato[]) {
     const contratosActivos = contratos.filter((c) => c.estado === 'activo');
 
     if (contratosActivos.length === 0) {
@@ -197,29 +198,43 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
       return;
     }
 
+    const contratosFallidos: number[] = [];
+
     from(contratosActivos)
       .pipe(
         concatMap((contrato) => {
           const contratoActualizado =
             this._cicloDeVida.evaluarContrato(contrato);
-          return this.actualizarSinRecargar(contrato.id, contratoActualizado);
+
+          return this.actualizarSinRecargar(
+            contrato.id,
+            contratoActualizado,
+          ).pipe(
+            catchError((error) => {
+              contratosFallidos.push(contrato.id);
+
+              console.error(
+                `Error actualizando contrato ${contrato.id}`,
+                error,
+              );
+
+              return EMPTY;
+            }),
+          );
         }),
         toArray(),
       )
       .subscribe({
         next: (resultados) => {
-          const listaActual = this.$lista();
-          const nuevaLista = listaActual.map((contrato) => {
-            const actualizado = resultados.find(
-              (r) => (r as any).id === contrato.id,
-            );
-            return actualizado ? actualizado : contrato;
-          });
+          console.log(`Sincronizados correctamente: ${resultados.length}`);
 
-          this.$lista.set(nuevaLista);
-          console.log('Contratos activos evaluados:', contratosActivos.length);
+          if (contratosFallidos.length > 0) {
+            console.warn(
+              'Contratos que no pudieron sincronizarse:',
+              contratosFallidos,
+            );
+          }
         },
-        error: (err) => console.error('Error al actualizar contratos', err),
       });
   }
 

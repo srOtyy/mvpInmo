@@ -90,7 +90,11 @@ export class CicloDeVidaContratosService {
           proximoAumento: nuevoProximoAumento,
         }),
       };
-    } else if (aumentoPendiente || estadoRenovacion === 'hoy') {
+    } else if (
+      aumentoPendiente ||
+      estadoRenovacion === 'hoy' ||
+      estadoRenovacion === 'vencido'
+    ) {
       contratoActualizado = {
         ...contrato,
         requiereAccion: true,

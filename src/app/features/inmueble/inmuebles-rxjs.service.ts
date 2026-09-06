@@ -47,17 +47,6 @@ export class InmueblesRxjsService extends BaseCrudService<IInmueble> {
       )?.valor;
       if (valor) {
         return valor;
-      } else {
-        console.warn(
-          'valor dió undefinded, id inmueble:',
-          idImueble,
-          'caracteristica:',
-          caracteristica,
-          'valor:',
-          valor,
-          'inmueble',
-          inmueble,
-        );
       }
     }
     return '';
