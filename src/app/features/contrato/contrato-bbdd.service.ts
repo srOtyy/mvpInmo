@@ -244,6 +244,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     if (contrato && monto) {
       const montoReducido = parseFloat(monto.toFixed(2)); // 473271.69 (number)
       contrato.rentaMensual = montoReducido;
+      contrato.requiereAccion = false; // Se actualizó el monto, por lo que ya no requiere acción
       this.actualizarSinRecargar(id, contrato).subscribe({
         next: () =>
           this._snackBar.mensajeSnackBar(
