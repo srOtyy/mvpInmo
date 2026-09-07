@@ -15,6 +15,10 @@ import {
 import { Router } from '@angular/router';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { ListaDeContratosService } from '../lista-de-contratos.service';
+import {
+  filtroEstadoContrato,
+  estadosRenovacionYEstadosGenerales,
+} from '../contrato.mapper';
 
 @Component({
   selector: 'app-lista-contratos',
@@ -36,8 +40,11 @@ export class ListaContratosComponent implements OnInit {
   private _contratosService = inject(ContratoBbddService);
   private router = inject(Router);
   evento = output<void>();
-  contratoSeleccionado = signal<IContrato | null>(null);
   calendarioIcono = 'calendar_today';
+  //estados para el filtro de estado de contrato
+  estadosRenovacionYEstadosGenerales = estadosRenovacionYEstadosGenerales;
+  //filtros y signals
+  contratoSeleccionado = signal<IContrato | null>(null);
   contadorFalopa: number = 0;
   contratosFiltrados = this._listaContratosService.$contratosFiltrados;
   $busquedaTexto = this._listaContratosService.$busquedaTexto;
@@ -46,8 +53,8 @@ export class ListaContratosComponent implements OnInit {
   $filtroNombrePropietario =
     this._listaContratosService.$filtroNombrePropietario;
   $filtroBusqueda = this._listaContratosService.$filtroBusqueda;
-
   $contratosFiltrados = this._listaContratosService.$contratosFiltrados;
+
   ngOnInit() {
     this._contratosService.cargarLista();
   }
@@ -152,4 +159,17 @@ export class ListaContratosComponent implements OnInit {
   //     contrato,
   //   );
   // }
+  procesarFiltroEstadoContrato(filtro: filtroEstadoContrato): IContrato[] {
+    const rta: filtroEstadoContrato = filtro;
+    const contratosActivos = this._contratosService
+      .$lista()
+      .filter((c) => c.estado === 'activo');
+    if (rta.tipo === 1) {
+      return contratosActivos.filter((c) => c.estado === rta.estado);
+    }
+    if (rta.tipo === 2) {
+      return contratosActivos.filter((c) => c.estadoRenovacion === rta.estado);
+    }
+    return [];
+  }
 }

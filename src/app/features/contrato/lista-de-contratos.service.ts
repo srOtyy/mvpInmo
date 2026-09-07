@@ -16,7 +16,7 @@ export class ListaDeContratosService {
       this._propietariosService.$lista(),
     );
   });
-  $filtroBusqueda = signal('todos');
+  $filtroBusqueda = signal({ tipo: 1, estado: 'todos' });
   $filtroFecha = signal(false);
   $filtroPorVencer = signal(false);
   $filtroNombrePropietario = signal(false);
@@ -56,16 +56,30 @@ export class ListaDeContratosService {
 
   aplicarFiltroEstado(lista: IContratoVista[]) {
     const filtroBusqueda = this.$filtroBusqueda();
-    if (filtroBusqueda === 'todos') return lista;
-    return lista.filter(
-      (contrato) =>
-        contrato.titulo
-          ?.toLowerCase()
-          .includes(this.$filtroBusqueda().toLowerCase()) ||
-        this.getEstadoLabel(contrato.estado)
-          .toLowerCase()
-          .includes(this.$filtroBusqueda().toLowerCase()),
-    );
+    if (filtroBusqueda.estado === 'todos') return lista;
+    if (filtroBusqueda.tipo === 1) {
+      return lista.filter(
+        (contrato) =>
+          contrato.titulo
+            ?.toLowerCase()
+            .includes(this.$filtroBusqueda().estado.toLowerCase()) ||
+          this.getEstadoLabel(contrato.estado)
+            .toLowerCase()
+            .includes(this.$filtroBusqueda().estado.toLowerCase()),
+      );
+    }
+    if (filtroBusqueda.tipo === 2) {
+      return lista.filter(
+        (contrato) =>
+          contrato.titulo
+            ?.toLowerCase()
+            .includes(this.$filtroBusqueda().estado.toLowerCase()) ||
+          contrato.estadoRenovacion
+            ?.toLowerCase()
+            .includes(this.$filtroBusqueda().estado.toLowerCase()),
+      );
+    }
+    return lista;
   }
   aplicarFiltrosNombrePropietario(lista: IContratoVista[]) {
     const filtroNombrePropietario = this.$filtroNombrePropietario();

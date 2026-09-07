@@ -51,16 +51,19 @@
           >schedule</mat-icon
         >
       </button>
+      <!-- [(value)]="$filtroBusqueda" -->
       <mat-form-field class="form-select" appearance="fill">
         <mat-label>Estado</mat-label>
         <mat-select [(value)]="$filtroBusqueda">
-          <!-- Esto esta hardcodeado, se debe mejorar -->
-          <mat-option value="todos">Todos</mat-option>
-          <mat-option value="activo">Activo</mat-option>
-          <mat-option value="preliminar">Preliminar</mat-option>
-          <mat-option value="finalizado">Finalizado</mat-option>
-          <mat-option value="cancelado">Cancelado</mat-option>
-          <mat-option value="renovar">Renovar</mat-option>
+          @for (estado of estadosRenovacionYEstadosGenerales; track estado) {
+            <mat-optgroup class="mat-optgroup" [label]="estado.tipoEstado">
+              @for (estado of estado.estados; track estado) {
+                <mat-option [value]="estado.value">{{
+                  estado.viewValue
+                }}</mat-option>
+              }
+            </mat-optgroup>
+          }
         </mat-select>
       </mat-form-field>
     </div>
