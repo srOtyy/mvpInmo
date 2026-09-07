@@ -54,32 +54,28 @@ export class ListaDeContratosService {
     return lista;
   }
 
-  aplicarFiltroEstado(lista: IContratoVista[]) {
-    const filtroBusqueda = this.$filtroBusqueda();
-    if (filtroBusqueda.estado === 'todos') return lista;
-    if (filtroBusqueda.tipo === 1) {
-      return lista.filter(
-        (contrato) =>
-          contrato.titulo
-            ?.toLowerCase()
-            .includes(this.$filtroBusqueda().estado.toLowerCase()) ||
-          this.getEstadoLabel(contrato.estado)
-            .toLowerCase()
-            .includes(this.$filtroBusqueda().estado.toLowerCase()),
-      );
+  aplicarFiltroEstado(lista: IContratoVista[]): IContratoVista[] {
+    //gracias microsfot copilot !!!
+    const { estado, tipo } = this.$filtroBusqueda();
+    if (estado === 'todos') {
+      return lista;
     }
-    if (filtroBusqueda.tipo === 2) {
-      return lista.filter(
-        (contrato) =>
-          contrato.titulo
-            ?.toLowerCase()
-            .includes(this.$filtroBusqueda().estado.toLowerCase()) ||
-          contrato.estadoRenovacion
-            ?.toLowerCase()
-            .includes(this.$filtroBusqueda().estado.toLowerCase()),
-      );
-    }
-    return lista;
+    const textoBusqueda = estado.toLowerCase();
+    const obtenerValorFiltro = (contrato: IContratoVista): string => {
+      switch (tipo) {
+        case 1:
+          return this.getEstadoLabel(contrato.estado);
+        case 2:
+          return contrato.estadoRenovacion ?? '';
+        default:
+          return '';
+      }
+    };
+    return lista.filter((contrato) =>
+      [contrato.titulo ?? '', obtenerValorFiltro(contrato)].some((valor) =>
+        valor.toLowerCase().includes(textoBusqueda),
+      ),
+    );
   }
   aplicarFiltrosNombrePropietario(lista: IContratoVista[]) {
     const filtroNombrePropietario = this.$filtroNombrePropietario();

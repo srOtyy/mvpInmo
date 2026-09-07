@@ -159,17 +159,4 @@ export class ListaContratosComponent implements OnInit {
   //     contrato,
   //   );
   // }
-  procesarFiltroEstadoContrato(filtro: filtroEstadoContrato): IContrato[] {
-    const rta: filtroEstadoContrato = filtro;
-    const contratosActivos = this._contratosService
-      .$lista()
-      .filter((c) => c.estado === 'activo');
-    if (rta.tipo === 1) {
-      return contratosActivos.filter((c) => c.estado === rta.estado);
-    }
-    if (rta.tipo === 2) {
-      return contratosActivos.filter((c) => c.estadoRenovacion === rta.estado);
-    }
-    return [];
-  }
 }
