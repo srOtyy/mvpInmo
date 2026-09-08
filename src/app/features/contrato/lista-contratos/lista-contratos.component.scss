@@ -211,6 +211,7 @@
     .chip-contenido-lado-izq {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 6px;
     }
     .chip-contenido-lado-der {
@@ -221,6 +222,7 @@
     }
 
     .chip-titulo {
+      gap: 6px;
       font-size: 14px;
       font-weight: 600;
       color: $neutral-50;
@@ -244,7 +246,10 @@
       border-radius: 10px;
       white-space: nowrap;
       flex-shrink: 0;
+      text-align: center;
+      margin: auto;
       //color de los chips
+      //estado general
       &.chip-preliminar {
         background-color: rgba($warning, 0.15);
         color: $warning;
@@ -269,6 +274,7 @@
         background-color: rgba($accent-1, 0.15);
         color: $accent-1;
       }
+      //estado renovacion
       &.chip-porFinalizar {
         background-color: rgba($secondary-100, 0.15);
         color: $primary-700;
@@ -289,12 +295,34 @@
         background-color: #ff9f501f;
         color: $accent-2;
       }
+      //requiere accion
       &.chip-requiereAccion-true {
         background-color: rgba($primary-500, 0.15);
         color: $primary-500;
       }
       &.chip-requiereAccion-false {
         display: none;
+      }
+      //tipo de contrato
+      &.chip-tipoDeContrato-invierno {
+        margin: 0;
+        background-color: rgba($color: #0c0570, $alpha: 1.5);
+        color: #bfbbfc;
+      }
+      &.chip-tipoDeContrato-comercial {
+        margin: 0;
+        background-color: rgba($color: #034419, $alpha: 1.5);
+        color: #bbfcd0c5;
+      }
+      &.chip-tipoDeContrato-verano {
+        margin: 0;
+        background-color: rgba($color: #702b05, $alpha: 1.5);
+        color: #fab48f;
+      }
+      &.chip-tipoDeContrato-estudiante {
+        margin: 0;
+        background-color: rgba($color: #370344, $alpha: 1.5);
+        color: #efbbfc;
       }
     }
 

@@ -66,6 +66,7 @@ export class EditarContratoComponent implements OnInit {
       diasFinalizacion: [''],
       porFinalizar: [false],
       requiereAccion: [false],
+      tipoDeContrato: ['invierno'],
     });
     this.formularioEditarContrato.get('inmuebleId')?.disable();
     this.formularioEditarContrato.get('propietarioId')?.disable();
@@ -110,6 +111,7 @@ export class EditarContratoComponent implements OnInit {
       diasFinalizacion: contratoData.diasFinalizacion,
       porFinalizar: contratoData.porFinalizar,
       requiereAccion: contratoData.requiereAccion,
+      tipoDeContrato: contratoData.tipoDeContrato,
     });
   }
   guardarCambios() {

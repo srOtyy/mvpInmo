@@ -11,6 +11,7 @@ import {
   IContrato,
   ContractStatus,
   EstadoRenovacion,
+  tipoDeContrato,
 } from '../contrato.interface';
 import { Router } from '@angular/router';
 import { ContratoBbddService } from '../contrato-bbdd.service';
@@ -138,6 +139,13 @@ export class ListaContratosComponent implements OnInit {
     if (estado === 'finalizado') return 'Finalizado';
     if (estado === 'preliminar') return 'Preliminar';
     if (estado === 'renovar') return 'Por renovar';
+    return '';
+  }
+  convertirChipTipoDeContrato(tipo: tipoDeContrato): string {
+    if (tipo === 'comercial') return 'Comercial';
+    if (tipo === 'estudiante') return 'Estudiante';
+    if (tipo === 'verano') return 'Verano';
+    if (tipo === 'invierno') return 'Invierno';
     return '';
   }
   //aplicar filtros enviandoselos al servicio

@@ -166,6 +166,16 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div class="campo">
+        <mat-form-field appearance="fill">
+          <mat-label>Tipo de contrato</mat-label>
+          <mat-select formControlName="tipoDeContrato">
+            @for (tipo of tipoDeContratoOpciones; track tipo) {
+              <mat-option [value]="tipo">{{ tipo }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
 
     <button

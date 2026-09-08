@@ -183,6 +183,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     fechaInicio: Date | string,
   ): Date {
     const fechaDate = new Date(fechaInicio);
+    fechaDate.setDate(1); // Establece el día en 1 para evitar problemas con meses de diferente duración
     return new Date(fechaDate.setMonth(fechaDate.getMonth() + periodo));
   }
 

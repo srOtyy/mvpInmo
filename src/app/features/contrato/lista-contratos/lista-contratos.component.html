@@ -95,11 +95,15 @@
         >
           <div class="chip-contenido">
             <div class="chip-header chip-contenido-lado-izq">
-              <span class="chip-titulo"
-                >{{ contrato.propietarioNombre }} / {{ contrato.titulo }}
+              <span class="chip-titulo">
+                {{ contrato.titulo }}
               </span>
-              <span class="chip-renta"
-                >{{ formatearMoneda(contrato.rentaMensual) }}
+              <span
+                class="chip-estado chip-tipoDeContrato-{{
+                  contrato.tipoDeContrato
+                }}"
+              >
+                {{ convertirChipTipoDeContrato(contrato.tipoDeContrato) }}
               </span>
             </div>
             <div class="chip-datos chip-contenido-lado-der">

@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { SnackbarService } from '../../../core/snackbar.service';
-import { IContrato, TipoPago } from '../contrato.interface';
+import { IContrato, TipoPago, tipoDeContrato } from '../contrato.interface';
 import {
   FormControl,
   FormGroup,
@@ -60,6 +60,12 @@ import { InmueblesRxjsService } from '../../inmueble/inmuebles-rxjs.service';
 export class CrearContratoComponent implements OnInit {
   formulario: FormGroup = new FormGroup({});
   tipoPagoOpciones: TipoPago[] = ['efectivo', 'transferencia'];
+  tipoDeContratoOpciones: tipoDeContrato[] = [
+    'invierno',
+    'comercial',
+    'verano',
+    'estudiante',
+  ];
   propietariosFiltrados!: Observable<IPropietarioVista[]>;
   inquilinosFiltrados!: Observable<IInquilinoVista[]>;
   $propietarioId = signal<number>(0);
@@ -107,6 +113,7 @@ export class CrearContratoComponent implements OnInit {
       diasFinalizacion: new FormControl(-1),
       porFinalizar: new FormControl(false),
       requiereAccion: new FormControl(false),
+      tipoDeContrato: new FormControl('invierno', Validators.required),
     });
   }
 
@@ -143,7 +150,6 @@ export class CrearContratoComponent implements OnInit {
             : this.inquilinosDisponiblesLista.slice(),
         ),
       );
-    console.log(this.formulario.value);
   }
   // para el oninit del observable para inquilinos y propietarios (autocomplete)
   private _filtrarPropietarios(nombre: string): IPropietarioVista[] {
@@ -266,6 +272,7 @@ export class CrearContratoComponent implements OnInit {
               this.formulario.patchValue({
                 id: randomId(),
                 estado: 'preliminar',
+                tipoDeContrato: 'invierno',
               });
             },
             error: () => {

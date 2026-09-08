@@ -60,6 +60,15 @@
         <mat-option [value]="false">No</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo de Contrato</mat-label>
+      <mat-select formControlName="tipoDeContrato">
+        <mat-option value="invierno">Invierno</mat-option>
+        <mat-option value="verano">Verano</mat-option>
+        <mat-option value="estudiante">Estudiante</mat-option>
+        <mat-option value="comercial">Comercial</mat-option>
+      </mat-select>
+    </mat-form-field>
   </ng-container>
 </form>
 <button

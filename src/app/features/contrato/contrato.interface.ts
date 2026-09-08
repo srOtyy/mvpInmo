@@ -20,6 +20,7 @@ export type InformacionAdicional = {
   valor: string;
 };
 export type tipoIndice = 'IPC' | 'ICL';
+export type tipoDeContrato = 'comercial' | 'estudiante' | 'verano' | 'invierno';
 
 export interface IContrato {
   id: number;
@@ -44,6 +45,7 @@ export interface IContrato {
   diasFinalizacion: number;
   porFinalizar: boolean;
   requiereAccion: boolean;
+  tipoDeContrato: tipoDeContrato;
 }
 export interface IContratoVista extends IContrato {
   propietarioNombre: string;
