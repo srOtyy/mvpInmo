@@ -1,7 +1,12 @@
-export function randomId(): number{
-     return Math.floor(Math.random() * 1_000_000) + 1;
+export function randomId(): number {
+  return Math.floor(Math.random() * 1_000_000) + 1;
 }
-export function numeroALetras(num: number): string {
+export function numeroALetras(valor: number | string): string {
+  const num = Number(valor); // Asegurarse de que sea un número
+  if (isNaN(num)) {
+    throw new Error('El valor proporcionado no es un número válido');
+  }
+
   if (num === 0) return 'CERO';
 
   const unidades = [
@@ -14,7 +19,19 @@ export function numeroALetras(num: number): string {
     'SEIS',
     'SIETE',
     'OCHO',
-    'NUEVE'
+    'NUEVE',
+  ];
+
+  const especiales = [
+    'ONCE',
+    'DOCE',
+    'TRECE',
+    'CATORCE',
+    'QUINCE',
+    'DIECISÉIS',
+    'DIECISIETE',
+    'DIECIOCHO',
+    'DIECINUEVE',
   ];
 
   const decenas = [
@@ -27,22 +44,10 @@ export function numeroALetras(num: number): string {
     'SESENTA',
     'SETENTA',
     'OCHENTA',
-    'NOVENTA'
+    'NOVENTA',
   ];
 
-  const especiales = [
-    'ONCE',
-    'DOCE',
-    'TRECE',
-    'CATORCE',
-    'QUINCE',
-    'DIECISÉIS',
-    'DIECISIETE',
-    'DIECIOCHO',
-    'DIECINUEVE'
-  ];
-
-  const veinti = [
+  const veintis = [
     'VEINTIUNO',
     'VEINTIDÓS',
     'VEINTITRÉS',
@@ -51,12 +56,12 @@ export function numeroALetras(num: number): string {
     'VEINTISÉIS',
     'VEINTISIETE',
     'VEINTIOCHO',
-    'VEINTINUEVE'
+    'VEINTINUEVE',
   ];
 
   const centenas = [
     '',
-    'CIEN',
+    'CIENTO',
     'DOSCIENTOS',
     'TRESCIENTOS',
     'CUATROCIENTOS',
@@ -64,87 +69,80 @@ export function numeroALetras(num: number): string {
     'SEISCIENTOS',
     'SETECIENTOS',
     'OCHOCIENTOS',
-    'NOVECIENTOS'
+    'NOVECIENTOS',
   ];
 
   function convertirSeccion(n: number): string {
+    if (n === 0) return '';
+    if (n === 100) return 'CIEN';
+
     let texto = '';
 
     // Centenas
-    if (n >= 100) {
-      if (n === 100) return 'CIEN';
-
-      texto += n < 200
-        ? 'CIENTO '
-        : centenas[Math.floor(n / 100)] + ' ';
-
+    if (n > 100) {
+      texto += centenas[Math.floor(n / 100)] + ' ';
       n %= 100;
     }
 
+    // 1-9
+    if (n < 10) {
+      return (texto + unidades[n]).trim();
+    }
+
     // 10
-    if (n === 10) return texto + 'DIEZ';
+    if (n === 10) {
+      return (texto + 'DIEZ').trim();
+    }
 
     // 11-19
     if (n >= 11 && n <= 19) {
-      return texto + especiales[n - 11];
+      return (texto + especiales[n - 11]).trim();
     }
 
     // 20
-    if (n === 20) return texto + 'VEINTE';
+    if (n === 20) {
+      return (texto + 'VEINTE').trim();
+    }
 
     // 21-29
     if (n >= 21 && n <= 29) {
-      return texto + veinti[n - 21];
+      return (texto + veintis[n - 21]).trim();
     }
 
     // 30-99
-    if (n >= 30) {
-      texto += decenas[Math.floor(n / 10)];
+    const decena = Math.floor(n / 10);
+    const unidad = n % 10;
 
-      if (n % 10 !== 0) {
-        texto += ' Y ' + unidades[n % 10];
-      }
+    texto += decenas[decena];
 
-      return texto;
+    if (unidad > 0) {
+      texto += ' Y ' + unidades[unidad];
     }
 
-    // 1-9
-    if (n > 0) {
-      texto += unidades[n];
-    }
-
-    return texto;
+    return texto.trim();
   }
 
-  let letras = '';
-  let resto = num;
+  let resultado = '';
+
+  const millones = Math.floor(num / 1_000_000);
+  const miles = Math.floor((num % 1_000_000) / 1000);
+  const resto = num % 1000;
 
   // Millones
-  if (resto >= 1_000_000) {
-    const millones = Math.floor(resto / 1_000_000);
-
-    letras += millones === 1
-      ? 'UN MILLÓN '
-      : `${convertirSeccion(millones)} MILLONES `;
-
-    resto %= 1_000_000;
+  if (millones > 0) {
+    resultado +=
+      millones === 1 ? 'UN MILLÓN ' : `${convertirSeccion(millones)} MILLONES `;
   }
 
   // Miles
-  if (resto >= 1000) {
-    const miles = Math.floor(resto / 1000);
-
-    letras += miles === 1
-      ? 'MIL '
-      : `${convertirSeccion(miles)} MIL `;
-
-    resto %= 1000;
+  if (miles > 0) {
+    resultado += miles === 1 ? 'MIL ' : `${convertirSeccion(miles)} MIL `;
   }
 
   // Resto
   if (resto > 0) {
-    letras += convertirSeccion(resto);
+    resultado += convertirSeccion(resto);
   }
 
-  return letras.trim();
+  return resultado.trim().replace(/\s+/g, ' ');
 }

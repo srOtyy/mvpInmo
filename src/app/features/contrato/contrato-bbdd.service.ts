@@ -212,12 +212,10 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
           ).pipe(
             catchError((error) => {
               contratosFallidos.push(contrato.id);
-
               console.error(
                 `Error actualizando contrato ${contrato.id}`,
                 error,
               );
-
               return EMPTY;
             }),
           );
@@ -242,9 +240,15 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   actualizarMontoAlquiler(id: number, monto: number) {
     const contrato = this.$lista().find((c) => c.id === id);
     if (contrato && monto) {
-      const montoReducido = parseFloat(monto.toFixed(2)); // 473271.69 (number)
+      const montoReducido = parseFloat(monto.toFixed(2));
       contrato.rentaMensual = montoReducido;
       contrato.requiereAccion = false; // Se actualizó el monto, por lo que ya no requiere acción
+      contrato.estadoRenovacion = 'normal';
+      contrato.proximoAumento = this.declararProximoMesDeAumento(
+        contrato.periodoAumento,
+        contrato.proximoAumento,
+      );
+
       this.actualizarSinRecargar(id, contrato).subscribe({
         next: () =>
           this._snackBar.mensajeSnackBar(

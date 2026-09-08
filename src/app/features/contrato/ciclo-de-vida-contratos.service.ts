@@ -18,6 +18,7 @@ export class CicloDeVidaContratosService {
   }
 
   calcularProximoAumento(contrato: IContrato): Date {
+    contrato.proximoAumento.setDate(1); // Asegurarse de que el día sea el primero del mes
     const proximoAumento = this.parseFecha(contrato.proximoAumento);
     const fechaInicio = this.parseFecha(contrato.fechaInicio);
     let fechaBase =
@@ -37,7 +38,6 @@ export class CicloDeVidaContratosService {
         proximoAumentoCalculado.getMonth() + contrato.periodoAumento,
       );
     }
-    proximoAumentoCalculado.setDate(1);
     return proximoAumentoCalculado;
   }
 

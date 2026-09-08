@@ -16,7 +16,10 @@ import { numeroALetras } from '../../shared/utilitys';
 export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
   //dia mostrado en el header
   ahora = new Date();
-
+  periodo = this.ahora.toLocaleDateString('es-AR', {
+    month: 'long',
+    year: 'numeric',
+  });
   $gastos: LiquidacionItem[] = [];
   $liquidacionSeleccionada = signal<Liquidacion>({} as Liquidacion);
   liquidacionInquilino = 'liquidacion-inquilino2.docx';
@@ -91,6 +94,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       liquidacion.inmuebleId,
       'piso',
     );
+    const letra = this._inmueblesService.devolverCaracteristica(
+      liquidacion.inmuebleId,
+      'letra',
+    );
     const itemsInquilino = liquidacion.itemsInquilino.map((item) => ({
       ...item,
       monto: this.formatearMonto(item.monto),
@@ -109,7 +116,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       });
       doc.render({
         contrato: liquidacion.contratoId,
-        periodo: liquidacion.periodo,
+        periodo: this.periodo,
         propietario: liquidacion.propietarioNombre,
         inquilino: liquidacion.inquilinoNombre,
         itemsInquilino,
@@ -123,6 +130,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         ),
         direccion: direccion,
         piso: piso,
+        letra: letra,
       });
 
       const blob = doc.getZip().generate({
@@ -136,6 +144,11 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     }
   }
   async generarLiquidacionPropietario(liquidacion: Liquidacion): Promise<void> {
+    const nombreTemplate = 'liquidacion-propietario-base.docx';
+    const nombrePropietario = liquidacion.propietarioNombre;
+    const inmueble = this._inmueblesService.obtenerInmueblePorId(
+      liquidacion.inmuebleId,
+    );
     const direccion = this._inmueblesService.obtenerDireccion(
       liquidacion.inmuebleId,
     );
@@ -167,10 +180,11 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0) +
       liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0);
 
-    const total = subTotal - totalHonorarios;
+    const total = subTotal - subtotalDcto;
+
     try {
       const response = await lastValueFrom(
-        this.http.get(`/templates/liquidacion - Propietario - Base`, {
+        this.http.get(`/templates/${nombreTemplate}`, {
           responseType: 'arraybuffer',
         }),
       );
@@ -182,12 +196,14 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       });
       doc.render({
         contrato: liquidacion.contratoId,
-        periodo: liquidacion.periodo,
+        periodo: this.periodo,
+        inmueble: inmueble?.direccion,
         propietario: liquidacion.propietarioNombre,
         inquilino: liquidacion.inquilinoNombre,
         itemsPropietario,
         itemsInquilino,
         montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
+        nombrePropietario: nombrePropietario,
         porcentajeHonorarios: liquidacion.honorarios,
         subTotal: this.formatearMonto(subTotal),
         subTotalDescuentos: this.formatearMonto(subtotalDcto),
@@ -197,76 +213,6 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         direccion: direccion,
         piso: piso,
         letra: letra,
-      });
-
-      const blob = doc.getZip().generate({
-        type: 'blob',
-        mimeType:
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      });
-      saveAs(blob, `Liquidacion - ${liquidacion.propietarioNombre}.docx`);
-    } catch (error) {
-      console.error('Error 1 al generar la liquidación;', error);
-    }
-  }
-  async generarLiquidacionPropietarioDocx(
-    liquidacion: Liquidacion,
-  ): Promise<void> {
-    const direccion = this._inmueblesService.obtenerDireccion(
-      liquidacion.inmuebleId,
-    );
-    const piso = this._inmueblesService.devolverCaracteristica(
-      liquidacion.inmuebleId,
-      'piso',
-    );
-    const itemsInquilino = liquidacion.itemsInquilino.map((item) => ({
-      ...item,
-      monto: this.formatearMonto(item.monto),
-    }));
-    const itemsPropietario = liquidacion.itemsPropietario.map((item) => ({
-      ...item,
-      monto: this.formatearMonto(item.monto),
-    }));
-    const totalHonorarios =
-      (liquidacion.honorarios * liquidacion.montoAlquiler) / 100;
-    const totalItemsPropietario = liquidacion.itemsPropietario.reduce(
-      (sum, item) => sum + item.monto,
-      0,
-    );
-    const subtotalDescuento = totalItemsPropietario + totalHonorarios;
-    const subTotal =
-      +liquidacion.montoAlquiler +
-      liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0) +
-      liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0);
-
-    const total = subTotal - totalHonorarios;
-    try {
-      const response = await lastValueFrom(
-        this.http.get(`/templates/${this.liquidacionPropietario}`, {
-          responseType: 'arraybuffer',
-        }),
-      );
-      const content = new Uint8Array(response as ArrayBuffer);
-      const zip = new PizZip(content);
-      const doc = new Docxtemplater(zip, {
-        paragraphLoop: true,
-        linebreaks: true,
-      });
-      doc.render({
-        contrato: liquidacion.contratoId,
-        periodo: liquidacion.periodo,
-        propietario: liquidacion.propietarioNombre,
-        inquilino: liquidacion.inquilinoNombre,
-        itemsPropietario,
-        itemsInquilino,
-        montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
-        porcentajeHonorarios: liquidacion.honorarios,
-        subTotal: this.formatearMonto(subTotal),
-        subTotalDescuentos: this.formatearMonto(subtotalDescuento),
-        totalHonorarios: this.formatearMonto(totalHonorarios),
-        total: this.formatearMonto(total),
-        direccion: direccion,
-        piso: piso,
       });
 
       const blob = doc.getZip().generate({
@@ -345,6 +291,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       liquidacion.inmuebleId,
       'piso',
     );
+    const letra = this._inmueblesService.devolverCaracteristica(
+      liquidacion.inmuebleId,
+      'letra',
+    );
     const anioActual = this.ahora.getFullYear();
     const mesActual = this.nombresMeses[this.ahora.getMonth()];
     const indiceProximoMes = (this.ahora.getMonth() + 1) % 12; // Si es 12, vuelve a 0 (enero)
@@ -357,8 +307,9 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     const itemsInquilino = liquidacion.itemsInquilino.map((item) => ({
       ...item,
       monto: this.formatearMonto(item.monto),
+      // montoTexto: numeroALetras(item.monto),
     }));
-
+    console.log('itemsInquilino', itemsInquilino);
     try {
       const response = await lastValueFrom(
         this.http.get(`/templates/${this.recibiInquilino}`, {
@@ -374,10 +325,11 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       doc.render({
         direccion: direccion,
         piso: piso,
+        letra: letra,
         mesYAnioActual: mesYAnioActual,
         proximoMesYAnioActual: proximoMesYAnioActual,
         contrato: liquidacion.contratoId,
-        periodo: liquidacion.periodo,
+        periodo: this.periodo,
         propietario: liquidacion.propietarioNombre,
         inquilino: liquidacion.inquilinoNombre,
         itemsInquilino,
