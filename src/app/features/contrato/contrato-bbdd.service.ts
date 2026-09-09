@@ -130,11 +130,6 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     }
     return 'Título no disponible';
   }
-  mostrarListas(): void {
-    console.log('Propietarios:', this.$listaPropietarios);
-    console.log('Inquilinos:', this.$listaInquilinos);
-    console.log('Inmuebles:', this.$listaInmuebles);
-  }
   obtenerContratoPorId(id: number): IContrato | undefined {
     return this.$lista().find((contrato) => contrato.id === id);
   }

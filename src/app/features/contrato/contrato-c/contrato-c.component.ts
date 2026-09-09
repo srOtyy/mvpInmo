@@ -96,7 +96,21 @@ export class ContratoCComponent implements OnInit {
       contrato,
     );
   }
-
+  actualizarProximoAumento(contrato: IContrato) {
+    contrato.proximoAumento =
+      this._contratosService.declararProximoMesDeAumento(
+        contrato.periodoAumento,
+        contrato.proximoAumento,
+      );
+    const contratoActualizado = contrato;
+    this._contratosService
+      .actualizar(contrato.id, contratoActualizado)
+      .subscribe({
+        next: () => {
+          console.log('proximo aumento actualizado');
+        },
+      });
+  }
   //cambiar valor $sideBarInfo ( desde el servicio de contratos)
   cambiarValorSidebarInfo(id: number) {
     this._contratosService.$sideBarInfo.set(true);
