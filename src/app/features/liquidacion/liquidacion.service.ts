@@ -176,7 +176,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     const subtotalDcto = totalItemsPropietario + totalHonorarios;
     const subTotal =
       +liquidacion.montoAlquiler +
-      liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0) +
+      // liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0) +
       liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0);
 
     const total = subTotal - subtotalDcto;
