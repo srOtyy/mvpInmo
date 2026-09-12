@@ -114,6 +114,7 @@ export class CrearContratoComponent implements OnInit {
       porFinalizar: new FormControl(false),
       requiereAccion: new FormControl(false),
       tipoDeContrato: new FormControl('invierno', Validators.required),
+      valorInicialDelContrato: new FormControl(''),
     });
   }
 
@@ -215,7 +216,9 @@ export class CrearContratoComponent implements OnInit {
       );
     }
   }
-
+  get rentaMensual() {
+    return this.formulario.get('rentaMensual');
+  }
   //submit
   enviarContrato() {
     this.formulario.patchValue({ propietarioId: this.$propietarioId() });
@@ -228,8 +231,8 @@ export class CrearContratoComponent implements OnInit {
       );
       return;
     }
-
     const contrato: IContrato = this.formulario.getRawValue();
+    contrato.valorInicialDelContrato = this.rentaMensual?.value;
     if (this.formulario.get('titulo')?.value === '') {
       contrato.titulo = this.contratosService.generarTituloContrato(
         contrato.propietarioId.toString(),

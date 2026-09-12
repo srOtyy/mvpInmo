@@ -46,6 +46,7 @@ export interface IContrato {
   porFinalizar: boolean;
   requiereAccion: boolean;
   tipoDeContrato: tipoDeContrato;
+  valorInicialDelContrato: number;
 }
 export interface IContratoVista extends IContrato {
   propietarioNombre: string;

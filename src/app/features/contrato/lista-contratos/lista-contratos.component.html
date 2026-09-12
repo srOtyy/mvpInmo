@@ -77,11 +77,12 @@
       <mat-icon class="icono">add</mat-icon>
     </button>
     <button
+      [disabled]="true"
       mat-icon-button
       class="btn-nuevo"
       (click)="evaluarVencimientosContratos()"
     >
-      <mat-icon>person</mat-icon>
+      <mat-icon class="icono icono-disabled">person</mat-icon>
     </button>
   </div>
 

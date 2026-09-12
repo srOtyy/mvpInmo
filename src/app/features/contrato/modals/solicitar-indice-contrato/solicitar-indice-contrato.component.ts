@@ -68,7 +68,7 @@ export class SolicitarIndiceContratoComponent implements OnInit {
     const fechaBase = this.formatearFechaParaInput(this.entidad.fechaInicio);
 
     this.formulario.patchValue({
-      amount: this.entidad.rentaMensual,
+      amount: this.entidad.valorInicialDelContrato,
       date: fechaBase,
       months: this.entidad.periodoAumento,
       rate: 'ipc',

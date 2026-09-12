@@ -209,7 +209,7 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
             catchError((error) => {
               contratosFallidos.push(contrato.id);
               console.error(
-                `Error actualizando contrato ${contrato.id}`,
+                `Error actualizando contrato ${contrato.titulo}`,
                 error,
               );
               return EMPTY;
