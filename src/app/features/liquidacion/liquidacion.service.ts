@@ -22,10 +22,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
   });
   $gastos: LiquidacionItem[] = [];
   $liquidacionSeleccionada = signal<Liquidacion>({} as Liquidacion);
-  liquidacionInquilino = 'liquidacion-inquilino2.docx';
-  liquidacionPropietario = 'liquidacion-propietario2.docx';
-  minutaPropietario = 'propietario-minuta-template.docx';
-  recibiInquilino = 'inquilino-recibi-template.docx';
+  liquidacionInquilino = 'liquidacion-inquilino-base.docx';
+  liquidacionPropietario = 'liquidacion-propietario-base.docx';
+  minutaPropietario = 'propietario-minuta-base.docx';
+  recibiInquilino = 'inquilino-recibi-base.docx';
   nombresMeses = [
     'enero',
     'febrero',
@@ -144,7 +144,6 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     }
   }
   async generarLiquidacionPropietario(liquidacion: Liquidacion): Promise<void> {
-    const nombreTemplate = 'liquidacion-propietario-base.docx';
     const nombrePropietario = liquidacion.propietarioNombre;
     const inmueble = this._inmueblesService.obtenerInmueblePorId(
       liquidacion.inmuebleId,
@@ -184,7 +183,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
 
     try {
       const response = await lastValueFrom(
-        this.http.get(`/templates/${nombreTemplate}`, {
+        this.http.get(`/templates/${this.liquidacionPropietario}`, {
           responseType: 'arraybuffer',
         }),
       );
