@@ -28,7 +28,51 @@
     }
   </mat-form-field>
 
-  <button mat-flat-button color="primary" type="submit">
-    Guardar información
-  </button>
+  <div class="acciones-formulario">
+    <button mat-flat-button color="primary" type="submit">
+      {{ indiceEnEdicion === null ? "Agregar información" : "Guardar cambios" }}
+    </button>
+    @if (indiceEnEdicion !== null) {
+      <button mat-button type="button" (click)="cancelarEdicion()">
+        Cancelar
+      </button>
+    }
+  </div>
 </form>
+@if (arrayDeInformacion.length > 0) {
+  <section
+    class="lista-informacion"
+    aria-label="Información adicional existente"
+  >
+    <mat-divider></mat-divider>
+    <h3>Información existente</h3>
+    @for (informacion of arrayDeInformacion; track $index) {
+      <article class="item-informacion">
+        <div class="contenido-informacion">
+          <strong>{{ informacion.titulo }}</strong>
+          <span>{{ informacion.valor }}</span>
+        </div>
+        <div class="acciones-informacion">
+          <button
+            mat-icon-button
+            type="button"
+            aria-label="Editar información"
+            matTooltip="Editar"
+            (click)="editarInformacion($index)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            type="button"
+            aria-label="Eliminar información"
+            matTooltip="Eliminar"
+            (click)="eliminarInformacion($index)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </article>
+    }
+  </section>
+}
