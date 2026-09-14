@@ -208,6 +208,12 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
           this.$lista.update((lista) =>
             lista.map((c) => (c.id === contrato.id ? contratoActualizado : c)),
           );
+          if (
+            JSON.stringify(contratoActualizado) === JSON.stringify(contrato)
+          ) {
+            console.log('no hizo falta actualizar');
+            return EMPTY;
+          }
 
           return this.actualizarSinRecargar(
             contrato.id,
