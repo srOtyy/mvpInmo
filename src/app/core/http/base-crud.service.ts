@@ -1,46 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Observable, switchMap, tap } from 'rxjs';
-import { IEntityBase } from '../../features/caracteristicas/entity-base.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export abstract class BaseCrudService<T>{
+export abstract class BaseCrudService<T> {
   $lista = signal<T[]>([]);
   constructor(
     protected http: HttpClient,
-    protected endpoint: string
-  ) { }
+    protected endpoint: string,
+  ) {}
 
   cargar(): Observable<T[]> {
-    return this.http.get<T[]>(this.endpoint).pipe(
-      tap(lista => this.$lista.set(lista)),
-    );
+    return this.http
+      .get<T[]>(this.endpoint)
+      .pipe(tap((lista) => this.$lista.set(lista)));
   }
   crear(entidad: T) {
-    return this.http.post<T>(this.endpoint, entidad).pipe(
-      switchMap( () => this.cargar() )
-    );  
+    return this.http
+      .post<T>(this.endpoint, entidad)
+      .pipe(switchMap(() => this.cargar()));
   }
   // si en algun momento genera problema, actualizar el tipo de dato que es id
-  actualizar(id: string | number, entidad: T){
-    return this.http.put<T>(`${this.endpoint}/${id}`, entidad).pipe(
-      switchMap(() => this.cargar())
-    );
+  actualizar(id: string | number, entidad: T) {
+    return this.http
+      .put<T>(`${this.endpoint}/${id}`, entidad)
+      .pipe(switchMap(() => this.cargar()));
   }
-  actualizarSinRecargar(id: string | number, entidad: T){
+  actualizarSinRecargar(id: string | number, entidad: T) {
     return this.http.put<T>(`${this.endpoint}/${id}`, entidad);
   }
-  eliminar(id: number){
-    return this.http.delete(`${this.endpoint}/${id}`).pipe(
-      switchMap(() => this.cargar())
-    );
+  eliminar(id: number) {
+    return this.http
+      .delete(`${this.endpoint}/${id}`)
+      .pipe(switchMap(() => this.cargar()));
   }
- buscarEntidadPorId<T>( id: number): Observable<T> {
-    return this.http.get<T>(`${this.endpoint}/${id}`)
+  buscarEntidadPorId<T>(id: number): Observable<T> {
+    return this.http.get<T>(`${this.endpoint}/${id}`);
   }
-
 
   //para los contratos necesito emitir la lista de cada entidad
 }

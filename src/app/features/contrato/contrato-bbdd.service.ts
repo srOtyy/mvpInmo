@@ -12,10 +12,12 @@ import {
   BehaviorSubject,
   catchError,
   concatMap,
+  delay,
   EMPTY,
   firstValueFrom,
   from,
   Observable,
+  retry,
   toArray,
 } from 'rxjs';
 import { obtenerCaracteristica } from '../caracteristicas/entity-helpers';
@@ -202,10 +204,19 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
           const contratoActualizado =
             this._cicloDeVida.evaluarContrato(contrato);
 
+          // Actualiza el signal local de forma inmutable, aunque falle el PUT.
+          this.$lista.update((lista) =>
+            lista.map((c) => (c.id === contrato.id ? contratoActualizado : c)),
+          );
+
           return this.actualizarSinRecargar(
             contrato.id,
             contratoActualizado,
           ).pipe(
+            retry({
+              count: 2,
+              delay: 500,
+            }),
             catchError((error) => {
               contratosFallidos.push(contrato.id);
               console.error(
@@ -221,7 +232,6 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
       .subscribe({
         next: (resultados) => {
           console.log(`Sincronizados correctamente: ${resultados.length}`);
-
           if (contratosFallidos.length > 0) {
             console.warn(
               'Contratos que no pudieron sincronizarse:',
@@ -235,26 +245,33 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   //ActualizarMonto del alquiler
   actualizarMontoAlquiler(id: number, monto: number) {
     const contrato = this.$lista().find((c) => c.id === id);
-    if (contrato && monto) {
-      const montoReducido = parseFloat(monto.toFixed(2));
-      contrato.rentaMensual = montoReducido;
-      contrato.requiereAccion = false; // Se actualizó el monto, por lo que ya no requiere acción
-      contrato.estadoRenovacion = 'normal';
-      contrato.proximoAumento = this.declararProximoMesDeAumento(
+    if (!contrato || !monto) {
+      console.warn('no se encontro contrato(1) o monto(2)', contrato, monto);
+      return;
+    }
+
+    const contratoActualizado: IContrato = {
+      ...contrato,
+      rentaMensual: parseFloat(monto.toFixed(2)),
+      requiereAccion: false,
+      estadoRenovacion: 'normal',
+      proximoAumento: this.declararProximoMesDeAumento(
         contrato.periodoAumento,
         contrato.proximoAumento,
-      );
+      ),
+    };
 
-      this.actualizarSinRecargar(id, contrato).subscribe({
-        next: () =>
-          this._snackBar.mensajeSnackBar(
-            'Monto actualizado al recargar',
-            'cerrar',
-          ),
-      });
-    } else {
-      console.warn('no se encontro contrato(1) o monto(2)', contrato, monto);
-    }
+    this.$lista.update((lista) =>
+      lista.map((c) => (c.id === id ? contratoActualizado : c)),
+    );
+
+    this.actualizarSinRecargar(id, contratoActualizado).subscribe({
+      next: () =>
+        this._snackBar.mensajeSnackBar(
+          'Monto actualizado al recargar',
+          'cerrar',
+        ),
+    });
   }
   // metodo para obtener el contrato seleccionado
   obtenerContratoSeleccionado(): IContrato | null {

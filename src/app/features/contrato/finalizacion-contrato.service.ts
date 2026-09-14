@@ -47,31 +47,8 @@ export class FinalizacionContratoService {
    */
   evaluarFinalizacion(contrato: IContrato): IContrato {
     const diasFinalizacion = this.calcularDiasDeFinalizacion(contrato);
-    const proximoAumento = new Date(contrato.proximoAumento);
+    const estado = diasFinalizacion <= 0 ? 'finalizado' : contrato.estado;
 
-    // Verificar si el próximo aumento excede la fecha de fin
-    const aumentoExcedeFinalizacion = this.aumentoExcedeFin(
-      contrato,
-      proximoAumento,
-    );
-
-    // Determinar el estado del contrato
-    let estado = contrato.estado;
-
-    if (diasFinalizacion <= 0) {
-      estado = 'finalizado';
-    } else if (aumentoExcedeFinalizacion) {
-      contrato.porFinalizar = true;
-      console.warn(
-        `⚠️ Contrato ${contrato.titulo}: El próximo aumento (${proximoAumento.toISOString()}) ` +
-          `excede la fecha de finalización (${new Date(contrato.fechaFin).toISOString()}). Se marcará como "por finalizar".`,
-      );
-    }
-
-    return {
-      ...contrato,
-      estado,
-      diasFinalizacion: diasFinalizacion,
-    };
+    return { ...contrato, estado, diasFinalizacion };
   }
 }
