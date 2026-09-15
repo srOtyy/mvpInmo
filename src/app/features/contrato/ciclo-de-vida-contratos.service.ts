@@ -17,26 +17,6 @@ export class CicloDeVidaContratosService {
     return fecha instanceof Date ? fecha : new Date(fecha);
   }
 
-  calcularProximoAumento(contrato: IContrato): Date {
-    const fechaBase = contrato.proximoAumento
-      ? this.parseFecha(contrato.proximoAumento)
-      : this.parseFecha(contrato.fechaInicio);
-
-    if (!fechaBase || Number.isNaN(fechaBase.getTime())) {
-      throw new Error(`El contrato ${contrato.id} no tiene una fecha válida`);
-    }
-    if (contrato.periodoAumento <= 0) {
-      throw new Error(`El contrato ${contrato.id} tiene un período inválido`);
-    }
-
-    const resultado = new Date(fechaBase);
-    resultado.setDate(1);
-    while (resultado <= this.ahora) {
-      resultado.setMonth(resultado.getMonth() + contrato.periodoAumento);
-    }
-    return resultado;
-  }
-
   calcularDiasRestantes(proximoAumento: Date | string | undefined): number {
     //esto podria devolver numeros negativos como respuesta a que no necesita renovacion
     if (!proximoAumento) return -1;
@@ -66,20 +46,13 @@ export class CicloDeVidaContratosService {
       });
     }
 
-    const necesitaCalcularFecha = !contrato.proximoAumento;
-    const proximoAumento = necesitaCalcularFecha
-      ? this.calcularProximoAumento(contrato)
-      : contrato.proximoAumento;
-
-    const diasRestantes = this.calcularDiasRestantes(proximoAumento);
-    const aumentoPendiente = Boolean(proximoAumento) && diasRestantes <= 0;
+    const diasRestantes = this.calcularDiasRestantes(contrato.proximoAumento);
+    const aumentoPendiente = diasRestantes <= 0;
 
     const cambios: Partial<IContrato> = {
-      proximoAumento,
       requiereAccion: aumentoPendiente,
       estadoRenovacion: this.calcularEstadoDeRenovacion({
         ...contrato,
-        proximoAumento,
       }),
     };
 
