@@ -35,7 +35,7 @@ export interface IContrato {
   periodoAumento: number;
   registroActividad?: string[];
   informacionAdicional?: InformacionAdicional[];
-  titulo?: string;
+  titulo: string;
   proximoAumento: Date;
   porcentajeHonorarios: number;
   tipoPago: TipoPago;

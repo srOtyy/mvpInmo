@@ -118,7 +118,10 @@ export class ContratoCComponent implements OnInit {
   }
 
   volverALaListaDeContratos() {
-    this.router.navigate(['/contratos/lista']);
+    this.router.navigate([
+      '/contratos',
+      { outlets: { primary: 'lista', detalle: null } },
+    ]);
   }
   devolverDireccionInmueble(id: number): string {
     return this._inmuebleService.obtenerDireccion(id);

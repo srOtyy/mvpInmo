@@ -51,8 +51,7 @@ export class ListaContratosComponent implements OnInit {
   $busquedaTexto = this._listaContratosService.$busquedaTexto;
   $filtroFecha = this._listaContratosService.$filtroFecha;
   $filtroPorVencer = this._listaContratosService.$filtroPorVencer;
-  $filtroNombrePropietario =
-    this._listaContratosService.$filtroNombrePropietario;
+  $filtroTituloContrato = this._listaContratosService.$filtroTituloContrato;
   $filtroBusqueda = this._listaContratosService.$filtroBusqueda;
   $contratosFiltrados = this._listaContratosService.$contratosFiltrados;
 
@@ -65,7 +64,10 @@ export class ListaContratosComponent implements OnInit {
     if (primerResultado) {
       this.contratoSeleccionado.set(primerResultado as IContrato);
       this._contratosService.seleccionarContrato(primerResultado as IContrato);
-      this.router.navigate(['/contratos/vista']);
+      this.router.navigate([
+        '/contratos',
+        { outlets: { primary: 'lista', detalle: 'vista' } },
+      ]);
     }
   }
 
@@ -78,7 +80,10 @@ export class ListaContratosComponent implements OnInit {
   }
   evaluarClick(contrato: IContrato): void {
     if (this.contratoSeleccionado() === contrato) {
-      this.router.navigate(['/contratos/vista']);
+      this.router.navigate([
+        '/contratos',
+        { outlets: { primary: 'lista', detalle: 'vista' } },
+      ]);
     } else {
       // 📌 Si no estaba seleccionado, el primer click solo lo selecciona
       this.seleccionarContrato(contrato);

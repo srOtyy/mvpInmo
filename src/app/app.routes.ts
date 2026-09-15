@@ -11,6 +11,7 @@ import { ContratoCComponent } from './features/contrato/contrato-c/contrato-c.co
 import { CrearNotificacionComponent } from './features/notificaciones/crear-notificacion/crear-notificacion.component';
 import { ListaContratosComponent } from './features/contrato/lista-contratos/lista-contratos.component';
 import { AgregarGastosContratoComponent } from './features/contrato/modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
+import { ContratosLayoutComponent } from './features/contrato/contratos-layout/contratos-layout.component';
 // es necesario pasar rutas "rutas-dinamicas.service"(core/navegacion) a este archivo para que el router pueda reconocerlas
 export const routes: Routes = [
   {
@@ -18,39 +19,47 @@ export const routes: Routes = [
     children: [
       { path: 'lista', component: PropietarioCComponent },
       { path: 'crear', component: CrearPropietarioComponent },
-      { path: 'def_caracteristicas', component: FormularioCaracteristicasComponent }
-    ]
+      {
+        path: 'def_caracteristicas',
+        component: FormularioCaracteristicasComponent,
+      },
+    ],
   },
   {
     path: 'inquilinos',
     children: [
       { path: 'lista', component: InquilinoCComponent },
       { path: 'crear', component: CrearInquilinoComponent },
-      { path: 'def_caracteristicas', component: FormularioCaracteristicasComponent }
-    ]
+      {
+        path: 'def_caracteristicas',
+        component: FormularioCaracteristicasComponent,
+      },
+    ],
   },
   {
     path: 'inmuebles',
     children: [
       { path: 'lista', component: InmuebleCComponent },
-      {path: 'crear', component: CrearInmuebleComponent},
-      { path: 'def_caracteristicas', component: FormularioCaracteristicasComponent }
-    ]
+      { path: 'crear', component: CrearInmuebleComponent },
+      {
+        path: 'def_caracteristicas',
+        component: FormularioCaracteristicasComponent,
+      },
+    ],
   },
   {
     path: 'contratos',
+    component: ContratosLayoutComponent,
     children: [
-      { path: 'vista', component: ContratoCComponent },
       { path: 'crear', component: CrearContratoComponent },
-      { path: 'lista', component: ListaContratosComponent},
-      {path: 'liquidaciones',component: AgregarGastosContratoComponent}
-    ]
+      { path: 'lista', component: ListaContratosComponent },
+      { path: 'liquidaciones', component: AgregarGastosContratoComponent },
+      { path: 'vista', component: ContratoCComponent, outlet: 'detalle' },
+    ],
   },
   {
     path: 'notificaciones',
-    children: [
-      {path: 'crear', component: CrearNotificacionComponent}
-    ]
+    children: [{ path: 'crear', component: CrearNotificacionComponent }],
   },
-  { path: '**', redirectTo: 'contratos/lista', pathMatch: 'full' }
+  { path: '**', redirectTo: 'contratos/lista', pathMatch: 'full' },
 ];

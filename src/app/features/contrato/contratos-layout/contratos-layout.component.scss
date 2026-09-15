@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+}
+
+.contratos-container,
+mat-sidenav-content {
+  height: 100%;
+  min-height: 0;
+}
+
+mat-sidenav-content {
+  overflow: hidden;
+}
+
+.detalle-sidenav {
+  width: min(620px, 92vw);
+}

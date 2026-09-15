@@ -1,19 +1,22 @@
 <div class="div">
-    <!-- // aca esta el nav bar y el sidebar -->
-    <mat-drawer-container class="nav-bar">
-                <mat-drawer position="end" mode="over" class="drawer drawer-der" [opened]="this._contratos.$sideBarInfo()">   
-                    <app-vista-info-entidad/>
-                </mat-drawer>
-                <mat-drawer-content class="drawer-content">
-                    <app-sidebar (evento)="eventoSidenav()" />
-                </mat-drawer-content>
-    </mat-drawer-container>
-       
+  <!-- // aca esta el nav bar y el sidebar -->
+  <mat-drawer-container class="nav-bar">
+    <mat-drawer
+      position="end"
+      mode="over"
+      class="drawer"
+      [opened]="this._contratos.$sideBarInfo()"
+    >
+      <app-vista-info-entidad />
+    </mat-drawer>
+    <mat-drawer-content class="drawer-content">
+      <app-sidebar (evento)="eventoSidenav()" />
+    </mat-drawer-content>
+  </mat-drawer-container>
 
-    <div class="lado-derecho">
-        <app-head class="head"></app-head>
-        <div class="body">
-            <app-main></app-main>
-        </div>
+  <div class="lado-derecho">
+    <div class="body">
+      <app-main></app-main>
     </div>
+  </div>
 </div>

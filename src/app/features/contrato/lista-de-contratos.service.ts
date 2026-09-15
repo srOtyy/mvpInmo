@@ -19,7 +19,7 @@ export class ListaDeContratosService {
   $filtroBusqueda = signal({ tipo: 1, estado: 'todos' });
   $filtroFecha = signal(false);
   $filtroPorVencer = signal(false);
-  $filtroNombrePropietario = signal(false);
+  $filtroTituloContrato = signal(false);
   $busquedaTexto = signal('');
   $contratosFiltrados = computed(() => {
     let lista = [...this.$contratosOriginales()];
@@ -27,7 +27,7 @@ export class ListaDeContratosService {
     lista = this.aplicarFiltroEstado(lista);
     lista = this.aplicarFiltroBusquedaTexto(lista);
     lista = this.aplicarFiltroPorVencer(lista);
-    lista = this.aplicarFiltrosNombrePropietario(lista);
+    lista = this.aplicarFiltrosTituloContrato(lista);
     return lista;
   });
   //cambiar el valor a los filtros
@@ -35,7 +35,7 @@ export class ListaDeContratosService {
     this.$filtroFecha.update((estado) => !estado);
   }
   cambiarEstadoSignalNombrePropietario() {
-    this.$filtroNombrePropietario.update((estado) => !estado);
+    this.$filtroTituloContrato.update((estado) => !estado);
   }
   cambiarEstadoSignalPorVencer() {
     this.$filtroPorVencer.update((estado) => !estado);
@@ -77,12 +77,12 @@ export class ListaDeContratosService {
       ),
     );
   }
-  aplicarFiltrosNombrePropietario(lista: IContratoVista[]) {
-    const filtroNombrePropietario = this.$filtroNombrePropietario();
-    if (filtroNombrePropietario) {
+  aplicarFiltrosTituloContrato(lista: IContratoVista[]) {
+    const filtroTituloContrato = this.$filtroTituloContrato();
+    if (filtroTituloContrato) {
       lista.sort((a, b) => {
-        const nombreA = a.propietarioNombre;
-        const nombreB = b.propietarioNombre;
+        const nombreA = a.titulo;
+        const nombreB = b.titulo;
         return nombreA.localeCompare(nombreB);
       });
       return lista;

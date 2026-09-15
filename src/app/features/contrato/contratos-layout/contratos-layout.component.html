@@ -1,0 +1,19 @@
+<mat-sidenav-container class="contratos-container">
+  <mat-sidenav
+    position="end"
+    mode="over"
+    class="detalle-sidenav"
+    [opened]="detalleAbierto()"
+    (closed)="cerrarDetalle()"
+  >
+    <router-outlet
+      name="detalle"
+      (activate)="detalleAbierto.set(true)"
+      (deactivate)="detalleAbierto.set(false)"
+    />
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>
