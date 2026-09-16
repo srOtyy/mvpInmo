@@ -109,6 +109,9 @@
             </div>
             <div class="chip-datos chip-contenido-lado-der">
               <div class="span-estados">
+                @if (contrato.administracionTotal) {
+                  <span class="chip-estado estado-AT"> Adm. Prop.</span>
+                }
                 <span
                   class="chip-estado chip-requiereAccion-{{
                     contrato.requiereAccion

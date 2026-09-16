@@ -259,6 +259,10 @@
       margin: auto;
       //color de los chips
       //estado general
+      &.estado-AT {
+        background-color: #af068a86;
+        color: #afa9b1;
+      }
       &.chip-preliminar {
         background-color: rgba($warning, 0.15);
         color: $warning;
