@@ -40,7 +40,6 @@ import {
 import { AsyncPipe } from '@angular/common';
 import { InquilinoRxjsService } from '../../inquilino/inquilino-rxjs.service';
 import { InmueblesRxjsService } from '../../inmueble/inmuebles-rxjs.service';
-import { InformacionAdicionalComponent } from '../modals/informacion-adicional/informacion-adicional.component';
 @Component({
   selector: 'app-crear-contrato',
   imports: [
