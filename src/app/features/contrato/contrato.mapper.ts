@@ -3,6 +3,7 @@ import {
   EstadoRenovacion,
   IContrato,
   IContratoVista,
+  tipoDeContrato,
 } from './contrato.interface';
 import { IPropietario } from '../propietario/propietario.interface';
 import { obtenerNombre } from '../caracteristicas/entity-helpers';
@@ -18,7 +19,7 @@ interface estadoGrupo {
 }
 export interface filtroEstadoContrato {
   tipo: number;
-  estado: ContractStatus | EstadoRenovacion | 'todos';
+  estado: ContractStatus | EstadoRenovacion | tipoDeContrato | 'todos';
 }
 export const estadosRenovacionYEstadosGenerales: estadoGrupo[] = [
   {
@@ -40,6 +41,20 @@ export const estadosRenovacionYEstadosGenerales: estadoGrupo[] = [
       { value: { tipo: 1, estado: 'activo' }, viewValue: 'Activo' },
       { value: { tipo: 1, estado: 'preliminar' }, viewValue: 'Preliminar' },
       { value: { tipo: 1, estado: 'finalizado' }, viewValue: 'Finalizado' },
+    ],
+  },
+  {
+    tipoEstado: 'Tipo de contrato',
+    estados: [
+      {
+        value: { tipo: 3, estado: 'viviendaPermanente' },
+        viewValue: 'Vivienda permanente',
+      },
+      {
+        value: { tipo: 3, estado: 'temporadaInvierno' },
+        viewValue: 'Temporada invierno',
+      },
+      { value: { tipo: 3, estado: 'comercial' }, viewValue: 'Comercial' },
     ],
   },
 ];

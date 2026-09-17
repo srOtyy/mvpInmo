@@ -48,8 +48,8 @@ export class ListaDeContratosService {
   //aplicar filtros a lista de contratos
   aplicarFiltroAdmTotal(lista: IContratoVista[]) {
     const filtroActivo = this.$filtroAdmTotal();
-    if (!filtroActivo) return lista;
-
+    if (!filtroActivo)
+      return lista.filter((c) => c.administracionTotal === false);
     return lista.filter((c) => c.administracionTotal === true);
   }
   aplicarFiltroOrdenPorFecha(lista: IContratoVista[]) {
@@ -77,6 +77,8 @@ export class ListaDeContratosService {
           return this.getEstadoLabel(contrato.estado);
         case 2:
           return contrato.estadoRenovacion ?? '';
+        case 3:
+          return contrato.tipoDeContrato ?? '';
         default:
           return '';
       }
