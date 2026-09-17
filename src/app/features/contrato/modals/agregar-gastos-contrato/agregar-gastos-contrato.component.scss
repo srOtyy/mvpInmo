@@ -1,118 +1,137 @@
-@use '../../../../../styles.scss' as *;
+@use "../../../../../styles.scss" as *;
 
-.contenedor{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 95%;
-    max-width: 85vw;
-    padding: 25px 0;
-    margin: 10px;
-    color: $primary-500;
-  .cabecera{
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  color: $primary-500;
+  .stepper {
     width: 100%;
-    padding: 20px;
-    .icono{
-      color: $primary-500
-    }
-}
-  .stepper{
-    margin-top:10px ;
-    width: 65vw;
-    height: 67vh;
-    border-radius: 10px;
-    .step1{
+    min-height: 0;
+    background: transparent;
+    .step1 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      .formulario{
+      gap: 24px;
+      .formulario {
         display: flex;
         flex-direction: column;
-        padding-right: 45px;
+        padding: 16px 24px 16px 0;
         border-right: 1px solid gray;
         align-items: center;
-        .datos_formulario{
-          width: 70%;
+        .datos_formulario {
+          width: 100%;
         }
-       
       }
-      .contenedor_lista{
+      .contenedor_lista {
+        display: flex;
+        flex-direction: column;
+        max-height: 280px;
+        overflow-y: auto;
+        gap: 10px;
+        align-items: start;
+        padding: 16px 0;
+        margin-bottom: 8px;
+        min-width: 0;
+        ::-webkit-scrollbar {
+          width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+          background: $primary-900;
+          border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: $neutral-500;
+          border-radius: 10px;
+        }
+        h6 {
+          font-size: 18px;
+          color: $neutral-200;
+          margin: 0;
+          align-self: flex-start;
+        }
+        .items-wrapper {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 15px 20px;
+          align-items: flex-start;
+          width: 100%;
+          .item {
+            color: $neutral-400;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 0;
+            flex: 1 1 100%;
+            background: $neutral-900;
+            border-radius: 6px;
+            .item_texto {
+              font-size: 13px;
               display: flex;
-              flex-direction: column;
-              height: 40vh;
-              overflow-y: auto;
+              flex-direction: row;
+              align-items: center;
               gap: 10px;
-              align-items: start;
-              padding-left: 10px;
-              margin-bottom: 15px;
-              min-width: 0;
-              ::-webkit-scrollbar {
-                width: 5px;
+              .item_texto_clave {
+                color: $primary-700;
+                opacity: 0.8;
               }
-              ::-webkit-scrollbar-track {
-                background: $primary-900;
-                border-radius: 5px;
-              }
-              ::-webkit-scrollbar-thumb {
-                background: $neutral-500;
-                border-radius: 10px;
-              }
-              h6{
-                font-size: 18px;
-                color: $neutral-200;
-                margin: 0;
-                align-self: flex-start;
-              }
-              .items-wrapper{
-                display: flex;
-                flex-wrap: wrap;
-                gap: 15px 20px;
-                align-items: flex-start;
-                width: 100%;
-                .item{
-                  color: $neutral-400;
-                  padding: 8px 12px;
-                  display: flex;
-                  flex-direction: row;
-                  justify-content: space-between;
-                  align-items: center;
-                  min-width: 200px;
-                  max-width: 300px;
-                  flex: 1 1 calc(50% - 10px);
-                  background: $neutral-900;
-                  border-radius: 6px;
-                  .item_texto{
-                    font-size: 13px;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    gap: 10px;
-                    .item_texto_clave{
-                      color: $primary-700;
-                      opacity: 0.8;
-                    }
-                  }
-                  .icono-confirmado{
-                    color: #2ecc71;
-                  }
-                }
-              }
+            }
+            .icono-confirmado {
+              color: #2ecc71;
+            }
+          }
+        }
       }
     }
-    .botones{
+    .botones {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
-      .generar_documentos{
+      align-items: flex-start;
+      gap: 16px;
+      padding-top: 8px;
+      .generar_documentos {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 5px;
-        .boton{
-        height: 45px;
-      } 
+        .boton {
+          height: 45px;
+        }
       }
-      
-    }  
+    }
+  }
+}
 
+@media (max-width: 700px) {
+  .contenedor .stepper .step1 {
+    grid-template-columns: 1fr;
+    gap: 8px;
+
+    .formulario {
+      padding: 12px 0;
+      border-right: 0;
+      border-bottom: 1px solid $neutral-500;
+    }
+
+    .contenedor_lista {
+      max-height: 200px;
+    }
+  }
+
+  .contenedor .stepper .botones {
+    flex-direction: column;
+    align-items: stretch;
+
+    .generar_documentos {
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .boton {
+        flex: 1 1 180px;
+      }
+    }
   }
 }

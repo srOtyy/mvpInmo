@@ -1,12 +1,12 @@
 .formulario {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  flex-direction: row;
+  justify-content: space-between;
   min-width: min(100%, 520px);
 }
 
 .campo-informacion {
-  width: 35vw;
+  width: 30vw;
 }
 
 .lista-informacion {
@@ -43,12 +43,11 @@
 }
 
 .acciones-informacion,
-.acciones-formulario {
+.formulario-acciones {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
 }
-
-.acciones-formulario {
-  flex-wrap: wrap;
+.formulario-inputs {
+  width: 50%;
 }

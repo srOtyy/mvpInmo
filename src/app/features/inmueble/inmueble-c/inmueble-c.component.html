@@ -1,7 +1,5 @@
 <app-card-list entidad="Inmuebles">
   <div class="acciones">
-    <p>Filtrar:</p>
-
     <mat-form-field class="form-buscar" appearance="fill">
       <mat-label>Buscar</mat-label>
       <mat-icon matSuffix class="icono-buscar">search</mat-icon>
@@ -18,7 +16,6 @@
   <mat-divider></mat-divider>
   @for (propietario of $listaPropietarios; track propietario.id) {
     <div class="header-item">
-      <mat-divider></mat-divider>
       <p>{{ propietario.nombre }}</p>
     </div>
     @for (inmueble of propietario.listaInmuebles; track inmueble) {

@@ -16,10 +16,7 @@ import {
 import { Router } from '@angular/router';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { ListaDeContratosService } from '../lista-de-contratos.service';
-import {
-  filtroEstadoContrato,
-  estadosRenovacionYEstadosGenerales,
-} from '../contrato.mapper';
+import { estadosRenovacionYEstadosGenerales } from '../contrato.mapper';
 
 @Component({
   selector: 'app-lista-contratos',
@@ -79,15 +76,11 @@ export class ListaContratosComponent implements OnInit {
     this._contratosService.seleccionarContrato(contrato);
   }
   evaluarClick(contrato: IContrato): void {
-    if (this.contratoSeleccionado() === contrato) {
-      this.router.navigate([
-        '/contratos',
-        { outlets: { primary: 'lista', detalle: 'vista' } },
-      ]);
-    } else {
-      // 📌 Si no estaba seleccionado, el primer click solo lo selecciona
-      this.seleccionarContrato(contrato);
-    }
+    this.seleccionarContrato(contrato);
+    this.router.navigate([
+      '/contratos',
+      { outlets: { primary: 'lista', detalle: 'vista' } },
+    ]);
   }
   getEstadoColor(estado: ContractStatus): string {
     const colores: Record<ContractStatus, string> = {

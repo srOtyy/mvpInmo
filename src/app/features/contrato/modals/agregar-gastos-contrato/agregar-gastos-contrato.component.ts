@@ -49,7 +49,7 @@ interface GastoLiquidacion {
   styleUrl: './agregar-gastos-contrato.component.scss',
 })
 export class AgregarGastosContratoComponent implements OnInit {
-  entidad!: Liquidacion;
+  @Input() entidad!: Liquidacion;
   $gastosInquilino = signal<GastoLiquidacion[]>([]);
   $gastosPropietario = signal<GastoLiquidacion[]>([]);
   formularioInquilino = new FormGroup({
@@ -68,7 +68,6 @@ export class AgregarGastosContratoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.entidad = this._liquidacion.$liquidacionSeleccionada();
     this.buscarGastosExistentes(TipoGasto.Inquilino);
     this.buscarGastosExistentes(TipoGasto.Propietario);
   }

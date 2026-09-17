@@ -26,13 +26,12 @@ export const estadosRenovacionYEstadosGenerales: estadoGrupo[] = [
     estados: [{ value: { tipo: 0, estado: 'todos' }, viewValue: 'Todos' }],
   },
   {
-    tipoEstado: 'Estado de Renovacion',
+    tipoEstado: 'Proximo aumento',
     estados: [
-      { value: { tipo: 2, estado: 'un_mes' }, viewValue: 'Un mes' },
-      { value: { tipo: 2, estado: 'dos_meses' }, viewValue: 'Dos meses' },
+      { value: { tipo: 2, estado: 'un_mes' }, viewValue: '1 mes' },
+      { value: { tipo: 2, estado: 'dos_meses' }, viewValue: '2 meses' },
       { value: { tipo: 2, estado: 'normal' }, viewValue: 'Normal' },
       { value: { tipo: 2, estado: 'vencido' }, viewValue: 'Vencido' },
-      { value: { tipo: 2, estado: 'hoy' }, viewValue: 'Hoy' },
     ],
   },
   {
@@ -41,8 +40,6 @@ export const estadosRenovacionYEstadosGenerales: estadoGrupo[] = [
       { value: { tipo: 1, estado: 'activo' }, viewValue: 'Activo' },
       { value: { tipo: 1, estado: 'preliminar' }, viewValue: 'Preliminar' },
       { value: { tipo: 1, estado: 'finalizado' }, viewValue: 'Finalizado' },
-      { value: { tipo: 1, estado: 'cancelado' }, viewValue: 'Cancelado' },
-      { value: { tipo: 1, estado: 'renovar' }, viewValue: 'Renovar' },
     ],
   },
 ];

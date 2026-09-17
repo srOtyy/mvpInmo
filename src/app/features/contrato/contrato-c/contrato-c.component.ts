@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 import { InmueblesRxjsService } from '../../inmueble/inmuebles-rxjs.service';
+import { AgregarGastosContratoComponent } from '../modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
+
 @Component({
   selector: 'app-contrato-c',
   imports: [
@@ -74,17 +76,12 @@ export class ContratoCComponent implements OnInit {
       liquidacionAux.montoAlquiler = contrato.rentaMensual;
       this._liquidacion.setSignalSeleccionado(liquidacionAux);
       this._liquidacion.actualizarLiquidacionSeleccionada();
-      this.router.navigate(['/contratos/liquidaciones']);
-    } else {
-      console.warn('La liquidacionAux dio undefinded:', liquidacionAux);
-    }
-  }
-  generarReciboInquilino(contrato: IContrato) {
-    const liquidacionAux = this._liquidacion.buscarLiquidacionPorContrato(
-      contrato.id,
-    );
-    if (liquidacionAux) {
-      this._liquidacion.generarLiquidacionInquilinoDocx(liquidacionAux);
+      this._modalService.abrirModal(
+        'Gastos y Liquidaciones',
+        AgregarGastosContratoComponent,
+        liquidacionAux,
+      );
+      // this.router.navigate(['/contratos/liquidaciones']);
     } else {
       console.warn('La liquidacionAux dio undefinded:', liquidacionAux);
     }
@@ -97,12 +94,19 @@ export class ContratoCComponent implements OnInit {
     );
   }
   actualizarProximoAumento(contrato: IContrato) {
-    contrato.proximoAumento =
-      this._contratosService.declararProximoMesDeAumento(
+    const confirmarActualizacion = window.confirm(
+      '¿Estas seguro de que queres modificar la proxima fecha de aumento?',
+    );
+
+    if (!confirmarActualizacion) return;
+
+    const contratoActualizado = {
+      ...contrato,
+      proximoAumento: this._contratosService.declararProximoMesDeAumento(
         contrato.periodoAumento,
         contrato.proximoAumento,
-      );
-    const contratoActualizado = contrato;
+      ),
+    };
     this._contratosService
       .actualizar(contrato.id, contratoActualizado)
       .subscribe({
