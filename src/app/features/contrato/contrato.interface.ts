@@ -20,7 +20,11 @@ export type InformacionAdicional = {
   valor: string;
 };
 export type tipoIndice = 'IPC' | 'ICL';
-export type tipoDeContrato = 'comercial' | 'estudiante' | 'verano' | 'invierno';
+export type tipoDeContrato =
+  | 'comercial'
+  | 'temporadaInvierno'
+  | 'verano'
+  | 'viviendaPermanente';
 
 export interface IContrato {
   id: number;

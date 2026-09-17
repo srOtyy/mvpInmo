@@ -317,7 +317,7 @@
         display: none;
       }
       //tipo de contrato
-      &.chip-tipoDeContrato-invierno {
+      &.chip-tipoDeContrato-viviendaPermanente {
         margin: 0;
         background-color: rgba($color: #0c0570, $alpha: 1.5);
         color: #bfbbfc;
@@ -332,7 +332,7 @@
         background-color: rgba($color: #702b05, $alpha: 1.5);
         color: #fab48f;
       }
-      &.chip-tipoDeContrato-estudiante {
+      &.chip-tipoDeContrato-temporadaInvierno {
         margin: 0;
         background-color: rgba($color: #370344, $alpha: 1.5);
         color: #efbbfc;

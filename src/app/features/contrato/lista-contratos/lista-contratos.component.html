@@ -13,12 +13,17 @@
           placeholder="Propietario o título"
         />
       </mat-form-field>
-      <button mat-icon-button matSuffix (click)="cambiarEstadoSignalFecha()">
+      <!-- Filtrar por porximo vencimiento / filtrar por nombre (titulo) / Por finalizar -->
+      <button mat-icon-button>
         <mat-icon
           matSuffix
-          [class]="{ 'icono-fecha': !$filtroFecha(), activo: $filtroFecha() }"
-          matTooltip="Proximo vencimiento"
-          >{{ calendarioIcono }}</mat-icon
+          [class]="{
+            'icono-fecha': !$filtroAdmTotal(),
+            activo: $filtroAdmTotal(),
+          }"
+          (click)="cambiarEstadoSignalAdmTotal()"
+          matTooltip="Contratos con adm. propia"
+          >{{ admTotalIcono }}</mat-icon
         >
       </button>
       <button
@@ -47,11 +52,11 @@
             'icono-porVencer': !$filtroPorVencer(),
             activo: $filtroPorVencer(),
           }"
-          matTooltip="Filtrar por contratos por vencer"
+          matTooltip="Contratos por finalizar"
           >schedule</mat-icon
         >
       </button>
-      <!-- [(value)]="$filtroBusqueda" -->
+      <!-- Filtrar por estado -->
       <mat-form-field class="form-select" appearance="fill">
         <mat-label>Estado</mat-label>
         <mat-select [(value)]="$filtroBusqueda">
@@ -67,12 +72,13 @@
         </mat-select>
       </mat-form-field>
     </div>
+    <!-- Agregar contrato /sincronizar contratos -->
     <button
       mat-icon-button
       class="btn-nuevo"
       aria-label="Nuevo contrato"
       (click)="irACrearContrato()"
-      matTooltip="Agregar contrato"
+      matTooltip="Crear contrato"
     >
       <mat-icon class="icono">add</mat-icon>
     </button>
@@ -81,8 +87,9 @@
       mat-icon-button
       class="btn-nuevo"
       (click)="evaluarVencimientosContratos()"
+      matTooltip="Sincronizar contratos"
     >
-      <mat-icon class="icono">person</mat-icon>
+      <mat-icon class="icono">sync</mat-icon>
     </button>
   </div>
 

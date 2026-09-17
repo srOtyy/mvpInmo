@@ -18,6 +18,7 @@ export class ListaDeContratosService {
   });
   $filtroBusqueda = signal({ tipo: 1, estado: 'todos' });
   $filtroFecha = signal(false);
+  $filtroAdmTotal = signal(false);
   $filtroPorVencer = signal(false);
   $filtroTituloContrato = signal(false);
   $busquedaTexto = signal('');
@@ -28,6 +29,7 @@ export class ListaDeContratosService {
     lista = this.aplicarFiltroBusquedaTexto(lista);
     lista = this.aplicarFiltroPorVencer(lista);
     lista = this.aplicarFiltrosTituloContrato(lista);
+    lista = this.aplicarFiltroAdmTotal(lista);
     return lista;
   });
   //cambiar el valor a los filtros
@@ -40,8 +42,16 @@ export class ListaDeContratosService {
   cambiarEstadoSignalPorVencer() {
     this.$filtroPorVencer.update((estado) => !estado);
   }
-
+  cambiarEstadoSignalAdmTotal() {
+    this.$filtroAdmTotal.update((estado) => !estado);
+  }
   //aplicar filtros a lista de contratos
+  aplicarFiltroAdmTotal(lista: IContratoVista[]) {
+    const filtroActivo = this.$filtroAdmTotal();
+    if (!filtroActivo) return lista;
+
+    return lista.filter((c) => c.administracionTotal === true);
+  }
   aplicarFiltroOrdenPorFecha(lista: IContratoVista[]) {
     const fechaFiltroActivo = this.$filtroFecha();
     if (fechaFiltroActivo) {

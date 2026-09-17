@@ -38,7 +38,7 @@ export class ListaContratosComponent implements OnInit {
   private _contratosService = inject(ContratoBbddService);
   private router = inject(Router);
   evento = output<void>();
-  calendarioIcono = 'calendar_today';
+  admTotalIcono = 'person_off';
   //estados para el filtro de estado de contrato
   estadosRenovacionYEstadosGenerales = estadosRenovacionYEstadosGenerales;
   //filtros y signals
@@ -51,7 +51,7 @@ export class ListaContratosComponent implements OnInit {
   $filtroTituloContrato = this._listaContratosService.$filtroTituloContrato;
   $filtroBusqueda = this._listaContratosService.$filtroBusqueda;
   $contratosFiltrados = this._listaContratosService.$contratosFiltrados;
-
+  $filtroAdmTotal = this._listaContratosService.$filtroAdmTotal;
   ngOnInit() {
     this._contratosService.cargarLista();
   }
@@ -67,7 +67,13 @@ export class ListaContratosComponent implements OnInit {
       ]);
     }
   }
-
+  cambiarIconoAdmTotal() {
+    if (this.$filtroAdmTotal() == true) {
+      this.admTotalIcono = 'person';
+    } else {
+      this.admTotalIcono = 'person_off';
+    }
+  }
   eventoSidenav() {
     this.evento.emit();
   }
@@ -92,6 +98,7 @@ export class ListaContratosComponent implements OnInit {
     };
     return colores[estado];
   }
+
   getEstadoLabel(estado: ContractStatus): string {
     const labels: Record<ContractStatus, string> = {
       preliminar: 'Preliminar',
@@ -141,9 +148,9 @@ export class ListaContratosComponent implements OnInit {
   }
   convertirChipTipoDeContrato(tipo: tipoDeContrato): string {
     if (tipo === 'comercial') return 'Comercial';
-    if (tipo === 'estudiante') return 'Estudiante';
-    if (tipo === 'verano') return 'Verano';
-    if (tipo === 'invierno') return 'Invierno';
+    if (tipo === 'temporadaInvierno') return 'Temporada invierno';
+    if (tipo === 'verano') return 'Temporada Verano';
+    if (tipo === 'viviendaPermanente') return 'Vivienda permantente';
     return '';
   }
   //aplicar filtros enviandoselos al servicio
@@ -158,6 +165,10 @@ export class ListaContratosComponent implements OnInit {
   }
   cambiarEstadoSignalPorVencer() {
     this._listaContratosService.cambiarEstadoSignalPorVencer();
+  }
+  cambiarEstadoSignalAdmTotal() {
+    this._listaContratosService.cambiarEstadoSignalAdmTotal();
+    this.cambiarIconoAdmTotal();
   }
   //dias restantes para la finalizacion
   // calcularDiasDeFinalizacion(contrato: IContrato): number {

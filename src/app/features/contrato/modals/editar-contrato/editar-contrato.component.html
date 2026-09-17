@@ -1,28 +1,6 @@
 <form [formGroup]="formularioEditarContrato" class="formulario">
   <ng-container>
     <mat-form-field>
-      <mat-label>Propietario</mat-label>
-
-      <mat-select formControlName="propietarioId">
-        @for (propietario of propietariosLista; track propietario.id) {
-          <mat-option [value]="propietario.id">{{
-            obtenerCaracteristica(propietario, "nombre", "Nombre no encontrado")
-          }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Inquilino</mat-label>
-
-      <mat-select formControlName="inquilinoId">
-        @for (inquilino of inquilinosLista; track inquilino.id) {
-          <mat-option [value]="inquilino.id">{{
-            obtenerCaracteristica(inquilino, "nombre", "Nombre no encontrado")
-          }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
       <mat-label>Estado del contrato</mat-label>
       <mat-select formControlName="estado">
         @for (estado of estadosLista; track estado) {
@@ -63,9 +41,9 @@
     <mat-form-field appearance="fill">
       <mat-label>Tipo de Contrato</mat-label>
       <mat-select formControlName="tipoDeContrato">
-        <mat-option value="invierno">Invierno</mat-option>
+        <mat-option value="viviendaPermanente">Vivienda permanente</mat-option>
         <mat-option value="verano">Verano</mat-option>
-        <mat-option value="estudiante">Estudiante</mat-option>
+        <mat-option value="temporadaInvierno">Temporada invierno</mat-option>
         <mat-option value="comercial">Comercial</mat-option>
       </mat-select>
     </mat-form-field>

@@ -61,10 +61,10 @@ export class CrearContratoComponent implements OnInit {
   formulario: FormGroup = new FormGroup({});
   tipoPagoOpciones: TipoPago[] = ['efectivo', 'transferencia'];
   tipoDeContratoOpciones: tipoDeContrato[] = [
-    'invierno',
+    'viviendaPermanente',
     'comercial',
     'verano',
-    'estudiante',
+    'temporadaInvierno',
   ];
   propietariosFiltrados!: Observable<IPropietarioVista[]>;
   inquilinosFiltrados!: Observable<IInquilinoVista[]>;
@@ -113,7 +113,10 @@ export class CrearContratoComponent implements OnInit {
       diasFinalizacion: new FormControl(-1),
       porFinalizar: new FormControl(false),
       requiereAccion: new FormControl(false),
-      tipoDeContrato: new FormControl('invierno', Validators.required),
+      tipoDeContrato: new FormControl(
+        'viviendaPermanente',
+        Validators.required,
+      ),
       valorInicialDelContrato: new FormControl(0),
       InformacionAdicionalComponent: new FormControl([]),
     });
@@ -276,7 +279,7 @@ export class CrearContratoComponent implements OnInit {
               this.formulario.patchValue({
                 id: randomId(),
                 estado: 'preliminar',
-                tipoDeContrato: 'invierno',
+                tipoDeContrato: 'viviendaPermanente',
               });
             },
             error: () => {
