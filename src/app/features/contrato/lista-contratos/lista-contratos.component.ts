@@ -151,6 +151,7 @@ export class ListaContratosComponent implements OnInit {
     if (tipo === 'temporadaInvierno') return 'Temporada invierno';
     if (tipo === 'verano') return 'Temporada Verano';
     if (tipo === 'viviendaPermanente') return 'Vivienda permantente';
+    if (tipo === 'comodato') return 'Comodato';
     return '';
   }
   //aplicar filtros enviandoselos al servicio

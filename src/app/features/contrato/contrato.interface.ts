@@ -24,7 +24,8 @@ export type tipoDeContrato =
   | 'comercial'
   | 'temporadaInvierno'
   | 'verano'
-  | 'viviendaPermanente';
+  | 'viviendaPermanente'
+  | 'comodato';
 
 export interface IContrato {
   id: number;

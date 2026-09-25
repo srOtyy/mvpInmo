@@ -55,6 +55,7 @@ export const estadosRenovacionYEstadosGenerales: estadoGrupo[] = [
         viewValue: 'Temporada invierno',
       },
       { value: { tipo: 3, estado: 'comercial' }, viewValue: 'Comercial' },
+      { value: { tipo: 3, estado: 'comodato' }, viewValue: 'Comodato' },
     ],
   },
 ];

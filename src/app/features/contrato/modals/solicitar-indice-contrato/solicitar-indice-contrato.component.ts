@@ -57,7 +57,7 @@ export class SolicitarIndiceContratoComponent implements OnInit {
       amount: [0, [Validators.required, Validators.min(1)]],
       date: ['', Validators.required],
       months: [1, [Validators.required, Validators.min(1)]],
-      rate: ['ipc', Validators.required],
+      rate: ['', Validators.required],
     });
   }
 
@@ -71,8 +71,9 @@ export class SolicitarIndiceContratoComponent implements OnInit {
       amount: this.entidad.valorInicialDelContrato,
       date: fechaBase,
       months: this.entidad.periodoAumento,
-      rate: 'ipc',
+      rate: this.entidad.tipoIndice.toLocaleLowerCase(),
     });
+    console.log(this.formulario);
   }
 
   solicitarIndice(): void {

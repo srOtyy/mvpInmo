@@ -337,6 +337,11 @@
         background-color: rgba($color: #370344, $alpha: 1.5);
         color: #efbbfc;
       }
+      &.chip-tipoDeContrato-comodato {
+        margin: 0;
+        background-color: #435861;
+        color: #b3cfd6;
+      }
     }
 
     .chip-renta {

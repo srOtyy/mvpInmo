@@ -43,6 +43,7 @@ export class ContratoCComponent implements OnInit {
   ngOnInit() {
     this._contratosService.cargarLista();
     this._liquidacion.cargarLista();
+    console.log();
   }
 
   // botones de accion para el contrato

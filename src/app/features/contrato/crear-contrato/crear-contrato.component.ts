@@ -65,6 +65,7 @@ export class CrearContratoComponent implements OnInit {
     'comercial',
     'verano',
     'temporadaInvierno',
+    'comodato',
   ];
   propietariosFiltrados!: Observable<IPropietarioVista[]>;
   inquilinosFiltrados!: Observable<IInquilinoVista[]>;
