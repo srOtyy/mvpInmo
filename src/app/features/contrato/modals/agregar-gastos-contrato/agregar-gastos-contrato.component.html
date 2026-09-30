@@ -28,7 +28,7 @@
             matTooltip="Agregar gasto a la liquidacion"
             [disabled]="!formularioInquilino.valid"
           >
-            <mat-icon class="icono">arrow_forward</mat-icon>
+            <mat-icon class="icono">add</mat-icon>
           </button>
         </form>
         <div class="contenedor_lista">
@@ -94,7 +94,6 @@
           color="accent"
           type="button"
           (click)="agregarGastosALiquidacion(1)"
-          [disabled]="$gastosInquilino().length === 0"
         >
           Confirmar items
         </button>
@@ -196,7 +195,6 @@
           color="accent"
           type="button"
           (click)="agregarGastosALiquidacion(2)"
-          [disabled]="$gastosPropietario().length === 0"
         >
           Confirmar items
         </button>

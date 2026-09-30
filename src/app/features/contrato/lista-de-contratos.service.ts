@@ -16,6 +16,15 @@ export class ListaDeContratosService {
       this._propietariosService.$lista(),
     );
   });
+  calcularTotalHonorarios(): number {
+    return this.$contratosOriginales().reduce((total, contrato) => {
+      if (contrato.estado !== 'activo' || contrato.porcentajeHonorarios == 0)
+        return total;
+      return (
+        total + (contrato.rentaMensual * contrato.porcentajeHonorarios) / 100
+      );
+    }, 0);
+  }
   $filtroBusqueda = signal({ tipo: 1, estado: 'todos' });
   $filtroFecha = signal(false);
   $filtroAdmTotal = signal(false);

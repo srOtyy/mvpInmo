@@ -177,4 +177,10 @@ export class ListaContratosComponent implements OnInit {
   //     contrato,
   //   );
   // }
+  //total honorarios
+  mostrarTotalHonorarios() {
+    const totalHonorarios =
+      this._listaContratosService.calcularTotalHonorarios();
+    console.log('Total honorarios: $', Math.round(totalHonorarios));
+  }
 }

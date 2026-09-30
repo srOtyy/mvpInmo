@@ -72,7 +72,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <!-- Agregar contrato /sincronizar contratos -->
+    <!-- Agregar contrato /sincronizar contratos / calcular total honorarios -->
     <button
       mat-icon-button
       class="btn-nuevo"
@@ -90,6 +90,14 @@
       matTooltip="Sincronizar contratos"
     >
       <mat-icon class="icono">sync</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="btn-nuevo"
+      (click)="mostrarTotalHonorarios()"
+      matTooltip="Ver total honorarios por consola"
+    >
+      <mat-icon class="icono">paid</mat-icon>
     </button>
   </div>
 

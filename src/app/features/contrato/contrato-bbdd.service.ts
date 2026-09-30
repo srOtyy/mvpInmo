@@ -190,17 +190,27 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   }
   sincronizarContratosActivos(contratos: IContrato[]) {
     const contratosActivos = contratos.filter((c) => c.estado === 'activo');
+    const contratosOmitidos = contratos.filter((c) => c.estado !== 'activo');
 
     if (contratosActivos.length === 0) {
-      console.log('No hay contratos activos para evaluar');
+      console.log(
+        `No hay contratos activos para evaluar (${contratos.length} contratos omitidos)`,
+      );
       return;
     }
 
     const contratosFallidos: number[] = [];
+    let contratosEvaluados = 0;
+
+    console.log(
+      `Evaluando ${contratosActivos.length} contratos activos de ${contratos.length}. ` +
+        `Omitidos por estado: ${contratosOmitidos.length}`,
+    );
 
     from(contratosActivos)
       .pipe(
         concatMap((contrato) => {
+          contratosEvaluados++;
           const contratoActualizado =
             this._cicloDeVida.evaluarContrato(contrato);
 
@@ -237,7 +247,17 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
       )
       .subscribe({
         next: (resultados) => {
-          console.log(`Sincronizados correctamente: ${resultados.length}`);
+          console.log(
+            `Contratos evaluados: ${contratosEvaluados}. ` +
+              `Actualizados correctamente: ${resultados.length}. ` +
+              `Sin cambios: ${contratosEvaluados - resultados.length}`,
+          );
+          if (contratosOmitidos.length > 0) {
+            console.log(
+              'Contratos omitidos por no estar activos:',
+              contratosOmitidos.map(({ id, estado }) => ({ id, estado })),
+            );
+          }
           if (contratosFallidos.length > 0) {
             console.warn(
               'Contratos que no pudieron sincronizarse:',

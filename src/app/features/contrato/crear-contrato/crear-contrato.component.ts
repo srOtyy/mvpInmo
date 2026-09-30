@@ -238,6 +238,7 @@ export class CrearContratoComponent implements OnInit {
     }
     const contrato: IContrato = this.formulario.getRawValue();
     contrato.valorInicialDelContrato = contrato.rentaMensual;
+    contrato.administracionTotal = false;
     if (this.formulario.get('titulo')?.value === '') {
       contrato.titulo = this.contratosService.generarTituloContrato(
         contrato.propietarioId.toString(),
