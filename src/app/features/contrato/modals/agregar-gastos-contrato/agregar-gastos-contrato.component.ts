@@ -185,4 +185,7 @@ export class AgregarGastosContratoComponent implements OnInit {
   generarReciboInquilino(liquidacion: Liquidacion): void {
     this._liquidacion.generarReciboInquilino(liquidacion);
   }
+  generarLiquidacionInquilinoTransferencia(liquidacion: Liquidacion): void {
+    this._liquidacion.generarLiquidacionInquilinoTransferencia(liquidacion);
+  }
 }

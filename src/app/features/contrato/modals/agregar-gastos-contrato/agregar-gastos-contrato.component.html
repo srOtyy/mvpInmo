@@ -85,7 +85,16 @@
             (click)="generarLiquidacionInquilino(entidad)"
           >
             <mat-icon>receipt_long</mat-icon>
-            Liquidacion Inquilino
+            Liquidacion (Efectivo)
+          </button>
+          <button
+            class="boton"
+            mat-fab
+            extended
+            (click)="generarLiquidacionInquilinoTransferencia(entidad)"
+          >
+            <mat-icon>receipt_long</mat-icon>
+            Liquidacion (Transferencia)
           </button>
         </div>
         <button

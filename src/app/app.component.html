@@ -6,6 +6,7 @@
       mode="over"
       class="drawer"
       [opened]="this._contratos.$sideBarInfo()"
+      (closed)="cerrarPanelesContrato()"
     >
       <app-vista-info-entidad />
     </mat-drawer>

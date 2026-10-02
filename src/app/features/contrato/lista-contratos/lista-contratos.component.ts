@@ -59,8 +59,7 @@ export class ListaContratosComponent implements OnInit {
   navegarPrimerResultado() {
     const primerResultado = this.contratosFiltrados()[0];
     if (primerResultado) {
-      this.contratoSeleccionado.set(primerResultado as IContrato);
-      this._contratosService.seleccionarContrato(primerResultado as IContrato);
+      this.seleccionarContrato(primerResultado as IContrato);
       this.router.navigate([
         '/contratos',
         { outlets: { primary: 'lista', detalle: 'vista' } },
@@ -80,6 +79,8 @@ export class ListaContratosComponent implements OnInit {
   seleccionarContrato(contrato: IContrato) {
     this.contratoSeleccionado.set(contrato);
     this._contratosService.seleccionarContrato(contrato);
+    this._contratosService.$contratoIdSideBarInfo.set(contrato.id);
+    this._contratosService.$sideBarInfo.set(true);
   }
   evaluarClick(contrato: IContrato): void {
     this.seleccionarContrato(contrato);

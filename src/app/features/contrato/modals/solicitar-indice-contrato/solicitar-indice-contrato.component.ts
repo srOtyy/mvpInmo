@@ -138,6 +138,7 @@ export class SolicitarIndiceContratoComponent implements OnInit {
     return fechaObj.toISOString().slice(0, 10);
   }
   actualizarAlquiler(id: number, monto: number) {
+    // monto = Math.trunc(monto);
     this._contratosService.actualizarMontoAlquiler(id, monto);
     this._liquidacionService.actualizarMontoAlquiler(id, monto);
   }
