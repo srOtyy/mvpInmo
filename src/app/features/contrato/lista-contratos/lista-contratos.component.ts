@@ -135,7 +135,7 @@ export class ListaContratosComponent implements OnInit {
     if (estadoRenovacion === 'un_mes') return '1 mes';
     if (estadoRenovacion === 'dos_meses') return '2 meses';
     if (estadoRenovacion === 'hoy') return 'hoy';
-    if (estadoRenovacion === 'vencido') return 'vencido';
+    if (estadoRenovacion === 'vencido') return 'Este mes';
     if (estadoRenovacion === 'porFinalizar') return 'por finalizar';
     return '';
   }

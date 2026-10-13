@@ -32,11 +32,11 @@ export const estadosRenovacionYEstadosGenerales: estadoGrupo[] = [
       { value: { tipo: 2, estado: 'un_mes' }, viewValue: '1 mes' },
       { value: { tipo: 2, estado: 'dos_meses' }, viewValue: '2 meses' },
       { value: { tipo: 2, estado: 'normal' }, viewValue: 'Normal' },
-      { value: { tipo: 2, estado: 'vencido' }, viewValue: 'Vencido' },
+      { value: { tipo: 2, estado: 'vencido' }, viewValue: 'Este mes' },
     ],
   },
   {
-    tipoEstado: 'Estado de general',
+    tipoEstado: 'Estado general',
     estados: [
       { value: { tipo: 1, estado: 'activo' }, viewValue: 'Activo' },
       { value: { tipo: 1, estado: 'preliminar' }, viewValue: 'Preliminar' },
