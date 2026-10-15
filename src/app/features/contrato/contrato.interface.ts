@@ -39,13 +39,13 @@ export interface IContrato {
   rentaMensual: number;
   periodoAumento: number;
   registroActividad?: string[];
-  informacionAdicional?: InformacionAdicional[];
+  informacionAdicional: InformacionAdicional[];
   titulo: string;
   proximoAumento: Date;
   porcentajeHonorarios: number;
   tipoPago: TipoPago;
   tipoIndice: tipoIndice;
-  inicioDelPeriodo?: number;
+  inicioDelPeriodo: number;
   administracionTotal: boolean;
   diasFinalizacion: number;
   porFinalizar: boolean;
