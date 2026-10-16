@@ -81,6 +81,13 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       inicioDelPeriodo: contrato.inicioDelPeriodo
         ? contrato.inicioDelPeriodo
         : 1,
+      EGLAI: {
+        expensas: 'no-requerido',
+        gas: 'no-requerido',
+        luz: 'no-requerido',
+        agua: 'no-requerido',
+        internet: 'no-requerido',
+      },
     };
     return liquidacion;
   }

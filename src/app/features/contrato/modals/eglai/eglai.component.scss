@@ -1,0 +1,32 @@
+.eglai {
+  display: grid;
+  gap: 12px;
+  min-width: 280px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.lista-servicios {
+  display: grid;
+}
+
+.servicio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.servicio:last-child {
+  border-bottom: 0;
+}
+
+.sin-liquidacion {
+  margin: 0;
+}

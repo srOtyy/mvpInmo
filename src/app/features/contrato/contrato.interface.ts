@@ -52,6 +52,7 @@ export interface IContrato {
   requiereAccion: boolean;
   tipoDeContrato: tipoDeContrato;
   valorInicialDelContrato: number;
+  EGLAI: [number, number, number, number, number]; //E: expensas, G: gas, L: luz, A: agua, I: internet // 0: no aplica, 1: incluido en el alquiler, 2: ya agregado en la liquidacion
 }
 export interface IContratoVista extends IContrato {
   propietarioNombre: string;

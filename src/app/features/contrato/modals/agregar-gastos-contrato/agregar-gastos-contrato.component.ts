@@ -140,34 +140,34 @@ export class AgregarGastosContratoComponent implements OnInit {
       monto: gasto.monto,
       montoTexto: numeroALetras(gasto.monto),
     }));
-  }
-
-  agregarGastosALiquidacion(tipo: TipoGasto): void {
-    if (tipo === TipoGasto.Inquilino) {
-      this.entidad.itemsInquilino = this.convertirAGastosLiquidacion(tipo);
-    } else {
-      this.entidad.itemsPropietario = this.convertirAGastosLiquidacion(tipo);
     }
 
-    this._liquidacion.actualizar(this.entidad.id, this.entidad).subscribe({
-      next: () => {
-        if (tipo === TipoGasto.Inquilino) {
-          this.$gastosInquilino.update((gastos) =>
-            gastos.map((g) => ({ ...g, confirmado: true })),
-          );
-        } else {
-          this.$gastosPropietario.update((gastos) =>
-            gastos.map((g) => ({ ...g, confirmado: true })),
-          );
-        }
-        this.formularioInquilino.reset();
-        this.formularioInquilino.markAllAsTouched();
-        this.formularioPropietario.reset();
-        this.formularioPropietario.markAllAsTouched();
-        this._snack.mensajeSnackBar('Gastos agregados', 'Cerrar');
-      },
-    });
-  }
+    agregarGastosALiquidacion(tipo: TipoGasto): void {
+      if (tipo === TipoGasto.Inquilino) {
+        this.entidad.itemsInquilino = this.convertirAGastosLiquidacion(tipo);
+      } else {
+        this.entidad.itemsPropietario = this.convertirAGastosLiquidacion(tipo);
+      }
+
+      this._liquidacion.actualizar(this.entidad.id, this.entidad).subscribe({
+        next: () => {
+          if (tipo === TipoGasto.Inquilino) {
+            this.$gastosInquilino.update((gastos) =>
+              gastos.map((g) => ({ ...g, confirmado: true })),
+            );
+          } else {
+            this.$gastosPropietario.update((gastos) =>
+              gastos.map((g) => ({ ...g, confirmado: true })),
+            );
+          }
+          this.formularioInquilino.reset();
+          this.formularioInquilino.markAllAsTouched();
+          this.formularioPropietario.reset();
+          this.formularioPropietario.markAllAsTouched();
+          this._snack.mensajeSnackBar('Gastos agregados', 'Cerrar');
+        },
+      });
+    }
 
   volverALaVistaDeContratos(): void {
     this._router.navigate(['/contratos/vista']);

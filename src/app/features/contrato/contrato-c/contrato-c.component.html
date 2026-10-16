@@ -83,11 +83,19 @@
         <button
           mat-icon-button
           class="btn-proximoAumento"
+          (click)="abrirEGLAI(contrato)"
+          matTooltip="Abrir EGLAI"
+        >
+          <mat-icon>rule</mat-icon>
+        </button>
+        <!-- <button
+          mat-icon-button
+          class="btn-proximoAumento"
           (click)="actualizarProximoAumento(contrato)"
           matTooltip="Actualizar el proximo aumento"
         >
           <mat-icon>refresh</mat-icon>
-        </button>
+        </button> -->
         <button
           mat-icon-button
           class="btn-infoAdicional"
