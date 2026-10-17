@@ -178,7 +178,25 @@
                   </span>
                 }
               } @else {
-                modo EGLAI
+                <div class="span-estados">
+                  @for (
+                    chip of obtenerChipsEGLAI(contrato.liquidacion?.EGLAI);
+                    track chip.servicio
+                  ) {
+                    <span
+                      class="chip-estado chip-eglai-{{ chip.estado }}"
+                      [matTooltip]="
+                        chip.estado === 'pendiente'
+                          ? 'Servicio pendiente de cargar'
+                          : 'Servicio cargado'
+                      "
+                    >
+                      {{ chip.servicio }}
+                    </span>
+                  } @empty {
+                    <span class="chip-estado"> Sin servicios pendientes </span>
+                  }
+                </div>
               }
             </div>
           </div>

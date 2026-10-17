@@ -17,7 +17,14 @@ import { Router } from '@angular/router';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { ListaDeContratosService } from '../lista-de-contratos.service';
 import { estadosRenovacionYEstadosGenerales } from '../contrato.mapper';
-
+import {
+  EstadoServicioLiquidacion,
+  SeguimientoEGLAI,
+} from '../eglai.interface';
+interface ChipEGLAI {
+  servicio: string;
+  estado: EstadoServicioLiquidacion;
+}
 @Component({
   selector: 'app-lista-contratos',
   imports: [
@@ -191,5 +198,32 @@ export class ListaContratosComponent implements OnInit {
     const totalHonorarios =
       this._listaContratosService.calcularTotalHonorarios();
     console.log('Total honorarios: $', Math.round(totalHonorarios));
+  }
+  //EGLAI
+  private formatearServicioEGLAI(servicio: keyof SeguimientoEGLAI): string {
+    const nombres: Record<keyof SeguimientoEGLAI, string> = {
+      expensas: 'Expensas',
+      gas: 'Gas',
+      luz: 'Luz',
+      agua: 'Agua',
+      internet: 'Internet',
+    };
+
+    return nombres[servicio];
+  }
+  obtenerChipsEGLAI(eglai: SeguimientoEGLAI | undefined): ChipEGLAI[] {
+    if (!eglai) return [];
+
+    return (
+      Object.entries(eglai) as [
+        keyof SeguimientoEGLAI,
+        EstadoServicioLiquidacion,
+      ][]
+    )
+      .filter(([_, estado]) => estado !== 'no-requerido')
+      .map(([servicio, estado]) => ({
+        servicio: this.formatearServicioEGLAI(servicio),
+        estado,
+      }));
   }
 }

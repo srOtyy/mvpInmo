@@ -353,5 +353,16 @@
       color: $neutral-400;
       white-space: nowrap;
     }
+    .chip-eglai-pendiente {
+      color: $warning;
+      background-color: #72550588;
+      font-weight: 500;
+    }
+
+    .chip-eglai-cargado {
+      color: $success;
+      background-color: #185335ab;
+      font-weight: 500;
+    }
   }
 }
