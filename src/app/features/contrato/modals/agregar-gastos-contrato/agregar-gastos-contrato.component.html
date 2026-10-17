@@ -21,7 +21,26 @@
               type="number"
             />
           </mat-form-field>
+          <div class="servicios-eglai-acciones">
+            @for (servicio of serviciosEGLAI; track servicio.key) {
+              <button
+                mat-stroked-button
+                type="button"
+                [disabled]="
+                  guardandoEGLAI ||
+                  entidad.EGLAI[servicio.key] === 'cargado' ||
+                  entidad.EGLAI[servicio.key] === 'no-requerido'
+                "
+                [matTooltip]="'Marcar ' + servicio.label + ' como cargado'"
+                (click)="marcarServicioComoCargado(servicio.key)"
+              >
+                <mat-icon>check</mat-icon>
+                {{ servicio.label }}
+              </button>
+            }
+          </div>
           <button
+            type="button"
             mat-icon-button
             color="primary"
             (click)="agregarGastoTemporal(1)"
@@ -207,6 +226,30 @@
         >
           Confirmar items
         </button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>EGLAI</ng-template>
+      <div class="eglai">
+        @for (servicio of serviciosEGLAI; track servicio.key) {
+          <div class="servicio-eglai">
+            <span>{{ servicio.label }}</span>
+            <mat-slide-toggle
+              [checked]="
+                entidad.EGLAI[servicio.key] === 'pendiente' ||
+                entidad.EGLAI[servicio.key] === 'cargado'
+              "
+              [disabled]="guardandoEGLAI"
+              [aria-label]="
+                servicio.label + ': ' + etiquetaEstadoEGLAI(servicio.key)
+              "
+              (change)="cambiarEstadoEGLAI(servicio.key, $event.checked)"
+            >
+              {{ etiquetaEstadoEGLAI(servicio.key) }}
+            </mat-slide-toggle>
+          </div>
+        }
       </div>
     </mat-step>
   </mat-stepper>

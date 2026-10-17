@@ -16,7 +16,6 @@ import { Router } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 import { InmueblesRxjsService } from '../../inmueble/inmuebles-rxjs.service';
 import { AgregarGastosContratoComponent } from '../modals/agregar-gastos-contrato/agregar-gastos-contrato.component';
-import { EGLAIComponent } from '../modals/eglai/eglai.component';
 @Component({
   selector: 'app-contrato-c',
   imports: [
@@ -114,13 +113,6 @@ export class ContratoCComponent implements OnInit {
           console.log('proximo aumento actualizado');
         },
       });
-  }
-  abrirEGLAI(contrato: IContrato) {
-    this._modalService.abrirModal<IContrato>(
-      'Editar EGLAI',
-      EGLAIComponent,
-      contrato,
-    );
   }
   //cambiar valor $sideBarInfo ( desde el servicio de contratos)
   cambiarValorSidebarInfo(id: number) {

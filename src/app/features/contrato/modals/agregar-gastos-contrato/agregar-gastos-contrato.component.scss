@@ -23,6 +23,18 @@
         .datos_formulario {
           width: 100%;
         }
+        .servicios-eglai-acciones {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 8px;
+          width: 100%;
+          margin-bottom: 8px;
+
+          button {
+            flex: 1 1 auto;
+          }
+        }
       }
       .contenedor_lista {
         display: flex;
@@ -100,6 +112,25 @@
         .boton {
           height: 45px;
         }
+      }
+    }
+    .eglai {
+      display: grid;
+      gap: 4px;
+      max-width: 520px;
+      padding: 8px 0;
+
+      .servicio-eglai {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 10px 0;
+        border-bottom: 1px solid $neutral-500;
+      }
+
+      .servicio-eglai:last-child {
+        border-bottom: 0;
       }
     }
   }
