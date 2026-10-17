@@ -7,6 +7,7 @@ import {
 } from './contrato.interface';
 import { IPropietario } from '../propietario/propietario.interface';
 import { obtenerNombre } from '../caracteristicas/entity-helpers';
+import { Liquidacion } from '../liquidacion/liquidacion-interface';
 
 interface estado {
   value: filtroEstadoContrato;
@@ -62,20 +63,28 @@ export const estadosRenovacionYEstadosGenerales: estadoGrupo[] = [
 export function toContratoVista(
   contrato: IContrato,
   propietarios: IPropietario[],
+  liquidaciones: Liquidacion[],
 ): IContratoVista {
   const propietario = propietarios.find((p) => p.id === contrato.propietarioId);
   const propietarioNombre = propietario
     ? obtenerNombre(propietario)
     : 'Nombre no disponible';
+  const liquidacion = liquidaciones.find(
+    (item) => item.contratoId === contrato.id,
+  );
   return {
     ...contrato,
     propietarioNombre,
+    liquidacion,
   };
 }
 
 export function toContratosVista(
   contratos: IContrato[],
   propietarios: IPropietario[],
+  liquidaciones: Liquidacion[],
 ): IContratoVista[] {
-  return contratos.map((contrato) => toContratoVista(contrato, propietarios));
+  return contratos.map((contrato) =>
+    toContratoVista(contrato, propietarios, liquidaciones),
+  );
 }

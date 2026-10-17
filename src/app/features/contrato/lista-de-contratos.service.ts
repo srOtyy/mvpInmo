@@ -3,6 +3,7 @@ import { toContratosVista } from './contrato.mapper';
 import { ContratoBbddService } from './contrato-bbdd.service';
 import { PropietarioRxjsService } from '../propietario/propietario-rxjs.service';
 import { ContractStatus, IContratoVista } from './contrato.interface';
+import { LiquidacionGeneratorService } from '../liquidacion/liquidacion.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +11,12 @@ import { ContractStatus, IContratoVista } from './contrato.interface';
 export class ListaDeContratosService {
   private _contratosService = inject(ContratoBbddService);
   private _propietariosService = inject(PropietarioRxjsService);
+  private _liquidacionesService = inject(LiquidacionGeneratorService);
   $contratosOriginales = computed(() => {
     return toContratosVista(
       this._contratosService.$lista(),
       this._propietariosService.$lista(),
+      this._liquidacionesService.$lista(),
     );
   });
   calcularTotalHonorarios(): number {

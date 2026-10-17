@@ -38,6 +38,7 @@ export class ListaContratosComponent implements OnInit {
   private _contratosService = inject(ContratoBbddService);
   private router = inject(Router);
   evento = output<void>();
+  modoVista = signal<'normal' | 'liquidaciones'>('normal');
   admTotalIcono = 'person_off';
   //estados para el filtro de estado de contrato
   estadosRenovacionYEstadosGenerales = estadosRenovacionYEstadosGenerales;
@@ -171,6 +172,13 @@ export class ListaContratosComponent implements OnInit {
   cambiarEstadoSignalAdmTotal() {
     this._listaContratosService.cambiarEstadoSignalAdmTotal();
     this.cambiarIconoAdmTotal();
+  }
+  cambiarModoVista() {
+    if (this.modoVista() === 'normal') {
+      this.modoVista.set('liquidaciones');
+    } else {
+      this.modoVista.set('normal');
+    }
   }
   //dias restantes para la finalizacion
   // calcularDiasDeFinalizacion(contrato: IContrato): number {

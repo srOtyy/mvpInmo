@@ -72,7 +72,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <!-- Agregar contrato /sincronizar contratos / calcular total honorarios -->
+    <!-- Agregar contrato /sincronizar contratos / calcular total honorarios / EGLAI -->
     <button
       mat-icon-button
       class="btn-nuevo"
@@ -99,6 +99,16 @@
     >
       <mat-icon class="icono">paid</mat-icon>
     </button>
+    <button
+      mat-icon-button
+      class="btn-nuevo"
+      (click)="cambiarModoVista()"
+      matTooltip="EGLAI: liquidaciones"
+    >
+      <mat-icon class="icono">{{
+        modoVista() === "normal" ? "view_list" : "rule"
+      }}</mat-icon>
+    </button>
   </div>
 
   <div class="contenedor-contratos">
@@ -122,44 +132,53 @@
                 {{ convertirChipTipoDeContrato(contrato.tipoDeContrato) }}
               </span>
             </div>
+
             <div class="chip-datos chip-contenido-lado-der">
-              <div class="span-estados">
-                @if (contrato.administracionTotal) {
-                  <span class="chip-estado estado-AT"> Adm. Prop.</span>
+              @if (modoVista() === "normal") {
+                <div class="span-estados">
+                  @if (contrato.administracionTotal) {
+                    <span class="chip-estado estado-AT"> Adm. Prop.</span>
+                  }
+                  <span
+                    class="chip-estado chip-requiereAccion-{{
+                      contrato.requiereAccion
+                    }}"
+                    matTooltip="requiere accion"
+                  >
+                    Aplicar aumento
+                  </span>
+                  <span
+                    class="chip-estado chip-{{ contrato.estadoRenovacion }}"
+                    matTooltip="próxima renovacion"
+                  >
+                    {{
+                      convertirChipEstadoRenovacion(contrato.estadoRenovacion)
+                    }}
+                  </span>
+                  <span
+                    class="chip-estado chip-{{
+                      getEstadoColor(contrato.estado)
+                    }}"
+                    matTooltip="estado del contrato"
+                  >
+                    {{ convertirChipEstadoContrato(contrato.estado) }}
+                  </span>
+                </div>
+                @if (contrato.porFinalizar) {
+                  <span
+                    class="chip-estado chip-porFinalizar"
+                    matTooltip="Contrato por finalizar"
+                  >
+                    {{ contrato.diasFinalizacion }} día(s) para que finalice
+                  </span>
+                } @else {
+                  <span class="chip-fecha">
+                    proximo aumento -
+                    {{ formatearFecha(contrato.proximoAumento) }}
+                  </span>
                 }
-                <span
-                  class="chip-estado chip-requiereAccion-{{
-                    contrato.requiereAccion
-                  }}"
-                  matTooltip="requiere accion"
-                >
-                  Aplicar aumento
-                </span>
-                <span
-                  class="chip-estado chip-{{ contrato.estadoRenovacion }}"
-                  matTooltip="próxima renovacion"
-                >
-                  {{ convertirChipEstadoRenovacion(contrato.estadoRenovacion) }}
-                </span>
-                <span
-                  class="chip-estado chip-{{ getEstadoColor(contrato.estado) }}"
-                  matTooltip="estado del contrato"
-                >
-                  {{ convertirChipEstadoContrato(contrato.estado) }}
-                </span>
-              </div>
-              @if (contrato.porFinalizar) {
-                <span
-                  class="chip-estado chip-porFinalizar"
-                  matTooltip="Contrato por finalizar"
-                >
-                  {{ contrato.diasFinalizacion }} día(s) para que finalice
-                </span>
               } @else {
-                <span class="chip-fecha">
-                  proximo aumento -
-                  {{ formatearFecha(contrato.proximoAumento) }}
-                </span>
+                modo EGLAI
               }
             </div>
           </div>

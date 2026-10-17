@@ -1,7 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { IContrato } from '../../contrato.interface';
-import { EglaiService } from '../../eglai.service';
 import { LiquidacionGeneratorService } from '../../../liquidacion/liquidacion.service';
 import { Liquidacion } from '../../../liquidacion/liquidacion-interface';
 import { SeguimientoEGLAI } from '../../eglai.interface';
