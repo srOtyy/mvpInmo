@@ -17,6 +17,8 @@ import { Router } from '@angular/router';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { ListaDeContratosService } from '../lista-de-contratos.service';
 import { estadosRenovacionYEstadosGenerales } from '../contrato.mapper';
+import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
+import { SnackbarService } from '../../../core/snackbar.service';
 import {
   EstadoServicioLiquidacion,
   SeguimientoEGLAI,
@@ -43,9 +45,12 @@ interface ChipEGLAI {
 export class ListaContratosComponent implements OnInit {
   private _listaContratosService = inject(ListaDeContratosService);
   private _contratosService = inject(ContratoBbddService);
+  private _liquidacionesService = inject(LiquidacionGeneratorService);
+  private _snackbar = inject(SnackbarService);
   private router = inject(Router);
   evento = output<void>();
   modoVista = signal<'normal' | 'liquidaciones'>('normal');
+  restableciendoEGLAI = signal(false);
   admTotalIcono = 'person_off';
   //estados para el filtro de estado de contrato
   estadosRenovacionYEstadosGenerales = estadosRenovacionYEstadosGenerales;
@@ -186,6 +191,34 @@ export class ListaContratosComponent implements OnInit {
     } else {
       this.modoVista.set('normal');
     }
+  }
+  restablecerServiciosEGLAI() {
+    if (this.restableciendoEGLAI()) return;
+    const confirmar = window.confirm(
+      '¿Restablecer todos los servicios EGLAI cargados a pendientes para iniciar el próximo ciclo de liquidaciones?',
+    );
+    if (!confirmar) return;
+
+    this.restableciendoEGLAI.set(true);
+    this._liquidacionesService.restablecerServiciosEGLAI().subscribe({
+      next: (cantidad) => {
+        this._snackbar.mensajeSnackBar(
+          cantidad > 0
+            ? `Se restablecieron ${cantidad} servicios EGLAI`
+            : 'No había servicios EGLAI cargados para restablecer',
+          'Cerrar',
+        );
+        this.restableciendoEGLAI.set(false);
+      },
+      error: (error) => {
+        console.error('No se pudieron restablecer los servicios EGLAI', error);
+        this._snackbar.mensajeSnackBar(
+          'No se pudieron restablecer los servicios EGLAI',
+          'Cerrar',
+        );
+        this.restableciendoEGLAI.set(false);
+      },
+    });
   }
   //dias restantes para la finalizacion
   // calcularDiasDeFinalizacion(contrato: IContrato): number {

@@ -6,10 +6,11 @@ import { Liquidacion, LiquidacionItem } from './liquidacion-interface';
 import { IContrato } from '../contrato/contrato.interface';
 import { randomId } from '../../shared/utilitys';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom, Observable, of } from 'rxjs';
+import { forkJoin, lastValueFrom, map, Observable, of, switchMap } from 'rxjs';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { InmueblesRxjsService } from '../inmueble/inmuebles-rxjs.service';
 import { numeroALetras } from '../../shared/utilitys';
+import { SeguimientoEGLAI } from '../contrato/eglai.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -54,6 +55,55 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       next: () => console.log('Liquidacion cargada'),
       error: () => console.error('Error al cargar las liquidaciones'),
     });
+  }
+
+  restablecerServiciosEGLAI(): Observable<number> {
+    return this.cargar().pipe(
+      switchMap((liquidaciones) => {
+        let cantidadRestablecida = 0;
+        const actualizaciones: Liquidacion[] = [];
+
+        for (const liquidacion of liquidaciones) {
+          if (!liquidacion.EGLAI) continue;
+
+          const serviciosCargados = Object.entries(liquidacion.EGLAI).filter(
+            ([, estado]) => estado === 'cargado',
+          );
+          if (serviciosCargados.length === 0) continue;
+
+          const EGLAI = { ...liquidacion.EGLAI };
+          for (const [servicio] of serviciosCargados) {
+            EGLAI[servicio as keyof SeguimientoEGLAI] = 'pendiente';
+          }
+          cantidadRestablecida += serviciosCargados.length;
+          actualizaciones.push({ ...liquidacion, EGLAI });
+        }
+
+        if (actualizaciones.length === 0) return of(0);
+
+        return forkJoin(
+          actualizaciones.map((liquidacion) =>
+            this.actualizarSinRecargar(liquidacion.id, liquidacion),
+          ),
+        ).pipe(
+          map(() => {
+            const actualizacionesPorId = new Map(
+              actualizaciones.map((liquidacion) => [
+                liquidacion.id,
+                liquidacion,
+              ]),
+            );
+            this.$lista.update((lista) =>
+              lista.map(
+                (liquidacion) =>
+                  actualizacionesPorId.get(liquidacion.id) ?? liquidacion,
+              ),
+            );
+            return cantidadRestablecida;
+          }),
+        );
+      }),
+    );
   }
 
   //crear la liquidacion

@@ -149,4 +149,5 @@ export class ListaDeContratosService {
       this._contratosService.$lista(),
     );
   }
+  //EGLAI
 }
