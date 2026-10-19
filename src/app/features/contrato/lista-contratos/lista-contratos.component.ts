@@ -140,9 +140,6 @@ export class ListaContratosComponent implements OnInit {
     });
   }
 
-  irACrearContrato() {
-    this.router.navigate(['/contratos/crear']);
-  }
   convertirChipEstadoRenovacion(estadoRenovacion: EstadoRenovacion): string {
     if (estadoRenovacion === 'normal') return '';
     if (estadoRenovacion === 'un_mes') return '1 mes';
@@ -168,7 +165,7 @@ export class ListaContratosComponent implements OnInit {
     if (tipo === 'comodato') return 'Comodato';
     return '';
   }
-  //aplicar filtros enviandoselos al servicio
+  //Filtros de la lista de contratos
   evaluarVencimientosContratos() {
     this._listaContratosService.evaluarVencimientosContratos();
   }
@@ -185,13 +182,15 @@ export class ListaContratosComponent implements OnInit {
     this._listaContratosService.cambiarEstadoSignalAdmTotal();
     this.cambiarIconoAdmTotal();
   }
-  cambiarModoVista() {
-    if (this.modoVista() === 'normal') {
-      this.modoVista.set('liquidaciones');
-    } else {
-      this.modoVista.set('normal');
-    }
+  //total honorarios
+  mostrarTotalHonorarios() {
+    const totalHonorarios =
+      this._listaContratosService.calcularTotalHonorarios();
+    console.log('Total honorarios: $', Math.round(totalHonorarios));
   }
+
+  //EGLAI
+
   restablecerServiciosEGLAI() {
     if (this.restableciendoEGLAI()) return;
     const confirmar = window.confirm(
@@ -220,19 +219,13 @@ export class ListaContratosComponent implements OnInit {
       },
     });
   }
-  //dias restantes para la finalizacion
-  // calcularDiasDeFinalizacion(contrato: IContrato): number {
-  //   return this._finalizacionContratosService.calcularDiasDeFinalizacion(
-  //     contrato,
-  //   );
-  // }
-  //total honorarios
-  mostrarTotalHonorarios() {
-    const totalHonorarios =
-      this._listaContratosService.calcularTotalHonorarios();
-    console.log('Total honorarios: $', Math.round(totalHonorarios));
+  cambiarModoVista() {
+    if (this.modoVista() === 'normal') {
+      this.modoVista.set('liquidaciones');
+    } else {
+      this.modoVista.set('normal');
+    }
   }
-  //EGLAI
   private formatearServicioEGLAI(servicio: keyof SeguimientoEGLAI): string {
     const nombres: Record<keyof SeguimientoEGLAI, string> = {
       expensas: 'Expensas',
@@ -244,6 +237,7 @@ export class ListaContratosComponent implements OnInit {
 
     return nombres[servicio];
   }
+  // Función para obtener los chips de EGLAI a partir del objeto SeguimientoEGLAI, la funcion de abajo es mas explicita. Pero hacen lo mismo y no se usa. Podria eliminarse cuando se desee pero sirve para comrpender la primera
   obtenerChipsEGLAI(eglai: SeguimientoEGLAI | undefined): ChipEGLAI[] {
     if (!eglai) return [];
 
@@ -258,5 +252,24 @@ export class ListaContratosComponent implements OnInit {
         servicio: this.formatearServicioEGLAI(servicio),
         estado,
       }));
+  }
+  obtenerChipsEGLAIExplicito(eglai: SeguimientoEGLAI | undefined): ChipEGLAI[] {
+    if (!eglai) return [];
+
+    const chips: ChipEGLAI[] = [];
+
+    for (const [servicio, estado] of Object.entries(eglai) as [
+      keyof SeguimientoEGLAI,
+      EstadoServicioLiquidacion,
+    ][]) {
+      if (estado === 'no-requerido') continue;
+
+      chips.push({
+        servicio: this.formatearServicioEGLAI(servicio),
+        estado,
+      });
+    }
+
+    return chips;
   }
 }

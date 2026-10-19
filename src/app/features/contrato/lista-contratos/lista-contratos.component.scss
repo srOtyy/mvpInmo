@@ -70,9 +70,9 @@
   .filtros {
     display: grid;
     flex: 1 1 auto;
-    grid-template-columns: minmax(180px, 1fr) repeat(3, 40px) minmax(
-        160px,
-        200px
+    grid-template-columns: minmax(180px, 270px) repeat(3, 40px) minmax(
+        180px,
+        290px
       );
     align-items: center;
     gap: 8px;
