@@ -1867,15 +1867,7 @@
         }
       ],
       "listaInmuebles": [
-        725513,
-        518703,
-        80571,
-        937516,
-        269648,
-        290718,
-        404137,
-        172639,
-        934780
+        725513, 518703, 80571, 937516, 269648, 290718, 404137, 172639, 934780
       ]
     },
     {
@@ -1902,9 +1894,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        618221
-      ]
+      "listaInmuebles": [618221]
     },
     {
       "id": 202785,
@@ -1930,9 +1920,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        365846
-      ]
+      "listaInmuebles": [365846]
     },
     {
       "id": 525810,
@@ -1958,11 +1946,7 @@
           "valor": "2235948424"
         }
       ],
-      "listaInmuebles": [
-        928088,
-        494265,
-        40318
-      ]
+      "listaInmuebles": [928088, 494265, 40318]
     },
     {
       "id": 736425,
@@ -1988,10 +1972,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        352994,
-        294464
-      ]
+      "listaInmuebles": [352994, 294464]
     },
     {
       "id": 863129,
@@ -2017,10 +1998,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        997361,
-        319188
-      ]
+      "listaInmuebles": [997361, 319188]
     },
     {
       "id": 887655,
@@ -2046,11 +2024,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        109574,
-        789282,
-        939326
-      ]
+      "listaInmuebles": [109574, 789282, 939326]
     },
     {
       "id": 467636,
@@ -2076,9 +2050,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        536893
-      ]
+      "listaInmuebles": [536893]
     },
     {
       "id": 862635,
@@ -2104,9 +2076,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        745279
-      ]
+      "listaInmuebles": [745279]
     },
     {
       "id": 710204,
@@ -2132,9 +2102,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        64531
-      ]
+      "listaInmuebles": [64531]
     },
     {
       "id": 775529,
@@ -2186,9 +2154,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        569691
-      ]
+      "listaInmuebles": [569691]
     },
     {
       "id": 270879,
@@ -2214,9 +2180,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        551476
-      ]
+      "listaInmuebles": [551476]
     },
     {
       "id": 364844,
@@ -2242,9 +2206,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        18707
-      ]
+      "listaInmuebles": [18707]
     },
     {
       "id": 286357,
@@ -2270,9 +2232,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        930360
-      ]
+      "listaInmuebles": [930360]
     },
     {
       "id": 759112,
@@ -2298,9 +2258,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        111684
-      ]
+      "listaInmuebles": [111684]
     },
     {
       "id": 562624,
@@ -2326,12 +2284,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        201934,
-        509173,
-        337479,
-        805399
-      ]
+      "listaInmuebles": [201934, 509173, 337479, 805399]
     },
     {
       "id": 318472,
@@ -2357,9 +2310,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        648010
-      ]
+      "listaInmuebles": [648010]
     },
     {
       "id": 839998,
@@ -2385,10 +2336,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        642346,
-        872159
-      ]
+      "listaInmuebles": [642346, 872159]
     },
     {
       "id": 443346,
@@ -2414,9 +2362,7 @@
           "valor": 1
         }
       ],
-      "listaInmuebles": [
-        970054
-      ]
+      "listaInmuebles": [970054]
     },
     {
       "id": 872467,
@@ -2442,10 +2388,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        602425,
-        698757
-      ]
+      "listaInmuebles": [602425, 698757]
     },
     {
       "id": 218856,
@@ -2471,9 +2414,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        488267
-      ]
+      "listaInmuebles": [488267]
     },
     {
       "id": 656907,
@@ -2499,9 +2440,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        222018
-      ]
+      "listaInmuebles": [222018]
     },
     {
       "id": 52518,
@@ -2527,10 +2466,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        768910,
-        645879
-      ]
+      "listaInmuebles": [768910, 645879]
     },
     {
       "id": 126931,
@@ -2556,9 +2492,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        126570
-      ]
+      "listaInmuebles": [126570]
     },
     {
       "id": 422650,
@@ -2584,9 +2518,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        78641
-      ]
+      "listaInmuebles": [78641]
     },
     {
       "id": 933649,
@@ -2612,9 +2544,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        263298
-      ]
+      "listaInmuebles": [263298]
     },
     {
       "id": 801227,
@@ -2640,9 +2570,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        935747
-      ]
+      "listaInmuebles": [935747]
     },
     {
       "id": 51526,
@@ -2668,9 +2596,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        355958
-      ]
+      "listaInmuebles": [355958]
     },
     {
       "id": 8630,
@@ -2696,9 +2622,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        940061
-      ]
+      "listaInmuebles": [940061]
     },
     {
       "id": 599469,
@@ -2724,10 +2648,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        788876,
-        578542
-      ]
+      "listaInmuebles": [788876, 578542]
     },
     {
       "id": 973538,
@@ -2753,10 +2674,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        483991,
-        394573
-      ]
+      "listaInmuebles": [483991, 394573]
     },
     {
       "id": 648474,
@@ -2782,9 +2700,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        273472
-      ]
+      "listaInmuebles": [273472]
     },
     {
       "id": 303369,
@@ -2810,9 +2726,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        423018
-      ]
+      "listaInmuebles": [423018]
     },
     {
       "id": 538440,
@@ -2838,9 +2752,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        121471
-      ]
+      "listaInmuebles": [121471]
     },
     {
       "id": 435269,
@@ -2866,9 +2778,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        376806
-      ]
+      "listaInmuebles": [376806]
     },
     {
       "id": 285205,
@@ -2895,14 +2805,7 @@
         }
       ],
       "listaInmuebles": [
-        143048,
-        894362,
-        2233,
-        808110,
-        998204,
-        212829,
-        149198,
-        626240
+        143048, 894362, 2233, 808110, 998204, 212829, 149198, 626240
       ]
     },
     {
@@ -2929,9 +2832,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        655442
-      ]
+      "listaInmuebles": [655442]
     },
     {
       "id": 288530,
@@ -2957,9 +2858,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        51655
-      ]
+      "listaInmuebles": [51655]
     },
     {
       "id": 724507,
@@ -2985,9 +2884,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        977101
-      ]
+      "listaInmuebles": [977101]
     },
     {
       "id": 43666,
@@ -3039,9 +2936,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        543418
-      ]
+      "listaInmuebles": [543418]
     },
     {
       "id": 612016,
@@ -3067,9 +2962,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        870511
-      ]
+      "listaInmuebles": [870511]
     },
     {
       "id": 266206,
@@ -3095,9 +2988,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        7450
-      ]
+      "listaInmuebles": [7450]
     },
     {
       "id": 942731,
@@ -3123,9 +3014,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        94215
-      ]
+      "listaInmuebles": [94215]
     },
     {
       "id": 133342,
@@ -3151,9 +3040,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        613412
-      ]
+      "listaInmuebles": [613412]
     },
     {
       "id": 857684,
@@ -3179,9 +3066,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        640041
-      ]
+      "listaInmuebles": [640041]
     },
     {
       "id": 971470,
@@ -3207,10 +3092,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        366640,
-        753449
-      ]
+      "listaInmuebles": [366640, 753449]
     },
     {
       "id": 971485,
@@ -3236,10 +3118,7 @@
           "valor": "Av. Independencia N° 855 2°B"
         }
       ],
-      "listaInmuebles": [
-        185857,
-        171567
-      ]
+      "listaInmuebles": [185857, 171567]
     },
     {
       "id": 985689,
@@ -3265,9 +3144,7 @@
           "valor": null
         }
       ],
-      "listaInmuebles": [
-        769016
-      ]
+      "listaInmuebles": [769016]
     },
     {
       "id": 584412,
@@ -3293,9 +3170,7 @@
           "valor": "Bahia Blanca N° 816"
         }
       ],
-      "listaInmuebles": [
-        319859
-      ]
+      "listaInmuebles": [319859]
     },
     {
       "id": 55513,
@@ -3321,9 +3196,7 @@
           "valor": "calle 517 N° 1094"
         }
       ],
-      "listaInmuebles": [
-        570699
-      ]
+      "listaInmuebles": [570699]
     },
     {
       "id": 625320,
@@ -3349,9 +3222,7 @@
           "valor": "Ingeniero Boatti N° 639 - Moron"
         }
       ],
-      "listaInmuebles": [
-        37192
-      ]
+      "listaInmuebles": [37192]
     },
     {
       "id": 694136,
@@ -3377,9 +3248,7 @@
           "valor": "Misiones N° 1012"
         }
       ],
-      "listaInmuebles": [
-        903361
-      ]
+      "listaInmuebles": [903361]
     },
     {
       "id": 671618,
@@ -3405,9 +3274,7 @@
           "valor": "Leandro N. Alem N° 1278 - Avellaneda"
         }
       ],
-      "listaInmuebles": [
-        551119
-      ]
+      "listaInmuebles": [551119]
     },
     {
       "id": 93655,
@@ -3433,9 +3300,7 @@
           "valor": "Nestor Kichner N° 3884 - Berazategui"
         }
       ],
-      "listaInmuebles": [
-        375605
-      ]
+      "listaInmuebles": [375605]
     },
     {
       "id": 739161,
@@ -3461,10 +3326,7 @@
           "valor": "calle 509 N° 1880 - Acantilados Golf"
         }
       ],
-      "listaInmuebles": [
-        161382,
-        668834
-      ]
+      "listaInmuebles": [161382, 668834]
     },
     {
       "id": 595756,
@@ -3490,9 +3352,7 @@
           "valor": "calle 58 N° 641, La Plata"
         }
       ],
-      "listaInmuebles": [
-        939530
-      ]
+      "listaInmuebles": [939530]
     },
     {
       "id": 825949,
@@ -3518,9 +3378,7 @@
           "valor": "Av. Independencia N° 951 2°D"
         }
       ],
-      "listaInmuebles": [
-        933738
-      ]
+      "listaInmuebles": [933738]
     },
     {
       "id": 603372,
@@ -3546,9 +3404,7 @@
           "valor": "Salta N° 661, Mar del Plata"
         }
       ],
-      "listaInmuebles": [
-        248314
-      ]
+      "listaInmuebles": [248314]
     },
     {
       "id": 781305,
@@ -3574,9 +3430,7 @@
           "valor": "Ayacucho N° 782, Vicente Lopez"
         }
       ],
-      "listaInmuebles": [
-        233381
-      ]
+      "listaInmuebles": [233381]
     }
   ],
   "inmuebles": [
