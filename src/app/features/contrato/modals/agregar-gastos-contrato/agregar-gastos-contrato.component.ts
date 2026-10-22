@@ -65,6 +65,7 @@ export class AgregarGastosContratoComponent implements OnInit {
     { key: 'luz', label: 'Luz' },
     { key: 'agua', label: 'Agua' },
     { key: 'internet', label: 'Internet' },
+    { key: 'seguro', label: 'Seguro' },
   ];
   formularioInquilino = new FormGroup({
     tipo: new FormControl('', Validators.required),
@@ -88,6 +89,7 @@ export class AgregarGastosContratoComponent implements OnInit {
       luz: 'no-requerido',
       agua: 'no-requerido',
       internet: 'no-requerido',
+      seguro: 'no-requerido',
     };
     this.buscarGastosExistentes(TipoGasto.Inquilino);
     this.buscarGastosExistentes(TipoGasto.Propietario);

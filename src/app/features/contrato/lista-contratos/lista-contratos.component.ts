@@ -233,6 +233,7 @@ export class ListaContratosComponent implements OnInit {
       luz: 'Luz',
       agua: 'Agua',
       internet: 'Internet',
+      seguro: 'Seguro',
     };
 
     return nombres[servicio];

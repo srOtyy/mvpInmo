@@ -137,6 +137,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         luz: 'no-requerido',
         agua: 'no-requerido',
         internet: 'no-requerido',
+        seguro: 'no-requerido',
       },
     };
     return liquidacion;

@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { IContrato } from './contrato.interface';
+import { IContrato, IContratoVista } from './contrato.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { InquilinoRxjsService } from '../inquilino/inquilino-rxjs.service';
@@ -88,6 +88,28 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     this.obtenerListas();
   }
 
+  override crear(entidad: IContrato) {
+    return super.crear(this.quitarDatosDeVista(entidad));
+  }
+
+  override actualizar(id: string | number, entidad: IContrato) {
+    return super.actualizar(id, this.quitarDatosDeVista(entidad));
+  }
+
+  override actualizarSinRecargar(id: string | number, entidad: IContrato) {
+    return super.actualizarSinRecargar(id, this.quitarDatosDeVista(entidad));
+  }
+
+  private quitarDatosDeVista(contrato: IContrato): IContrato {
+    const contratoPersistible: IContrato &
+      Partial<Pick<IContratoVista, 'liquidacion' | 'propietarioNombre'>> = {
+      ...contrato,
+    };
+    delete contratoPersistible.liquidacion;
+    delete contratoPersistible.propietarioNombre;
+    return contratoPersistible;
+  }
+
   cargarLista(): void {
     if (this.$lista().length > 0) return;
     this.cargar().subscribe({
@@ -163,7 +185,12 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   }
   // para el contrato BehaviurSubject
   seleccionarContrato(contrato: IContrato): void {
-    this.contratoSeleccionado.next(contrato);
+    const contratoPersistido = this.$lista().find(
+      (item) => item.id === contrato.id,
+    );
+    this.contratoSeleccionado.next(
+      this.quitarDatosDeVista(contratoPersistido ?? contrato),
+    );
   }
 
   filtrarContratosPorFecha(fecha: Date): IContrato[] {

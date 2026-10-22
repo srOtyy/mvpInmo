@@ -9,4 +9,5 @@ export interface SeguimientoEGLAI {
   luz: EstadoServicioLiquidacion;
   agua: EstadoServicioLiquidacion;
   internet: EstadoServicioLiquidacion;
+  seguro: EstadoServicioLiquidacion;
 }
