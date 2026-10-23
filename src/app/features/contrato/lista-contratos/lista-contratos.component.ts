@@ -194,17 +194,21 @@ export class ListaContratosComponent implements OnInit {
   restablecerServiciosEGLAI() {
     if (this.restableciendoEGLAI()) return;
     const confirmar = window.confirm(
-      '¿Restablecer todos los servicios EGLAI cargados a pendientes para iniciar el próximo ciclo de liquidaciones?',
+      '¿Restablecer los servicios EGLAI cargados a pendientes y las liquidaciones emitidas a borrador para iniciar el próximo ciclo?',
     );
     if (!confirmar) return;
 
     this.restableciendoEGLAI.set(true);
     this._liquidacionesService.restablecerServiciosEGLAI().subscribe({
-      next: (cantidad) => {
+      next: ({ serviciosRestablecidos, liquidacionesRestablecidas }) => {
+        const resumen = [
+          `${serviciosRestablecidos} servicios EGLAI restablecidos`,
+          `${liquidacionesRestablecidas} liquidaciones devueltas a borrador`,
+        ].join('; ');
         this._snackbar.mensajeSnackBar(
-          cantidad > 0
-            ? `Se restablecieron ${cantidad} servicios EGLAI`
-            : 'No había servicios EGLAI cargados para restablecer',
+          serviciosRestablecidos > 0 || liquidacionesRestablecidas > 0
+            ? resumen
+            : 'No había servicios EGLAI ni liquidaciones emitidas para restablecer',
           'Cerrar',
         );
         this.restableciendoEGLAI.set(false);

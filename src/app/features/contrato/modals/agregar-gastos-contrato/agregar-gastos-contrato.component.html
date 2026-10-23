@@ -101,6 +101,7 @@
             class="boton"
             mat-fab
             extended
+            [disabled]="emitiendoLiquidacion"
             (click)="generarLiquidacionInquilino(entidad)"
           >
             <mat-icon>receipt_long</mat-icon>
@@ -110,6 +111,7 @@
             class="boton"
             mat-fab
             extended
+            [disabled]="emitiendoLiquidacion"
             (click)="generarLiquidacionInquilinoTransferencia(entidad)"
           >
             <mat-icon>receipt_long</mat-icon>
@@ -210,6 +212,7 @@
             class="boton"
             mat-fab
             extended
+            [disabled]="emitiendoLiquidacion"
             (click)="generarLiquidacionPropietario(entidad)"
           >
             <mat-icon>receipt_long</mat-icon>

@@ -21,6 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 import { numeroALetras } from '../../../../shared/utilitys';
 import {
   EstadoServicioLiquidacion,
@@ -59,6 +60,7 @@ export class AgregarGastosContratoComponent implements OnInit {
   $gastosInquilino = signal<GastoLiquidacion[]>([]);
   $gastosPropietario = signal<GastoLiquidacion[]>([]);
   guardandoEGLAI = false;
+  emitiendoLiquidacion = false;
   readonly serviciosEGLAI: { key: keyof SeguimientoEGLAI; label: string }[] = [
     { key: 'expensas', label: 'Expensas' },
     { key: 'gas', label: 'Gas' },
@@ -239,11 +241,15 @@ export class AgregarGastosContratoComponent implements OnInit {
     this._router.navigate(['/contratos/vista']);
   }
 
-  generarLiquidacionPropietario(liquidacion: Liquidacion): void {
-    this._liquidacion.generarLiquidacionPropietario(liquidacion);
+  async generarLiquidacionPropietario(liquidacion: Liquidacion): Promise<void> {
+    await this.emitirLiquidacion(liquidacion, () =>
+      this._liquidacion.generarLiquidacionPropietario(liquidacion),
+    );
   }
-  generarLiquidacionInquilino(liquidacion: Liquidacion): void {
-    this._liquidacion.generarLiquidacionInquilinoDocx(liquidacion);
+  async generarLiquidacionInquilino(liquidacion: Liquidacion): Promise<void> {
+    await this.emitirLiquidacion(liquidacion, () =>
+      this._liquidacion.generarLiquidacionInquilinoDocx(liquidacion),
+    );
   }
   generarMinutaPropietario(liquidacion: Liquidacion): void {
     this._liquidacion.generarMinutaPropietario(liquidacion);
@@ -251,7 +257,48 @@ export class AgregarGastosContratoComponent implements OnInit {
   generarReciboInquilino(liquidacion: Liquidacion): void {
     this._liquidacion.generarReciboInquilino(liquidacion);
   }
-  generarLiquidacionInquilinoTransferencia(liquidacion: Liquidacion): void {
-    this._liquidacion.generarLiquidacionInquilinoTransferencia(liquidacion);
+  async generarLiquidacionInquilinoTransferencia(
+    liquidacion: Liquidacion,
+  ): Promise<void> {
+    await this.emitirLiquidacion(liquidacion, () =>
+      this._liquidacion.generarLiquidacionInquilinoTransferencia(liquidacion),
+    );
+  }
+
+  private async emitirLiquidacion(
+    liquidacion: Liquidacion,
+    generarDocumento: () => Promise<void>,
+  ): Promise<void> {
+    if (this.emitiendoLiquidacion) return;
+    this.emitiendoLiquidacion = true;
+
+    try {
+      try {
+        await generarDocumento();
+      } catch (error) {
+        this._snack.mensajeSnackBar(
+          'No se pudo generar la liquidación',
+          'Cerrar',
+        );
+        console.error('No se pudo generar la liquidación', error);
+        return;
+      }
+
+      try {
+        await lastValueFrom(
+          this._liquidacion.marcarComoEmitida(liquidacion),
+        );
+        liquidacion.estado = 'emitida';
+        this._snack.mensajeSnackBar('Liquidación emitida', 'Cerrar');
+      } catch (error) {
+        this._snack.mensajeSnackBar(
+          'Documento generado, pero no se pudo guardar el estado',
+          'Cerrar',
+        );
+        console.error('No se pudo guardar el estado de la liquidación', error);
+      }
+    } finally {
+      this.emitiendoLiquidacion = false;
+    }
   }
 }

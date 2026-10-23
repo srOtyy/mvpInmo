@@ -57,29 +57,54 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     });
   }
 
-  restablecerServiciosEGLAI(): Observable<number> {
+  restablecerServiciosEGLAI(): Observable<{
+    serviciosRestablecidos: number;
+    liquidacionesRestablecidas: number;
+  }> {
     return this.cargar().pipe(
       switchMap((liquidaciones) => {
-        let cantidadRestablecida = 0;
+        let serviciosRestablecidos = 0;
+        let liquidacionesRestablecidas = 0;
         const actualizaciones: Liquidacion[] = [];
 
         for (const liquidacion of liquidaciones) {
-          if (!liquidacion.EGLAI) continue;
-
-          const serviciosCargados = Object.entries(liquidacion.EGLAI).filter(
-            ([, estado]) => estado === 'cargado',
-          );
-          if (serviciosCargados.length === 0) continue;
-
-          const EGLAI = { ...liquidacion.EGLAI };
-          for (const [servicio] of serviciosCargados) {
-            EGLAI[servicio as keyof SeguimientoEGLAI] = 'pendiente';
+          const EGLAI = liquidacion.EGLAI
+            ? { ...liquidacion.EGLAI }
+            : undefined;
+          const serviciosCargados = EGLAI
+            ? Object.entries(EGLAI).filter(
+                ([, estado]) => estado === 'cargado',
+              )
+            : [];
+          const estadoActualizado =
+            liquidacion.estado === 'emitida' ? 'borrador' : liquidacion.estado;
+          if (
+            serviciosCargados.length === 0 &&
+            estadoActualizado === liquidacion.estado
+          ) {
+            continue;
           }
-          cantidadRestablecida += serviciosCargados.length;
-          actualizaciones.push({ ...liquidacion, EGLAI });
+
+          for (const [servicio] of serviciosCargados) {
+            if (EGLAI) {
+              EGLAI[servicio as keyof SeguimientoEGLAI] = 'pendiente';
+            }
+          }
+          serviciosRestablecidos += serviciosCargados.length;
+          if (liquidacion.estado === 'emitida') liquidacionesRestablecidas++;
+          actualizaciones.push({
+            ...liquidacion,
+            ...(EGLAI ? { EGLAI } : {}),
+            estado: estadoActualizado,
+          });
         }
 
-        if (actualizaciones.length === 0) return of(0);
+        if (actualizaciones.length === 0) {
+          return of({
+            serviciosRestablecidos: 0,
+            liquidacionesRestablecidas: 0,
+          });
+        }
 
         return forkJoin(
           actualizaciones.map((liquidacion) =>
@@ -99,7 +124,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
                   actualizacionesPorId.get(liquidacion.id) ?? liquidacion,
               ),
             );
-            return cantidadRestablecida;
+            return {
+              serviciosRestablecidos,
+              liquidacionesRestablecidas,
+            };
           }),
         );
       }),
@@ -127,6 +155,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       itemsPropietario: [],
       montoAlquiler: contrato.rentaMensual,
       total: contrato.rentaMensual,
+      estado: 'borrador',
       honorarios: contrato.porcentajeHonorarios,
       inicioDelPeriodo: contrato.inicioDelPeriodo
         ? contrato.inicioDelPeriodo
@@ -199,7 +228,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       });
       saveAs(blob, `Liquidacion - ${liquidacion.inquilinoNombre}.docx`);
     } catch (error) {
-      console.error('Error 1 al generar la liquidación;', error);
+      throw error;
     }
   }
   async generarLiquidacionPropietario(liquidacion: Liquidacion): Promise<void> {
@@ -280,7 +309,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       });
       saveAs(blob, `Liquidacion - ${liquidacion.propietarioNombre}.docx`);
     } catch (error) {
-      console.error('Error 1 al generar la liquidación;', error);
+      throw error;
     }
   }
   async generarMinutaPropietario(liquidacion: Liquidacion): Promise<void> {
@@ -471,11 +500,8 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       });
       saveAs(blob, `Liquidacion - ${liquidacion.inquilinoNombre}.docx`);
     } catch (error) {
-      console.error('Error 1 al generar la liquidación;', error);
+      throw error;
     }
-  }
-  buscarLiquidacionPorId(id: number): Liquidacion | undefined {
-    return this.$lista().find((l) => l.id === id);
   }
 
   //buscar liquidacion x id de contrato
@@ -491,6 +517,17 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       return 0;
     }
   }
+  buscarLiquidacionPorId(id: number): Liquidacion | undefined {
+    return this.$lista().find((l) => l.id === id);
+  }
+
+  marcarComoEmitida(liquidacion: Liquidacion): Observable<Liquidacion[]> {
+    return this.actualizar(liquidacion.id, {
+      ...liquidacion,
+      estado: 'emitida',
+    });
+  }
+
   eliminarLiquidacionPorIdDeContrato(idDelContrato: number) {
     const idLiquidacion = this.buscarIdLiquidacionPorContratoId(idDelContrato);
     if (idLiquidacion !== 0) {

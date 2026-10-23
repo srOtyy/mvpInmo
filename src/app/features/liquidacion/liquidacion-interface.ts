@@ -11,7 +11,7 @@ export interface Liquidacion {
   itemsPropietario: LiquidacionItem[];
   montoAlquiler: number;
   total: number;
-  estado?: 'borrador' | 'emitida' | 'enviada'; //se puede borrar. No se usa
+  estado?: 'borrador' | 'emitida';
   honorarios: number;
   inicioDelPeriodo: number;
   EGLAI: SeguimientoEGLAI;

@@ -189,9 +189,14 @@
                       {{ chip.servicio }}
                     </span>
                   } @empty {
-                    <span class="chip-estado"> Sin servicios pendientes </span>
+                    <span class="chip-estado">
+                      servicios no cargados / sin servicios a liquidar
+                    </span>
                   }
                 </div>
+                @if (contrato.liquidacion?.estado === "emitida") {
+                  <span class="chip-fecha"> Liquidación emitida </span>
+                }
               }
             </div>
           </div>
