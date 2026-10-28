@@ -1,7 +1,7 @@
 <div class="contenedor-principal">
   <div class="cabecera">
     <div class="filtros">
-      <mat-form-field class="form-buscar" appearance="fill">
+      <mat-form-field class="form-buscar" appearance="outline">
         <mat-label>Buscar</mat-label>
         <mat-icon matSuffix class="icono-buscar">search</mat-icon>
         <input
@@ -13,12 +13,17 @@
           placeholder="Propietario o título"
         />
       </mat-form-field>
-      <button mat-icon-button matSuffix (click)="cambiarEstadoSignalFecha()">
+      <!-- Filtrar por porximo vencimiento / filtrar por nombre (titulo) / Por finalizar -->
+      <button mat-icon-button>
         <mat-icon
           matSuffix
-          [class]="{ 'icono-fecha': !$filtroFecha(), activo: $filtroFecha() }"
-          matTooltip="Proximo vencimiento"
-          >{{ calendarioIcono }}</mat-icon
+          [class]="{
+            'icono-fecha': !$filtroAdmTotal(),
+            activo: $filtroAdmTotal(),
+          }"
+          (click)="cambiarEstadoSignalAdmTotal()"
+          matTooltip="Contratos con adm. propia"
+          >{{ admTotalIcono }}</mat-icon
         >
       </button>
       <button
@@ -29,8 +34,8 @@
         <mat-icon
           matSuffix
           [class]="{
-            'icono-ordenAlfabetico': !$filtroNombrePropietario(),
-            activo: $filtroNombrePropietario(),
+            'icono-ordenAlfabetico': !$filtroTituloContrato(),
+            activo: $filtroTituloContrato(),
           }"
           matTooltip="Ordenar alfabeticamente"
           >sort_by_alpha</mat-icon
@@ -47,12 +52,12 @@
             'icono-porVencer': !$filtroPorVencer(),
             activo: $filtroPorVencer(),
           }"
-          matTooltip="Filtrar por contratos por vencer"
+          matTooltip="Contratos por finalizar"
           >schedule</mat-icon
         >
       </button>
-      <!-- [(value)]="$filtroBusqueda" -->
-      <mat-form-field class="form-select" appearance="fill">
+      <!-- Filtrar por estado -->
+      <mat-form-field class="form-select" appearance="outline">
         <mat-label>Estado</mat-label>
         <mat-select [(value)]="$filtroBusqueda">
           @for (estado of estadosRenovacionYEstadosGenerales; track estado) {
@@ -67,22 +72,46 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <button
-      mat-icon-button
-      class="btn-nuevo"
-      aria-label="Nuevo contrato"
-      (click)="irACrearContrato()"
-      matTooltip="Agregar contrato"
-    >
-      <mat-icon class="icono">add</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      class="btn-nuevo"
-      (click)="evaluarVencimientosContratos()"
-    >
-      <mat-icon>person</mat-icon>
-    </button>
+    <!-- sync / honorarios / EGLAI -->
+    <div class="acciones">
+      <button
+        [disabled]="false"
+        mat-icon-button
+        class="btn-nuevo"
+        (click)="evaluarVencimientosContratos()"
+        matTooltip="Sincronizar contratos"
+      >
+        <mat-icon class="icono">sync</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="btn-nuevo"
+        (click)="mostrarTotalHonorarios()"
+        matTooltip="Ver total honorarios por consola"
+      >
+        <mat-icon class="icono">paid</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="btn-nuevo"
+        (click)="cambiarModoVista()"
+        matTooltip="EGLAI: liquidaciones"
+      >
+        <mat-icon class="icono">{{
+          modoVista() === "normal" ? "view_list" : "rule"
+        }}</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="btn-nuevo"
+        aria-label="Restablecer servicios EGLAI"
+        [disabled]="restableciendoEGLAI()"
+        (click)="restablecerServiciosEGLAI()"
+        matTooltip="Reset EGLAI"
+      >
+        <mat-icon class="icono">restart_alt</mat-icon>
+      </button>
+    </div>
   </div>
 
   <div class="contenedor-contratos">
@@ -106,41 +135,68 @@
                 {{ convertirChipTipoDeContrato(contrato.tipoDeContrato) }}
               </span>
             </div>
+
             <div class="chip-datos chip-contenido-lado-der">
-              <div class="span-estados">
-                <span
-                  class="chip-estado chip-requiereAccion-{{
-                    contrato.requiereAccion
-                  }}"
-                  matTooltip="requiere accion"
-                >
-                  requiere accion
-                </span>
-                <span
-                  class="chip-estado chip-{{ contrato.estadoRenovacion }}"
-                  matTooltip="próxima renovacion"
-                >
-                  {{ convertirChipEstadoRenovacion(contrato.estadoRenovacion) }}
-                </span>
-                <span
-                  class="chip-estado chip-{{ getEstadoColor(contrato.estado) }}"
-                  matTooltip="estado del contrato"
-                >
-                  {{ convertirChipEstadoContrato(contrato.estado) }}
-                </span>
-              </div>
-              @if (contrato.porFinalizar) {
-                <span
-                  class="chip-estado chip-porFinalizar"
-                  matTooltip="Contrato por finalizar"
-                >
-                  {{ contrato.diasFinalizacion }} día(s) para que finalice
-                </span>
+              @if (modoVista() === "normal") {
+                <div class="span-estados">
+                  @if (contrato.administracionTotal) {
+                    <span class="chip-estado estado-AT"> Adm. Prop.</span>
+                  }
+                  <span
+                    class="chip-estado chip-{{ contrato.estadoRenovacion }}"
+                    matTooltip="próxima renovacion"
+                  >
+                    {{
+                      convertirChipEstadoRenovacion(contrato.estadoRenovacion)
+                    }}
+                  </span>
+                  <span
+                    class="chip-estado chip-{{
+                      getEstadoColor(contrato.estado)
+                    }}"
+                    matTooltip="estado del contrato"
+                  >
+                    {{ convertirChipEstadoContrato(contrato.estado) }}
+                  </span>
+                </div>
+                @if (contrato.porFinalizar) {
+                  <span
+                    class="chip-estado chip-porFinalizar"
+                    matTooltip="Contrato por finalizar"
+                  >
+                    {{ contrato.diasFinalizacion }} día(s) para que finalice
+                  </span>
+                } @else {
+                  <span class="chip-fecha">
+                    proximo aumento -
+                    {{ formatearFecha(contrato.proximoAumento) }}
+                  </span>
+                }
               } @else {
-                <span class="chip-fecha">
-                  proximo aumento -
-                  {{ formatearFecha(contrato.proximoAumento) }}
-                </span>
+                <div class="span-estados">
+                  @for (
+                    chip of obtenerChipsEGLAI(contrato.liquidacion?.EGLAI);
+                    track chip.servicio
+                  ) {
+                    <span
+                      class="chip-estado chip-eglai-{{ chip.estado }}"
+                      [matTooltip]="
+                        chip.estado === 'pendiente'
+                          ? 'Servicio pendiente de cargar'
+                          : 'Servicio cargado'
+                      "
+                    >
+                      {{ chip.servicio }}
+                    </span>
+                  } @empty {
+                    <span class="chip-estado">
+                      servicios no cargados / sin servicios a liquidar
+                    </span>
+                  }
+                </div>
+                @if (contrato.liquidacion?.estado === "emitida") {
+                  <span class="chip-fecha"> Liquidación emitida </span>
+                }
               }
             </div>
           </div>

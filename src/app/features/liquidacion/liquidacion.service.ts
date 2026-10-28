@@ -6,10 +6,11 @@ import { Liquidacion, LiquidacionItem } from './liquidacion-interface';
 import { IContrato } from '../contrato/contrato.interface';
 import { randomId } from '../../shared/utilitys';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom, Observable, of } from 'rxjs';
+import { forkJoin, lastValueFrom, map, Observable, of, switchMap } from 'rxjs';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { InmueblesRxjsService } from '../inmueble/inmuebles-rxjs.service';
 import { numeroALetras } from '../../shared/utilitys';
+import { SeguimientoEGLAI } from '../contrato/eglai.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,10 +23,11 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
   });
   $gastos: LiquidacionItem[] = [];
   $liquidacionSeleccionada = signal<Liquidacion>({} as Liquidacion);
-  liquidacionInquilino = 'liquidacion-inquilino2.docx';
-  liquidacionPropietario = 'liquidacion-propietario2.docx';
-  minutaPropietario = 'propietario-minuta-template.docx';
-  recibiInquilino = 'inquilino-recibi-template.docx';
+  liquidacionInquilino = 'liquidacion-inquilino-base.docx';
+  liquidacionInquilinoTransferencia = 'liquidacion-inquilino-transf.docx';
+  liquidacionPropietario = 'liquidacion-propietario-base.docx';
+  minutaPropietario = 'propietario-minuta-base.docx';
+  recibiInquilino = 'inquilino-recibi-base.docx';
   nombresMeses = [
     'enero',
     'febrero',
@@ -55,6 +57,81 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     });
   }
 
+  restablecerServiciosEGLAI(): Observable<{
+    serviciosRestablecidos: number;
+    liquidacionesRestablecidas: number;
+  }> {
+    return this.cargar().pipe(
+      switchMap((liquidaciones) => {
+        let serviciosRestablecidos = 0;
+        let liquidacionesRestablecidas = 0;
+        const actualizaciones: Liquidacion[] = [];
+
+        for (const liquidacion of liquidaciones) {
+          const EGLAI = liquidacion.EGLAI
+            ? { ...liquidacion.EGLAI }
+            : undefined;
+          const serviciosCargados = EGLAI
+            ? Object.entries(EGLAI).filter(([, estado]) => estado === 'cargado')
+            : [];
+          const estadoActualizado =
+            liquidacion.estado === 'emitida' ? 'borrador' : liquidacion.estado;
+          if (
+            serviciosCargados.length === 0 &&
+            estadoActualizado === liquidacion.estado
+          ) {
+            continue;
+          }
+
+          for (const [servicio] of serviciosCargados) {
+            if (EGLAI) {
+              EGLAI[servicio as keyof SeguimientoEGLAI] = 'pendiente';
+            }
+          }
+          serviciosRestablecidos += serviciosCargados.length;
+          if (liquidacion.estado === 'emitida') liquidacionesRestablecidas++;
+          actualizaciones.push({
+            ...liquidacion,
+            ...(EGLAI ? { EGLAI } : {}),
+            estado: estadoActualizado,
+          });
+        }
+
+        if (actualizaciones.length === 0) {
+          return of({
+            serviciosRestablecidos: 0,
+            liquidacionesRestablecidas: 0,
+          });
+        }
+
+        return forkJoin(
+          actualizaciones.map((liquidacion) =>
+            this.actualizarSinRecargar(liquidacion.id, liquidacion),
+          ),
+        ).pipe(
+          map(() => {
+            const actualizacionesPorId = new Map(
+              actualizaciones.map((liquidacion) => [
+                liquidacion.id,
+                liquidacion,
+              ]),
+            );
+            this.$lista.update((lista) =>
+              lista.map(
+                (liquidacion) =>
+                  actualizacionesPorId.get(liquidacion.id) ?? liquidacion,
+              ),
+            );
+            return {
+              serviciosRestablecidos,
+              liquidacionesRestablecidas,
+            };
+          }),
+        );
+      }),
+    );
+  }
+
   //crear la liquidacion
   crearLiquidacion(
     contrato: IContrato,
@@ -76,10 +153,19 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       itemsPropietario: [],
       montoAlquiler: contrato.rentaMensual,
       total: contrato.rentaMensual,
+      estado: 'borrador',
       honorarios: contrato.porcentajeHonorarios,
       inicioDelPeriodo: contrato.inicioDelPeriodo
         ? contrato.inicioDelPeriodo
         : 1,
+      EGLAI: {
+        expensas: 'no-requerido',
+        gas: 'no-requerido',
+        luz: 'no-requerido',
+        agua: 'no-requerido',
+        internet: 'no-requerido',
+        seguro: 'no-requerido',
+      },
     };
     return liquidacion;
   }
@@ -138,13 +224,15 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
-      saveAs(blob, `Liquidacion - ${liquidacion.inquilinoNombre}.docx`);
+      saveAs(
+        blob,
+        `${liquidacion.inquilinoNombre} - liquidacion ${this.periodo}.docx`,
+      );
     } catch (error) {
-      console.error('Error 1 al generar la liquidación;', error);
+      throw error;
     }
   }
   async generarLiquidacionPropietario(liquidacion: Liquidacion): Promise<void> {
-    const nombreTemplate = 'liquidacion-propietario-base.docx';
     const nombrePropietario = liquidacion.propietarioNombre;
     const inmueble = this._inmueblesService.obtenerInmueblePorId(
       liquidacion.inmuebleId,
@@ -177,14 +265,14 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     const subtotalDcto = totalItemsPropietario + totalHonorarios;
     const subTotal =
       +liquidacion.montoAlquiler +
-      liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0) +
+      // liquidacion.itemsPropietario.reduce((sum, item) => sum + item.monto, 0) +
       liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0);
 
     const total = subTotal - subtotalDcto;
 
     try {
       const response = await lastValueFrom(
-        this.http.get(`/templates/${nombreTemplate}`, {
+        this.http.get(`/templates/${this.liquidacionPropietario}`, {
           responseType: 'arraybuffer',
         }),
       );
@@ -220,9 +308,12 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
-      saveAs(blob, `Liquidacion - ${liquidacion.propietarioNombre}.docx`);
+      saveAs(
+        blob,
+        `${liquidacion.propietarioNombre} - liquidacion ${this.periodo}.docx`,
+      );
     } catch (error) {
-      console.error('Error 1 al generar la liquidación;', error);
+      throw error;
     }
   }
   async generarMinutaPropietario(liquidacion: Liquidacion): Promise<void> {
@@ -277,7 +368,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
-      saveAs(blob, `minuta - ${liquidacion.propietarioNombre}.docx`);
+      saveAs(
+        blob,
+        `${liquidacion.propietarioNombre} - minuta ${this.periodo}.docx`,
+      );
     } catch (error) {
       console.error('Error 1 al generar la liquidación;', error);
     }
@@ -350,14 +444,77 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
-      saveAs(blob, `Recibo - ${liquidacion.inquilinoNombre}.docx`);
+      saveAs(
+        blob,
+        `${liquidacion.inquilinoNombre} - recibo ${this.periodo}.docx`,
+      );
     } catch (error) {
       console.error('Error 1 al generar la liquidación;', error);
     }
   }
+  async generarLiquidacionInquilinoTransferencia(
+    liquidacion: Liquidacion,
+  ): Promise<void> {
+    const direccion = this._inmueblesService.obtenerDireccion(
+      liquidacion.inmuebleId,
+    );
+    const piso = this._inmueblesService.devolverCaracteristica(
+      liquidacion.inmuebleId,
+      'piso',
+    );
+    const letra = this._inmueblesService.devolverCaracteristica(
+      liquidacion.inmuebleId,
+      'letra',
+    );
+    const itemsInquilino = liquidacion.itemsInquilino.map((item) => ({
+      ...item,
+      monto: this.formatearMonto(item.monto),
+    }));
+    const total =
+      liquidacion.montoAlquiler +
+      liquidacion.itemsInquilino.reduce((sum, item) => sum + item.monto, 0);
+    const totalHonorarios =
+      (liquidacion.honorarios * liquidacion.montoAlquiler) / 100;
+    const totalPropietario = total - totalHonorarios;
+    try {
+      const response = await lastValueFrom(
+        this.http.get(`/templates/${this.liquidacionInquilinoTransferencia}`, {
+          responseType: 'arraybuffer',
+        }),
+      );
+      const content = new Uint8Array(response as ArrayBuffer);
+      const zip = new PizZip(content);
+      const doc = new Docxtemplater(zip, {
+        paragraphLoop: true,
+        linebreaks: true,
+      });
+      doc.render({
+        contrato: liquidacion.contratoId,
+        periodo: this.periodo,
+        direccion: direccion,
+        piso: piso,
+        letra: letra,
+        montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
+        propietario: liquidacion.propietarioNombre,
+        inquilino: liquidacion.inquilinoNombre,
+        itemsInquilino,
+        total: this.formatearMonto(total),
+        totalHonorarios: this.formatearMonto(totalHonorarios),
+        totalPropietario: this.formatearMonto(totalPropietario),
+      });
 
-  buscarLiquidacionPorId(id: number): Liquidacion | undefined {
-    return this.$lista().find((l) => l.id === id);
+      const blob = doc.getZip().generate({
+        type: 'blob',
+        mimeType:
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      });
+      saveAs(
+        blob,
+        `${liquidacion.inquilinoNombre} - liquidacion ${this.periodo}.docx`,
+      );
+    } catch (error) {
+      throw error;
+    }
   }
 
   //buscar liquidacion x id de contrato
@@ -373,6 +530,17 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       return 0;
     }
   }
+  buscarLiquidacionPorId(id: number): Liquidacion | undefined {
+    return this.$lista().find((l) => l.id === id);
+  }
+
+  marcarComoEmitida(liquidacion: Liquidacion): Observable<Liquidacion[]> {
+    return this.actualizar(liquidacion.id, {
+      ...liquidacion,
+      estado: 'emitida',
+    });
+  }
+
   eliminarLiquidacionPorIdDeContrato(idDelContrato: number) {
     const idLiquidacion = this.buscarIdLiquidacionPorContratoId(idDelContrato);
     if (idLiquidacion !== 0) {

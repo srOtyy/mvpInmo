@@ -1,3 +1,5 @@
+import { Liquidacion } from '../liquidacion/liquidacion-interface';
+
 export type ContractStatus =
   | 'preliminar' // aún no válido
   | 'activo' // en curso
@@ -20,7 +22,12 @@ export type InformacionAdicional = {
   valor: string;
 };
 export type tipoIndice = 'IPC' | 'ICL';
-export type tipoDeContrato = 'comercial' | 'estudiante' | 'verano' | 'invierno';
+export type tipoDeContrato =
+  | 'comercial'
+  | 'temporadaInvierno'
+  | 'verano'
+  | 'viviendaPermanente'
+  | 'comodato';
 
 export interface IContrato {
   id: number;
@@ -34,19 +41,21 @@ export interface IContrato {
   rentaMensual: number;
   periodoAumento: number;
   registroActividad?: string[];
-  informacionAdicional?: InformacionAdicional[];
-  titulo?: string;
+  informacionAdicional: InformacionAdicional[];
+  titulo: string;
   proximoAumento: Date;
   porcentajeHonorarios: number;
   tipoPago: TipoPago;
   tipoIndice: tipoIndice;
-  inicioDelPeriodo?: number;
+  inicioDelPeriodo: number;
   administracionTotal: boolean;
   diasFinalizacion: number;
   porFinalizar: boolean;
   requiereAccion: boolean;
   tipoDeContrato: tipoDeContrato;
+  valorInicialDelContrato: number;
 }
 export interface IContratoVista extends IContrato {
   propietarioNombre: string;
+  liquidacion: Liquidacion | undefined;
 }

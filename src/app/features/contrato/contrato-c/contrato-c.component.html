@@ -8,7 +8,7 @@
       (click)="volverALaListaDeContratos()"
       matTooltip="Volver"
     >
-      <mat-icon class="icono">arrow_back</mat-icon>
+      <mat-icon class="icono">close</mat-icon>
     </button>
     <mat-divider></mat-divider>
   </div>
@@ -27,7 +27,7 @@
         <div class="info-row">
           <span class="label">Alquiler:</span>
           <span class="valor">{{
-            contrato.rentaMensual | currency: "$" : "symbol" : "1.0-0"
+            contrato.rentaMensual | currency: "$" : "symbol"
           }}</span>
         </div>
         <div class="info-row">
@@ -73,21 +73,21 @@
           <span class="label">Información detallada:</span>
           <span class="valor">
             <button mat-button (click)="cambiarValorSidebarInfo(contrato.id)">
-              Ver info
+              Más info.
             </button>
           </span>
         </div>
       </div>
-
+      <!-- botones d accion -->
       <div class="card-actions">
-        <button
+        <!-- <button
           mat-icon-button
           class="btn-proximoAumento"
           (click)="actualizarProximoAumento(contrato)"
           matTooltip="Actualizar el proximo aumento"
         >
           <mat-icon>refresh</mat-icon>
-        </button>
+        </button> -->
         <button
           mat-icon-button
           class="btn-infoAdicional"
@@ -100,7 +100,7 @@
           mat-icon-button
           class="btn-gastos"
           (click)="agregarGastosContrato(contrato)"
-          matTooltip="Agregar gastos"
+          matTooltip="Gastos, liquidaciones y EGLAI"
         >
           <mat-icon>receipt_long</mat-icon>
         </button>

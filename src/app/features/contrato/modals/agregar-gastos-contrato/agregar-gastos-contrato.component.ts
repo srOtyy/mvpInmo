@@ -19,8 +19,14 @@ import { SnackbarService } from '../../../../core/snackbar.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 import { numeroALetras } from '../../../../shared/utilitys';
+import {
+  EstadoServicioLiquidacion,
+  SeguimientoEGLAI,
+} from '../../eglai.interface';
 export enum TipoGasto {
   Inquilino = 1,
   Propietario = 2,
@@ -44,14 +50,25 @@ interface GastoLiquidacion {
     MatTooltipModule,
     MatDividerModule,
     MatStepperModule,
+    MatSlideToggleModule,
   ],
   templateUrl: './agregar-gastos-contrato.component.html',
   styleUrl: './agregar-gastos-contrato.component.scss',
 })
 export class AgregarGastosContratoComponent implements OnInit {
-  entidad!: Liquidacion;
+  @Input() entidad!: Liquidacion;
   $gastosInquilino = signal<GastoLiquidacion[]>([]);
   $gastosPropietario = signal<GastoLiquidacion[]>([]);
+  guardandoEGLAI = false;
+  emitiendoLiquidacion = false;
+  readonly serviciosEGLAI: { key: keyof SeguimientoEGLAI; label: string }[] = [
+    { key: 'expensas', label: 'Expensas' },
+    { key: 'gas', label: 'Gas' },
+    { key: 'luz', label: 'Luz' },
+    { key: 'agua', label: 'Agua' },
+    { key: 'internet', label: 'Internet' },
+    { key: 'seguro', label: 'Seguro' },
+  ];
   formularioInquilino = new FormGroup({
     tipo: new FormControl('', Validators.required),
     monto: new FormControl('', Validators.required),
@@ -68,9 +85,59 @@ export class AgregarGastosContratoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.entidad = this._liquidacion.$liquidacionSeleccionada();
+    this.entidad.EGLAI ??= {
+      expensas: 'no-requerido',
+      gas: 'no-requerido',
+      luz: 'no-requerido',
+      agua: 'no-requerido',
+      internet: 'no-requerido',
+      seguro: 'no-requerido',
+    };
     this.buscarGastosExistentes(TipoGasto.Inquilino);
     this.buscarGastosExistentes(TipoGasto.Propietario);
+  }
+
+  cambiarEstadoEGLAI(
+    servicio: keyof SeguimientoEGLAI,
+    pendiente: boolean,
+  ): void {
+    this.actualizarEstadoEGLAI(
+      servicio,
+      pendiente ? 'pendiente' : 'no-requerido',
+    );
+  }
+
+  marcarServicioComoCargado(servicio: keyof SeguimientoEGLAI): void {
+    this.actualizarEstadoEGLAI(servicio, 'cargado');
+  }
+
+  private actualizarEstadoEGLAI(
+    servicio: keyof SeguimientoEGLAI,
+    nuevoEstado: EstadoServicioLiquidacion,
+  ): void {
+    if (this.guardandoEGLAI) return;
+    if (this.entidad.EGLAI[servicio] === nuevoEstado) return;
+
+    const estadoAnterior = this.entidad.EGLAI[servicio];
+    this.entidad.EGLAI[servicio] = nuevoEstado;
+    this.guardandoEGLAI = true;
+
+    this._liquidacion.actualizar(this.entidad.id, this.entidad).subscribe({
+      next: () => (this.guardandoEGLAI = false),
+      error: (error) => {
+        this.entidad.EGLAI[servicio] = estadoAnterior;
+        this.guardandoEGLAI = false;
+        this._snack.mensajeSnackBar('No se pudo actualizar EGLAI', 'Cerrar');
+        console.error('No se pudo actualizar el seguimiento EGLAI', error);
+      },
+    });
+  }
+
+  etiquetaEstadoEGLAI(servicio: keyof SeguimientoEGLAI): string {
+    const estado = this.entidad.EGLAI[servicio];
+    if (estado === 'pendiente') return 'Pendiente';
+    if (estado === 'cargado') return 'Cargado';
+    return 'No requerido';
   }
 
   private buscarGastosExistentes(tipo: TipoGasto): void {
@@ -174,16 +241,64 @@ export class AgregarGastosContratoComponent implements OnInit {
     this._router.navigate(['/contratos/vista']);
   }
 
-  generarLiquidacionPropietario(liquidacion: Liquidacion): void {
-    this._liquidacion.generarLiquidacionPropietario(liquidacion);
+  async generarLiquidacionPropietario(liquidacion: Liquidacion): Promise<void> {
+    await this.emitirLiquidacion(liquidacion, () =>
+      this._liquidacion.generarLiquidacionPropietario(liquidacion),
+    );
   }
-  generarLiquidacionInquilino(liquidacion: Liquidacion): void {
-    this._liquidacion.generarLiquidacionInquilinoDocx(liquidacion);
+  async generarLiquidacionInquilino(liquidacion: Liquidacion): Promise<void> {
+    await this.emitirLiquidacion(liquidacion, () =>
+      this._liquidacion.generarLiquidacionInquilinoDocx(liquidacion),
+    );
   }
   generarMinutaPropietario(liquidacion: Liquidacion): void {
     this._liquidacion.generarMinutaPropietario(liquidacion);
   }
   generarReciboInquilino(liquidacion: Liquidacion): void {
     this._liquidacion.generarReciboInquilino(liquidacion);
+  }
+  async generarLiquidacionInquilinoTransferencia(
+    liquidacion: Liquidacion,
+  ): Promise<void> {
+    await this.emitirLiquidacion(liquidacion, () =>
+      this._liquidacion.generarLiquidacionInquilinoTransferencia(liquidacion),
+    );
+  }
+
+  private async emitirLiquidacion(
+    liquidacion: Liquidacion,
+    generarDocumento: () => Promise<void>,
+  ): Promise<void> {
+    if (this.emitiendoLiquidacion) return;
+    this.emitiendoLiquidacion = true;
+
+    try {
+      try {
+        await generarDocumento();
+      } catch (error) {
+        this._snack.mensajeSnackBar(
+          'No se pudo generar la liquidación',
+          'Cerrar',
+        );
+        console.error('No se pudo generar la liquidación', error);
+        return;
+      }
+
+      try {
+        await lastValueFrom(
+          this._liquidacion.marcarComoEmitida(liquidacion),
+        );
+        liquidacion.estado = 'emitida';
+        this._snack.mensajeSnackBar('Liquidación emitida', 'Cerrar');
+      } catch (error) {
+        this._snack.mensajeSnackBar(
+          'Documento generado, pero no se pudo guardar el estado',
+          'Cerrar',
+        );
+        console.error('No se pudo guardar el estado de la liquidación', error);
+      }
+    } finally {
+      this.emitiendoLiquidacion = false;
+    }
   }
 }

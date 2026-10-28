@@ -3,6 +3,7 @@ import { toContratosVista } from './contrato.mapper';
 import { ContratoBbddService } from './contrato-bbdd.service';
 import { PropietarioRxjsService } from '../propietario/propietario-rxjs.service';
 import { ContractStatus, IContratoVista } from './contrato.interface';
+import { LiquidacionGeneratorService } from '../liquidacion/liquidacion.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,16 +11,28 @@ import { ContractStatus, IContratoVista } from './contrato.interface';
 export class ListaDeContratosService {
   private _contratosService = inject(ContratoBbddService);
   private _propietariosService = inject(PropietarioRxjsService);
+  private _liquidacionesService = inject(LiquidacionGeneratorService);
   $contratosOriginales = computed(() => {
     return toContratosVista(
       this._contratosService.$lista(),
       this._propietariosService.$lista(),
+      this._liquidacionesService.$lista(),
     );
   });
+  calcularTotalHonorarios(): number {
+    return this.$contratosOriginales().reduce((total, contrato) => {
+      if (contrato.estado !== 'activo' || contrato.porcentajeHonorarios == 0)
+        return total;
+      return (
+        total + (contrato.rentaMensual * contrato.porcentajeHonorarios) / 100
+      );
+    }, 0);
+  }
   $filtroBusqueda = signal({ tipo: 1, estado: 'todos' });
   $filtroFecha = signal(false);
+  $filtroAdmTotal = signal(false);
   $filtroPorVencer = signal(false);
-  $filtroNombrePropietario = signal(false);
+  $filtroTituloContrato = signal(false);
   $busquedaTexto = signal('');
   $contratosFiltrados = computed(() => {
     let lista = [...this.$contratosOriginales()];
@@ -27,7 +40,8 @@ export class ListaDeContratosService {
     lista = this.aplicarFiltroEstado(lista);
     lista = this.aplicarFiltroBusquedaTexto(lista);
     lista = this.aplicarFiltroPorVencer(lista);
-    lista = this.aplicarFiltrosNombrePropietario(lista);
+    lista = this.aplicarFiltrosTituloContrato(lista);
+    lista = this.aplicarFiltroAdmTotal(lista);
     return lista;
   });
   //cambiar el valor a los filtros
@@ -35,13 +49,21 @@ export class ListaDeContratosService {
     this.$filtroFecha.update((estado) => !estado);
   }
   cambiarEstadoSignalNombrePropietario() {
-    this.$filtroNombrePropietario.update((estado) => !estado);
+    this.$filtroTituloContrato.update((estado) => !estado);
   }
   cambiarEstadoSignalPorVencer() {
     this.$filtroPorVencer.update((estado) => !estado);
   }
-
+  cambiarEstadoSignalAdmTotal() {
+    this.$filtroAdmTotal.update((estado) => !estado);
+  }
   //aplicar filtros a lista de contratos
+  aplicarFiltroAdmTotal(lista: IContratoVista[]) {
+    const filtroActivo = this.$filtroAdmTotal();
+    if (!filtroActivo)
+      return lista.filter((c) => c.administracionTotal === false);
+    return lista.filter((c) => c.administracionTotal === true);
+  }
   aplicarFiltroOrdenPorFecha(lista: IContratoVista[]) {
     const fechaFiltroActivo = this.$filtroFecha();
     if (fechaFiltroActivo) {
@@ -67,6 +89,8 @@ export class ListaDeContratosService {
           return this.getEstadoLabel(contrato.estado);
         case 2:
           return contrato.estadoRenovacion ?? '';
+        case 3:
+          return contrato.tipoDeContrato ?? '';
         default:
           return '';
       }
@@ -77,12 +101,12 @@ export class ListaDeContratosService {
       ),
     );
   }
-  aplicarFiltrosNombrePropietario(lista: IContratoVista[]) {
-    const filtroNombrePropietario = this.$filtroNombrePropietario();
-    if (filtroNombrePropietario) {
+  aplicarFiltrosTituloContrato(lista: IContratoVista[]) {
+    const filtroTituloContrato = this.$filtroTituloContrato();
+    if (filtroTituloContrato) {
       lista.sort((a, b) => {
-        const nombreA = a.propietarioNombre;
-        const nombreB = b.propietarioNombre;
+        const nombreA = a.titulo;
+        const nombreB = b.titulo;
         return nombreA.localeCompare(nombreB);
       });
       return lista;
@@ -125,4 +149,5 @@ export class ListaDeContratosService {
       this._contratosService.$lista(),
     );
   }
+  //EGLAI
 }

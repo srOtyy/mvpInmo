@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { IContrato } from './contrato.interface';
+import { IContrato, IContratoVista } from './contrato.interface';
 import { HttpClient } from '@angular/common/http';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { InquilinoRxjsService } from '../inquilino/inquilino-rxjs.service';
@@ -12,10 +12,12 @@ import {
   BehaviorSubject,
   catchError,
   concatMap,
+  delay,
   EMPTY,
   firstValueFrom,
   from,
   Observable,
+  retry,
   toArray,
 } from 'rxjs';
 import { obtenerCaracteristica } from '../caracteristicas/entity-helpers';
@@ -84,6 +86,28 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   ) {
     super(http, 'http://localhost:3000/contratos');
     this.obtenerListas();
+  }
+
+  override crear(entidad: IContrato) {
+    return super.crear(this.quitarDatosDeVista(entidad));
+  }
+
+  override actualizar(id: string | number, entidad: IContrato) {
+    return super.actualizar(id, this.quitarDatosDeVista(entidad));
+  }
+
+  override actualizarSinRecargar(id: string | number, entidad: IContrato) {
+    return super.actualizarSinRecargar(id, this.quitarDatosDeVista(entidad));
+  }
+
+  private quitarDatosDeVista(contrato: IContrato): IContrato {
+    const contratoPersistible: IContrato &
+      Partial<Pick<IContratoVista, 'liquidacion' | 'propietarioNombre'>> = {
+      ...contrato,
+    };
+    delete contratoPersistible.liquidacion;
+    delete contratoPersistible.propietarioNombre;
+    return contratoPersistible;
   }
 
   cargarLista(): void {
@@ -161,7 +185,12 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   }
   // para el contrato BehaviurSubject
   seleccionarContrato(contrato: IContrato): void {
-    this.contratoSeleccionado.next(contrato);
+    const contratoPersistido = this.$lista().find(
+      (item) => item.id === contrato.id,
+    );
+    this.contratoSeleccionado.next(
+      this.quitarDatosDeVista(contratoPersistido ?? contrato),
+    );
   }
 
   filtrarContratosPorFecha(fecha: Date): IContrato[] {
@@ -188,28 +217,53 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   }
   sincronizarContratosActivos(contratos: IContrato[]) {
     const contratosActivos = contratos.filter((c) => c.estado === 'activo');
+    const contratosOmitidos = contratos.filter((c) => c.estado !== 'activo');
 
     if (contratosActivos.length === 0) {
-      console.log('No hay contratos activos para evaluar');
+      console.log(
+        `No hay contratos activos para evaluar (${contratos.length} contratos omitidos)`,
+      );
       return;
     }
 
     const contratosFallidos: number[] = [];
+    let contratosEvaluados = 0;
+
+    console.log(
+      `Evaluando ${contratosActivos.length} contratos activos de ${contratos.length}. ` +
+        `Omitidos por estado: ${contratosOmitidos.length}`,
+    );
 
     from(contratosActivos)
       .pipe(
         concatMap((contrato) => {
+          contratosEvaluados++;
           const contratoActualizado =
             this._cicloDeVida.evaluarContrato(contrato);
+
+          // Actualiza el signal local de forma inmutable, aunque falle el PUT.
+          this.$lista.update((lista) =>
+            lista.map((c) => (c.id === contrato.id ? contratoActualizado : c)),
+          );
+          if (
+            JSON.stringify(contratoActualizado) === JSON.stringify(contrato)
+          ) {
+            console.log('no hizo falta actualizar');
+            return EMPTY;
+          }
 
           return this.actualizarSinRecargar(
             contrato.id,
             contratoActualizado,
           ).pipe(
+            retry({
+              count: 2,
+              delay: 500,
+            }),
             catchError((error) => {
               contratosFallidos.push(contrato.id);
               console.error(
-                `Error actualizando contrato ${contrato.id}`,
+                `Error actualizando contrato ${contrato.titulo}`,
                 error,
               );
               return EMPTY;
@@ -220,8 +274,17 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
       )
       .subscribe({
         next: (resultados) => {
-          console.log(`Sincronizados correctamente: ${resultados.length}`);
-
+          console.log(
+            `Contratos evaluados: ${contratosEvaluados}. ` +
+              `Actualizados correctamente: ${resultados.length}. ` +
+              `Sin cambios: ${contratosEvaluados - resultados.length}`,
+          );
+          if (contratosOmitidos.length > 0) {
+            console.log(
+              'Contratos omitidos por no estar activos:',
+              contratosOmitidos.map(({ id, estado }) => ({ id, estado })),
+            );
+          }
           if (contratosFallidos.length > 0) {
             console.warn(
               'Contratos que no pudieron sincronizarse:',
@@ -235,26 +298,33 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
   //ActualizarMonto del alquiler
   actualizarMontoAlquiler(id: number, monto: number) {
     const contrato = this.$lista().find((c) => c.id === id);
-    if (contrato && monto) {
-      const montoReducido = parseFloat(monto.toFixed(2));
-      contrato.rentaMensual = montoReducido;
-      contrato.requiereAccion = false; // Se actualizó el monto, por lo que ya no requiere acción
-      contrato.estadoRenovacion = 'normal';
-      contrato.proximoAumento = this.declararProximoMesDeAumento(
+    if (!contrato || !monto) {
+      console.warn('no se encontro contrato(1) o monto(2)', contrato, monto);
+      return;
+    }
+
+    const contratoActualizado: IContrato = {
+      ...contrato,
+      rentaMensual: parseFloat(monto.toFixed(2)),
+      requiereAccion: false,
+      estadoRenovacion: 'normal',
+      proximoAumento: this.declararProximoMesDeAumento(
         contrato.periodoAumento,
         contrato.proximoAumento,
-      );
+      ),
+    };
 
-      this.actualizarSinRecargar(id, contrato).subscribe({
-        next: () =>
-          this._snackBar.mensajeSnackBar(
-            'Monto actualizado al recargar',
-            'cerrar',
-          ),
-      });
-    } else {
-      console.warn('no se encontro contrato(1) o monto(2)', contrato, monto);
-    }
+    this.$lista.update((lista) =>
+      lista.map((c) => (c.id === id ? contratoActualizado : c)),
+    );
+
+    this.actualizarSinRecargar(id, contratoActualizado).subscribe({
+      next: () =>
+        this._snackBar.mensajeSnackBar(
+          'Monto actualizado al recargar',
+          'cerrar',
+        ),
+    });
   }
   // metodo para obtener el contrato seleccionado
   obtenerContratoSeleccionado(): IContrato | null {

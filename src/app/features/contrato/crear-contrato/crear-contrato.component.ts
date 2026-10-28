@@ -61,10 +61,11 @@ export class CrearContratoComponent implements OnInit {
   formulario: FormGroup = new FormGroup({});
   tipoPagoOpciones: TipoPago[] = ['efectivo', 'transferencia'];
   tipoDeContratoOpciones: tipoDeContrato[] = [
-    'invierno',
+    'viviendaPermanente',
     'comercial',
     'verano',
-    'estudiante',
+    'temporadaInvierno',
+    'comodato',
   ];
   propietariosFiltrados!: Observable<IPropietarioVista[]>;
   inquilinosFiltrados!: Observable<IInquilinoVista[]>;
@@ -113,7 +114,12 @@ export class CrearContratoComponent implements OnInit {
       diasFinalizacion: new FormControl(-1),
       porFinalizar: new FormControl(false),
       requiereAccion: new FormControl(false),
-      tipoDeContrato: new FormControl('invierno', Validators.required),
+      tipoDeContrato: new FormControl(
+        'viviendaPermanente',
+        Validators.required,
+      ),
+      valorInicialDelContrato: new FormControl(0),
+      InformacionAdicionalComponent: new FormControl([]),
     });
   }
 
@@ -215,7 +221,9 @@ export class CrearContratoComponent implements OnInit {
       );
     }
   }
-
+  get rentaMensual() {
+    return this.formulario.get('rentaMensual');
+  }
   //submit
   enviarContrato() {
     this.formulario.patchValue({ propietarioId: this.$propietarioId() });
@@ -228,8 +236,10 @@ export class CrearContratoComponent implements OnInit {
       );
       return;
     }
-
     const contrato: IContrato = this.formulario.getRawValue();
+    contrato.valorInicialDelContrato = contrato.rentaMensual;
+    contrato.informacionAdicional = [];
+    contrato.administracionTotal = false;
     if (this.formulario.get('titulo')?.value === '') {
       contrato.titulo = this.contratosService.generarTituloContrato(
         contrato.propietarioId.toString(),
@@ -272,7 +282,7 @@ export class CrearContratoComponent implements OnInit {
               this.formulario.patchValue({
                 id: randomId(),
                 estado: 'preliminar',
-                tipoDeContrato: 'invierno',
+                tipoDeContrato: 'viviendaPermanente',
               });
             },
             error: () => {

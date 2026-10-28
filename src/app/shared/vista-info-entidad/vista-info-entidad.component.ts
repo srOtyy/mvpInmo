@@ -9,7 +9,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 
 import { MatIconModule } from '@angular/material/icon';
-import { VerInfoGaranteComponent } from '../../features/inquilino/ver-info-garante/ver-info-garante.component';
 @Component({
   selector: 'app-vista-info-entidad',
   imports: [
@@ -20,7 +19,6 @@ import { VerInfoGaranteComponent } from '../../features/inquilino/ver-info-garan
     VistaInfoInquilinoComponent,
     MatStepperModule,
     MatButtonModule,
-    VerInfoGaranteComponent,
     VistaInfoInmuebleComponent,
   ],
   templateUrl: './vista-info-entidad.component.html',

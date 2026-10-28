@@ -1,29 +1,23 @@
-@use '../../../styles.scss' as *;
-.card{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 95%;
-    max-height: 65vh;
-    max-width: 85vw;
-    padding: 25px 0;
-    margin: 10px;
-    color: $primary-500;
-    background-color: $neutral-800;
+@use "../../../styles.scss" as *;
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  max-height: 85vh;
+  max-width: 85vw;
+  padding: 25px 0;
+  margin: 10px;
+  color: $primary-500;
+  background-color: $neutral-800;
+  border-radius: 15px;
+
+  .lista {
+    width: 90%;
+    overflow-y: auto;
+    padding: 30px 0;
+    scrollbar-color: $primary-500 $neutral-800;
     border-radius: 15px;
-  
-    .lista{
-        width: 90%;
-        overflow-y: auto;
-        padding: 30px 0;
-        scrollbar-width: thin;
-        scrollbar-color: $primary-500 $neutral-800;
-        border-radius: 15px;
-    }
-    
+  }
 }
-
-
-
-

@@ -45,14 +45,14 @@ export class EditarContratoComponent implements OnInit {
   ) {
     this.formularioEditarContrato = this.formBuilder.group({
       id: [''],
-      inquilinoId: [''],
-      inmuebleId: [''],
-      fechaFin: [''],
+      inquilinoId: [],
+      inmuebleId: [],
+      fechaFin: [],
       fechaInicio: [''],
-      propietarioId: [''],
+      propietarioId: [],
       estado: [''],
       estadoRenovacion: [''],
-      rentaMensual: [''],
+      rentaMensual: [],
       titulo: [''],
       proximoAumento: [''],
       registroDeActividad: [''],
@@ -66,7 +66,8 @@ export class EditarContratoComponent implements OnInit {
       diasFinalizacion: [''],
       porFinalizar: [false],
       requiereAccion: [false],
-      tipoDeContrato: ['invierno'],
+      tipoDeContrato: [],
+      valorInicialDelContrato: [],
     });
     this.formularioEditarContrato.get('inmuebleId')?.disable();
     this.formularioEditarContrato.get('propietarioId')?.disable();
@@ -112,14 +113,20 @@ export class EditarContratoComponent implements OnInit {
       porFinalizar: contratoData.porFinalizar,
       requiereAccion: contratoData.requiereAccion,
       tipoDeContrato: contratoData.tipoDeContrato,
+      valorInicialDelContrato: contratoData.valorInicialDelContrato,
     });
   }
   guardarCambios() {
     this.formularioEditarContrato.get('inmuebleId')?.enable();
     this.formularioEditarContrato.get('propietarioId')?.enable();
     this.formularioEditarContrato.get('inquilinoId')?.enable();
-    const contratoActualizado: IContrato =
-      this.formularioEditarContrato.getRawValue();
+    const raw: IContrato = this.formularioEditarContrato.getRawValue();
+    const contratoActualizado: IContrato = {
+      ...raw,
+      porcentajeHonorarios: Number(raw.porcentajeHonorarios),
+      rentaMensual: Number(raw.rentaMensual),
+    };
+    console.log(contratoActualizado);
 
     this._liquidacionService
       .actualizarHonorarios(

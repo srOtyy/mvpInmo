@@ -1,38 +1,51 @@
-@use '../../../styles.scss' as *;
+@use "../../../styles.scss" as *;
 .modal-base {
-  padding: 20px;
-  padding-top: 70px;
-  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 24px;
   background-color: $neutral-600;
   color: $neutral-100;
   display: flex;
   flex-direction: column;
   z-index: 1000;
-  height: 80vh;
+  height: min(820px, calc(100vh - 32px));
+  min-height: 0;
   .titulo {
     font-weight: 400;
-    margin-bottom: 20px;
+    margin: 0 0 16px;
     text-align: center;
-
   }
-  .divider-titulo{
+  .divider-titulo {
     border-top-color: $primary-300;
   }
-  .cuerpo{
-    overflow-y: auto ;
-    margin: 20px 0;
+  .cuerpo {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    overflow: auto;
+    margin: 16px 0;
+    padding: 10px;
   }
   ::-webkit-scrollbar {
-    width: 5px; /* Ancho para scroll vertical */
-
-    }
-    ::-webkit-scrollbar-track {
-        background: $primary-900;
-        border-radius: 5px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: $neutral-500;
-      border-radius: 10px;
+    width: 8px; /* Ancho para scroll vertical */
   }
-  
+  ::-webkit-scrollbar-track {
+    background: $neutral-800;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: $neutral-400;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .modal-base {
+    padding: 16px;
+    height: calc(100vh - 16px);
+
+    .titulo {
+      font-size: 1.1rem;
+    }
+  }
 }

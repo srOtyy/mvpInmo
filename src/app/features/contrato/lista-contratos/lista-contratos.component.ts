@@ -16,11 +16,17 @@ import {
 import { Router } from '@angular/router';
 import { ContratoBbddService } from '../contrato-bbdd.service';
 import { ListaDeContratosService } from '../lista-de-contratos.service';
+import { estadosRenovacionYEstadosGenerales } from '../contrato.mapper';
+import { LiquidacionGeneratorService } from '../../liquidacion/liquidacion.service';
+import { SnackbarService } from '../../../core/snackbar.service';
 import {
-  filtroEstadoContrato,
-  estadosRenovacionYEstadosGenerales,
-} from '../contrato.mapper';
-
+  EstadoServicioLiquidacion,
+  SeguimientoEGLAI,
+} from '../eglai.interface';
+interface ChipEGLAI {
+  servicio: string;
+  estado: EstadoServicioLiquidacion;
+}
 @Component({
   selector: 'app-lista-contratos',
   imports: [
@@ -39,9 +45,13 @@ import {
 export class ListaContratosComponent implements OnInit {
   private _listaContratosService = inject(ListaDeContratosService);
   private _contratosService = inject(ContratoBbddService);
+  private _liquidacionesService = inject(LiquidacionGeneratorService);
+  private _snackbar = inject(SnackbarService);
   private router = inject(Router);
   evento = output<void>();
-  calendarioIcono = 'calendar_today';
+  modoVista = signal<'normal' | 'liquidaciones'>('normal');
+  restableciendoEGLAI = signal(false);
+  admTotalIcono = 'person_off';
   //estados para el filtro de estado de contrato
   estadosRenovacionYEstadosGenerales = estadosRenovacionYEstadosGenerales;
   //filtros y signals
@@ -51,11 +61,10 @@ export class ListaContratosComponent implements OnInit {
   $busquedaTexto = this._listaContratosService.$busquedaTexto;
   $filtroFecha = this._listaContratosService.$filtroFecha;
   $filtroPorVencer = this._listaContratosService.$filtroPorVencer;
-  $filtroNombrePropietario =
-    this._listaContratosService.$filtroNombrePropietario;
+  $filtroTituloContrato = this._listaContratosService.$filtroTituloContrato;
   $filtroBusqueda = this._listaContratosService.$filtroBusqueda;
   $contratosFiltrados = this._listaContratosService.$contratosFiltrados;
-
+  $filtroAdmTotal = this._listaContratosService.$filtroAdmTotal;
   ngOnInit() {
     this._contratosService.cargarLista();
   }
@@ -63,26 +72,35 @@ export class ListaContratosComponent implements OnInit {
   navegarPrimerResultado() {
     const primerResultado = this.contratosFiltrados()[0];
     if (primerResultado) {
-      this.contratoSeleccionado.set(primerResultado as IContrato);
-      this._contratosService.seleccionarContrato(primerResultado as IContrato);
-      this.router.navigate(['/contratos/vista']);
+      this.seleccionarContrato(primerResultado as IContrato);
+      this.router.navigate([
+        '/contratos',
+        { outlets: { primary: 'lista', detalle: 'vista' } },
+      ]);
     }
   }
-
+  cambiarIconoAdmTotal() {
+    if (this.$filtroAdmTotal() == true) {
+      this.admTotalIcono = 'person';
+    } else {
+      this.admTotalIcono = 'person_off';
+    }
+  }
   eventoSidenav() {
     this.evento.emit();
   }
   seleccionarContrato(contrato: IContrato) {
     this.contratoSeleccionado.set(contrato);
     this._contratosService.seleccionarContrato(contrato);
+    this._contratosService.$contratoIdSideBarInfo.set(contrato.id);
+    this._contratosService.$sideBarInfo.set(true);
   }
   evaluarClick(contrato: IContrato): void {
-    if (this.contratoSeleccionado() === contrato) {
-      this.router.navigate(['/contratos/vista']);
-    } else {
-      // 📌 Si no estaba seleccionado, el primer click solo lo selecciona
-      this.seleccionarContrato(contrato);
-    }
+    this.seleccionarContrato(contrato);
+    this.router.navigate([
+      '/contratos',
+      { outlets: { primary: 'lista', detalle: 'vista' } },
+    ]);
   }
   getEstadoColor(estado: ContractStatus): string {
     const colores: Record<ContractStatus, string> = {
@@ -94,6 +112,7 @@ export class ListaContratosComponent implements OnInit {
     };
     return colores[estado];
   }
+
   getEstadoLabel(estado: ContractStatus): string {
     const labels: Record<ContractStatus, string> = {
       preliminar: 'Preliminar',
@@ -121,15 +140,12 @@ export class ListaContratosComponent implements OnInit {
     });
   }
 
-  irACrearContrato() {
-    this.router.navigate(['/contratos/crear']);
-  }
   convertirChipEstadoRenovacion(estadoRenovacion: EstadoRenovacion): string {
     if (estadoRenovacion === 'normal') return '';
     if (estadoRenovacion === 'un_mes') return '1 mes';
     if (estadoRenovacion === 'dos_meses') return '2 meses';
     if (estadoRenovacion === 'hoy') return 'hoy';
-    if (estadoRenovacion === 'vencido') return 'vencido';
+    if (estadoRenovacion === 'vencido') return 'Este mes';
     if (estadoRenovacion === 'porFinalizar') return 'por finalizar';
     return '';
   }
@@ -143,12 +159,13 @@ export class ListaContratosComponent implements OnInit {
   }
   convertirChipTipoDeContrato(tipo: tipoDeContrato): string {
     if (tipo === 'comercial') return 'Comercial';
-    if (tipo === 'estudiante') return 'Estudiante';
-    if (tipo === 'verano') return 'Verano';
-    if (tipo === 'invierno') return 'Invierno';
+    if (tipo === 'temporadaInvierno') return 'Temporada invierno';
+    if (tipo === 'verano') return 'Temporada Verano';
+    if (tipo === 'viviendaPermanente') return 'Vivienda permantente';
+    if (tipo === 'comodato') return 'Comodato';
     return '';
   }
-  //aplicar filtros enviandoselos al servicio
+  //Filtros de la lista de contratos
   evaluarVencimientosContratos() {
     this._listaContratosService.evaluarVencimientosContratos();
   }
@@ -161,10 +178,103 @@ export class ListaContratosComponent implements OnInit {
   cambiarEstadoSignalPorVencer() {
     this._listaContratosService.cambiarEstadoSignalPorVencer();
   }
-  //dias restantes para la finalizacion
-  // calcularDiasDeFinalizacion(contrato: IContrato): number {
-  //   return this._finalizacionContratosService.calcularDiasDeFinalizacion(
-  //     contrato,
-  //   );
-  // }
+  cambiarEstadoSignalAdmTotal() {
+    this._listaContratosService.cambiarEstadoSignalAdmTotal();
+    this.cambiarIconoAdmTotal();
+  }
+  //total honorarios
+  mostrarTotalHonorarios() {
+    const totalHonorarios =
+      this._listaContratosService.calcularTotalHonorarios();
+    console.log('Total honorarios: $', Math.round(totalHonorarios));
+  }
+
+  //EGLAI
+
+  restablecerServiciosEGLAI() {
+    if (this.restableciendoEGLAI()) return;
+    const confirmar = window.confirm(
+      '¿Restablecer los servicios EGLAI cargados a pendientes y las liquidaciones emitidas a borrador para iniciar el próximo ciclo?',
+    );
+    if (!confirmar) return;
+
+    this.restableciendoEGLAI.set(true);
+    this._liquidacionesService.restablecerServiciosEGLAI().subscribe({
+      next: ({ serviciosRestablecidos, liquidacionesRestablecidas }) => {
+        const resumen = [
+          `${serviciosRestablecidos} servicios EGLAI restablecidos`,
+          `${liquidacionesRestablecidas} liquidaciones devueltas a borrador`,
+        ].join('; ');
+        this._snackbar.mensajeSnackBar(
+          serviciosRestablecidos > 0 || liquidacionesRestablecidas > 0
+            ? resumen
+            : 'No había servicios EGLAI ni liquidaciones emitidas para restablecer',
+          'Cerrar',
+        );
+        this.restableciendoEGLAI.set(false);
+      },
+      error: (error) => {
+        console.error('No se pudieron restablecer los servicios EGLAI', error);
+        this._snackbar.mensajeSnackBar(
+          'No se pudieron restablecer los servicios EGLAI',
+          'Cerrar',
+        );
+        this.restableciendoEGLAI.set(false);
+      },
+    });
+  }
+  cambiarModoVista() {
+    if (this.modoVista() === 'normal') {
+      this.modoVista.set('liquidaciones');
+    } else {
+      this.modoVista.set('normal');
+    }
+  }
+  private formatearServicioEGLAI(servicio: keyof SeguimientoEGLAI): string {
+    const nombres: Record<keyof SeguimientoEGLAI, string> = {
+      expensas: 'Expensas',
+      gas: 'Gas',
+      luz: 'Luz',
+      agua: 'Agua',
+      internet: 'Internet',
+      seguro: 'Seguro',
+    };
+
+    return nombres[servicio];
+  }
+  // Función para obtener los chips de EGLAI a partir del objeto SeguimientoEGLAI, la funcion de abajo es mas explicita. Pero hacen lo mismo y no se usa. Podria eliminarse cuando se desee pero sirve para comrpender la primera
+  obtenerChipsEGLAI(eglai: SeguimientoEGLAI | undefined): ChipEGLAI[] {
+    if (!eglai) return [];
+
+    return (
+      Object.entries(eglai) as [
+        keyof SeguimientoEGLAI,
+        EstadoServicioLiquidacion,
+      ][]
+    )
+      .filter(([_, estado]) => estado !== 'no-requerido')
+      .map(([servicio, estado]) => ({
+        servicio: this.formatearServicioEGLAI(servicio),
+        estado,
+      }));
+  }
+  obtenerChipsEGLAIExplicito(eglai: SeguimientoEGLAI | undefined): ChipEGLAI[] {
+    if (!eglai) return [];
+
+    const chips: ChipEGLAI[] = [];
+
+    for (const [servicio, estado] of Object.entries(eglai) as [
+      keyof SeguimientoEGLAI,
+      EstadoServicioLiquidacion,
+    ][]) {
+      if (estado === 'no-requerido') continue;
+
+      chips.push({
+        servicio: this.formatearServicioEGLAI(servicio),
+        estado,
+      });
+    }
+
+    return chips;
+  }
 }

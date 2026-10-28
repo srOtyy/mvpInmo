@@ -2,12 +2,17 @@ export function randomId(): number {
   return Math.floor(Math.random() * 1_000_000) + 1;
 }
 export function numeroALetras(valor: number | string): string {
-  const num = Number(valor); // Asegurarse de que sea un número
-  if (isNaN(num)) {
+  const valorNumerico = Number(valor);
+  if (!Number.isFinite(valorNumerico) || valorNumerico < 0) {
     throw new Error('El valor proporcionado no es un número válido');
   }
 
-  if (num === 0) return 'CERO';
+  const valorRedondeado =
+    Math.round((valorNumerico + Number.EPSILON) * 100) / 100;
+  const num = Math.floor(valorRedondeado);
+  const centavos = Math.round((valorRedondeado - num) * 100);
+
+  if (num === 0 && centavos === 0) return 'CERO';
 
   const unidades = [
     '',
@@ -144,5 +149,8 @@ export function numeroALetras(valor: number | string): string {
     resultado += convertirSeccion(resto);
   }
 
-  return resultado.trim().replace(/\s+/g, ' ');
+  const resultadoEntero = resultado.trim().replace(/\s+/g, ' ') || 'CERO';
+  return centavos > 0
+    ? `${resultadoEntero} PESOS ${centavos.toString().padStart(2, '0')}/100`
+    : resultadoEntero;
 }

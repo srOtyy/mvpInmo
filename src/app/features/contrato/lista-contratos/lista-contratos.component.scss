@@ -4,16 +4,22 @@
 .contenedor-principal {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  background-color: $primary-900;
+
   height: 100%;
+  min-height: 0;
+  overflow: hidden;
   gap: 16px;
   padding: 10px;
-  width: 90%;
+  width: 100%;
 
   .cabecera {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 95%;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
     padding-bottom: 8px;
     border-bottom: 1px solid $neutral-700;
 
@@ -28,7 +34,8 @@
     .btn-nuevo {
       width: 40px;
       height: 40px;
-      border-radius: 50%;
+      flex: 0 0 40px;
+      border-radius: 8px;
       color: $primary-500;
       background-color: transparent;
       transition: all 0.2s ease;
@@ -47,19 +54,35 @@
         width: 24px;
         height: 24px;
       }
+      .icono-disabled {
+        color: rgba($neutral-400, 0.15);
+      }
+    }
+
+    .acciones {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 4px;
     }
   }
 
   .filtros {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    gap: 5px;
-    width: 95%;
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: minmax(180px, 270px) repeat(3, 40px) minmax(
+        180px,
+        290px
+      );
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    width: auto;
 
     .form-buscar,
     .form-select {
-      flex: 1;
+      width: 100%;
+      min-width: 0;
       .mat-optgroup {
         color: $neutral-400;
       }
@@ -111,6 +134,14 @@
       }
     }
 
+    button[mat-icon-button] {
+      width: 40px;
+      height: 40px;
+      border: 1px solid $neutral-700;
+      border-radius: 8px;
+      background-color: $neutral-800;
+    }
+
     .icono-fecha,
     .icono-ordenAlfabetico,
     .icono-porVencer,
@@ -122,8 +153,49 @@
     }
   }
 
+  @media (max-width: 1100px) {
+    .cabecera {
+      flex-wrap: wrap;
+      align-items: center;
+
+      .filtros {
+        flex-basis: 100%;
+        grid-template-columns: minmax(180px, 1fr) repeat(3, 40px) minmax(
+            160px,
+            220px
+          );
+        order: 1;
+      }
+
+      .acciones {
+        margin-left: auto;
+        order: 0;
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .cabecera {
+      gap: 8px;
+
+      .filtros {
+        grid-template-columns: minmax(0, 1fr) repeat(3, 40px);
+
+        .form-select {
+          grid-column: 1 / -1;
+        }
+      }
+
+      .acciones {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+  }
+
   .contenedor-contratos {
-    height: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -235,21 +307,23 @@
     .span-estados {
       display: flex;
       flex-direction: row;
-      gap: 20px;
     }
     .chip-estado {
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.4px;
-      padding: 2px 8px;
-      border-radius: 10px;
+      padding: 4px 10px;
       white-space: nowrap;
       flex-shrink: 0;
       text-align: center;
-      margin: auto;
+      border-right: 1px solid $neutral-900;
       //color de los chips
       //estado general
+      &.estado-AT {
+        background-color: #af068a86;
+        color: #afa9b1;
+      }
       &.chip-preliminar {
         background-color: rgba($warning, 0.15);
         color: $warning;
@@ -304,7 +378,7 @@
         display: none;
       }
       //tipo de contrato
-      &.chip-tipoDeContrato-invierno {
+      &.chip-tipoDeContrato-viviendaPermanente {
         margin: 0;
         background-color: rgba($color: #0c0570, $alpha: 1.5);
         color: #bfbbfc;
@@ -319,10 +393,25 @@
         background-color: rgba($color: #702b05, $alpha: 1.5);
         color: #fab48f;
       }
-      &.chip-tipoDeContrato-estudiante {
+      &.chip-tipoDeContrato-temporadaInvierno {
         margin: 0;
         background-color: rgba($color: #370344, $alpha: 1.5);
         color: #efbbfc;
+      }
+      &.chip-tipoDeContrato-comodato {
+        margin: 0;
+        background-color: #435861;
+        color: #b3cfd6;
+      }
+      //EGLAI
+      &.chip-eglai-pendiente {
+        color: $warning;
+        background-color: #72550588;
+      }
+
+      &.chip-eglai-cargado {
+        color: $success;
+        background-color: #185335ab;
       }
     }
 

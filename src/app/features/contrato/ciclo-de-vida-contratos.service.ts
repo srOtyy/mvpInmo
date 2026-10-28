@@ -17,30 +17,6 @@ export class CicloDeVidaContratosService {
     return fecha instanceof Date ? fecha : new Date(fecha);
   }
 
-  calcularProximoAumento(contrato: IContrato): Date {
-    contrato.proximoAumento.setDate(1); // Asegurarse de que el día sea el primero del mes
-    const proximoAumento = this.parseFecha(contrato.proximoAumento);
-    const fechaInicio = this.parseFecha(contrato.fechaInicio);
-    let fechaBase =
-      proximoAumento && !Number.isNaN(proximoAumento.getTime())
-        ? proximoAumento
-        : fechaInicio;
-    if (!fechaBase || Number.isNaN(fechaBase.getTime())) {
-      throw new Error(`El contrato ${contrato.id} no tiene una fecha válida`);
-    }
-    if (contrato.periodoAumento <= 0) {
-      throw new Error(`El contrato ${contrato.id} tiene un período inválido`);
-    }
-
-    const proximoAumentoCalculado = new Date(fechaBase);
-    while (proximoAumentoCalculado <= this.ahora) {
-      proximoAumentoCalculado.setMonth(
-        proximoAumentoCalculado.getMonth() + contrato.periodoAumento,
-      );
-    }
-    return proximoAumentoCalculado;
-  }
-
   calcularDiasRestantes(proximoAumento: Date | string | undefined): number {
     //esto podria devolver numeros negativos como respuesta a que no necesita renovacion
     if (!proximoAumento) return -1;
@@ -63,61 +39,40 @@ export class CicloDeVidaContratosService {
    * Incluye: próximo aumento, estado de renovación y finalización
    */
   evaluarContrato(contrato: IContrato): IContrato {
-    const diasRestantes = this.calcularDiasRestantes(contrato.proximoAumento);
-    const necesitaCalcularFecha = !contrato.proximoAumento;
-    const estadoRenovacion = this.calcularEstadoDeRenovacion(contrato);
-    const aumentoPendiente =
-      Boolean(contrato.proximoAumento) && diasRestantes <= 0;
-
-    // Una acción pendiente bloquea el recálculo hasta que se aplique el aumento.
+    // Bloqueo: hay una acción pendiente, no se recalcula proximoAumento.
     if (contrato.requiereAccion) {
-      const actualizado = this._finalizacionContrato.evaluarFinalizacion({
-        ...contrato,
-        estadoRenovacion,
-      });
-      if (this._finalizacionContrato.aumentoExcedeFin(actualizado)) {
-        actualizado.estadoRenovacion = 'porFinalizar';
-      }
-      return actualizado;
-    }
-    // Paso 1: Actualizar próximo aumento si es necesario
-    let contratoActualizado: IContrato;
-
-    if (necesitaCalcularFecha) {
-      const nuevoProximoAumento = this.calcularProximoAumento(contrato);
-      contratoActualizado = {
-        ...contrato,
-        proximoAumento: nuevoProximoAumento,
-        estadoRenovacion: this.calcularEstadoDeRenovacion({
-          ...contrato,
-          proximoAumento: nuevoProximoAumento,
-        }),
-      };
-    } else if (aumentoPendiente) {
-      contratoActualizado = {
-        ...contrato,
-        requiereAccion: true,
-        estadoRenovacion,
-      };
-    } else {
-      contratoActualizado = {
-        ...contrato,
+      return this.aplicarEvaluacionFinal(contrato, {
         estadoRenovacion: this.calcularEstadoDeRenovacion(contrato),
+      });
+    }
+
+    const diasRestantes = this.calcularDiasRestantes(contrato.proximoAumento);
+    const aumentoPendiente = diasRestantes <= 0;
+
+    const cambios: Partial<IContrato> = {
+      requiereAccion: aumentoPendiente,
+      estadoRenovacion: this.calcularEstadoDeRenovacion({
+        ...contrato,
+      }),
+    };
+
+    return this.aplicarEvaluacionFinal(contrato, cambios);
+  }
+  // Unifica Paso 2 + Paso 3, sin duplicar aumentoExcedeFin ni el warning.
+  private aplicarEvaluacionFinal(
+    contrato: IContrato,
+    cambios: Partial<IContrato>,
+  ): IContrato {
+    const intermedio = { ...contrato, ...cambios };
+    const evaluado = this._finalizacionContrato.evaluarFinalizacion(intermedio);
+
+    if (this._finalizacionContrato.aumentoExcedeFin(evaluado)) {
+      return {
+        ...evaluado,
+        estadoRenovacion: 'porFinalizar',
+        porFinalizar: true,
       };
     }
-
-    // Paso 2: Evaluar el estado de finalización
-    contratoActualizado =
-      this._finalizacionContrato.evaluarFinalizacion(contratoActualizado);
-
-    // Paso 3: Verificar si hay conflicto entre próximo aumento y fecha de fin
-    if (this._finalizacionContrato.aumentoExcedeFin(contratoActualizado)) {
-      contratoActualizado.estadoRenovacion = 'porFinalizar';
-      console.warn(
-        `⚠️ ALERTA: Contrato ${contrato.titulo} - El próximo aumento excede la fecha de finalización. Contrato marcado como 'por vencer'`,
-      );
-    }
-
-    return contratoActualizado;
+    return evaluado;
   }
 }

@@ -1,0 +1,25 @@
+<section class="eglai">
+  <h2>Seguimiento EGLAI</h2>
+
+  @if (liquidacionAuxiliar.id) {
+    <div class="lista-servicios">
+      @for (servicio of servicios; track servicio.key) {
+        <div class="servicio">
+          <span>{{ servicio.label }}</span>
+          <mat-slide-toggle
+            [checked]="liquidacionAuxiliar.EGLAI[servicio.key] === 'pendiente'"
+            [disabled]="guardando"
+            [aria-label]="servicio.label + ': ' + etiquetaEstado(servicio.key)"
+            (change)="cambiarEstado(servicio.key, $event.checked)"
+          >
+            {{ etiquetaEstado(servicio.key) }}
+          </mat-slide-toggle>
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="sin-liquidacion">
+      No se encontró una liquidación para este contrato.
+    </p>
+  }
+</section>

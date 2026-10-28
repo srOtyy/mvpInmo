@@ -1,28 +1,53 @@
 <div class="contenedor">
-
-    <div class="cabecera">
-      <button mat-icon-button class="btn-nuevo" aria-label="Nuevo contrato" (click)="volverALaVistaDeContratos()" matTooltip="Volver">
-          <mat-icon class="icono">arrow_back</mat-icon>
-      </button>
-      <mat-divider></mat-divider>
-    </div>
-  
-  <mat-stepper [linear]="false " #stepper class="stepper">
-  
-    <mat-step [stepControl]="formularioInquilino" >
+  <mat-stepper [linear]="false" #stepper class="stepper">
+    <mat-step [stepControl]="formularioInquilino">
       <ng-template matStepLabel>Liquidacion inquilino</ng-template>
       <div class="step1">
         <form [formGroup]="formularioInquilino" class="formulario">
           <mat-form-field class="datos_formulario">
             <mat-label>Tipo de item</mat-label>
-            <input matInput formControlName="tipo" placeholder="Tipo de gasto" >
+            <input
+              matInput
+              formControlName="tipo"
+              placeholder="Tipo de gasto"
+            />
           </mat-form-field>
           <mat-form-field class="datos_formulario">
             <mat-label>Monto correspondiente</mat-label>
-            <input matInput formControlName="monto" placeholder="Monto" type="number">
+            <input
+              matInput
+              formControlName="monto"
+              placeholder="Monto"
+              type="number"
+            />
           </mat-form-field>
-          <button mat-icon-button color="primary"  (click)="agregarGastoTemporal(1)" matTooltip="Agregar gasto a la liquidacion" [disabled]="!formularioInquilino.valid">
-            <mat-icon class="icono">arrow_forward</mat-icon>
+          <div class="servicios-eglai-acciones">
+            @for (servicio of serviciosEGLAI; track servicio.key) {
+              <button
+                mat-stroked-button
+                type="button"
+                [disabled]="
+                  guardandoEGLAI ||
+                  entidad.EGLAI[servicio.key] === 'cargado' ||
+                  entidad.EGLAI[servicio.key] === 'no-requerido'
+                "
+                [matTooltip]="'Marcar ' + servicio.label + ' como cargado'"
+                (click)="marcarServicioComoCargado(servicio.key)"
+              >
+                <mat-icon>check</mat-icon>
+                {{ servicio.label }}
+              </button>
+            }
+          </div>
+          <button
+            type="button"
+            mat-icon-button
+            color="primary"
+            (click)="agregarGastoTemporal(1)"
+            matTooltip="Agregar gasto a la liquidacion"
+            [disabled]="!formularioInquilino.valid"
+          >
+            <mat-icon class="icono">add</mat-icon>
           </button>
         </form>
         <div class="contenedor_lista">
@@ -31,14 +56,28 @@
             @for (gasto of $gastosInquilino(); track $index) {
               <div class="item">
                 <div class="item_texto">
-                  <p><strong class="item_texto_clave">{{ gasto.tipo }}</strong></p>
-                  <p><span>${{ gasto.monto }}</span></p>
+                  <p>
+                    <strong class="item_texto_clave">{{ gasto.tipo }}</strong>
+                  </p>
+                  <p>
+                    <span>${{ gasto.monto }}</span>
+                  </p>
                 </div>
                 <div class="item_boton">
                   @if (gasto.confirmado) {
-                    <mat-icon class="icono-confirmado" matTooltip="Gasto confirmado">check_circle</mat-icon>
+                    <mat-icon
+                      class="icono-confirmado"
+                      matTooltip="Gasto confirmado"
+                      >check_circle</mat-icon
+                    >
                   }
-                  <button mat-icon-button color="warn" type="button" (click)="eliminarGastoTemporal($index, 1)" class="boton">
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    type="button"
+                    (click)="eliminarGastoTemporal($index, 1)"
+                    class="boton"
+                  >
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
@@ -49,41 +88,76 @@
       </div>
       <div class="botones">
         <div class="generar_documentos">
-          <button class="boton" mat-fab extended (click)="generarReciboInquilino(entidad)">
-          <mat-icon>receipt_long</mat-icon>
-          Recibo Inquilino
-          </button>
-          <button class="boton" mat-fab extended (click)="generarLiquidacionInquilino(entidad)">
+          <button
+            class="boton"
+            mat-fab
+            extended
+            (click)="generarReciboInquilino(entidad)"
+          >
             <mat-icon>receipt_long</mat-icon>
-            Liquidacion Inquilino
+            Recibo Inquilino
+          </button>
+          <button
+            class="boton"
+            mat-fab
+            extended
+            [disabled]="emitiendoLiquidacion"
+            (click)="generarLiquidacionInquilino(entidad)"
+          >
+            <mat-icon>receipt_long</mat-icon>
+            Liquidacion (Efectivo)
+          </button>
+          <button
+            class="boton"
+            mat-fab
+            extended
+            [disabled]="emitiendoLiquidacion"
+            (click)="generarLiquidacionInquilinoTransferencia(entidad)"
+          >
+            <mat-icon>receipt_long</mat-icon>
+            Liquidacion (Transferencia)
           </button>
         </div>
-        <button class="boton"
-                  mat-raised-button
-                  color="accent"
-                  type="button"
-                  (click)="agregarGastosALiquidacion(1)"
-                  [disabled]="$gastosInquilino().length === 0">
-                  Confirmar items
-          </button>
-                
+        <button
+          class="boton"
+          mat-raised-button
+          color="accent"
+          type="button"
+          (click)="agregarGastosALiquidacion(1)"
+        >
+          Confirmar items
+        </button>
       </div>
-
     </mat-step>
-  
-    <mat-step [stepControl]="formularioPropietario" >
+
+    <mat-step [stepControl]="formularioPropietario">
       <ng-template matStepLabel>Liquidacion propietario</ng-template>
       <div class="step1">
         <form [formGroup]="formularioPropietario" class="formulario">
           <mat-form-field class="datos_formulario">
             <mat-label>Tipo de item</mat-label>
-            <input matInput formControlName="tipo" placeholder="Tipo de gasto" >
+            <input
+              matInput
+              formControlName="tipo"
+              placeholder="Tipo de gasto"
+            />
           </mat-form-field>
           <mat-form-field class="datos_formulario">
             <mat-label>Monto correspondiente</mat-label>
-            <input matInput formControlName="monto" placeholder="Monto" type="number">
+            <input
+              matInput
+              formControlName="monto"
+              placeholder="Monto"
+              type="number"
+            />
           </mat-form-field>
-          <button mat-icon-button color="primary"  (click)="agregarGastoTemporal(2)" matTooltip="Agregar gasto a la liquidacion" [disabled]="!formularioPropietario.valid">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="agregarGastoTemporal(2)"
+            matTooltip="Agregar gasto a la liquidacion"
+            [disabled]="!formularioPropietario.valid"
+          >
             <mat-icon class="icono">arrow_forward</mat-icon>
           </button>
         </form>
@@ -93,14 +167,28 @@
             @for (gasto of $gastosPropietario(); track $index) {
               <div class="item">
                 <div class="item_texto">
-                  <p><strong class="item_texto_clave">{{ gasto.tipo }}</strong></p>
-                  <p><span>${{ gasto.monto }}</span></p>
+                  <p>
+                    <strong class="item_texto_clave">{{ gasto.tipo }}</strong>
+                  </p>
+                  <p>
+                    <span>${{ gasto.monto }}</span>
+                  </p>
                 </div>
                 <div class="item_boton">
                   @if (gasto.confirmado) {
-                    <mat-icon class="icono-confirmado" matTooltip="Gasto confirmado">check_circle</mat-icon>
+                    <mat-icon
+                      class="icono-confirmado"
+                      matTooltip="Gasto confirmado"
+                      >check_circle</mat-icon
+                    >
                   }
-                  <button mat-icon-button color="warn" type="button" (click)="eliminarGastoTemporal($index, 2)" class="boton">
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    type="button"
+                    (click)="eliminarGastoTemporal($index, 2)"
+                    class="boton"
+                  >
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
@@ -111,28 +199,61 @@
       </div>
       <div class="botones">
         <div class="generar_documentos">
-          <button class="boton" mat-fab extended (click)="generarMinutaPropietario(entidad)">
+          <button
+            class="boton"
+            mat-fab
+            extended
+            (click)="generarMinutaPropietario(entidad)"
+          >
             <mat-icon>receipt_long</mat-icon>
             Minuta Propietario
           </button>
-          <button class="boton" mat-fab extended (click)="generarLiquidacionPropietario(entidad)">
+          <button
+            class="boton"
+            mat-fab
+            extended
+            [disabled]="emitiendoLiquidacion"
+            (click)="generarLiquidacionPropietario(entidad)"
+          >
             <mat-icon>receipt_long</mat-icon>
             Liquidacion Propietario
           </button>
         </div>
-        
-        <button class="boton"
-                  mat-raised-button
-                  color="accent"
-                  type="button"
-                  (click)="agregarGastosALiquidacion(2)"
-                  [disabled]="$gastosPropietario().length === 0">
-                  Confirmar items
-          </button>
-                
-      </div>
 
+        <button
+          class="boton"
+          mat-raised-button
+          color="accent"
+          type="button"
+          (click)="agregarGastosALiquidacion(2)"
+        >
+          Confirmar items
+        </button>
+      </div>
     </mat-step>
 
+    <mat-step>
+      <ng-template matStepLabel>EGLAI</ng-template>
+      <div class="eglai">
+        @for (servicio of serviciosEGLAI; track servicio.key) {
+          <div class="servicio-eglai">
+            <span>{{ servicio.label }}</span>
+            <mat-slide-toggle
+              [checked]="
+                entidad.EGLAI[servicio.key] === 'pendiente' ||
+                entidad.EGLAI[servicio.key] === 'cargado'
+              "
+              [disabled]="guardandoEGLAI"
+              [aria-label]="
+                servicio.label + ': ' + etiquetaEstadoEGLAI(servicio.key)
+              "
+              (change)="cambiarEstadoEGLAI(servicio.key, $event.checked)"
+            >
+              {{ etiquetaEstadoEGLAI(servicio.key) }}
+            </mat-slide-toggle>
+          </div>
+        }
+      </div>
+    </mat-step>
   </mat-stepper>
 </div>

@@ -1,0 +1,21 @@
+@use "../../../../styles.scss" as *;
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+}
+
+.contratos-container,
+mat-sidenav-content {
+  height: 100%;
+  min-height: 0;
+}
+
+mat-sidenav-content {
+  overflow: hidden;
+  background-color: $primary-900;
+}
+
+.detalle-sidenav {
+  width: min(620px, 92vw);
+}

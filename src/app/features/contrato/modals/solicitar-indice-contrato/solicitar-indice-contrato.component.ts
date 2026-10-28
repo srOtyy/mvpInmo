@@ -57,7 +57,7 @@ export class SolicitarIndiceContratoComponent implements OnInit {
       amount: [0, [Validators.required, Validators.min(1)]],
       date: ['', Validators.required],
       months: [1, [Validators.required, Validators.min(1)]],
-      rate: ['ipc', Validators.required],
+      rate: ['', Validators.required],
     });
   }
 
@@ -68,11 +68,12 @@ export class SolicitarIndiceContratoComponent implements OnInit {
     const fechaBase = this.formatearFechaParaInput(this.entidad.fechaInicio);
 
     this.formulario.patchValue({
-      amount: this.entidad.rentaMensual,
+      amount: this.entidad.valorInicialDelContrato,
       date: fechaBase,
       months: this.entidad.periodoAumento,
-      rate: 'ipc',
+      rate: this.entidad.tipoIndice.toLocaleLowerCase(),
     });
+    console.log(this.formulario);
   }
 
   solicitarIndice(): void {
@@ -137,6 +138,7 @@ export class SolicitarIndiceContratoComponent implements OnInit {
     return fechaObj.toISOString().slice(0, 10);
   }
   actualizarAlquiler(id: number, monto: number) {
+    // monto = Math.trunc(monto);
     this._contratosService.actualizarMontoAlquiler(id, monto);
     this._liquidacionService.actualizarMontoAlquiler(id, monto);
   }
