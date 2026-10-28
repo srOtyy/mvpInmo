@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { Observable, switchMap, tap } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export abstract class BaseCrudService<T> {
+export abstract class BaseCrudService<T extends { id: number }> {
   $lista = signal<T[]>([]);
   constructor(
     protected http: HttpClient,
@@ -33,8 +33,16 @@ export abstract class BaseCrudService<T> {
   }
   eliminar(id: number) {
     return this.http
-      .delete(`${this.endpoint}/${id}`)
-      .pipe(switchMap(() => this.cargar()));
+      .delete<void>(`${this.endpoint}/${id}`)
+      .pipe(
+        map(() => {
+          const listaActualizada = this.$lista().filter(
+            (entidad) => entidad.id !== id,
+          );
+          this.$lista.set(listaActualizada);
+          return listaActualizada;
+        }),
+      );
   }
   buscarEntidadPorId<T>(id: number): Observable<T> {
     return this.http.get<T>(`${this.endpoint}/${id}`);

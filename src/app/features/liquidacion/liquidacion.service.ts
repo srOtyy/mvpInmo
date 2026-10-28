@@ -72,9 +72,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
             ? { ...liquidacion.EGLAI }
             : undefined;
           const serviciosCargados = EGLAI
-            ? Object.entries(EGLAI).filter(
-                ([, estado]) => estado === 'cargado',
-              )
+            ? Object.entries(EGLAI).filter(([, estado]) => estado === 'cargado')
             : [];
           const estadoActualizado =
             liquidacion.estado === 'emitida' ? 'borrador' : liquidacion.estado;
@@ -226,7 +224,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
-      saveAs(blob, `Liquidacion - ${liquidacion.inquilinoNombre}.docx`);
+      saveAs(
+        blob,
+        `${liquidacion.inquilinoNombre} - liquidacion ${this.periodo}.docx`,
+      );
     } catch (error) {
       throw error;
     }
@@ -307,7 +308,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
-      saveAs(blob, `Liquidacion - ${liquidacion.propietarioNombre}.docx`);
+      saveAs(
+        blob,
+        `${liquidacion.propietarioNombre} - liquidacion ${this.periodo}.docx`,
+      );
     } catch (error) {
       throw error;
     }
@@ -364,7 +368,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
-      saveAs(blob, `minuta - ${liquidacion.propietarioNombre}.docx`);
+      saveAs(
+        blob,
+        `${liquidacion.propietarioNombre} - minuta ${this.periodo}.docx`,
+      );
     } catch (error) {
       console.error('Error 1 al generar la liquidación;', error);
     }
@@ -437,7 +444,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
-      saveAs(blob, `Recibo - ${liquidacion.inquilinoNombre}.docx`);
+      saveAs(
+        blob,
+        `${liquidacion.inquilinoNombre} - recibo ${this.periodo}.docx`,
+      );
     } catch (error) {
       console.error('Error 1 al generar la liquidación;', error);
     }
@@ -498,7 +508,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         mimeType:
           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
-      saveAs(blob, `Liquidacion - ${liquidacion.inquilinoNombre}.docx`);
+      saveAs(
+        blob,
+        `${liquidacion.inquilinoNombre} - liquidacion ${this.periodo}.docx`,
+      );
     } catch (error) {
       throw error;
     }
