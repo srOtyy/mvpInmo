@@ -16,6 +16,36 @@
     </mat-form-field>
   </ng-container>
 </form>
+
+<section class="garantes">
+  <h3>Garantes</h3>
+  @if (garantesFormArray.length === 0) {
+    <p>Este inquilino no tiene garantes.</p>
+  }
+  @for (garante of garantesFormArray.controls; track $index; let i = $index) {
+    <div class="garante" [formGroup]="garante">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" placeholder="Nombre del garante" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Email del garante" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="telefono" placeholder="Teléfono del garante" />
+      </mat-form-field>
+      <button type="button" mat-button color="warn" (click)="quitarGarante(i)">
+        Quitar garante
+      </button>
+    </div>
+  }
+  <button type="button" mat-button (click)="agregarGarante()">
+    Agregar garante
+  </button>
+</section>
+
 <button
   type="submit"
   mat-flat-button

@@ -41,8 +41,7 @@
       transition: all 0.2s ease;
 
       &:hover {
-        background-color: rgba($primary-500, 0.1);
-        transform: scale(1.05);
+        transform: scale(1.25);
       }
 
       &:active {
@@ -62,8 +61,7 @@
     .acciones {
       display: flex;
       flex: 0 0 auto;
-      align-items: center;
-      gap: 4px;
+      gap: 10px;
     }
   }
 
@@ -241,6 +239,11 @@
       background-color: $neutral-800;
       border-radius: 8px;
       margin-bottom: 5px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
       &.chip-dos_meses {
         border-right: 3px solid $warning;
         border-bottom: 1px solid $warning;

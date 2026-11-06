@@ -5,11 +5,11 @@
       <div class="step1">
         <form [formGroup]="formularioInquilino" class="formulario">
           <mat-form-field class="datos_formulario">
-            <mat-label>Tipo de item</mat-label>
+            <mat-label>Nombre del item</mat-label>
             <input
               matInput
               formControlName="tipo"
-              placeholder="Tipo de gasto"
+              placeholder="Ej: Expensas comunes ordinarias..."
             />
           </mat-form-field>
           <mat-form-field class="datos_formulario">
@@ -17,7 +17,7 @@
             <input
               matInput
               formControlName="monto"
-              placeholder="Monto"
+              placeholder="Ej: 35200,80"
               type="number"
             />
           </mat-form-field>
@@ -135,11 +135,11 @@
       <div class="step1">
         <form [formGroup]="formularioPropietario" class="formulario">
           <mat-form-field class="datos_formulario">
-            <mat-label>Tipo de item</mat-label>
+            <mat-label>Nombre del item</mat-label>
             <input
               matInput
               formControlName="tipo"
-              placeholder="Tipo de gasto"
+              placeholder="Ej: Expensas comunes extraordinarias..."
             />
           </mat-form-field>
           <mat-form-field class="datos_formulario">
@@ -147,7 +147,7 @@
             <input
               matInput
               formControlName="monto"
-              placeholder="Monto"
+              placeholder="Ej: 35200,80"
               type="number"
             />
           </mat-form-field>
