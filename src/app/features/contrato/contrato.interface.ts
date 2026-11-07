@@ -15,7 +15,7 @@ export type EstadoRenovacion =
   | 'hoy'
   | 'porFinalizar';
 
-export type TipoPago = 'efectivo' | 'transferencia';
+export type TipoPago = 'efectivo' | 'transferencia' | 'ambos';
 
 export type InformacionAdicional = {
   titulo: string;

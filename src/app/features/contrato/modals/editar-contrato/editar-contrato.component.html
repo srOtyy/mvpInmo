@@ -13,6 +13,7 @@
       <mat-select formControlName="tipoPago">
         <mat-option value="efectivo">efectivo</mat-option>
         <mat-option value="transferencia">transferencia</mat-option>
+        <mat-option value="ambos">ambos</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
@@ -30,6 +31,10 @@
     <mat-form-field appearance="fill">
       <mat-label>Honorarios</mat-label>
       <input matInput formControlName="porcentajeHonorarios" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Periodo deAumento</mat-label>
+      <input matInput formControlName="periodoAumento" />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Administra propietario</mat-label>
