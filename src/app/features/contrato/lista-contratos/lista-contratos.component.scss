@@ -249,29 +249,19 @@
         border-bottom: 1px solid $warning;
       }
 
-      &.chip-activo {
-        border-right: 3px solid $success;
-        border-bottom: 1px solid $success;
-      }
-
       &.chip-normal {
         border-right: 3px solid $neutral-500;
         border-bottom: 1px solid $neutral-500;
       }
 
-      &.chip-un_mes {
+      &.chip-vencido {
         border-right: 3px solid $error;
         border-bottom: 1px solid $error;
       }
 
-      &.chip-vencido {
-        border-right: 3px solid $accent-1;
-        border-bottom: 1px solid $accent-1;
-      }
-
-      &.chip-hoy {
-        border-right: 3px solid $accent-2;
-        border-bottom: 1px solid $accent-2;
+      &.chip-un_mes {
+        border-right: 3px solid #ee701cd7;
+        border-bottom: 1px solid #df5f0afd;
       }
     }
 
@@ -356,7 +346,7 @@
         background-color: rgba($secondary-100, 0.15);
         color: $primary-700;
       }
-      &.chip-un_mes {
+      &.chip-vencido {
         background-color: rgba($error, 0.15);
         color: $error;
       }
@@ -364,14 +354,11 @@
         background-color: rgba($warning, 0.15);
         color: $warning;
       }
-      &.chip-vencido {
-        background-color: #ff9f501f;
+      &.chip-un_mes {
+        background-color: #703610d7;
         color: $accent-1;
       }
-      &.chip-hoy {
-        background-color: #ff9f501f;
-        color: $accent-2;
-      }
+
       //requiere accion
       &.chip-requiereAccion-true {
         background-color: rgba($primary-500, 0.15);
