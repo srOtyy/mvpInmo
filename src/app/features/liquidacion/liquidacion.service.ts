@@ -403,7 +403,6 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       monto: this.formatearMonto(item.monto),
       // montoTexto: numeroALetras(item.monto),
     }));
-    console.log('itemsInquilino', itemsInquilino);
     try {
       const response = await lastValueFrom(
         this.http.get(`/templates/${this.recibiInquilino}`, {
