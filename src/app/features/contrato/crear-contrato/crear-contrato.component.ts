@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
 import {
   IPropietario,
   IPropietarioVista,
@@ -32,7 +33,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { CicloDeVidaContratosService } from '../ciclo-de-vida-contratos.service';
 import { PropietarioRxjsService } from '../../propietario/propietario-rxjs.service';
-import { map, Observable, startWith, switchMap } from 'rxjs';
+import { forkJoin, map, Observable, startWith, switchMap } from 'rxjs';
 import {
   MatAutocompleteModule,
   MatAutocompleteSelectedEvent,
@@ -48,6 +49,7 @@ import { InmueblesRxjsService } from '../../inmueble/inmuebles-rxjs.service';
     MatSelectModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatChipsModule,
     MatDatepickerModule,
     MatAutocompleteModule,
     AsyncPipe,
@@ -69,8 +71,8 @@ export class CrearContratoComponent implements OnInit {
   ];
   propietariosFiltrados!: Observable<IPropietarioVista[]>;
   inquilinosFiltrados!: Observable<IInquilinoVista[]>;
+  busquedaInquilino = new FormControl('', { nonNullable: true });
   $propietarioId = signal<number>(0);
-  $inquilinoId = signal<number>(0);
   constructor(
     private contratosService: ContratoBbddService,
     private _snack: SnackbarService,
@@ -87,7 +89,10 @@ export class CrearContratoComponent implements OnInit {
         { value: '', disabled: true },
         Validators.required,
       ),
-      inquilinoId: new FormControl('', Validators.required),
+      inquilinos: new FormControl<number[]>([], {
+        nonNullable: true,
+        validators: Validators.required,
+      }),
       fechaInicio: new FormControl('', Validators.required),
       fechaFin: new FormControl('', Validators.required),
       rentaMensual: new FormControl('', [
@@ -145,19 +150,12 @@ export class CrearContratoComponent implements OnInit {
             : this.propietariosLista.slice(),
         ),
       );
-    this.inquilinosFiltrados = this.formulario
-      .get('inquilinoId')!
-      .valueChanges.pipe(
-        startWith(''),
-        map((value) => (typeof value === 'string' ? value : value?.nombre)),
-        map((nombre) =>
-          nombre
-            ? this._filtrarInquilinos(nombre)
-            : this.inquilinosDisponiblesLista.slice(),
-        ),
-      );
+    this.inquilinosFiltrados = this.busquedaInquilino.valueChanges.pipe(
+      startWith(this.busquedaInquilino.value),
+      map((nombre) => this._filtrarInquilinos(nombre)),
+    );
   }
-  // para el oninit del observable para inquilinos y propietarios (autocomplete)
+  // para el oninit de los observables de autocomplete
   private _filtrarPropietarios(nombre: string): IPropietarioVista[] {
     const filterValue = nombre.toLowerCase();
     return this.propietariosLista.filter((p) =>
@@ -168,12 +166,15 @@ export class CrearContratoComponent implements OnInit {
     return propietario?.nombre ?? '';
   }
   private _filtrarInquilinos(nombre: string): IInquilinoVista[] {
-    const filterValue = nombre.toLowerCase();
-    return this.inquilinosDisponiblesLista.filter((i) =>
-      i.nombre.toLowerCase().includes(filterValue),
+    const filterValue = nombre.toLowerCase().trim();
+    const idsSeleccionados = new Set(this.inquilinosSeleccionados);
+    return this.inquilinosDisponiblesLista.filter(
+      (inquilino) =>
+        !idsSeleccionados.has(inquilino.id) &&
+        inquilino.nombre.toLowerCase().includes(filterValue),
     );
   }
-  displayInquilino(inquilino: IInquilinoVista): string {
+  displayInquilino(inquilino: IInquilinoVista | null): string {
     return inquilino?.nombre ?? '';
   }
   displayInmueble(inmueble: (typeof this.inmueblesLista)[number]): string {
@@ -203,6 +204,9 @@ export class CrearContratoComponent implements OnInit {
   get inquilinosDisponiblesLista() {
     return this.inquilinosLista.filter((inquilino) => !inquilino.activo);
   }
+  get inquilinosSeleccionados(): number[] {
+    return this.formulario.get('inquilinos')?.value ?? [];
+  }
   get inmueblesLista() {
     return this.contratosService.$listaInmuebles;
   }
@@ -227,7 +231,6 @@ export class CrearContratoComponent implements OnInit {
   //submit
   enviarContrato() {
     this.formulario.patchValue({ propietarioId: this.$propietarioId() });
-    this.formulario.patchValue({ inquilinoId: this.$inquilinoId() });
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
       this._snack.mensajeSnackBar(
@@ -240,12 +243,6 @@ export class CrearContratoComponent implements OnInit {
     contrato.valorInicialDelContrato = contrato.rentaMensual;
     contrato.informacionAdicional = [];
     contrato.administracionTotal = false;
-    if (this.formulario.get('titulo')?.value === '') {
-      contrato.titulo = this.contratosService.generarTituloContrato(
-        contrato.propietarioId.toString(),
-        contrato.inquilinoId.toString(),
-      );
-    }
     contrato.proximoAumento = this.contratosService.declararProximoMesDeAumento(
       contrato.periodoAumento,
       contrato.fechaInicio,
@@ -260,7 +257,9 @@ export class CrearContratoComponent implements OnInit {
         const liquidacion = this._liquidacion.crearLiquidacion(
           contrato,
           this.nombrePropietarioXId(contrato.propietarioId),
-          this.nombreInquilinoXId(contrato.inquilinoId),
+          contrato.inquilinos
+            .map((id) => this.nombreInquilinoXId(id))
+            .join(', '),
         );
         this._liquidacion
           .crear(liquidacion)
@@ -269,7 +268,11 @@ export class CrearContratoComponent implements OnInit {
               this._inmueblesService.activarInmueble(contrato.inmuebleId),
             ),
             switchMap(() =>
-              this._inquilinoService.activarInquilino(contrato.inquilinoId),
+              forkJoin(
+                contrato.inquilinos.map((id) =>
+                  this._inquilinoService.activarInquilino(id),
+                ),
+              ),
             ),
           )
           .subscribe({
@@ -287,7 +290,7 @@ export class CrearContratoComponent implements OnInit {
             },
             error: () => {
               this._snack.mensajeSnackBar(
-                'Contrato creado, pero no se pudieron completar las actualizaciones relacionadas',
+                'Contrato creado, pero no se pudieron completar las activaciones relacionadas',
                 'Cerrar',
               );
             },
@@ -323,7 +326,10 @@ export class CrearContratoComponent implements OnInit {
   }
   nombreInquilinoXId(id: number): string {
     const inquilino = this.inquilinosLista.find((i) => i.id === id);
-    return inquilino ? this.nombreInquilino(inquilino) : 'Nombre no disponible';
+    const nombre = inquilino
+      ? this.nombreInquilino(inquilino)
+      : 'Nombre no disponible';
+    return nombre.split(' ')[0]; // Devuelve solo el primer nombre
   }
 
   //convertir array a la version de Vista
@@ -351,7 +357,22 @@ export class CrearContratoComponent implements OnInit {
     const controlInmuebles = this.formulario.get('inmuebleId');
     controlInmuebles?.enable();
   }
+
   obtenerIdDelInquilino(event: MatAutocompleteSelectedEvent) {
-    this.$inquilinoId.set(event.option.value.id);
+    const inquilino = event.option.value as IInquilinoVista;
+    const idsSeleccionados = this.inquilinosSeleccionados;
+    if (!idsSeleccionados.includes(inquilino.id)) {
+      this.formulario
+        .get('inquilinos')
+        ?.setValue([...idsSeleccionados, inquilino.id]);
+    }
+    this.busquedaInquilino.setValue('');
+  }
+
+  quitarInquilino(id: number) {
+    this.formulario
+      .get('inquilinos')
+      ?.setValue(this.inquilinosSeleccionados.filter((item) => item !== id));
+    this.busquedaInquilino.setValue(this.busquedaInquilino.value);
   }
 }

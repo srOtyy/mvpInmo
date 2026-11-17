@@ -31,9 +31,11 @@ export type tipoDeContrato =
 
 export interface IContrato {
   id: number;
-  inquilinoId: number;
-  inmuebleId: number;
+  // inquilinoId: number;
+  // propietarios: number[];
+  inquilinos: number[];
   propietarioId: number;
+  inmuebleId: number;
   fechaInicio: Date;
   fechaFin: Date;
   estado: ContractStatus;

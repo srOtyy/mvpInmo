@@ -45,7 +45,7 @@ export class EditarContratoComponent implements OnInit {
   ) {
     this.formularioEditarContrato = this.formBuilder.group({
       id: [''],
-      inquilinoId: [],
+      inquilinos: [[]],
       inmuebleId: [],
       fechaFin: [],
       fechaInicio: [''],
@@ -71,7 +71,7 @@ export class EditarContratoComponent implements OnInit {
     });
     this.formularioEditarContrato.get('inmuebleId')?.disable();
     this.formularioEditarContrato.get('propietarioId')?.disable();
-    this.formularioEditarContrato.get('inquilinoId')?.disable();
+    this.formularioEditarContrato.get('inquilinos')?.disable();
   }
   async ngOnInit(): Promise<void> {
     this.pasarDatosContrato(this.entidad);
@@ -91,7 +91,7 @@ export class EditarContratoComponent implements OnInit {
   pasarDatosContrato(contratoData: IContrato) {
     this.formularioEditarContrato.patchValue({
       id: contratoData.id,
-      inquilinoId: contratoData.inquilinoId,
+      inquilinos: contratoData.inquilinos,
       inmuebleId: contratoData.inmuebleId,
       propietarioId: contratoData.propietarioId,
       fechaFin: contratoData.fechaFin,
@@ -119,7 +119,7 @@ export class EditarContratoComponent implements OnInit {
   guardarCambios() {
     this.formularioEditarContrato.get('inmuebleId')?.enable();
     this.formularioEditarContrato.get('propietarioId')?.enable();
-    this.formularioEditarContrato.get('inquilinoId')?.enable();
+    this.formularioEditarContrato.get('inquilinos')?.enable();
     const raw: IContrato = this.formularioEditarContrato.getRawValue();
     const contratoActualizado: IContrato = {
       ...raw,

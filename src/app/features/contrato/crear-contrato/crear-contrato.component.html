@@ -34,27 +34,49 @@
       </div>
       <div class="campo">
         <mat-form-field>
-          <mat-label>Inquilino</mat-label>
+          <mat-label>Inquilinos</mat-label>
+          <mat-chip-grid #inquilinoChipGrid aria-label="Inquilinos seleccionados">
+            @for (id of inquilinosSeleccionados; track id) {
+              <mat-chip-row (removed)="quitarInquilino(id)">
+                {{ nombreInquilinoXId(id) }}
+                <button
+                  type="button"
+                  matChipRemove
+                  [attr.aria-label]="'Quitar ' + nombreInquilinoXId(id)"
+                >
+                  ×
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-grid>
           <input
             type="text"
             matInput
-            formControlName="inquilinoId"
+            placeholder="Buscar inquilino..."
+            [formControl]="busquedaInquilino"
+            [matChipInputFor]="inquilinoChipGrid"
             [matAutocomplete]="autoInq"
+            (keydown.enter)="$event.preventDefault()"
           />
           <mat-autocomplete
             #autoInq="matAutocomplete"
             [displayWith]="displayInquilino"
             (optionSelected)="obtenerIdDelInquilino($event)"
           >
-            @for (
-              inquilino of inquilinosFiltrados | async;
-              track inquilino.id
-            ) {
+            @for (inquilino of inquilinosFiltrados | async; track inquilino.id) {
               <mat-option [value]="inquilino">{{
                 inquilino.nombre
               }}</mat-option>
+            } @empty {
+              <mat-option disabled>No hay inquilinos coincidentes</mat-option>
             }
           </mat-autocomplete>
+          @if (
+            formulario.get("inquilinos")?.hasError("required") &&
+            formulario.get("inquilinos")?.touched
+          ) {
+            <mat-error>Selecciona al menos un inquilino</mat-error>
+          }
         </mat-form-field>
       </div>
       <div class="campo">
