@@ -3,7 +3,7 @@ export interface Liquidacion {
   id: number;
   contratoId: number;
   propietarioNombre: string;
-  inquilinoNombre: string;
+  inquilinosNombres: string[];
   inmuebleId: number;
   periodo: string;
   fechaGeneracion: Date; //se puede borrar. No se usa

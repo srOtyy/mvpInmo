@@ -136,13 +136,13 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
   crearLiquidacion(
     contrato: IContrato,
     nombrePropietario: string,
-    nombreInquilino: string,
+    nombresInquilino: string[],
   ): Liquidacion {
     const liquidacion: Liquidacion = {
       id: randomId(),
       contratoId: contrato.id,
       propietarioNombre: nombrePropietario,
-      inquilinoNombre: nombreInquilino,
+      inquilinosNombres: nombresInquilino,
       inmuebleId: contrato.inmuebleId,
       periodo: new Date().toLocaleDateString('es-AR', {
         month: 'long',
@@ -204,7 +204,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         contrato: liquidacion.contratoId,
         periodo: this.periodo,
         propietario: liquidacion.propietarioNombre,
-        inquilino: liquidacion.inquilinoNombre,
+        inquilino: liquidacion.inquilinosNombres,
         itemsInquilino,
         montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
         total: this.formatearMonto(
@@ -226,7 +226,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       });
       saveAs(
         blob,
-        `${liquidacion.inquilinoNombre} - liquidacion ${this.periodo}.docx`,
+        `${liquidacion.inquilinosNombres[0]} - liquidacion ${this.periodo}.docx`,
       );
     } catch (error) {
       throw error;
@@ -287,7 +287,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         periodo: this.periodo,
         inmueble: inmueble?.direccion,
         propietario: liquidacion.propietarioNombre,
-        inquilino: liquidacion.inquilinoNombre,
+        inquilino: liquidacion.inquilinosNombres,
         itemsPropietario,
         itemsInquilino,
         montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
@@ -377,6 +377,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     }
   }
   async generarReciboInquilino(liquidacion: Liquidacion): Promise<void> {
+    console.log(liquidacion);
     const montoAlquilerTexto = numeroALetras(liquidacion.montoAlquiler);
     const direccion = this._inmueblesService.obtenerDireccion(
       liquidacion.inmuebleId,
@@ -424,7 +425,9 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         contrato: liquidacion.contratoId,
         periodo: this.periodo,
         propietario: liquidacion.propietarioNombre,
-        inquilino: liquidacion.inquilinoNombre,
+        inquilinosNombres: liquidacion.inquilinosNombres.map(
+          (nombre) => `de/la señor/a ${nombre},`,
+        ),
         itemsInquilino,
         montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
         montoAlquilerTexto: montoAlquilerTexto,
@@ -445,7 +448,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       });
       saveAs(
         blob,
-        `${liquidacion.inquilinoNombre} - recibo ${this.periodo}.docx`,
+        `${liquidacion.inquilinosNombres[0]} - recibo ${this.periodo}.docx`,
       );
     } catch (error) {
       console.error('Error 1 al generar la liquidación;', error);
@@ -495,7 +498,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         letra: letra,
         montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
         propietario: liquidacion.propietarioNombre,
-        inquilino: liquidacion.inquilinoNombre,
+        inquilino: liquidacion.inquilinosNombres,
         itemsInquilino,
         total: this.formatearMonto(total),
         totalHonorarios: this.formatearMonto(totalHonorarios),
@@ -509,7 +512,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       });
       saveAs(
         blob,
-        `${liquidacion.inquilinoNombre} - liquidacion ${this.periodo}.docx`,
+        `${liquidacion.inquilinosNombres[0]} - liquidacion ${this.periodo}.docx`,
       );
     } catch (error) {
       throw error;
