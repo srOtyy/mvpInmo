@@ -49,7 +49,7 @@ export class EditarContratoComponent implements OnInit {
       inmuebleId: [],
       fechaFin: [],
       fechaInicio: [''],
-      propietarioId: [],
+      propietarios: [[]],
       estado: [''],
       estadoRenovacion: [''],
       rentaMensual: [],
@@ -70,7 +70,7 @@ export class EditarContratoComponent implements OnInit {
       valorInicialDelContrato: [],
     });
     this.formularioEditarContrato.get('inmuebleId')?.disable();
-    this.formularioEditarContrato.get('propietarioId')?.disable();
+    this.formularioEditarContrato.get('propietarios')?.disable();
     this.formularioEditarContrato.get('inquilinos')?.disable();
   }
   async ngOnInit(): Promise<void> {
@@ -93,7 +93,9 @@ export class EditarContratoComponent implements OnInit {
       id: contratoData.id,
       inquilinos: contratoData.inquilinos,
       inmuebleId: contratoData.inmuebleId,
-      propietarioId: contratoData.propietarioId,
+      propietarios:
+        contratoData.propietarios ??
+        (contratoData.propietarioId ? [contratoData.propietarioId] : []),
       fechaFin: contratoData.fechaFin,
       fechaInicio: contratoData.fechaInicio,
       estado: contratoData.estado,
@@ -118,7 +120,7 @@ export class EditarContratoComponent implements OnInit {
   }
   guardarCambios() {
     this.formularioEditarContrato.get('inmuebleId')?.enable();
-    this.formularioEditarContrato.get('propietarioId')?.enable();
+    this.formularioEditarContrato.get('propietarios')?.enable();
     this.formularioEditarContrato.get('inquilinos')?.enable();
     const raw: IContrato = this.formularioEditarContrato.getRawValue();
     const contratoActualizado: IContrato = {

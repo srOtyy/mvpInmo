@@ -1,42 +1,156 @@
 @use "../../../../styles.scss" as *;
 
-.section {
-  margin: 30px 10px;
-  padding: 20px;
-  border-radius: 15px;
-  background-color: $neutral-800;
+:host {
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.contrato-form {
+  max-width: 1180px;
+  margin: 24px auto;
+  padding: 0 24px 32px;
+  color: $neutral-50;
+}
+
+.encabezado {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  h4 {
-    color: $primary-500;
-    margin: 0;
-  }
-  .formulario {
-    padding: 20px;
-    p {
-      color: $neutral-400;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      margin-bottom: 1rem;
-      gap: 25px;
-      .campo {
-        display: flex;
-        flex-direction: column;
-        width: 230px;
-      }
-    }
-  }
-  .example-additional-selection {
-    font-size: 0.85em;
-    opacity: 0.75;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  h1 {
+    margin: 2px 0 6px;
+    color: $accent-1;
+    font-size: 36px;
   }
 }
 
-@media (max-width: 768px) {
-  .grid {
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px solid $neutral-600;
+  border-radius: 12px;
+  background: $neutral-800;
+
+  legend {
+    padding: 0 8px;
+    color: $accent-1;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .seccion-ayuda {
+    margin: -2px 0 14px;
+    color: $neutral-400;
+    font-size: 13px;
+  }
+}
+
+.fieldset-partes {
+  height: 190px;
+}
+.grid {
+  display: grid;
+  gap: 14px 18px;
+}
+
+.grid-partes {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-vigencia {
+  grid-template-columns: minmax(280px, 2fr) repeat(2, minmax(180px, 1fr));
+}
+
+.grid-administracion {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.campo {
+  width: 100%;
+  min-width: 0;
+}
+
+.campo-chips {
+  height: 84px;
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 2px;
+
+  button {
+    min-width: 180px;
+    height: 44px;
+  }
+
+  .estado-formulario {
+    color: $neutral-400;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 960px) {
+  .grid-partes,
+  .grid-administracion {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid-vigencia {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .campo-rango {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 620px) {
+  .contrato-form {
+    margin: 12px auto;
+    padding: 0 12px 24px;
+  }
+
+  .encabezado h1 {
+    font-size: 24px;
+  }
+
+  fieldset {
+    padding: 14px 12px 6px;
+  }
+
+  .grid-partes,
+  .grid-vigencia,
+  .grid-administracion {
     grid-template-columns: 1fr;
+  }
+
+  .campo-rango {
+    grid-column: auto;
+  }
+
+  .acciones {
+    align-items: stretch;
+    flex-direction: column;
+
+    .estado-formulario {
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+    }
   }
 }

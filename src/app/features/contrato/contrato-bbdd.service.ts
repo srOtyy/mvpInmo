@@ -63,9 +63,9 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     const contrato = this.$lista().find(
       (c) => c.id === this.$contratoIdSideBarInfo(),
     );
-    return this.$listaPropietarios.find(
-      (p) => p.id === contrato?.propietarioId,
-    );
+    const propietarioId =
+      contrato?.propietarios?.[0] ?? contrato?.propietarioId;
+    return this.$listaPropietarios.find((p) => p.id === propietarioId);
   });
   $contratoTituloSideBarInfo = computed(() => {
     const contrato = this.$lista().find(

@@ -15,7 +15,6 @@ import { SeguimientoEGLAI } from '../contrato/eglai.interface';
   providedIn: 'root',
 })
 export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
-  //dia mostrado en el header
   ahora = new Date();
   periodo = this.ahora.toLocaleDateString('es-AR', {
     month: 'long',
@@ -377,7 +376,6 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     }
   }
   async generarReciboInquilino(liquidacion: Liquidacion): Promise<void> {
-    console.log(liquidacion);
     const montoAlquilerTexto = numeroALetras(liquidacion.montoAlquiler);
     const direccion = this._inmueblesService.obtenerDireccion(
       liquidacion.inmuebleId,
