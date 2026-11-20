@@ -93,10 +93,10 @@ export class ListaContratosComponent implements OnInit {
     this.contratoSeleccionado.set(contrato);
     this._contratosService.seleccionarContrato(contrato);
     this._contratosService.$contratoIdSideBarInfo.set(contrato.id);
-    this._contratosService.$sideBarInfo.set(true);
   }
   evaluarClick(contrato: IContrato): void {
     this.seleccionarContrato(contrato);
+    this._contratosService.$sideBarInfo.set(true);
     this.router.navigate([
       '/contratos',
       { outlets: { primary: 'lista', detalle: 'vista' } },

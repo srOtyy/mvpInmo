@@ -114,11 +114,6 @@ export class ContratoCComponent implements OnInit {
         },
       });
   }
-  //cambiar valor $sideBarInfo ( desde el servicio de contratos)
-  cambiarValorSidebarInfo(id: number) {
-    this._contratosService.$sideBarInfo.set(true);
-    this._contratosService.$contratoIdSideBarInfo.set(id);
-  }
 
   volverALaListaDeContratos() {
     this.router.navigate([

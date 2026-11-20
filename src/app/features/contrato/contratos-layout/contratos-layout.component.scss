@@ -17,5 +17,11 @@ mat-sidenav-content {
 }
 
 .detalle-sidenav {
-  width: min(620px, 92vw);
+  width: 50%;
+}
+
+@media (max-width: 999px) {
+  .detalle-sidenav {
+    width: min(620px, 92vw);
+  }
 }

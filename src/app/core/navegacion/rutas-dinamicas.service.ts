@@ -1,45 +1,52 @@
-
 import { Injectable, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { Dominio,IBotonRuta } from './navegacionRutas';
+import { Dominio, IBotonRuta } from './navegacionRutas';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class RutasDinamicasService {
   // por el momento es importante declarar los dominios y sus rutas en el Record<K,V> 'accionesPorDominio'
   private accionesPorDominio: Record<Dominio, IBotonRuta[]> = {
     propietarios: [
       { nombre: 'lista', ruta: ['/propietarios', 'lista'] },
       { nombre: 'crear', ruta: ['/propietarios', 'crear'] },
-      { nombre: 'caracteristicas', ruta: ['/propietarios', 'def_caracteristicas'] }
+      {
+        nombre: 'caracteristicas',
+        ruta: ['/propietarios', 'def_caracteristicas'],
+      },
     ],
     inquilinos: [
       { nombre: 'lista', ruta: ['/inquilinos', 'lista'] },
-      {nombre: 'crear', ruta: ['/inquilinos', 'crear']},
-      { nombre: 'caracteristicas', ruta: ['/inquilinos', 'def_caracteristicas'] },
+      { nombre: 'crear', ruta: ['/inquilinos', 'crear'] },
+      {
+        nombre: 'caracteristicas',
+        ruta: ['/inquilinos', 'def_caracteristicas'],
+      },
     ],
     inmuebles: [
       { nombre: 'lista', ruta: ['/inmuebles', 'lista'] },
-      {nombre: 'crear', ruta: ['/inmuebles', 'crear']},
-      { nombre: 'caracteristicas', ruta: ['/inmuebles', 'def_caracteristicas'] }
+      { nombre: 'crear', ruta: ['/inmuebles', 'crear'] },
+      {
+        nombre: 'caracteristicas',
+        ruta: ['/inmuebles', 'def_caracteristicas'],
+      },
     ],
     contratos: [
-      {nombre: 'crear', ruta: ['/contratos', 'crear']},
-      {nombre: 'lista', ruta: ['/contratos','lista']}
-    ]
+      { nombre: 'crear', ruta: ['/contratos', 'crear'] },
+      { nombre: 'lista', ruta: ['/contratos', 'lista'] },
+    ],
   };
 
   //singal para el dominio activo, se puede usar en el html del sidebar para mostrar los botones de accion correspondientes al dominio activo
   public $dominioActivo = signal<Dominio | null>(null);
 
-  constructor(private router: Router) {}
+  constructor() {}
 
-  emitirEntidades(): string[]{
-    return Object.keys(this.accionesPorDominio);
+  emitirEntidades(): Dominio[] {
+    return Object.keys(this.accionesPorDominio) as Dominio[];
   }
-    obtenerBotonesAccionPorDominio(dominio: Dominio): IBotonRuta[] {
+
+  obtenerBotonesAccionPorDominio(dominio: Dominio): IBotonRuta[] {
     return this.accionesPorDominio[dominio] || [];
   }
 }
