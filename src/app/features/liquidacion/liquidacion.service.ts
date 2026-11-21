@@ -6,7 +6,17 @@ import { Liquidacion, LiquidacionItem } from './liquidacion-interface';
 import { IContrato } from '../contrato/contrato.interface';
 import { randomId } from '../../shared/utilitys';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin, lastValueFrom, map, Observable, of, switchMap } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  from,
+  lastValueFrom,
+  map,
+  Observable,
+  of,
+  switchMap,
+  toArray,
+} from 'rxjs';
 import { BaseCrudService } from '../../core/http/base-crud.service';
 import { InmueblesRxjsService } from '../inmueble/inmuebles-rxjs.service';
 import { numeroALetras } from '../../shared/utilitys';
@@ -59,12 +69,15 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
   restablecerServiciosEGLAI(): Observable<{
     serviciosRestablecidos: number;
     liquidacionesRestablecidas: number;
+    fallidas: { id: number; error: unknown }[];
   }> {
     return this.cargar().pipe(
       switchMap((liquidaciones) => {
-        let serviciosRestablecidos = 0;
-        let liquidacionesRestablecidas = 0;
-        const actualizaciones: Liquidacion[] = [];
+        const actualizaciones: {
+          liquidacion: Liquidacion;
+          serviciosRestablecidos: number;
+          liquidacionRestablecida: boolean;
+        }[] = [];
 
         for (const liquidacion of liquidaciones) {
           const EGLAI = liquidacion.EGLAI
@@ -87,12 +100,14 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
               EGLAI[servicio as keyof SeguimientoEGLAI] = 'pendiente';
             }
           }
-          serviciosRestablecidos += serviciosCargados.length;
-          if (liquidacion.estado === 'emitida') liquidacionesRestablecidas++;
           actualizaciones.push({
-            ...liquidacion,
-            ...(EGLAI ? { EGLAI } : {}),
-            estado: estadoActualizado,
+            liquidacion: {
+              ...liquidacion,
+              ...(EGLAI ? { EGLAI } : {}),
+              estado: estadoActualizado,
+            },
+            serviciosRestablecidos: serviciosCargados.length,
+            liquidacionRestablecida: liquidacion.estado === 'emitida',
           });
         }
 
@@ -100,19 +115,35 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
           return of({
             serviciosRestablecidos: 0,
             liquidacionesRestablecidas: 0,
+            fallidas: [],
           });
         }
 
-        return forkJoin(
-          actualizaciones.map((liquidacion) =>
-            this.actualizarSinRecargar(liquidacion.id, liquidacion),
+        return from(actualizaciones).pipe(
+          concatMap((actualizacion) =>
+            this.actualizarSinRecargar(
+              actualizacion.liquidacion.id,
+              actualizacion.liquidacion,
+            ).pipe(
+              map(() => ({ ok: true as const, actualizacion })),
+              catchError((error: unknown) =>
+                of({ ok: false as const, actualizacion, error }),
+              ),
+            ),
           ),
-        ).pipe(
-          map(() => {
+          toArray(),
+          map((resultados) => {
+            const exitosas = resultados.filter((resultado) => resultado.ok);
+            const fallidas = resultados
+              .filter((resultado) => !resultado.ok)
+              .map(({ actualizacion, error }) => ({
+                id: actualizacion.liquidacion.id,
+                error,
+              }));
             const actualizacionesPorId = new Map(
-              actualizaciones.map((liquidacion) => [
-                liquidacion.id,
-                liquidacion,
+              exitosas.map(({ actualizacion }) => [
+                actualizacion.liquidacion.id,
+                actualizacion.liquidacion,
               ]),
             );
             this.$lista.update((lista) =>
@@ -122,8 +153,15 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
               ),
             );
             return {
-              serviciosRestablecidos,
-              liquidacionesRestablecidas,
+              serviciosRestablecidos: exitosas.reduce(
+                (total, { actualizacion }) =>
+                  total + actualizacion.serviciosRestablecidos,
+                0,
+              ),
+              liquidacionesRestablecidas: exitosas.filter(
+                ({ actualizacion }) => actualizacion.liquidacionRestablecida,
+              ).length,
+              fallidas,
             };
           }),
         );

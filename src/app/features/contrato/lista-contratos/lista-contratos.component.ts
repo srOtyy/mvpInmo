@@ -200,15 +200,29 @@ export class ListaContratosComponent implements OnInit {
 
     this.restableciendoEGLAI.set(true);
     this._liquidacionesService.restablecerServiciosEGLAI().subscribe({
-      next: ({ serviciosRestablecidos, liquidacionesRestablecidas }) => {
-        const resumen = [
-          `${serviciosRestablecidos} servicios EGLAI restablecidos`,
-          `${liquidacionesRestablecidas} liquidaciones devueltas a borrador`,
-        ].join('; ');
+      next: ({
+        serviciosRestablecidos,
+        liquidacionesRestablecidas,
+        fallidas,
+      }) => {
+        fallidas.forEach(({ id, error }) => {
+          console.error(`No se pudo restablecer la liquidación ${id}`, error);
+        });
+        const huboCambios =
+          serviciosRestablecidos > 0 || liquidacionesRestablecidas > 0;
+        const resumen = huboCambios
+          ? [
+              `${serviciosRestablecidos} servicios EGLAI restablecidos`,
+              `${liquidacionesRestablecidas} liquidaciones devueltas a borrador`,
+            ].join('; ')
+          : 'No había servicios EGLAI ni liquidaciones emitidas para restablecer';
+        const mensaje = fallidas.length
+          ? huboCambios
+            ? `${resumen}; ${fallidas.length} liquidaciones no se pudieron restablecer`
+            : `No se pudieron restablecer ${fallidas.length} liquidaciones`
+          : resumen;
         this._snackbar.mensajeSnackBar(
-          serviciosRestablecidos > 0 || liquidacionesRestablecidas > 0
-            ? resumen
-            : 'No había servicios EGLAI ni liquidaciones emitidas para restablecer',
+          mensaje,
           'Cerrar',
         );
         this.restableciendoEGLAI.set(false);
