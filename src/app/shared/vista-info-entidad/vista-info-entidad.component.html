@@ -30,11 +30,17 @@
       </ng-template>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Propietario</ng-template>
+      <ng-template matStepLabel>Propietarios</ng-template>
       <ng-template matStepContent>
-        <app-vista-info-propietario
-          [propietario]="this._contratos.$propietarioSideBarInfo()"
-        ></app-vista-info-propietario>
+        @for (
+          propietario of _contratos.$propietariosSideBarInfo();
+          track propietario.id
+        ) {
+          <app-vista-info-propietario [propietario]="propietario" />
+          <mat-divider></mat-divider>
+        } @empty {
+          <p>No hay propietarios asociados.</p>
+        }
       </ng-template>
     </mat-step>
     <mat-step>

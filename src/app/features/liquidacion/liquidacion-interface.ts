@@ -2,10 +2,9 @@ import { SeguimientoEGLAI } from '../contrato/eglai.interface';
 export interface Liquidacion {
   id: number;
   contratoId: number;
-  propietarioNombre: string;
+  propietariosNombres: string[];
   inquilinosNombres: string[];
   inmuebleId: number;
-  periodo: string;
   fechaGeneracion: Date; //se puede borrar. No se usa
   itemsInquilino: LiquidacionItem[];
   itemsPropietario: LiquidacionItem[];

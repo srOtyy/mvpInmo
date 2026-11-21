@@ -12,7 +12,6 @@ import {
   BehaviorSubject,
   catchError,
   concatMap,
-  delay,
   EMPTY,
   firstValueFrom,
   from,
@@ -59,13 +58,17 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
       )
       .filter((inquilino): inquilino is IInquilino => inquilino !== undefined);
   });
-  $propietarioSideBarInfo = computed(() => {
+  $propietariosSideBarInfo = computed(() => {
     const contrato = this.$lista().find(
       (c) => c.id === this.$contratoIdSideBarInfo(),
     );
-    const propietarioId =
-      contrato?.propietarios?.[0] ?? contrato?.propietarioId;
-    return this.$listaPropietarios.find((p) => p.id === propietarioId);
+    return (contrato?.propietarios ?? [])
+      .map((id) =>
+        this.$listaPropietarios.find((propietario) => propietario.id === id),
+      )
+      .filter(
+        (propietario): propietario is IPropietario => propietario !== undefined,
+      );
   });
   $contratoTituloSideBarInfo = computed(() => {
     const contrato = this.$lista().find(

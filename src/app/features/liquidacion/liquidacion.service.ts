@@ -134,19 +134,15 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
   //crear la liquidacion
   crearLiquidacion(
     contrato: IContrato,
-    nombrePropietario: string,
+    nombresPropietarios: string[],
     nombresInquilino: string[],
   ): Liquidacion {
     const liquidacion: Liquidacion = {
       id: randomId(),
       contratoId: contrato.id,
-      propietarioNombre: nombrePropietario,
+      propietariosNombres: nombresPropietarios,
       inquilinosNombres: nombresInquilino,
       inmuebleId: contrato.inmuebleId,
-      periodo: new Date().toLocaleDateString('es-AR', {
-        month: 'long',
-        year: 'numeric',
-      }),
       fechaGeneracion: new Date(),
       itemsInquilino: [],
       itemsPropietario: [],
@@ -202,7 +198,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       doc.render({
         contrato: liquidacion.contratoId,
         periodo: this.periodo,
-        propietario: liquidacion.propietarioNombre,
+        propietario: liquidacion.propietariosNombres.join(' y '),
         inquilino: liquidacion.inquilinosNombres,
         itemsInquilino,
         montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
@@ -232,7 +228,11 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     }
   }
   async generarLiquidacionPropietario(liquidacion: Liquidacion): Promise<void> {
-    const nombrePropietario = liquidacion.propietarioNombre;
+    let nombresPropietarios = liquidacion.propietariosNombres[0];
+    if (liquidacion.propietariosNombres.length > 1) {
+      nombresPropietarios = liquidacion.propietariosNombres.join(' y ');
+    }
+
     const inmueble = this._inmueblesService.obtenerInmueblePorId(
       liquidacion.inmuebleId,
     );
@@ -285,12 +285,11 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         contrato: liquidacion.contratoId,
         periodo: this.periodo,
         inmueble: inmueble?.direccion,
-        propietario: liquidacion.propietarioNombre,
         inquilino: liquidacion.inquilinosNombres,
+        propietarios: nombresPropietarios,
         itemsPropietario,
         itemsInquilino,
         montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
-        nombrePropietario: nombrePropietario,
         porcentajeHonorarios: liquidacion.honorarios,
         subTotal: this.formatearMonto(subTotal),
         subTotalDescuentos: this.formatearMonto(subtotalDcto),
@@ -309,70 +308,10 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
       });
       saveAs(
         blob,
-        `${liquidacion.propietarioNombre} - liquidacion ${this.periodo}.docx`,
+        `${nombresPropietarios} - liquidacion ${this.periodo}.docx`,
       );
     } catch (error) {
       throw error;
-    }
-  }
-  async generarMinutaPropietario(liquidacion: Liquidacion): Promise<void> {
-    const totalHonorarios =
-      (liquidacion.honorarios * liquidacion.montoAlquiler) / 100;
-    const totalItemsInquilino = liquidacion.itemsInquilino.reduce(
-      (sum, item) => sum + item.monto,
-      0,
-    );
-    const totalItemsPropietario = liquidacion.itemsPropietario.reduce(
-      (sum, item) => sum + item.monto,
-      0,
-    );
-    const subtotal = liquidacion.montoAlquiler + totalItemsInquilino;
-    const subtotalDescuento = totalItemsPropietario + totalHonorarios;
-    const total = subtotal - subtotalDescuento;
-    const itemsInquilino = liquidacion.itemsInquilino.map((item) => ({
-      ...item,
-      monto: this.formatearMonto(item.monto),
-    }));
-    const itemsPropietario = liquidacion.itemsPropietario.map((item) => ({
-      ...item,
-      monto: this.formatearMonto(item.monto),
-    }));
-    try {
-      const response = await lastValueFrom(
-        this.http.get(`/templates/${this.minutaPropietario}`, {
-          responseType: 'arraybuffer',
-        }),
-      );
-      const content = new Uint8Array(response as ArrayBuffer);
-      const zip = new PizZip(content);
-      const doc = new Docxtemplater(zip, {
-        paragraphLoop: true,
-        linebreaks: true,
-      });
-      doc.render({
-        periodo: liquidacion.periodo,
-        propietario: liquidacion.propietarioNombre,
-        itemsInquilino: itemsInquilino,
-        itemsPropietario: itemsPropietario,
-        montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
-        porcentajeHonorarios: liquidacion.honorarios,
-        montoHonorarios: this.formatearMonto(totalHonorarios),
-        subtotal: this.formatearMonto(subtotal),
-        subtotalDescuento: this.formatearMonto(subtotalDescuento),
-        total: this.formatearMonto(total),
-      });
-
-      const blob = doc.getZip().generate({
-        type: 'blob',
-        mimeType:
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      });
-      saveAs(
-        blob,
-        `${liquidacion.propietarioNombre} - minuta ${this.periodo}.docx`,
-      );
-    } catch (error) {
-      console.error('Error 1 al generar la liquidación;', error);
     }
   }
   async generarReciboInquilino(liquidacion: Liquidacion): Promise<void> {
@@ -400,7 +339,6 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
     const itemsInquilino = liquidacion.itemsInquilino.map((item) => ({
       ...item,
       monto: this.formatearMonto(item.monto),
-      // montoTexto: numeroALetras(item.monto),
     }));
     try {
       const response = await lastValueFrom(
@@ -422,7 +360,6 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         proximoMesYAnioActual: proximoMesYAnioActual,
         contrato: liquidacion.contratoId,
         periodo: this.periodo,
-        propietario: liquidacion.propietarioNombre,
         inquilinosNombres: liquidacion.inquilinosNombres.map(
           (nombre) => `de/la señor/a ${nombre},`,
         ),
@@ -495,7 +432,7 @@ export class LiquidacionGeneratorService extends BaseCrudService<Liquidacion> {
         piso: piso,
         letra: letra,
         montoAlquiler: this.formatearMonto(liquidacion.montoAlquiler),
-        propietario: liquidacion.propietarioNombre,
+        propietario: liquidacion.propietariosNombres.join(' y '),
         inquilino: liquidacion.inquilinosNombres,
         itemsInquilino,
         total: this.formatearMonto(total),

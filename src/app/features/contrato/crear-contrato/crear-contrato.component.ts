@@ -259,8 +259,7 @@ export class CrearContratoComponent implements OnInit {
           contrato,
           contrato.propietarios
             .map((id) => this.nombrePropietarioXId(id))
-            .filter((nombre) => nombre !== 'Nombre no disponible')
-            .join(', '),
+            .filter((nombre) => nombre !== 'Nombre no disponible'),
           contrato.inquilinos
             .map((id) => this.nombreInquilinoXId(id))
             .filter((nombre) => nombre !== 'Nombre no disponible'),
