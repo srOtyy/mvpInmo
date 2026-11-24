@@ -73,8 +73,12 @@ export class CrearContratoComponent implements OnInit {
   ];
   propietariosFiltrados!: Observable<IPropietarioVista[]>;
   inquilinosFiltrados!: Observable<IInquilinoVista[]>;
-  busquedaInquilino = new FormControl('', { nonNullable: true });
-  busquedaPropietario = new FormControl('', { nonNullable: true });
+  busquedaInquilino = new FormControl<string | IInquilinoVista>('', {
+    nonNullable: true,
+  });
+  busquedaPropietario = new FormControl<string | IPropietarioVista>('', {
+    nonNullable: true,
+  });
   $propietarioId = signal<number>(0);
   constructor(
     private contratosService: ContratoBbddService,
@@ -148,10 +152,12 @@ export class CrearContratoComponent implements OnInit {
     });
     this.propietariosFiltrados = this.busquedaPropietario.valueChanges.pipe(
       startWith(this.busquedaPropietario.value),
+      map((valor) => (typeof valor === 'string' ? valor : valor.nombre)),
       map((nombre) => this._filtrarPropietarios(nombre)),
     );
     this.inquilinosFiltrados = this.busquedaInquilino.valueChanges.pipe(
       startWith(this.busquedaInquilino.value),
+      map((valor) => (typeof valor === 'string' ? valor : valor.nombre)),
       map((nombre) => this._filtrarInquilinos(nombre)),
     );
   }
