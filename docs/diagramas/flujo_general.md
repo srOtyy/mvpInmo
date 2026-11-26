@@ -1,115 +1,119 @@
-# Diagrama de Flujo General (arquitectura actual)
+# Flujo general de la aplicacion
+
+Este diagrama resume como se conectan las rutas, las pantallas, los servicios y la API. Es un mapa de arquitectura: los recorridos de cada entidad y el ciclo del contrato se detallan en sus diagramas especificos.
 
 ```mermaid
 flowchart TB
+    U[Usuario] --> ROUTER[Angular Router<br/>app.routes.ts]
 
-    %% Entrada comun
-    U[Usuario]
-    RDS{{RutasDinamicasService}}
+    subgraph RUTAS["Rutas de la aplicacion"]
+        RP["/propietarios<br/>lista · crear · def_caracteristicas"]
+        RI["/inquilinos<br/>lista · crear · def_caracteristicas"]
+        RIM["/inmuebles<br/>lista · crear · def_caracteristicas"]
+        RC["/contratos<br/>crear · lista · liquidaciones · vista (outlet detalle)"]
+        RN["/notificaciones/crear"]
+    end
+    ROUTER --> RP
+    ROUTER --> RI
+    ROUTER --> RIM
+    ROUTER --> RC
+    ROUTER --> RN
 
-    %% Rutas por dominio
-    RP[/Ruta: propietarios/lista/]
-    RI[/Ruta: inquilinos/lista/]
-    RC[/Ruta: crear por dominio/]
+    RDS{{RutasDinamicasService}} --> SIDEBAR["Acciones del sidebar<br/>propietarios, inquilinos, inmuebles y contratos"]
+    SIDEBAR -.-> RP
+    SIDEBAR -.-> RI
+    SIDEBAR -.-> RIM
+    SIDEBAR -.-> RC
 
-    RDC1[/Ruta: propietarios/def_caracteristicas/]
-    RDC2[/Ruta: inquilinos/def_caracteristicas/]
-    RDC3[/Ruta: inmuebles/def_caracteristicas/]
+    subgraph ENTIDADES["Propietarios, inquilinos e inmuebles"]
+        LISTA["Componentes de lista<br/>filtro y orden"]
+        CARD["card-list + acordeon de entidad"]
+        MODAL["Acciones de entidad<br/>ModalService → ModalComponent<br/>editar y eliminar"]
+        CREAR["Componentes de creacion"]
+        FD["form-dinamico"]
+        DEFINICIONES["FormularioCaracteristicasComponent"]
+        SDEF{{DefinicionesCaracteristicasService}}
+        SERVICES["Servicios de dominio<br/>PropietarioRxjsService · InquilinoRxjsService<br/>InmueblesRxjsService"]
+        CRUD{{BaseCrudService}}
+        ESTADO[("signal $lista por entidad")]
 
-    %% Componentes de dominio
-    PC[propietario-c]
-    IC[inquilino-c]
-    FC[crear-entidad]
+        RP --> LISTA
+        RI --> LISTA
+        RIM --> LISTA
+        LISTA --> CARD
+        CARD -->|"editar o eliminar"| MODAL
+        LISTA --> SERVICES
+        MODAL --> SERVICES
+        RP --> CREAR
+        RI --> CREAR
+        RIM --> CREAR
+        CREAR --> FD
+        FD -->|"entidadCreada"| CREAR
+        CREAR --> SERVICES
+        RP --> DEFINICIONES
+        RI --> DEFINICIONES
+        RIM --> DEFINICIONES
+        DEFINICIONES <--> SDEF
+        SDEF -->|"definiciones por dominio"| FD
+        SERVICES --> CRUD
+        CRUD --> ESTADO
+        ESTADO --> LISTA
+    end
 
-    %% Shared UI
-    CL[shared: card-list]
-    IE[shared: item-entidad]
-    FD[shared: form-dinamico]
-    FCS[shared: formulario-caracteristicas]
-    MOD[shared: modal]
+    subgraph CONTRATOS["Contratos y liquidaciones"]
+        CFORM["CrearContratoComponent<br/>carga propietarios, inquilinos e inmuebles"]
+        CS{{ContratoBbddService}}
+        LCOMP[ListaContratosComponent]
+        CL["ListaDeContratosService<br/>filtros y lista"]
+        DETAIL["ContratoCComponent<br/>outlet detalle"]
+        LIFE["CicloDeVidaContratosService<br/>FinalizacionContratoService"]
+        LIQ{{LiquidacionGeneratorService}}
+        DOC["Gastos, EGLAI y documentos<br/>de liquidacion"]
+        ACT["CrearContratoComponent<br/>activa inmueble e inquilinos"]
 
-    %% Servicios de dominio y bases compartidas
-    SP{{propietario-rxjs.service}}
-    SI{{inquilino-rxjs.service}}
-    SM{{inmuebles-rxjs.service}}
-    BCRUD{{base-crud.service}}
-    MS{{modal.service}}
+        RC --> CFORM
+        CFORM --> CS
+        CFORM -->|"consulta entidades relacionadas"| SERVICES
+        RC --> LCOMP
+        LCOMP --> CL
+        CL --> CS
+        CL --> LIQ
+        LCOMP -->|"seleccion"| DETAIL
+        CL -->|"sincronizacion"| LIFE
+        LIFE --> CS
+        DETAIL --> LIQ
+        RC --> DOC
+        DETAIL --> DOC
+        DOC --> LIQ
+        CS -->|"contrato guardado"| LIQ
+        LIQ -->|"liquidacion inicial guardada"| ACT
+        CS --> CRUD
+        LIQ --> CRUD
+    end
 
-    %% Servicio shared de definiciones
-    SDEF{{definiciones-caracteristicas.service}}
+    RN --> NCOMP["CrearNotificacionComponent"]
+    NCOMP --> NS{{NotificacionesService}}
+    NS --> CRUD
+    CRUD <--> API[("json-server<br/>http://localhost:3000")]
+    SDEF <--> API
 
-    %% Estado observable
-    OP[(listaPropietarios$)]
-    OI[(listaInquilinos$)]
-    OM[(listaInmuebles$)]
-
-    %% Navegacion
-    U --> RDS
-    RDS --> RP
-    RDS --> RI
-    RDS --> RC
-    RDS --> RDC1
-    RDS --> RDC2
-    RDS --> RDC3
-
-    %% Flujos dominio propietarios
-    RP --> PC
-    PC --> CL
-    CL --> IE
-    IE -->|ver/editar/eliminar en propietarios| MS
-    MS --> MOD
-    PC --> SP
-    MOD --> SP
-    SP --> OP
-    OP --> PC
-
-    %% Flujos dominio inquilinos
-    RI --> IC
-    IC --> CL
-    CL --> IE
-    IE -.->|apertura directa en inquilinos| MOD
-    IC --> SI
-    MOD --> SI
-    SI --> OI
-    OI --> IC
-
-    %% Flujos de creacion compartidos
-    RC --> FC
-    FC --> FD
-    FD -->|entidadCreada| FC
-    FC --> SM
-    SM --> OM
-    OM --> FC
-
-    %% Herencia de servicios CRUD por dominio
-    SP -->|extiende| BCRUD
-    SI -->|extiende| BCRUD
-    SM -->|extiende| BCRUD
-    BCRUD -->|GET/POST/PUT/DELETE + lista$| API[(json-server)]
-
-    %% Flujo compartido de definiciones por dominio
-    RDC1 --> FCS
-    RDC2 --> FCS
-    RDC3 --> FCS
-    FCS -->|get/set definiciones por dominio| SDEF
-    FCS -->|lee dominio activo| RDS
-
-    %% Estilos
     classDef route stroke:#1E88E5,color:#f1f1f1;
     classDef component stroke:#2E7D32;
     classDef shared stroke:#5E35B1;
     classDef service stroke:#F9A825;
     classDef state stroke:#455A64;
 
-    class RP,RI,RC,RDC1,RDC2,RDC3 route;
-    class PC,IC,FC component;
-    class CL,IE,FD,FCS,MOD shared;
-    class RDS,SP,SI,SM,BCRUD,MS,SDEF service;
-    class OP,OI,OM state;
+    class RP,RI,RIM,RC,RN route;
+    class LISTA,CARD,CREAR,FD,DEFINICIONES,CFORM,LCOMP,CL,DETAIL,DOC,ACT,NCOMP,SIDEBAR component;
+    class MODAL shared;
+    class RDS,SDEF,SERVICES,CRUD,CS,LIFE,LIQ,NS service;
+    class ESTADO,API state;
 ```
 
-## Nota
+## Alcance y notas
 
-Los servicios RxJS de cada entidad ya no repiten la lógica CRUD principal: `propietario-rxjs.service`, `inquilino-rxjs.service` e `inmuebles-rxjs.service` extienden [base-crud.service](/c:/Users/Octavio/Desktop/Desarrollo/mvpInmo/mvpInmo/src/app/core/http/base-crud.service), que centraliza `cargar`, `crear`, `actualizar`, `eliminar` y el `BehaviorSubject` `lista$`.
-
-En la capa de modales ya existe [modal.service](/c:/Users/Octavio/Desktop/Desarrollo/mvpInmo/mvpInmo/src/app/core/modal/modal.service), que encapsula la apertura del modal compartido. Hoy su uso ya aparece en propietarios; inquilinos todavia conserva apertura directa con `MatDialog`, por eso el diagrama lo muestra como una transicion hacia un flujo mas homogeneo.
+- El flujo general da una vista de conjunto; no reemplaza los diagramas de [propietarios](./propietarios_flujo.md), [inquilinos](./inquilinos_flujo.md) e [inmuebles](./inmuebles_flujo.md), que muestran sus diferencias de captura y relacion entre datos.
+- `RutasDinamicasService` prepara las acciones del sidebar; la definicion de pantallas y URLs esta en `app.routes.ts`.
+- Las entidades principales comparten `BaseCrudService`, que centraliza las peticiones CRUD y mantiene el signal `$lista`. Las definiciones de caracteristicas se guardan por dominio en `/definiciones`.
+- La ruta `/notificaciones/crear` existe, pero el formulario actual es una funcionalidad de prueba y aun no esta integrada como flujo completo del sidebar.
+- La creacion de contratos usa propietarios, inquilinos e inmuebles; al guardarse, crea una liquidacion inicial e intenta activar el inmueble y los inquilinos asociados.

@@ -32,6 +32,7 @@
     }
   }
   .card {
+    box-sizing: border-box;
     margin-top: 20px;
     background-color: $neutral-800;
     border-radius: 15px;

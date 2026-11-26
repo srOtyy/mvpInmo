@@ -12,7 +12,6 @@ import {
   BehaviorSubject,
   catchError,
   concatMap,
-  delay,
   EMPTY,
   firstValueFrom,
   from,
@@ -48,19 +47,28 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     );
     return this.$listaInmuebles.find((i) => i.id === contrato?.inmuebleId);
   });
-  $inquilinoSideBarInfo = computed(() => {
+  $inquilinosSideBarInfo = computed(() => {
     const contrato = this.$lista().find(
       (c) => c.id === this.$contratoIdSideBarInfo(),
     );
-    return this.$listaInquilinos.find((i) => i.id === contrato?.inquilinoId);
+
+    return (contrato?.inquilinos ?? [])
+      .map((id) =>
+        this.$listaInquilinos.find((inquilino) => inquilino.id === id),
+      )
+      .filter((inquilino): inquilino is IInquilino => inquilino !== undefined);
   });
-  $propietarioSideBarInfo = computed(() => {
+  $propietariosSideBarInfo = computed(() => {
     const contrato = this.$lista().find(
       (c) => c.id === this.$contratoIdSideBarInfo(),
     );
-    return this.$listaPropietarios.find(
-      (p) => p.id === contrato?.propietarioId,
-    );
+    return (contrato?.propietarios ?? [])
+      .map((id) =>
+        this.$listaPropietarios.find((propietario) => propietario.id === id),
+      )
+      .filter(
+        (propietario): propietario is IPropietario => propietario !== undefined,
+      );
   });
   $contratoTituloSideBarInfo = computed(() => {
     const contrato = this.$lista().find(
@@ -132,28 +140,6 @@ export class ContratoBbddService extends BaseCrudService<IContrato> {
     }
   }
 
-  generarTituloContrato(idPropietario: string, idInquilino: string): string {
-    const propietario = this.$listaPropietarios.find(
-      (p) => p.id.toString() === idPropietario,
-    );
-    const inquilino = this.$listaInquilinos.find(
-      (i) => i.id.toString() === idInquilino,
-    );
-    if (propietario && inquilino) {
-      const nombrePropietario = obtenerCaracteristica(
-        propietario,
-        'nombre',
-        'Nombre no disponible',
-      );
-      const nombreInquilino = obtenerCaracteristica(
-        inquilino,
-        'nombre',
-        'Nombre no disponible',
-      );
-      return `${nombrePropietario} - ${nombreInquilino}`;
-    }
-    return 'Título no disponible';
-  }
   obtenerContratoPorId(id: number): IContrato | undefined {
     return this.$lista().find((contrato) => contrato.id === id);
   }

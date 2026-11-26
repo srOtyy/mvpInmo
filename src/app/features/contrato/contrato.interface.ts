@@ -15,7 +15,7 @@ export type EstadoRenovacion =
   | 'hoy'
   | 'porFinalizar';
 
-export type TipoPago = 'efectivo' | 'transferencia';
+export type TipoPago = 'efectivo' | 'transferencia' | 'ambos';
 
 export type InformacionAdicional = {
   titulo: string;
@@ -31,9 +31,10 @@ export type tipoDeContrato =
 
 export interface IContrato {
   id: number;
-  inquilinoId: number;
+  propietarios: number[];
+  inquilinos: number[];
+  propietarioId?: number;
   inmuebleId: number;
-  propietarioId: number;
   fechaInicio: Date;
   fechaFin: Date;
   estado: ContractStatus;

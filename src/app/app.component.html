@@ -1,23 +1,58 @@
 <div class="div">
-  <!-- // aca esta el nav bar y el sidebar -->
-  <mat-drawer-container class="nav-bar">
-    <mat-drawer
-      position="end"
-      mode="over"
-      class="drawer"
-      [opened]="this._contratos.$sideBarInfo()"
-      (closed)="cerrarPanelesContrato()"
+  @if (menuMovilAbierto) {
+    <button
+      type="button"
+      class="mobile-backdrop"
+      aria-label="Cerrar menú de navegación"
+      (click)="cerrarMenuMovil()"
+    ></button>
+  }
+
+  <aside
+    class="nav-bar"
+    [class.abierto]="menuMovilAbierto"
+    aria-label="Navegación principal"
+  >
+    <button
+      type="button"
+      class="mobile-close"
+      aria-label="Cerrar menú"
+      (click)="cerrarMenuMovil()"
     >
-      <app-vista-info-entidad />
-    </mat-drawer>
-    <mat-drawer-content class="drawer-content">
-      <app-sidebar (evento)="eventoSidenav()" />
-    </mat-drawer-content>
-  </mat-drawer-container>
+      <mat-icon>close</mat-icon>
+    </button>
+    <app-sidebar (navegacionSeleccionada)="cerrarMenuMovil()" />
+  </aside>
 
   <div class="lado-derecho">
+    <header class="mobile-topbar">
+      <button
+        mat-icon-button
+        type="button"
+        aria-label="Abrir menú de navegación"
+        [attr.aria-expanded]="menuMovilAbierto"
+        (click)="alternarMenuMovil()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Inmo</span>
+    </header>
+
     <div class="body">
-      <app-main></app-main>
+      <mat-drawer-container class="panel-container" [hasBackdrop]="false">
+        <mat-drawer
+          position="start"
+          mode="over"
+          class="drawer"
+          [opened]="this._contratos.$sideBarInfo()"
+          (closed)="cerrarInfoContrato()"
+        >
+          <app-vista-info-entidad />
+        </mat-drawer>
+        <mat-drawer-content class="drawer-content">
+          <app-main />
+        </mat-drawer-content>
+      </mat-drawer-container>
     </div>
   </div>
 </div>

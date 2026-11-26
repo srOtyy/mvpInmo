@@ -1,50 +1,205 @@
-@use '../../../styles.scss' as *;
-.side-bar{
-    margin-top :50px ;
-    .botones{
-        display: flex;
-        flex-direction: column;
-        gap: 50px;
-        width: auto ;
-        .contenedor-boton-dominio{
-            width: 100%;
-            .boton-dominio{
-                padding: 20px;
-                display: flex;
-                flex-direction: column;
-                text-align: start;
-                width: 100%;
-                border-bottom: 1px solid $primary-300;
-                border-radius: 0;
-                transition: all 0.3s ease;
-                &:hover{
-                    color: $neutral-50;
-                    border-bottom-color: $neutral-50;
-                }
-            }
-            .sub-botones{
-                background-color: $neutral-700;
-                border-bottom: 1px solid $primary-700;
-                ul{
-                    list-style: none;
-                    margin: 0;
-                    padding: 15px;
-                    li{
-                        .boton-accion{
-                            text-align: start;
-                            width: 100%;
-                            border-radius: 0;
-                            transition: all 0.3s ease;
-                            background-color: transparent;
-                            &:hover{
-                                color: $accent-1;
-                                background-color: transparent;
-                            }
-                        }
-                        
-                    }
-                    }
-            }
-        }
+@use "../../../styles.scss" as *;
+
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.sidebar {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 22px 14px 14px;
+  background: $neutral-900;
+  color: $neutral-100;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 50px;
+  padding: 0 8px;
+  color: inherit;
+  text-decoration: none;
+
+  .marca-icono {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid rgba($primary-400, 0.3);
+    border-radius: 12px;
+    background: rgba($primary-700, 0.2);
+    color: $primary-300;
+  }
+
+  .marca-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    strong {
+      font-size: 19px;
+      letter-spacing: 0.02em;
     }
+
+    small {
+      color: $neutral-400;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+  }
+}
+
+.separador {
+  height: 1px;
+  margin: 22px 4px 20px;
+  background: $neutral-700;
+}
+
+.etiqueta-menu {
+  margin: 0 10px 10px;
+  color: $neutral-400;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.navegacion {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.grupo {
+  min-width: 0;
+}
+
+.boton-dominio {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  gap: 12px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: $neutral-200;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+
+  > mat-icon:first-child {
+    width: 20px;
+    height: 20px;
+    color: $neutral-400;
+    font-size: 20px;
+  }
+
+  span {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .flecha {
+    width: 18px;
+    height: 18px;
+    color: $neutral-400;
+    font-size: 18px;
+  }
+
+  &:hover {
+    background: $neutral-800;
+    color: $neutral-50;
+  }
+
+  &.activo {
+    border-color: rgba($primary-400, 0.18);
+    background: rgba($primary-700, 0.16);
+    color: $primary-200;
+
+    > mat-icon:first-child {
+      color: $primary-300;
+    }
+  }
+
+  &:focus-visible,
+  &:focus-visible:not(:hover) {
+    outline: 2px solid $primary-400;
+    outline-offset: 2px;
+  }
+}
+
+.sub-botones {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 4px 0 8px 21px;
+  padding: 4px 0 4px 13px;
+  border-left: 1px solid $neutral-700;
+
+  .boton-accion {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 36px;
+    gap: 10px;
+    padding: 0 10px;
+    border-radius: 6px;
+    color: $neutral-300;
+    font-size: 13px;
+    text-align: left;
+    text-decoration: none;
+
+    mat-icon {
+      width: 17px;
+      height: 17px;
+      color: $neutral-500;
+      font-size: 17px;
+    }
+
+    &:hover {
+      background: $neutral-800;
+      color: $neutral-50;
+
+      mat-icon {
+        color: $primary-300;
+      }
+    }
+
+    &.ruta-activa {
+      background: rgba($primary-700, 0.18);
+      color: $primary-200;
+
+      mat-icon {
+        color: $primary-300;
+      }
+    }
+  }
+}
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: auto;
+  padding: 16px 10px 4px;
+  border-top: 1px solid $neutral-700;
+  color: $neutral-400;
+  font-size: 11px;
+
+  mat-icon {
+    width: 17px;
+    height: 17px;
+    color: $neutral-500;
+    font-size: 17px;
+  }
 }

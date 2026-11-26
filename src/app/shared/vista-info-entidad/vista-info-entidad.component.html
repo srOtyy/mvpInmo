@@ -7,7 +7,6 @@
   >
     <mat-icon class="icono">close</mat-icon>
   </button>
-  <h3 class="titulo">{{ this._contratos.$contratoTituloSideBarInfo() }}</h3>
 </div>
 <mat-divider></mat-divider>
 <div class="stepper">
@@ -31,19 +30,31 @@
       </ng-template>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Propietario</ng-template>
+      <ng-template matStepLabel>Propietarios</ng-template>
       <ng-template matStepContent>
-        <app-vista-info-propietario
-          [propietario]="this._contratos.$propietarioSideBarInfo()"
-        ></app-vista-info-propietario>
+        @for (
+          propietario of _contratos.$propietariosSideBarInfo();
+          track propietario.id
+        ) {
+          <app-vista-info-propietario [propietario]="propietario" />
+          <mat-divider></mat-divider>
+        } @empty {
+          <p>No hay propietarios asociados.</p>
+        }
       </ng-template>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Inquilino</ng-template>
+      <ng-template matStepLabel>Inquilinos</ng-template>
       <ng-template matStepContent>
-        <app-vista-info-inquilino
-          [inquilino]="this._contratos.$inquilinoSideBarInfo()"
-        ></app-vista-info-inquilino>
+        @for (
+          inquilino of _contratos.$inquilinosSideBarInfo();
+          track inquilino.id
+        ) {
+          <app-vista-info-inquilino [inquilino]="inquilino" />
+          <mat-divider></mat-divider>
+        } @empty {
+          <p>No hay inquilinos asociados.</p>
+        }
       </ng-template>
     </mat-step>
     <mat-step>

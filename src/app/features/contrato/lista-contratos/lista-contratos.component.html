@@ -72,17 +72,8 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <!-- sync / honorarios / EGLAI -->
+    <!-- sync / honorarios / EGLAI / Reset EGLAI -->
     <div class="acciones">
-      <button
-        [disabled]="false"
-        mat-icon-button
-        class="btn-nuevo"
-        (click)="evaluarVencimientosContratos()"
-        matTooltip="Sincronizar contratos"
-      >
-        <mat-icon class="icono">sync</mat-icon>
-      </button>
       <button
         mat-icon-button
         class="btn-nuevo"
@@ -91,6 +82,7 @@
       >
         <mat-icon class="icono">paid</mat-icon>
       </button>
+
       <button
         mat-icon-button
         class="btn-nuevo"
@@ -101,6 +93,7 @@
           modoVista() === "normal" ? "view_list" : "rule"
         }}</mat-icon>
       </button>
+
       <button
         mat-icon-button
         class="btn-nuevo"
@@ -110,6 +103,16 @@
         matTooltip="Reset EGLAI"
       >
         <mat-icon class="icono">restart_alt</mat-icon>
+      </button>
+
+      <button
+        [disabled]="false"
+        mat-icon-button
+        class="btn-nuevo"
+        (click)="evaluarVencimientosContratos()"
+        matTooltip="Sincronizar contratos"
+      >
+        <mat-icon class="icono">sync</mat-icon>
       </button>
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IInquilino } from '../../inquilino.interface';
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -15,6 +16,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
 import { construirCaracteristicasDesdeForm } from '../../../caracteristicas/entity-helpers';
+import { GarantesService } from '../../../garantes/garantes.service';
+import { Garante } from '../../../garantes/garante-interface';
+
+type GaranteFormGroup = FormGroup<{
+  id: FormControl<number>;
+  idInquilino: FormControl<number>;
+  nombre: FormControl<string>;
+  email: FormControl<string>;
+  telefono: FormControl<string>;
+}>;
+
 @Component({
   selector: 'app-editar-inquilino',
   imports: [
@@ -30,13 +42,16 @@ import { construirCaracteristicasDesdeForm } from '../../../caracteristicas/enti
 export class EditarInquilinoComponent implements OnInit {
   @Input() entidad!: IInquilino;
   formularioEditarInquilino: FormGroup;
+  garantesFormArray: FormArray<GaranteFormGroup>;
 
   constructor(
     private formBuilder: FormBuilder,
     private _inquilinoRxJsService: InquilinoRxjsService,
     private dialogRef: MatDialogRef<ModalComponent>,
     private _snackbarService: SnackbarService,
+    private _garantesService: GarantesService,
   ) {
+    this.garantesFormArray = this.formBuilder.array<GaranteFormGroup>([]);
     this.formularioEditarInquilino = this.formBuilder.group({
       id: new FormControl(''),
       activo: new FormControl(false),
@@ -48,6 +63,7 @@ export class EditarInquilinoComponent implements OnInit {
   }
 
   pasarDatosInquilino(inquilinoData: IInquilino) {
+    this.garantesFormArray.clear();
     this.formularioEditarInquilino.patchValue({
       id: inquilinoData.id,
       activo: inquilinoData.activo,
@@ -59,6 +75,30 @@ export class EditarInquilinoComponent implements OnInit {
         new FormControl(c.valor),
       );
     });
+
+    inquilinoData.garantes?.forEach((garante) => this.cargarGarante(garante));
+  }
+
+  agregarGarante(): void {
+    this.cargarGarante(
+      this._garantesService.crearGarante(this.entidad.id, '', '', ''),
+    );
+  }
+
+  quitarGarante(indice: number): void {
+    this.garantesFormArray.removeAt(indice);
+  }
+
+  private cargarGarante(garante: Garante): void {
+    this.garantesFormArray.push(
+      this.formBuilder.nonNullable.group({
+        id: garante.id,
+        idInquilino: garante.idInquilino,
+        nombre: garante.nombre,
+        email: garante.email,
+        telefono: garante.telefono,
+      }),
+    );
   }
 
   guardarCambios() {
@@ -87,7 +127,7 @@ export class EditarInquilinoComponent implements OnInit {
       caracteristicas: construirCaracteristicasDesdeForm(
         this.formularioEditarInquilino,
       ),
-      garantes: this.entidad.garantes,
+      garantes: this.garantesFormArray.getRawValue(),
       activo: this.formularioEditarInquilino.value.activo,
     };
     return inquilinoEditado;

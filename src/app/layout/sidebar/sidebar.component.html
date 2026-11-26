@@ -1,20 +1,67 @@
-<div class="side-bar"> 
-    <div class="botones">
-        @for (dominio of dominiosActivos; track $index){
-         <div class="contenedor-boton-dominio">
-            <button mat-raised-button (click)="enviarDominio(dominio)" class="boton-dominio"> {{dominio}} </button>
-                @if(consultarDominioActivo(dominio)){
-                    <div class="sub-botones">
-                        <ul>
-                            @for(boton of obtenerBotonesDeAccion(dominio); track $index){
-                                <li>
-                                    <button mat-button [routerLink]="boton.ruta" class="boton-accion"> {{boton.nombre}} </button>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                }
-         </div>
-        }   
-    </div>
+<div class="sidebar">
+  <a class="marca" routerLink="/contratos/lista" (click)="seleccionarInicio()">
+    <span class="marca-icono" aria-hidden="true">
+      <mat-icon>home_work</mat-icon>
+    </span>
+    <span class="marca-texto">
+      <strong>CRM</strong>
+      <small>GESTIÓN INMOBILIARIA</small>
+    </span>
+  </a>
+
+  <div class="separador"></div>
+  <p class="etiqueta-menu">MENÚ PRINCIPAL</p>
+
+  <nav class="navegacion" aria-label="Navegación principal">
+    @for (dominio of dominiosActivos; track dominio) {
+      <section class="grupo">
+        <button
+          type="button"
+          class="boton-dominio"
+          [class.activo]="consultarDominioActivo(dominio)"
+          [attr.aria-expanded]="consultarDominioActivo(dominio)"
+          [attr.aria-controls]="'acciones-' + dominio"
+          (click)="alternarDominio(dominio)"
+        >
+          <mat-icon aria-hidden="true">{{
+            obtenerIconoDominio(dominio)
+          }}</mat-icon>
+          <span>{{ obtenerEtiquetaDominio(dominio) }}</span>
+          <mat-icon class="flecha" aria-hidden="true">
+            {{
+              consultarDominioActivo(dominio) ? "expand_less" : "expand_more"
+            }}
+          </mat-icon>
+        </button>
+
+        @if (consultarDominioActivo(dominio)) {
+          <div class="sub-botones" [id]="'acciones-' + dominio">
+            @for (
+              boton of obtenerBotonesDeAccion(dominio);
+              track boton.ruta.join("/")
+            ) {
+              <a
+                mat-button
+                class="boton-accion"
+                [routerLink]="boton.ruta"
+                routerLinkActive="ruta-activa"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="seleccionarAccion(dominio)"
+              >
+                <mat-icon aria-hidden="true">{{
+                  obtenerIconoAccion(boton.nombre)
+                }}</mat-icon>
+                <span>{{ obtenerEtiquetaAccion(boton.nombre) }}</span>
+              </a>
+            }
+          </div>
+        }
+      </section>
+    }
+  </nav>
+
+  <footer class="sidebar-footer">
+    <mat-icon aria-hidden="true">apartment</mat-icon>
+    <span>Administración Little Daddy</span>
+  </footer>
 </div>

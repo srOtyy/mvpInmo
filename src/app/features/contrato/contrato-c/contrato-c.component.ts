@@ -73,6 +73,7 @@ export class ContratoCComponent implements OnInit {
     );
     if (liquidacionAux) {
       liquidacionAux.montoAlquiler = contrato.rentaMensual;
+      liquidacionAux.inicioDelPeriodo = contrato.inicioDelPeriodo; //esta linea se deberia borrar en el futuro
       this._liquidacion.setSignalSeleccionado(liquidacionAux);
       this._liquidacion.actualizarLiquidacionSeleccionada();
       this._modalService.abrirModal(
@@ -80,7 +81,6 @@ export class ContratoCComponent implements OnInit {
         AgregarGastosContratoComponent,
         liquidacionAux,
       );
-      // this.router.navigate(['/contratos/liquidaciones']);
     } else {
       console.warn('La liquidacionAux dio undefinded:', liquidacionAux);
     }
@@ -113,11 +113,6 @@ export class ContratoCComponent implements OnInit {
           console.log('proximo aumento actualizado');
         },
       });
-  }
-  //cambiar valor $sideBarInfo ( desde el servicio de contratos)
-  cambiarValorSidebarInfo(id: number) {
-    this._contratosService.$sideBarInfo.set(true);
-    this._contratosService.$contratoIdSideBarInfo.set(id);
   }
 
   volverALaListaDeContratos() {

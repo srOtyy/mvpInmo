@@ -1,44 +1,58 @@
-# Diagrama de Flujo - Dominio Inmuebles (actualizado)
+# Flujo del dominio Inmuebles
 
 ```mermaid
 flowchart TB
-    %% Rutas
-    RCREAR[/Ruta: /inmuebles/crear/]
-    RDEF[/Ruta: /inmuebles/def_caracteristicas/]
+    RLISTA["/inmuebles/lista"]
+    RCREAR["/inmuebles/crear"]
+    RDEF["/inmuebles/def_caracteristicas"]
 
-    %% Componentes
-    CC[crear-inmueble]
+    LISTA[InmuebleCComponent]
+    CARD["card-list + AccordionInmuebleComponent"]
+    MODAL["ModalService<br/>editar o eliminar"]
+    CREAR[CrearInmuebleComponent]
     FD[form-dinamico]
-    FC[formulario-caracteristicas]
+    PROPIETARIO["Seleccionar propietario"]
+    SI{{InmueblesRxjsService}}
+    SP{{PropietarioRxjsService}}
+    CRUD{{BaseCrudService}}
+    ESTADO[("signals $lista<br/>inmuebles y propietarios")]
+    DEFINICIONES[FormularioCaracteristicasComponent]
+    SDEF{{DefinicionesCaracteristicasService}}
+    API[("json-server")]
+    CONTRATO["Crear contrato<br/>activa inmueble e inquilinos"]
 
-    %% Servicios y estado
-    SI{{inmuebles-rxjs.service}}
-    SD{{definiciones-caracteristicas.service}}
-    EI[(listaInmuebles$)]
-    ED[(definiciones inmuebles)]
+    RLISTA --> LISTA --> SI
+    SI --> CRUD --> API
+    SI --> ESTADO --> LISTA
+    LISTA --> CARD
+    CARD -->|"editar o eliminar"| MODAL
+    MODAL --> SI
 
-    %% Crear (estado en memoria)
-    RCREAR --> CC --> FD
-    FD -->|entidadCreada| CC
-    CC -->|agregarInmueble()| SI
-    SI --> EI
+    RCREAR --> CREAR
+    CREAR --> PROPIETARIO
+    CREAR --> FD
+    FD -->|"entidadCreada"| CREAR
+    CREAR -->|"crear inmueble"| SI
+    SI -->|"tras persistir: actualiza listaInmuebles"| SP
+    SP --> CRUD
+    CONTRATO -->|"activarInmueble()"| SI
 
-    %% Definiciones de caracteristicas
-    RDEF --> FC
-    FC -->|getDefiniciones$()| SD
-    FC -->|setDefiniciones()| SD
-    SD -->|GET/POST/PATCH| API[(json-server)]
-    SD --> ED
-    ED --> FD
+    RDEF --> DEFINICIONES
+    DEFINICIONES <--> SDEF
+    SDEF -->|"GET /definiciones<br/>POST o PATCH por dominio"| API
+    SDEF -->|"definiciones de inmuebles"| FD
 
-    %% Estilos
     classDef route stroke:#1E88E5,color:#f1f1f1;
     classDef component stroke:#2E7D32;
+    classDef shared stroke:#5E35B1;
     classDef service stroke:#F9A825;
     classDef state stroke:#455A64;
 
-    class RCREAR,RDEF route;
-    class CC,FD,FC component;
-    class SI,SD service;
-    class EI,ED state;
+    class RLISTA,RCREAR,RDEF route;
+    class LISTA,CARD,CREAR,FD,PROPIETARIO,DEFINICIONES,CONTRATO component;
+    class MODAL shared;
+    class SI,SP,CRUD,SDEF service;
+    class ESTADO,API state;
 ```
+
+El alta requiere elegir un propietario. Se guarda el inmueble y luego se agrega su ID a `listaInmuebles` del propietario. La activacion del inmueble ocurre al crear un contrato.

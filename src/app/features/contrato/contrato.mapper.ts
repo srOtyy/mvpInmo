@@ -65,10 +65,17 @@ export function toContratoVista(
   propietarios: IPropietario[],
   liquidaciones: Liquidacion[],
 ): IContratoVista {
-  const propietario = propietarios.find((p) => p.id === contrato.propietarioId);
-  const propietarioNombre = propietario
-    ? obtenerNombre(propietario)
-    : 'Nombre no disponible';
+  const propietarioIds = contrato.propietarios?.length
+    ? contrato.propietarios
+    : contrato.propietarioId
+      ? [contrato.propietarioId]
+      : [];
+  const nombresPropietarios = propietarioIds
+    .map((id) => propietarios.find((propietario) => propietario.id === id))
+    .filter((propietario): propietario is IPropietario => propietario !== undefined)
+    .map(obtenerNombre);
+  const propietarioNombre =
+    nombresPropietarios.join(', ') || 'Nombre no disponible';
   const liquidacion = liquidaciones.find(
     (item) => item.contratoId === contrato.id,
   );

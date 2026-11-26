@@ -251,9 +251,6 @@ export class AgregarGastosContratoComponent implements OnInit {
       this._liquidacion.generarLiquidacionInquilinoDocx(liquidacion),
     );
   }
-  generarMinutaPropietario(liquidacion: Liquidacion): void {
-    this._liquidacion.generarMinutaPropietario(liquidacion);
-  }
   generarReciboInquilino(liquidacion: Liquidacion): void {
     this._liquidacion.generarReciboInquilino(liquidacion);
   }
@@ -285,9 +282,7 @@ export class AgregarGastosContratoComponent implements OnInit {
       }
 
       try {
-        await lastValueFrom(
-          this._liquidacion.marcarComoEmitida(liquidacion),
-        );
+        await lastValueFrom(this._liquidacion.marcarComoEmitida(liquidacion));
         liquidacion.estado = 'emitida';
         this._snack.mensajeSnackBar('Liquidación emitida', 'Cerrar');
       } catch (error) {

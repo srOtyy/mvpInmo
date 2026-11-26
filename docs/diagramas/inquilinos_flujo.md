@@ -1,69 +1,56 @@
-# Diagrama de Flujo - Dominio Inquilinos (actualizado)
+# Flujo del dominio Inquilinos
 
 ```mermaid
 flowchart TB
-    %% Rutas
-    RLISTA[/Ruta: /inquilinos/lista/]
-    RCREAR[/Ruta: /inquilinos/crear/]
-    RDEF[/Ruta: /inquilinos/def_caracteristicas/]
+    RLISTA["/inquilinos/lista"]
+    RCREAR["/inquilinos/crear"]
+    RDEF["/inquilinos/def_caracteristicas"]
 
-    %% Componentes
-    LC[inquilino-c]
-    CC[crear-inquilino]
+    LISTA[InquilinoCComponent]
+    CARD["card-list + AccordionInquilinoComponent"]
+    MODAL["ModalService<br/>editar o eliminar"]
+    CREAR[CrearInquilinoComponent]
     FD[form-dinamico]
-    FC[formulario-caracteristicas]
-    CL[shared: card-list]
-    IE[shared: item-entidad]
-    MOD[shared: modal]
-    MV[modal: ver-inquilino]
-    ME[modal: editar-inquilino]
-    MD[modal: eliminar-inquilino]
+    PASO["Stepper: datos del inquilino"]
+    GARANTES["GarantesService<br/>agregar garantes"]
+    SI{{InquilinoRxjsService}}
+    CRUD{{BaseCrudService}}
+    ESTADO[("signal $lista")]
+    DEFINICIONES[FormularioCaracteristicasComponent]
+    SDEF{{DefinicionesCaracteristicasService}}
+    API[("json-server")]
+    CONTRATO["Crear contrato<br/>activa inquilinos asociados"]
 
-    %% Servicios y estado
-    SI{{inquilino-rxjs.service}}
-    SD{{definiciones-caracteristicas.service}}
-    EI[(listaInquilinos$)]
-    ED[(definiciones inquilinos)]
+    RLISTA --> LISTA --> SI
+    SI --> CRUD --> API
+    SI --> ESTADO --> LISTA
+    LISTA --> CARD
+    CARD -->|"editar o eliminar"| MODAL
+    MODAL --> SI
 
-    %% Lista
-    RLISTA --> LC
-    LC -->|ngOnInit: cargarInquilinos()| SI
-    SI -->|GET/POST/PUT/DELETE| API[(json-server)]
-    SI --> EI
-    EI --> LC
-    LC --> CL --> IE
-    IE -->|ver/editar/eliminar| MOD
-    MOD --> MV
-    MOD --> ME
-    MOD --> MD
-    ME -->|actualizarInquilino()| SI
-    MD -->|eliminarInquilino()| SI
+    RCREAR --> CREAR --> FD
+    FD -->|"entidadCreada"| PASO
+    PASO --> GARANTES
+    GARANTES -->|"terminar creacion"| CREAR
+    CREAR -->|"crear inquilino con garantes"| SI
+    CONTRATO -->|"activarInquilino()"| SI
 
-    %% Crear
-    RCREAR --> CC --> FD
-    FD -->|entidadCreada| CC
-    CC -->|crearInquilino()| SI
+    RDEF --> DEFINICIONES
+    DEFINICIONES <--> SDEF
+    SDEF -->|"GET /definiciones<br/>POST o PATCH por dominio"| API
+    SDEF -->|"definiciones de inquilinos"| FD
 
-    %% Definiciones de caracteristicas
-    RDEF --> FC
-    FC -->|getDefiniciones$()| SD
-    FC -->|setDefiniciones()| SD
-    SD -->|GET/POST/PATCH| API
-    SD --> ED
-    ED --> FD
-
-    %% Estilos
     classDef route stroke:#1E88E5,color:#f1f1f1;
     classDef component stroke:#2E7D32;
-    classDef service stroke:#F9A825;
-    classDef modal stroke:#C2185B;
     classDef shared stroke:#5E35B1;
+    classDef service stroke:#F9A825;
     classDef state stroke:#455A64;
 
     class RLISTA,RCREAR,RDEF route;
-    class LC,CC,FD,FC component;
-    class CL,IE,MOD shared;
-    class MV,ME,MD modal;
-    class SI,SD service;
-    class EI,ED state;
+    class LISTA,CARD,CREAR,FD,PASO,GARANTES,DEFINICIONES,CONTRATO component;
+    class MODAL shared;
+    class SI,CRUD,SDEF service;
+    class ESTADO,API state;
 ```
+
+El alta no termina al enviar las caracteristicas: el formulario pasa al paso de garantes y recien despues persiste el inquilino.

@@ -151,6 +151,6 @@ export function numeroALetras(valor: number | string): string {
 
   const resultadoEntero = resultado.trim().replace(/\s+/g, ' ') || 'CERO';
   return centavos > 0
-    ? `${resultadoEntero} PESOS ${centavos.toString().padStart(2, '0')}/100`
+    ? `${resultadoEntero} con ${centavos.toString().padStart(2, '0')}/100 centavos`
     : resultadoEntero;
 }

@@ -8,34 +8,150 @@
 
 .div {
   display: grid;
-  grid-template-columns: 3fr 8fr;
+  grid-template-columns: 252px minmax(0, 1fr);
   height: 100%;
   min-height: 0;
+  background: $neutral-900;
+}
+
+.nav-bar {
+  z-index: 1;
+  min-width: 0;
+  overflow-y: auto;
+  border-right: 1px solid $neutral-700;
+  background: $neutral-900;
+  scrollbar-color: $neutral-600 $neutral-900;
+}
+
+.mobile-close,
+.mobile-topbar,
+.mobile-backdrop {
+  display: none;
+}
+
+.lado-derecho {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background-color: $primary-900;
+}
+
+.body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.panel-container {
+  flex: 1 1 auto;
+  min-height: 0;
+  background: transparent;
+}
+
+.drawer {
+  width: 30%;
+  scrollbar-color: $neutral-600 $neutral-800;
+}
+
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 760px) {
+  .div {
+    display: block;
+  }
 
   .nav-bar {
-    height: 100%;
+    position: fixed;
+    z-index: 21;
+    inset: 0 auto 0 0;
+    width: min(290px, calc(100vw - 52px));
+    overflow-y: auto;
+    border-right: 1px solid $neutral-600;
+    box-shadow: 16px 0 40px rgba(0, 0, 0, 0.3);
+    transform: translateX(-105%);
+    transition: transform 220ms ease;
 
-    .drawer {
-      width: 100%;
-      scrollbar-color: $neutral-600 $neutral-800;
-    }
-    .drawer-content {
-      width: 100%;
-      padding: 10px;
+    &.abierto {
+      transform: translateX(0);
     }
   }
-  .lado-derecho {
+
+  .mobile-close {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    margin: 8px 8px -44px auto;
+    padding: 0;
+    place-items: center;
+    position: relative;
+    z-index: 1;
+    border: 0;
+    border-radius: 50%;
+    background: $neutral-800;
+    color: $neutral-300;
+    cursor: pointer;
+  }
+
+  .mobile-backdrop {
+    display: block;
+    position: fixed;
+    z-index: 20;
+    inset: 0;
     width: 100%;
-    max-width: 100%;
-    min-height: 0;
-    overflow: hidden;
-    background-color: $primary-900;
-    .body {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      min-height: 0;
-      z-index: 1;
+    height: 100%;
+    border: 0;
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .lado-derecho {
+    height: 100%;
+  }
+
+  .drawer {
+    width: min(440px, 90vw);
+  }
+
+  .mobile-topbar {
+    display: flex;
+    flex: 0 0 56px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    border-bottom: 1px solid $neutral-700;
+    background: $neutral-900;
+    color: $neutral-100;
+
+    button {
+      color: $primary-300;
     }
+
+    @media (min-width: 761px) and (max-width: 999px) {
+      .drawer {
+        width: min(440px, 90vw);
+      }
+    }
+
+    span {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-bar {
+    transition: none;
   }
 }

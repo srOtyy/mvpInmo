@@ -1,39 +1,107 @@
 import { Component, output } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
 import { RutasDinamicasService } from '../../core/navegacion/rutas-dinamicas.service';
 import { Dominio, IBotonRuta } from '../../core/navegacion/navegacionRutas';
-import { RouterLink } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+
 @Component({
-    selector: 'app-sidebar',
-    imports: [MatButtonModule, RouterLink, MatIconModule],
-    templateUrl: './sidebar.component.html',
-    styleUrl: './sidebar.component.scss'
+  selector: 'app-sidebar',
+  imports: [MatButtonModule, MatIconModule, RouterLink, RouterLinkActive],
+  templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
-  evento = output<void>();
-  // no se si estoy agarrando el valor del signal y lo asigno a la variable o si directamente uso el signal en el html, lo que si se es que el signal no se puede usar en el html, por eso lo asigno a la variable dominioActivo, pero no se si es la mejor forma de hacerlo
-  dominiosActivos: string[] = [];
-  dominioActivo: Dominio | null = null;
+  readonly navegacionSeleccionada = output<void>();
+  readonly dominiosActivos: Dominio[];
+  private readonly etiquetasDominios: Record<
+    Dominio,
+    { etiqueta: string; icono: string }
+  > = {
+    contratos: { etiqueta: 'Contratos', icono: 'description' },
+    inmuebles: { etiqueta: 'Inmuebles', icono: 'apartment' },
+    inquilinos: { etiqueta: 'Inquilinos', icono: 'people_alt' },
+    propietarios: { etiqueta: 'Propietarios', icono: 'key' },
+  };
+  private readonly etiquetasAcciones: Record<
+    string,
+    { etiqueta: string; icono: string }
+  > = {
+    lista: { etiqueta: 'Listado', icono: 'view_list' },
+    crear: { etiqueta: 'Crear nuevo', icono: 'add_circle_outline' },
+    caracteristicas: { etiqueta: 'Características', icono: 'tune' },
+  };
+
   constructor(
-    private rutasDinamicasService: RutasDinamicasService
+    private readonly rutasDinamicasService: RutasDinamicasService,
+    private readonly router: Router,
   ) {
-    this.rutasDinamicasService.emitirEntidades().forEach(dominio => {
-      this.dominiosActivos.push(dominio);
-    });
-    
+    this.dominiosActivos = this.rutasDinamicasService.emitirEntidades();
+    this.actualizarDominioActivo(this.router.url);
+    this.router.events
+      .pipe(
+        filter(
+          (evento): evento is NavigationEnd => evento instanceof NavigationEnd,
+        ),
+        takeUntilDestroyed(),
+      )
+      .subscribe((evento) =>
+        this.actualizarDominioActivo(evento.urlAfterRedirects),
+      );
   }
-  cerrarSidenavEvent() {
-    this.enviarDominio(null)
-    this.evento.emit();
+
+  alternarDominio(dominio: Dominio): void {
+    const dominioActual = this.rutasDinamicasService.$dominioActivo();
+    this.rutasDinamicasService.$dominioActivo.set(
+      dominioActual === dominio ? null : dominio,
+    );
   }
-  enviarDominio(dominio: string | null): void {
-    this.rutasDinamicasService.$dominioActivo.set(dominio as Dominio);
-  }
-  consultarDominioActivo(dominio: string): boolean {
+
+  consultarDominioActivo(dominio: Dominio): boolean {
     return this.rutasDinamicasService.$dominioActivo() === dominio;
   }
-  obtenerBotonesDeAccion(dominio: string): IBotonRuta[] {
-    return this.rutasDinamicasService.obtenerBotonesAccionPorDominio(dominio as Dominio);
+
+  obtenerBotonesDeAccion(dominio: Dominio): IBotonRuta[] {
+    return this.rutasDinamicasService.obtenerBotonesAccionPorDominio(dominio);
+  }
+
+  obtenerEtiquetaDominio(dominio: Dominio): string {
+    return this.etiquetasDominios[dominio].etiqueta;
+  }
+
+  obtenerIconoDominio(dominio: Dominio): string {
+    return this.etiquetasDominios[dominio].icono;
+  }
+
+  obtenerEtiquetaAccion(accion: string): string {
+    return this.etiquetasAcciones[accion]?.etiqueta ?? accion;
+  }
+
+  obtenerIconoAccion(accion: string): string {
+    return this.etiquetasAcciones[accion]?.icono ?? 'arrow_forward';
+  }
+
+  seleccionarAccion(dominio: Dominio): void {
+    this.rutasDinamicasService.$dominioActivo.set(dominio);
+    this.navegacionSeleccionada.emit();
+  }
+
+  seleccionarInicio(): void {
+    this.rutasDinamicasService.$dominioActivo.set('contratos');
+    this.navegacionSeleccionada.emit();
+  }
+
+  private actualizarDominioActivo(url: string): void {
+    const primerSegmento = url.split('?')[0].split('/')[1]?.split(';')[0];
+    const dominioActivo =
+      this.dominiosActivos.find((dominio) => dominio === primerSegmento) ?? null;
+    this.rutasDinamicasService.$dominioActivo.set(dominioActivo);
   }
 }
