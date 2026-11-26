@@ -258,9 +258,6 @@ export class CrearContratoComponent implements OnInit {
       this._cicloDeVida.calcularEstadoDeRenovacion(contrato);
     this.contratosService.crear(contrato).subscribe({
       next: () => {
-        /*
-        En este lugar se tiene que crear la liquidacion del contrato. ¿Que datos necesito para crear la liquidacion? El contrato, el nombre del propietario, el nombre del inquilino y los items de la liquidacion. 
-        */
         const liquidacion = this._liquidacion.crearLiquidacion(
           contrato,
           contrato.propietarios
